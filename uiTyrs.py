@@ -22,10 +22,9 @@ class uiTyrs:
 
     def displayHomeTimeline (self):
         statuses = self.api.updateHomeTimeline()
-        i=0
-        for status in statuses:
-            self.displayStatus(status, i)
-            i = i+1
+
+        for i in range(len(statuses)):
+            self.displayStatus(statuses[i], i)
         self.screen.getch()
 
     def displayStatus (self, status, i):
