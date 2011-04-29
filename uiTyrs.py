@@ -2,6 +2,12 @@ import sys
 import curses
 import time
 
+# colors:
+# 1 cyan
+# 2 red
+# 3 green
+# 4 yellow
+
 class uiTyrs:
 
     def __init__ (self, api, conf):
@@ -66,7 +72,12 @@ class uiTyrs:
             if curent_x + len(word) > self.maxyx[1] -6:
                 line += 1
                 curent_x = 2
-            panel.addstr(line, curent_x, word)
+
+            if word[0] == '#':
+                panel.addstr(line, curent_x, word, curses.color_pair(4))
+            else:
+                panel.addstr(line, curent_x, word)
+                
             curent_x += len(word) + 1
 
     def getTime (self, date):
