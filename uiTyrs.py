@@ -30,7 +30,7 @@ class uiTyrs:
         self.screen.getch()
 
     def displayStatus (self, status, i):
-
+        
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
@@ -45,17 +45,29 @@ class uiTyrs:
         if start_y + height > self.maxyx[0]:
             return 
 
-        tweet = curses.newpad(height, length)
-        tweet.border(0, curses.color_pair(1))
+        panel = curses.newpad(height, length)
+        panel.border(0)
         
-        tweet.addstr(0,3, header, curses.color_pair(4))
-        tweet.addstr(1,2, text)
-        tweet.refresh(0, 0, start_y, start_x, 
+        panel.addstr(0,3, header, curses.color_pair(1))
+        self.displayText(text, panel)
+        panel.refresh(0, 0, start_y, start_x, 
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
 
-        return tweet
+        #return panel
+
+    def displayText (self, text, panel):
+
+        words = text.split(' ')
+        curent_x = 2
+        line = 1
+        for word in words:
+            if curent_x + len(word) > self.maxyx[1] -6:
+                line += 1
+                curent_x = 2
+            panel.addstr(line, curent_x, word)
+            curent_x += len(word) + 1
 
     def getTime (self, date):
         time = date.split(' ')
