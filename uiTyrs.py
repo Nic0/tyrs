@@ -23,6 +23,8 @@ class uiTyrs:
     def displayHomeTimeline (self):
         statuses = self.api.updateHomeTimeline()
 
+        self.current_y = 2
+
         for i in range(len(statuses)):
             self.displayStatus(statuses[i], i)
         self.screen.getch()
@@ -33,22 +35,25 @@ class uiTyrs:
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
 
-        start_y = 2 + 4 * i
+        length = self.maxyx[1] - 4 
+        height = len(text) / length + 3
+
+        start_y = self.current_y
         start_x = 2
 
-        if start_y + 4 > self.maxyx[0]:
+        # si on a plus de place pour afficher, on quitte
+        if start_y + height > self.maxyx[0]:
             return 
 
-        height = 4
-        length = self.maxyx[1] - 4 
-
         tweet = curses.newpad(height, length)
-        tweet.border(0)
+        tweet.border(0, curses.color_pair(1))
         
         tweet.addstr(0,3, header, curses.color_pair(4))
         tweet.addstr(1,2, text)
         tweet.refresh(0, 0, start_y, start_x, 
             start_y + height, start_x + length)
+
+        self.current_y = start_y + height
 
         return tweet
 
