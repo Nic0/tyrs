@@ -3,10 +3,14 @@ import curses
 import time
 
 # colors:
-# 1 cyan
-# 2 red
-# 3 green
-# 4 yellow
+# 1 black
+# 2 blue
+# 3 cyan
+# 4 green
+# 5 magenta
+# 6 red
+# 7 white
+# 8 yellow
 
 class uiTyrs:
 
@@ -15,10 +19,14 @@ class uiTyrs:
         self.conf   = conf
         screen = curses.initscr()
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_CYAN, False)
-        curses.init_pair(2, curses.COLOR_RED, False)
-        curses.init_pair(3, curses.COLOR_GREEN, False)
-        curses.init_pair(4, curses.COLOR_YELLOW, False)
+        curses.init_pair(1, curses.COLOR_BLACK, False)
+        curses.init_pair(2, curses.COLOR_BLUE, False)
+        curses.init_pair(3, curses.COLOR_CYAN, False)
+        curses.init_pair(4, curses.COLOR_GREEN, False)
+        curses.init_pair(5, curses.COLOR_MAGENTA, False)
+        curses.init_pair(6, curses.COLOR_RED, False)
+        curses.init_pair(7, curses.COLOR_WHITE, False)
+        curses.init_pair(8, curses.COLOR_YELLOW, False)
 
         self.maxyx = screen.getmaxyx()
 
