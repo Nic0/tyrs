@@ -62,7 +62,7 @@ class uiTyrs:
         panel = curses.newpad(height, length)
         panel.border(0)
         
-        panel.addstr(0,3, header, curses.color_pair(1))
+        panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
         self.displayText(text, panel)
         panel.refresh(0, 0, start_y, start_x, 
             start_y + height, start_x + length)
@@ -82,7 +82,11 @@ class uiTyrs:
                 curent_x = 2
 
             if word[0] == '#':
-                panel.addstr(line, curent_x, word, curses.color_pair(4))
+                panel.addstr(line, curent_x, word,
+                        curses.color_pair(self.conf.color_hashtag))
+            elif word[0] == '@':
+                panel.addstr(line, curent_x, word,
+                        curses.color_pair(self.conf.color_attag))
             else:
                 panel.addstr(line, curent_x, word)
                 

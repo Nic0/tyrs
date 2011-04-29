@@ -15,3 +15,7 @@ class Config:
         self.pseudo             = conf.get('account', 'pseudo')
         self.oauth_token        = conf.get('token', 'oauth_token')
         self.oauth_token_secret = conf.get('token', 'oauth_token_secret')
+
+        self.color_header       = int(conf.get('colors', 'header'))
+        self.color_hashtag      = int(conf.get('colors', 'hashtag'))
+        self.color_attag        = int(conf.get('colors', 'attag'))
