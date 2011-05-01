@@ -20,6 +20,10 @@ class uiTyrs:
         self.api    = api
         self.conf   = conf
         screen = curses.initscr()
+
+        curses.noecho()
+        curses.cbreak()
+
         curses.start_color()
         curses.init_pair(1, curses.COLOR_BLACK, False)
         curses.init_pair(2, curses.COLOR_BLUE, False)
@@ -41,13 +45,16 @@ class uiTyrs:
 
         self.current_y = 2
 
+        statuses_displayed = []
         for status in statuses:
-            self.displayStatus(status)
+            statuses_displayed + [self.displayStatus(status)]
             #print status
         self.screen.getch()
 
+        #status = statuses_displayed[0]
+
     def displayStatus (self, status):
-        
+
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
@@ -63,8 +70,7 @@ class uiTyrs:
             return 
 
         panel = curses.newpad(height, length)
-        panel.border(0)
-        
+        panel.border(0, self.conf.color_header)
         panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
         self.displayText(text, panel)
         panel.refresh(0, 0, start_y, start_x, 
@@ -72,7 +78,7 @@ class uiTyrs:
 
         self.current_y = start_y + height
 
-        #return panel
+        return panel
 
     def displayText (self, text, panel):
 
@@ -85,7 +91,6 @@ class uiTyrs:
                 curent_x = 2
 
             if word != '': 
-
                 if word[0] == '#':
                     panel.addstr(line, curent_x, word,
                             curses.color_pair(self.conf.color_hashtag))
@@ -94,7 +99,6 @@ class uiTyrs:
                             curses.color_pair(self.conf.color_attag))
                 else:
                     panel.addstr(line, curent_x, word)
-                    
                 curent_x += len(word) + 1
 
     def getTime (self, date):
