@@ -18,7 +18,22 @@ def main():
     api     = tweets.Tweets()
     api.authentification(conf)
     screen  = uiTyrs.uiTyrs(api, conf)
+    screen.updateHomeTimeline()
     screen.displayHomeTimeline()
+
+
+    while True:
+        ch = screen.screen.getch()
+        if ch == ord('t'):
+            screen.current_status += 1
+            screen.displayHomeTimeline()
+        elif ch == ord('s'):
+            screen.current_status -= 1
+            screen.displayHomeTimeline()
+        elif ch == ord('q'):
+            break
+
+
     return 0
 
 if __name__ == "__main__":

@@ -16,6 +16,8 @@ class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
 
+    current_status = 0
+
     def __init__ (self, api, conf):
         self.api    = api
         self.conf   = conf
@@ -40,16 +42,24 @@ class uiTyrs:
         screen.refresh()
         self.screen = screen
 
+    def updateHomeTimeline (self):
+        self.statuses = self.api.updateHomeTimeline()
+
     def displayHomeTimeline (self):
-        statuses = self.api.updateHomeTimeline()
 
         self.current_y = 2
 
         statuses_displayed = []
-        for status in statuses:
+        i = 0
+        for status in self.statuses:
+            if i == self.current_status:
+                status.selected = True
+            else:
+                status.selected = False
+            i += 1
             statuses_displayed + [self.displayStatus(status)]
             #print status
-        self.screen.getch()
+        #self.screen.getch()
 
         #status = statuses_displayed[0]
 
@@ -70,15 +80,21 @@ class uiTyrs:
             return 
 
         panel = curses.newpad(height, length)
-        panel.border(0, self.conf.color_header)
-        panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
+        panel.border(0)
+        if status.selected == True:
+            panel.addstr(0,3, header,
+                    curses.color_pair(self.conf.color_header)| curses.A_BOLD)
+        else:
+            panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
+
         self.displayText(text, panel)
         panel.refresh(0, 0, start_y, start_x, 
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
 
-        return panel
+        tweet = [status, panel]
+        return tweet
 
     def displayText (self, text, panel):
 
