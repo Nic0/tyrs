@@ -13,6 +13,8 @@ import time
 # 8 yellow
 
 class uiTyrs:
+    ''' All dispositions in the screen, and some logics for display tweet
+    '''
 
     def __init__ (self, api, conf):
         self.api    = api
@@ -39,11 +41,12 @@ class uiTyrs:
 
         self.current_y = 2
 
-        for i in range(len(statuses)):
-            self.displayStatus(statuses[i], i)
+        for status in statuses:
+            self.displayStatus(status)
+            #print status
         self.screen.getch()
 
-    def displayStatus (self, status, i):
+    def displayStatus (self, status):
         
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
@@ -81,16 +84,18 @@ class uiTyrs:
                 line += 1
                 curent_x = 2
 
-            if word[0] == '#':
-                panel.addstr(line, curent_x, word,
-                        curses.color_pair(self.conf.color_hashtag))
-            elif word[0] == '@':
-                panel.addstr(line, curent_x, word,
-                        curses.color_pair(self.conf.color_attag))
-            else:
-                panel.addstr(line, curent_x, word)
-                
-            curent_x += len(word) + 1
+            if word != '': 
+
+                if word[0] == '#':
+                    panel.addstr(line, curent_x, word,
+                            curses.color_pair(self.conf.color_hashtag))
+                elif word[0] == '@':
+                    panel.addstr(line, curent_x, word,
+                            curses.color_pair(self.conf.color_attag))
+                else:
+                    panel.addstr(line, curent_x, word)
+                    
+                curent_x += len(word) + 1
 
     def getTime (self, date):
         time = date.split(' ')

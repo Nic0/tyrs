@@ -9,4 +9,7 @@ class Tweets:
                 access_token_secret=conf.oauth_token_secret) 
 
     def updateHomeTimeline (self):
-        return self.api.GetFriendsTimeline()
+        ''' include_entities return some varius metadata in a structure, not use
+        yet, but it might be usefull    
+        '''
+        return self.api.GetFriendsTimeline(retweets=True, include_entities=True)
