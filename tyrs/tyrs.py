@@ -30,6 +30,8 @@ def main():
 
     interface.handleKeybinding()
 
+    interface.tearDown()
+
     return 0
 
 #def coin():

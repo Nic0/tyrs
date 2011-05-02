@@ -15,6 +15,7 @@ class uiTyrs:
 
         curses.noecho()
         curses.cbreak()
+        screen.keypad(1)
 
         curses.start_color()
         curses.init_pair(1, curses.COLOR_BLACK, False)
@@ -132,13 +133,22 @@ class uiTyrs:
     def handleKeybinding(self):
         '''Should have all keybinding handle here'''
         while True:
+
             ch = self.screen.getch()
-            if ch == ord(self.conf.keys_down) \
+
+            if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN \
                 and self.status['current'] < self.status['last'] - 1:
                 self.status['current'] += 1
                 self.displayHomeTimeline()
-            elif ch == ord(self.conf.keys_up) and self.status['current'] > 0:
+
+            elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP \
+                and self.status['current'] > 0:
                 self.status['current'] -= 1
                 self.displayHomeTimeline()
-            elif ch == ord(self.conf.keys_quit):
+
+            # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
+            elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
+
+    def tearDown (self):
+        curses.endwin()
