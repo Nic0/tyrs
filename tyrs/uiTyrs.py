@@ -2,16 +2,6 @@ import sys
 import curses
 import time
 
-# colors:
-# 1 black
-# 2 blue
-# 3 cyan
-# 4 green
-# 5 magenta
-# 6 red
-# 7 white
-# 8 yellow
-
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
@@ -86,12 +76,13 @@ class uiTyrs:
             panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
 
         self.displayText(text, panel)
+
         panel.refresh(0, 0, start_y, start_x, 
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
 
-        tweet = [status, panel]
+        tweet = {'status': status, 'panel': panel}
         return tweet
 
     def displayText (self, text, panel):
