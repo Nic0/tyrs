@@ -40,15 +40,14 @@ class uiTyrs:
         self.current_y = 2
 
         statuses_displayed = []
-        i = 0
         self.status['last'] = self.status['first']
-        for status in self.statuses:
-            if i == self.status['current']:
-                status.selected = True
-            else:
-                status.selected = False
-            i += 1
-            statuses_displayed + [self.displayStatus(status)]
+        for i in range(len(self.statuses)):
+            if i >= self.status['first']:
+                if i == self.status['current']:
+                    self.statuses[i].selected = True
+                else:
+                    self.statuses[i].selected = False
+                statuses_displayed + [self.displayStatus(self.statuses[i])]
 
     def displayStatus (self, status):
         ''' Display a status (tweet) from top to bottom of the screen,
