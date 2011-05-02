@@ -41,6 +41,7 @@ class uiTyrs:
 
         statuses_displayed = []
         i = 0
+        self.status['last'] = self.status['first']
         for status in self.statuses:
             if i == self.status['current']:
                 status.selected = True
@@ -81,7 +82,7 @@ class uiTyrs:
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
-
+        self.status['last'] += 1
         tweet = {'status': status, 'panel': panel}
         return tweet
 
@@ -133,7 +134,8 @@ class uiTyrs:
         '''Should have all keybinding handle here'''
         while True:
             ch = self.screen.getch()
-            if ch == ord(self.conf.keys_down):
+            if ch == ord(self.conf.keys_down) \
+                and self.status['current'] < self.status['last'] - 1:
                 self.status['current'] += 1
                 self.displayHomeTimeline()
             elif ch == ord(self.conf.keys_up) and self.status['current'] > 0:
