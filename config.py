@@ -19,3 +19,7 @@ class Config:
         self.color_header       = int(conf.get('colors', 'header'))
         self.color_hashtag      = int(conf.get('colors', 'hashtag'))
         self.color_attag        = int(conf.get('colors', 'attag'))
+
+        self.keys_up            = conf.get('keys', 'up')
+        self.keys_down          = conf.get('keys', 'down')
+        self.keys_quit          = conf.get('keys', 'quit')

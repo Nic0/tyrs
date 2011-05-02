@@ -58,13 +58,11 @@ class uiTyrs:
                 status.selected = False
             i += 1
             statuses_displayed + [self.displayStatus(status)]
-            #print status
-        #self.screen.getch()
-
-        #status = statuses_displayed[0]
 
     def displayStatus (self, status):
-
+        ''' Display a status (tweet) from top to bottom of the screen,
+        depending on self.current_y, an array [status, panel] is return and
+        will be stock in a array, to retreve status information (like id)'''
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
@@ -97,7 +95,8 @@ class uiTyrs:
         return tweet
 
     def displayText (self, text, panel):
-
+        '''needed to cut words properly, as it would cut it in a midle of a
+        world without. handle highlighting of '#' and '@' tags.'''
         words = text.split(' ')
         curent_x = 2
         line = 1
@@ -118,6 +117,8 @@ class uiTyrs:
                 curent_x += len(word) + 1
 
     def getTime (self, date):
+        '''Handle the time format given by the api with something more
+        readeable'''
         time = date.split(' ')
         time = time[3]
         time = time.split(':')
@@ -135,3 +136,17 @@ class uiTyrs:
         header = " %s (%s) " % (pseudo, time)
         
         return header
+
+
+    def handleKeybinding(self):
+        '''Should have all keybinding handle here'''
+        while True:
+            ch = self.screen.getch()
+            if ch == ord(self.conf.keys_down):
+                self.current_status += 1
+                self.displayHomeTimeline()
+            elif ch == ord(self.conf.keys_up):
+                self.current_status -= 1
+                self.displayHomeTimeline()
+            elif ch == ord(self.conf.keys_quit):
+                break

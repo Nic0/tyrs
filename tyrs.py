@@ -12,29 +12,28 @@
 import config
 import uiTyrs
 import tweets
+import time
+import threading
 
 def main():
     conf    = config.Config()
     api     = tweets.Tweets()
     api.authentification(conf)
-    screen  = uiTyrs.uiTyrs(api, conf)
-    screen.updateHomeTimeline()
-    screen.displayHomeTimeline()
+    interface  = uiTyrs.uiTyrs(api, conf)
+    interface.updateHomeTimeline()
+    interface.displayHomeTimeline()
 
+    #while True:
+        #update = threading.Timer(2.0, coin)
+        #update.start()
+        #time.sleep(2.0)
 
-    while True:
-        ch = screen.screen.getch()
-        if ch == ord('t'):
-            screen.current_status += 1
-            screen.displayHomeTimeline()
-        elif ch == ord('s'):
-            screen.current_status -= 1
-            screen.displayHomeTimeline()
-        elif ch == ord('q'):
-            break
-
+    interface.handleKeybinding()
 
     return 0
+
+#def coin():
+    #print 'coin'
 
 if __name__ == "__main__":
     main()
