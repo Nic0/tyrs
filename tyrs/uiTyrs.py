@@ -6,7 +6,7 @@ class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
 
-    current_status = 0
+    status = {'current': 0, 'first': 0, 'last': 0 }
 
     def __init__ (self, api, conf):
         self.api    = api
@@ -42,7 +42,7 @@ class uiTyrs:
         statuses_displayed = []
         i = 0
         for status in self.statuses:
-            if i == self.current_status:
+            if i == self.status['current']:
                 status.selected = True
             else:
                 status.selected = False
@@ -134,10 +134,10 @@ class uiTyrs:
         while True:
             ch = self.screen.getch()
             if ch == ord(self.conf.keys_down):
-                self.current_status += 1
+                self.status['current'] += 1
                 self.displayHomeTimeline()
-            elif ch == ord(self.conf.keys_up) and self.current_status > 0:
-                self.current_status -= 1
+            elif ch == ord(self.conf.keys_up) and self.status['current'] > 0:
+                self.status['current'] -= 1
                 self.displayHomeTimeline()
             elif ch == ord(self.conf.keys_quit):
                 break
