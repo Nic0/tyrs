@@ -6,7 +6,7 @@ class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
 
-    status = {'current': 0, 'first': 0, 'last': 0 }
+    status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
 
     def __init__ (self, api, conf):
         self.api    = api
@@ -35,6 +35,11 @@ class uiTyrs:
 
     def updateHomeTimeline (self):
         self.statuses = self.api.updateHomeTimeline()
+        self.countStatus()
+
+    def countStatus (self):
+        for status in self.statuses:
+            self.status['count'] += 1
 
     def displayHomeTimeline (self):
 
@@ -48,19 +53,19 @@ class uiTyrs:
                     self.statuses[i].selected = True
                 else:
                     self.statuses[i].selected = False
-                statuses_displayed + [self.displayStatus(self.statuses[i])]
+                statuses_displayed + [self.displayStatus(self.statuses[i], i)]
 
-    def displayStatus (self, status):
+    def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
         depending on self.current_y, an array [status, panel] is return and
         will be stock in a array, to retreve status information (like id)'''
+
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
 
         length = self.maxyx[1] - 4 
         height = len(text) / length + 3
-
         start_y = self.current_y
         start_x = 2
 
@@ -70,6 +75,7 @@ class uiTyrs:
 
         panel = curses.newpad(height, length)
         panel.border(0)
+
         if status.selected == True:
             panel.addstr(0,3, header,
                     curses.color_pair(self.conf.color_header)| curses.A_BOLD)
@@ -82,7 +88,7 @@ class uiTyrs:
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
-        self.status['last'] += 1
+        self.status['last'] = i
         tweet = {'status': status, 'panel': panel}
         return tweet
 
@@ -129,7 +135,6 @@ class uiTyrs:
         
         return header
 
-
     def handleKeybinding(self):
         '''Should have all keybinding handle here'''
         while True:
@@ -137,12 +142,17 @@ class uiTyrs:
             ch = self.screen.getch()
 
             if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN \
-                and self.status['current'] < self.status['last'] - 1:
+                and self.status['current'] < self.status['count'] - 1:
+                if self.status['current'] == self.status['last']:
+                    self.status['first'] += 1
                 self.status['current'] += 1
                 self.displayHomeTimeline()
 
             elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP \
                 and self.status['current'] > 0:
+                if self.status['current'] == self.status['first'] \
+                    and self.status['first'] != 0:
+                    self.status['first'] -= 1
                 self.status['current'] -= 1
                 self.displayHomeTimeline()
 
