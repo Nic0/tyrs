@@ -136,7 +136,7 @@ class uiTyrs:
             if ch == ord(self.conf.keys_down):
                 self.current_status += 1
                 self.displayHomeTimeline()
-            elif ch == ord(self.conf.keys_up):
+            elif ch == ord(self.conf.keys_up) and self.current_status >= 0:
                 self.current_status -= 1
                 self.displayHomeTimeline()
             elif ch == ord(self.conf.keys_quit):
