@@ -23,19 +23,33 @@ def main():
     interface.updateHomeTimeline()
     interface.displayHomeTimeline()
 
-    #while True:
-        #update = threading.Timer(2.0, coin)
-        #update.start()
-        #time.sleep(2.0)
+    update = UpdateThread(interface, conf)
+    update.start()
 
     interface.handleKeybinding()
+    update.stop()
 
     interface.tearDown()
 
     return 0
 
-#def coin():
-    #print 'coin'
+class UpdateThread (threading.Thread):
+
+    def __init__ (self, interface, conf):
+        self.interface = interface
+        self.conf = conf
+        threading.Thread.__init__(self, target=self.run)
+        self._stopevent = threading.Event()
+        
+
+    def run (self):
+        while not self._stopevent.isSet():
+            self._stopevent.wait(self.conf.params_refresh * 60.0)
+            self.interface.updateHomeTimeline()
+            self.interface.displayHomeTimeline()
+
+    def stop (self):
+        self._stopevent.set()
 
 if __name__ == "__main__":
     main()

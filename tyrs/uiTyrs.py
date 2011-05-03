@@ -43,9 +43,9 @@ class uiTyrs:
         self.countStatus()
 
         # /!\ DEBUG
-        curses.endwin()
-        for status in self.statuses:
-            print status
+        #curses.endwin()
+        #for status in self.statuses:
+            #print status
 
     def countStatus (self):
         self.status['count'] = 0
