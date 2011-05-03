@@ -6,6 +6,11 @@ class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
 
+    # current:  the current tweet highlight, from the statuses list
+    # first:    first status display, from the status list, mean if we display the midle
+    #           of the list, the first won't be 0
+    # last:     the last tweet from statuses list
+    # count:    usefull, knowing if it's the last one on the statuses list as well
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
 
     def __init__ (self, api, conf):
@@ -38,45 +43,42 @@ class uiTyrs:
         self.countStatus()
 
     def countStatus (self):
+        self.status['count'] = 0
         for status in self.statuses:
             self.status['count'] += 1
 
     def displayHomeTimeline (self):
+        self.current_y = 1
 
-        self.current_y = 2
-
-        statuses_displayed = []
-        self.status['last'] = self.status['first']
         for i in range(len(self.statuses)):
             if i >= self.status['first']:
-                if i == self.status['current']:
-                    self.statuses[i].selected = True
-                else:
-                    self.statuses[i].selected = False
-                statuses_displayed + [self.displayStatus(self.statuses[i], i)]
+                self.displayStatus(self.statuses[i], i)
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
         depending on self.current_y, an array [status, panel] is return and
         will be stock in a array, to retreve status information (like id)'''
-
+        
+        # The content of the tweets is handle
+        # text is needed for the height of a panel
         charset = sys.stdout.encoding
         text    = status.text.encode(charset)
         header  = self.getHeader(status)
 
+        # We get size and where to display the tweet
         length = self.maxyx[1] - 4 
         height = len(text) / length + 3
         start_y = self.current_y
         start_x = 2
 
-        # si on a plus de place pour afficher, on quitte
-        if start_y + height > self.maxyx[0]:
+        # We leave if no more space left
+        if start_y + height + 1 > self.maxyx[0]:
             return 
 
         panel = curses.newpad(height, length)
         panel.border(0)
 
-        if status.selected == True:
+        if self.status['current'] == i:
             panel.addstr(0,3, header,
                     curses.color_pair(self.conf.color_header)| curses.A_BOLD)
         else:
@@ -89,8 +91,8 @@ class uiTyrs:
 
         self.current_y = start_y + height
         self.status['last'] = i
-        tweet = {'status': status, 'panel': panel}
-        return tweet
+        #tweet = {'status': status, 'panel': panel}
+        #return tweet
 
     def displayText (self, text, panel):
         '''needed to cut words properly, as it would cut it in a midle of a
@@ -140,22 +142,30 @@ class uiTyrs:
         while True:
 
             ch = self.screen.getch()
+            # Down and Up key must act as a menu, and should navigate
+            # throught every tweets like an item.
 
-            if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN \
-                and self.status['current'] < self.status['count'] - 1:
-                if self.status['current'] == self.status['last']:
-                    self.status['first'] += 1
-                self.status['current'] += 1
-                self.displayHomeTimeline()
+            #  MOVE DOWN
+            if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
+                # if we have some more tweets to display
+                if self.status['current'] < self.status['count'] - 1:
+                    if self.status['current'] == self.status['last']:
+                        self.status['first'] += 1
+                    self.status['current'] += 1
+                    self.displayHomeTimeline()
 
-            elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP \
-                and self.status['current'] > 0:
-                if self.status['current'] == self.status['first'] \
-                    and self.status['first'] != 0:
-                    self.status['first'] -= 1
-                self.status['current'] -= 1
-                self.displayHomeTimeline()
+            # MOVE UP
+            elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
+                # the current tweet must not be the first one of the statuses
+                # list
+                if self.status['current'] > 0:
+                    # if we need to move up the list to display
+                    if self.status['current'] == self.status['first']:
+                        self.status['first'] -= 1
+                    self.status['current'] -= 1
+                    self.displayHomeTimeline()
 
+            # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
