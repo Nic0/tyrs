@@ -12,4 +12,4 @@ class Tweets:
         ''' include_entities return some varius metadata in a structure, not use
         yet, but it might be usefull    
         '''
-        return self.api.GetFriendsTimeline(retweets=True, include_entities=True)
+        return self.api.GetFriendsTimeline(retweets=True)

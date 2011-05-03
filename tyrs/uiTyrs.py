@@ -10,7 +10,7 @@ class uiTyrs:
     # first:    first status display, from the status list, mean if we display the midle
     #           of the list, the first won't be 0
     # last:     the last tweet from statuses list
-    # count:    usefull, knowing if it's the last one on the statuses list as well
+    # count:    usefull, knowing if it's the last one on the statuses list
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
 
     def __init__ (self, api, conf):
@@ -41,6 +41,11 @@ class uiTyrs:
     def updateHomeTimeline (self):
         self.statuses = self.api.updateHomeTimeline()
         self.countStatus()
+
+        # /!\ DEBUG
+        curses.endwin()
+        for status in self.statuses:
+            print status
 
     def countStatus (self):
         self.status['count'] = 0
