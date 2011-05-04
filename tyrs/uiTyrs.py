@@ -24,14 +24,14 @@ class uiTyrs:
         curses.curs_set(0)      # Dont display cursor
 
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_BLACK, False)
-        curses.init_pair(2, curses.COLOR_BLUE, False)
-        curses.init_pair(3, curses.COLOR_CYAN, False)
-        curses.init_pair(4, curses.COLOR_GREEN, False)
-        curses.init_pair(5, curses.COLOR_MAGENTA, False)
-        curses.init_pair(6, curses.COLOR_RED, False)
-        curses.init_pair(7, curses.COLOR_WHITE, False)
-        curses.init_pair(8, curses.COLOR_YELLOW, False)
+        curses.init_pair(1, curses.COLOR_BLACK, False)   # 1 black
+        curses.init_pair(2, curses.COLOR_BLUE, False)    # 2 blue
+        curses.init_pair(3, curses.COLOR_CYAN, False)    # 3 cyan
+        curses.init_pair(4, curses.COLOR_GREEN, False)   # 4 green
+        curses.init_pair(5, curses.COLOR_MAGENTA, False) # 5 magenta
+        curses.init_pair(6, curses.COLOR_RED, False)     # 6 red
+        curses.init_pair(7, curses.COLOR_WHITE, False)   # 7 white
+        curses.init_pair(8, curses.COLOR_YELLOW, False)  # 8 yellow
 
         self.maxyx = screen.getmaxyx()
 
@@ -205,8 +205,7 @@ class TweetBox:
         self.tweet = tweetBox.edit(self.validate)
 
     def validate (self, ch):
-        if ch == 'a':
-            return True
-        else:
-            return False
+        if ch == 10:            # 10 corresponding to ENTER
+            ch = curses.ascii.BEL
+        return ch
         
