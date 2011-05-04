@@ -23,5 +23,6 @@ class Config:
         self.keys_up            = conf.get('keys', 'up')
         self.keys_down          = conf.get('keys', 'down')
         self.keys_quit          = conf.get('keys', 'quit')
+        self.keys_tweet         = conf.get('keys', 'tweet')
 
         self.params_refresh     = int(conf.get('params', 'refresh'))

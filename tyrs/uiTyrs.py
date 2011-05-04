@@ -1,5 +1,6 @@
 import sys
 import curses
+import curses.textpad
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -149,8 +150,9 @@ class uiTyrs:
             ch = self.screen.getch()
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
-
-            #  MOVE DOWN
+            #
+            # MOVE DOWN
+            #
             if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
                 # if we have some more tweets to display
                 if self.status['current'] < self.status['count'] - 1:
@@ -158,8 +160,9 @@ class uiTyrs:
                         self.status['first'] += 1
                     self.status['current'] += 1
                     self.displayHomeTimeline()
-
+            #        
             # MOVE UP
+            #
             elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
                 # the current tweet must not be the first one of the statuses
                 # list
@@ -170,11 +173,37 @@ class uiTyrs:
                     self.status['current'] -= 1
                     self.displayHomeTimeline()
 
+            #        
+            # TWEET
+            #        
+            elif ch == ord(self.conf.keys_tweet):
+                TweetBox()
+
+
+            #
             # QUIT
+            #
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
 
+    # Last function call when quiting, restore some defaults params 
     def tearDown (self):
         curses.endwin()
         curses.curs_set(1)
+
+class TweetBox:
+
+    def __init__(self):
+
+        win = curses.newwin(5, 60, 5, 10)
+        win.border(0)
+        tweetBox = curses.textpad.Textbox(win)
+        self.tweet = tweetBox.edit(self.validate)
+
+    def validate (self, ch):
+        if ch == 'a':
+            return True
+        else:
+            return False
+        
