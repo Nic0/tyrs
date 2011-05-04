@@ -44,9 +44,9 @@ class uiTyrs:
         self.countStatus()
 
         # /!\ DEBUG
-        #curses.endwin()
-        #for status in self.statuses:
-            #print status
+        # curses.endwin()
+        # for status in self.statuses:
+        #     print status
 
     def countStatus (self):
         self.status['count'] = 0
@@ -111,15 +111,18 @@ class uiTyrs:
                 line += 1
                 curent_x = 2
 
-            if word != '': 
+            if word != '':
                 if word[0] == '#':
                     panel.addstr(line, curent_x, word,
-                            curses.color_pair(self.conf.color_hashtag))
+                                 curses.color_pair(self.conf.color_hashtag))
                 elif word[0] == '@':
                     panel.addstr(line, curent_x, word,
-                            curses.color_pair(self.conf.color_attag))
+                                 curses.color_pair(self.conf.color_attag))
                 else:
-                    panel.addstr(line, curent_x, word)
+                    try:
+                        panel.addstr(line, curent_x, word)
+                    except:
+                        print '>> Error to print the entire tweet'
                 curent_x += len(word) + 1
 
     def getTime (self, date):

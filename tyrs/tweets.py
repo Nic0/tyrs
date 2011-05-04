@@ -1,4 +1,5 @@
 import twitter
+import urllib2
 
 class Tweets:
 
@@ -12,4 +13,8 @@ class Tweets:
         ''' include_entities return some varius metadata in a structure, not use
         yet, but it might be usefull    
         '''
-        return self.api.GetFriendsTimeline(retweets=True)
+        try:
+            statuses = self.api.GetFriendsTimeline(retweets=True)
+            return statuses
+        except urllib2.URLError:
+            print 'Coul\'t get statuses, network is down ?'
