@@ -122,7 +122,7 @@ class uiTyrs:
                     try:
                         panel.addstr(line, curent_x, word)
                     except:
-                        print '>> Error to print the entire tweet'
+                        pass
                 curent_x += len(word) + 1
 
     def getTime (self, date):
