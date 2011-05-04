@@ -1,6 +1,5 @@
 import sys
 import curses
-import time
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -18,9 +17,10 @@ class uiTyrs:
         self.conf   = conf
         screen = curses.initscr()
 
-        curses.noecho()
+        curses.noecho()         # Dont print anything
         curses.cbreak()
-        screen.keypad(1)
+        screen.keypad(1)        # Use of arrow keys
+        curses.curs_set(0)      # Dont display cursor
 
         curses.start_color()
         curses.init_pair(1, curses.COLOR_BLACK, False)
@@ -177,3 +177,4 @@ class uiTyrs:
 
     def tearDown (self):
         curses.endwin()
+        curses.curs_set(1)
