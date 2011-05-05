@@ -180,7 +180,8 @@ class uiTyrs:
             # TWEET
             #        
             elif ch == ord(self.conf.keys_tweet):
-                TweetBox()
+                tweet = TweetBox()
+                print tweet.tweet
 
 
             #
@@ -199,13 +200,12 @@ class TweetBox:
 
     def __init__(self):
 
-        win = curses.newwin(5, 60, 5, 10)
-        win.border(0)
-        tweetBox = curses.textpad.Textbox(win)
+        self.win = curses.newwin(5, 60, 5, 10)
+        self.win.border(0)
+        tweetBox = curses.textpad.Textbox(self.win)
         self.tweet = tweetBox.edit(self.validate)
 
     def validate (self, ch):
         if ch == 10:            # 10 corresponding to ENTER
             ch = curses.ascii.BEL
         return ch
-        

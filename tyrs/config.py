@@ -169,9 +169,10 @@ class Config:
             if resp['status'] != '200':
                 print 'The request for a Token did not succeed: %s' % resp['status']
                 print access_token
+                sys.exit()
             else:
-                self.conf.auth_token = access_token['oauth_token']
-                self.conf.auth_token_secret = access_token['oauth_token_secret']
+                self.auth_token = access_token['oauth_token']
+                self.auth_token_secret = access_token['oauth_token_secret']
 
     def createTokenFile(self, token):
 
