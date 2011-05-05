@@ -1,0 +1,64 @@
+; Configuration file for Tyrs
+; Nicolas Paris <nicolas.caen@gmail.com>
+; Release 0.0.1
+
+
+; This file is not require to have Tyrs working, it will take those value
+; as defaults, but usefull to customize.
+; Comments can be added with ';' or '#'
+; The configuration is based on the ConfigParser module for python.
+; The configuration schema is easy:
+;
+; [Section]
+; param1 = foo
+; param2 = bar 
+
+;
+; PARAMS
+;
+
+; This section contain some basic behavior of the client
+
+[params]
+
+; refresh set the frequency that you're home timeline is update
+; 15 mean that you're timeline will be update every 1/4 hour.
+; units: minutes
+
+refresh=2
+
+;
+; COLORS
+;
+
+; The corresponding code for colors is:
+; 1 black, 2 blue, 3 cyan
+; 4 green, 5 magenta, 6 red
+; 7 white, 8 yellow
+
+[colors]
+; The header is the first line of a tweet, this contain the pseudo
+; and the time of the tweet (some metadata so). It will be put in 
+; bold to show the current tweet.
+
+header  = 3
+
+; The hashtag is the '#' usely use for search purpose.
+
+hashtag = 8
+
+; The attag is the '@' use for nominate someone,
+; (obviously, i don't know how it's _realy_ called)
+
+attag   = 4
+
+;
+; KEYS BINDING
+;
+
+[keys]
+up    = s
+down  = t
+quit  = q
+tweet = c
+
