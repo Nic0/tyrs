@@ -43,7 +43,7 @@ class Config:
         token = ConfigParser.RawConfigParser()
         token.read(self.tokenFile)
         self.oauth_token = token.get('token', 'oauth_token')
-        self.oauth_token_secret = token.get('token', 'oauth_token')
+        self.oauth_token_secret = token.get('token', 'oauth_token_secret')
    
     def parseConfig (self):
         ''' This parse the configuration file, and set 
