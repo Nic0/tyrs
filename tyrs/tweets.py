@@ -17,4 +17,4 @@ class Tweets:
             statuses = self.api.GetFriendsTimeline(retweets=True)
             return statuses
         except urllib2.URLError:
-            print 'Coul\'t get statuses, network is down ?'
+            print 'Could\'t get statuses, network is down ?'
