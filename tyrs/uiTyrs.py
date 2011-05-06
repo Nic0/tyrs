@@ -6,6 +6,7 @@
 import sys
 import curses
 import curses.textpad
+import editBox
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -87,7 +88,7 @@ class uiTyrs:
         ''' Display a status (tweet) from top to bottom of the screen,
         depending on self.current_y, an array [status, panel] is return and
         will be stock in a array, to retreve status information (like id)'''
-        
+
         # The content of the tweets is handle
         # text is needed for the height of a panel
         charset = sys.stdout.encoding
@@ -95,14 +96,14 @@ class uiTyrs:
         header  = self.getHeader(status)
 
         # We get size and where to display the tweet
-        length = self.maxyx[1] - 4 
+        length = self.maxyx[1] - 4
         height = len(text) / length + 3
         start_y = self.current_y
         start_x = 2
 
         # We leave if no more space left
         if start_y + height + 1 > self.maxyx[0]:
-            return 
+            return
 
         panel = curses.newpad(height, length)
 
@@ -117,7 +118,7 @@ class uiTyrs:
 
         self.displayText(text, panel)
 
-        panel.refresh(0, 0, start_y, start_x, 
+        panel.refresh(0, 0, start_y, start_x,
             start_y + height, start_x + length)
 
         self.current_y = start_y + height
@@ -172,7 +173,7 @@ class uiTyrs:
         #name    = status.user.name.encode(charset)
 
         header = " %s (%s) " % (pseudo, time)
-        
+
         return header
 
     def handleKeybinding(self):
@@ -192,7 +193,7 @@ class uiTyrs:
                         self.status['first'] += 1
                     self.status['current'] += 1
                     self.displayHomeTimeline()
-            #        
+            #
             # MOVE UP
             #
             elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
@@ -205,13 +206,14 @@ class uiTyrs:
                     self.status['current'] -= 1
                     self.displayHomeTimeline()
 
-            #        
+            #
             # TWEET
-            #        
+            #
             elif ch == ord(self.conf.keys_tweet):
-                box = TweetBox(self.screen)
-                tweet = box.getTweet()
-                self.api.postTweet(tweet)
+                box = editBox.EditBox(self.screen)
+
+                if box.confirm:
+                    self.api.postTweet(box.getTweet())
 
 
             #
@@ -221,35 +223,7 @@ class uiTyrs:
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
 
-    # Last function call when quiting, restore some defaults params 
+    # Last function call when quiting, restore some defaults params
     def tearDown (self):
         curses.endwin()
         curses.curs_set(1)
-
-class TweetBox:
-
-    def __init__(self, screen):
-
-        win = screen.subwin(5, 60, 5, 10)
-
-        tweet = ''
-        curses.echo()
-
-        while True:
-
-            ch = win.getch()
-            if ch == 10:
-                break
-            chr(ch)
-            tweet +=  chr(ch)
-
-        curses.noecho()
-        self.tweet = tweet
-
-    def getTweet (self):
-        return self.tweet
-
-    def validate (self, ch):
-        if ch == 10:            # 10 corresponding to ENTER
-            ch = curses.ascii.BEL
-        return ch
