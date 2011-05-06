@@ -1,3 +1,8 @@
+'''
+@package   tyrs
+@author    Nicolas Paris <nicolas.caen@gmail.com>
+'''
+
 import sys
 import curses
 import curses.textpad
@@ -6,14 +11,30 @@ class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
     '''
 
-    # current:  the current tweet highlight, from the statuses list
-    # first:    first status display, from the status list, mean if we display the midle
-    #           of the list, the first won't be 0
-    # last:     the last tweet from statuses list
-    # count:    usefull, knowing if it's the last one on the statuses list
+    '''
+    current:  the current tweet highlight, from the statuses list
+    first:    first status displayed, from the status list, mean if we display the midle
+              of the list, the first won't be 0
+    last:     the last tweet from statuses list
+    count:    usefull, knowing if it's the last one on the statuses list
+    '''
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
 
+    '''
+    self.api          The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
+    self.conf         The configuration file parsed in config.py
+    self.maxyx        Array contain the window size [y, x]
+    self.screen       Main screen (curse)
+    self.statuses     List of all status retrieve
+    self.current_y    Current line in the screen
+    self.status       See explanation above
+    '''
+
     def __init__ (self, api, conf):
+        '''
+        @param api: instance of Tweets, will handle retrieve, sending tweets
+        @param conf: contain all configuration parameters parsed
+        '''
         self.api    = api
         self.conf   = conf
         screen = curses.initscr()
@@ -40,6 +61,8 @@ class uiTyrs:
         self.screen = screen
 
     def updateHomeTimeline (self):
+        ''' Retrieves tweets, don't display them
+        '''
         self.statuses = self.api.updateHomeTimeline()
         self.countStatus()
 
@@ -127,7 +150,10 @@ class uiTyrs:
 
     def getTime (self, date):
         '''Handle the time format given by the api with something more
-        readeable'''
+        readeable
+        @param  date: full iso time format
+        @return string: readeable time
+        '''
         time = date.split(' ')
         time = time[3]
         time = time.split(':')
@@ -137,6 +163,7 @@ class uiTyrs:
         return time
 
     def getHeader (self, status):
+        '''@return string'''
         charset = sys.stdout.encoding
         pseudo  = status.user.screen_name.encode(charset)
         time    = self.getTime(status.created_at).encode(charset)
@@ -180,8 +207,9 @@ class uiTyrs:
             # TWEET
             #        
             elif ch == ord(self.conf.keys_tweet):
-                tweet = TweetBox()
-                print tweet.tweet
+                box = TweetBox(self.screen)
+                tweet = box.getTweet()
+                self.api.postTweet(tweet)
 
 
             #
@@ -198,12 +226,26 @@ class uiTyrs:
 
 class TweetBox:
 
-    def __init__(self):
+    def __init__(self, screen):
 
-        self.win = curses.newwin(5, 60, 5, 10)
-        self.win.border(0)
-        tweetBox = curses.textpad.Textbox(self.win)
-        self.tweet = tweetBox.edit(self.validate)
+        win = screen.subwin(5, 60, 5, 10)
+
+        tweet = ''
+        curses.echo()
+
+        while True:
+
+            ch = win.getch()
+            if ch == 10:
+                break
+            chr(ch)
+            tweet +=  chr(ch)
+
+        curses.noecho()
+        self.tweet = tweet
+
+    def getTweet (self):
+        return self.tweet
 
     def validate (self, ch):
         if ch == 10:            # 10 corresponding to ENTER

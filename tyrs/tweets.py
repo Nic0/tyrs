@@ -18,3 +18,9 @@ class Tweets:
             return statuses
         except urllib2.URLError:
             print 'Could\'t get statuses, network is down ?'
+
+    def postTweet (self, tweet, reply_to=None):
+        try:
+            self.api.PostUpdate(tweet)
+        except:
+            print 'ERROR!! impossible to send: \'%s\'' % tweet
