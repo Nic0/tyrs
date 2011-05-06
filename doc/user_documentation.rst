@@ -12,6 +12,19 @@ your home `~/.config/tyrs/tyrs.tok`.
 
 That's all, you can now see your tweets display in the terminal.
 
+Usage
+-----
+
+
+* Navigation
+  * Move down  : j or down arrow
+  * Move up    : k or up arrow
+
+* Functions
+  * Tweet      : t
+  * Quit       : q
+
+
 Configuration
 -------------
 
