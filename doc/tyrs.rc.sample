@@ -27,6 +27,12 @@
 
 refresh=2
 
+; Display some border to every tweets.
+; turn on, value: 1
+; turn off, value: 0
+
+tweet_border=1
+
 ;
 ; COLORS
 ;

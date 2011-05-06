@@ -1,4 +1,5 @@
 import os
+import sys
 import oauth2 as oauth
 import ConfigParser
 
@@ -112,6 +113,12 @@ class Config:
             self.params_refresh     = int(self.conf.get('params', 'refresh'))
         else:
             self.params_refresh     = 10
+
+        # tweet_border
+        if self.conf.has_option('params', 'tweet_border'):
+            self.params_tweet_border = int(self.conf.get('params', 'tweet_border'))
+        else:
+            self.params_tweet_border = 1
 
 
     def authorization (self):
