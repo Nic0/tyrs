@@ -105,7 +105,7 @@ class uiTyrs:
             return 
 
         panel = curses.newpad(height, length)
-        # TODO pass border in config
+
         if self.conf.params_tweet_border == 1:
             panel.border(0)
 
