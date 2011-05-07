@@ -12,7 +12,7 @@ class Config:
 
     consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
     consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
-    
+
     def __init__ (self):
 
         self.home = os.environ['HOME']
@@ -36,18 +36,18 @@ class Config:
         print 'If you want to setup a new account, let\'s go through some basic steps'
         print 'If you want to skip this, just press return or ctrl-C.'
         print ''
-        
-        token = self.authorization()
-        self.createTokenFile(token)
+
+        self.authorization()
+        self.createTokenFile()
 
     def parseToken (self):
         token = ConfigParser.RawConfigParser()
         token.read(self.tokenFile)
         self.oauth_token = token.get('token', 'oauth_token')
         self.oauth_token_secret = token.get('token', 'oauth_token_secret')
-   
+
     def parseConfig (self):
-        ''' This parse the configuration file, and set 
+        ''' This parse the configuration file, and set
         some defaults values if the parameter is not given'''
 
         # self.pseudo             = self.conf.get('account', 'pseudo')
@@ -98,7 +98,7 @@ class Config:
         else:
             self.keys_quit          = 'q'
 
-        # tweet 
+        # tweet
         if self.conf.has_option('keys', 'tweet'):
             self.keys_tweet         = self.conf.get('keys', 'tweet')
         else:
@@ -141,6 +141,7 @@ class Config:
         AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
         consumer_key    = 'Eq9KLjwH9sJNcpF4OOYNw'
         consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+        signature_method_hmac_sha1 = oauth.SignatureMethod_HMAC_SHA1()
         oauth_consumer             = oauth.Consumer(key=consumer_key, secret=consumer_secret)
         oauth_client               = oauth.Client(oauth_consumer)
 
@@ -178,10 +179,10 @@ class Config:
                 print access_token
                 sys.exit()
             else:
-                self.auth_token = access_token['oauth_token']
-                self.auth_token_secret = access_token['oauth_token_secret']
+                self.oauth_token = access_token['oauth_token']
+                self.oauth_token_secret = access_token['oauth_token_secret']
 
-    def createTokenFile(self, token):
+    def createTokenFile(self):
 
         if not os.path.isdir(self.home + '/.config/tyrs'):
             try:
@@ -191,8 +192,8 @@ class Config:
 
         conf = ConfigParser.RawConfigParser()
         conf.add_section('token')
-        conf.set('token', 'oauth_token', token['oauth_token'])
-        conf.set('token', 'oauth_token_secret', token['oauth_token_secret'])
+        conf.set('token', 'oauth_token', self.oauth_token)
+        conf.set('token', 'oauth_token_secret', self.oauth_token_secret)
 
         with open(self.tokenFile, 'wb') as tokens:
             conf.write(tokens)
