@@ -19,6 +19,7 @@ class EditBox:
 
         while True:
             ch = self.win.getch()
+
             if ch == 10:        # Corresponding to ENTER
                 self.confirm = True
                 break
@@ -27,6 +28,10 @@ class EditBox:
 
             else:
                 cur_yx = self.win.getyx()
+
+                # for new lines, we don't want to start right in the border
+                if cur_yx[1] == 0:
+                    self.win.move(cur_yx[0], 3)
 
                 tweet += chr(ch)
                 self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
@@ -41,14 +46,14 @@ class EditBox:
         '''
         maxyx = screen.getmaxyx()
 
-        # Set height
+        # Set width
         if maxyx[0] > 80:
             width = 80
         else:
             width = maxyx[0] - 4
 
-        # Set width
-        height = int(200 / width) + 2
+        # Set height
+        height = int(200 / width) + 4
 
         # Start of EditWin
         start_y = maxyx[0]/2 - int(height/2)
@@ -62,6 +67,7 @@ class EditBox:
 
         win.border(0)
         win.addstr(0, 3, ' What\'s up ? ', curses.color_pair(3))
+        win.move(2, 3)
         return win
 
     def getTweet (self):
