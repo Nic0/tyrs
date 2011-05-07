@@ -19,6 +19,7 @@ class EditBox:
             ch = self.win.getch()
 
             if ch == 10:          # ENTER: send the tweet
+                self.tweet = tweet
                 self.confirm = True
                 break
 
@@ -43,8 +44,6 @@ class EditBox:
 
                 tweet += chr(ch)
                 self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
-
-        self.tweet = tweet
 
     def initWin (self, screen):
         '''

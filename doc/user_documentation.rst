@@ -23,6 +23,11 @@ Usage
   * Tweet      : t
   * Quit       : q
 
+* Tweet edition
+  * Abord      : ESC
+  * Send       : ENTER
+  * Delete     : DEL
+
 
 Configuration
 -------------
