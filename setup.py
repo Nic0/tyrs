@@ -14,4 +14,5 @@ setup(name='tyrs',
       license='GPLv3',
 #      requires=['python-twitter'],
       packages=['tyrs'],
+      scripts=['scripts/tyrs'],
     )
