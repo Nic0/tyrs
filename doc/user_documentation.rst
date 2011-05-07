@@ -36,10 +36,10 @@ You can add a configuration file, there is no need to have one to get
 it work, but you can customized some keybinding, color and basic
 behavior.
 
-The configuration file should be place in `~/.config/tyrs/tyrs.rc`
+The configuration file should be place in `~/.config/tyrs/tyrs.cfg`
 
 For a full exemple with comments of a configuration file, check the
-`doc/tyrs.rc.sample`.
+`doc/tyrs.sample.cfg`.
 
 Related Sites
 -------------

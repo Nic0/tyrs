@@ -16,7 +16,7 @@ class Config:
     def __init__ (self):
 
         self.home = os.environ['HOME']
-        self.configFile = self.home + '/.config/tyrs/tyrs.rc'
+        self.configFile = self.home + '/.config/tyrs/tyrs.cfg'
         self.tokenFile  = self.home + '/.config/tyrs/tyrs.tok'
 
         if not os.path.isfile(self.tokenFile):
