@@ -27,7 +27,7 @@ class EditBox:
                 cur_yx = self.win.getyx()
                 #ch = str(chr(ch)).encode(sys.stdout.encoding)
                 ch = chr(ch)
-                #self.win.addstr(cur_yx[0], cur_yx[1] + 1, ch)
+                self.win.addstr(cur_yx[0], cur_yx[1] + 1, ch.encode(sys.stdout.encoding))
                 tweet += ch
                 print 'tweet: %s' % tweet
 
