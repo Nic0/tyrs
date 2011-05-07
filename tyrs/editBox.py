@@ -1,4 +1,6 @@
+import sys
 import curses
+import curses.textpad
 
 class EditBox:
 
@@ -6,14 +8,15 @@ class EditBox:
 
     def __init__(self, screen):
 
-        win = screen.subwin(5, 60, 5, 10)
-        win = self.initWin(screen)
+        self.win = self.initWin(screen)
+        self.startEdit()
+        print 'tweet: %s' % self.tweet
 
+    def startEdit (self):
         tweet = ''
 
-
         while True:
-            ch = win.getch()
+            ch = self.win.getch()
             if ch == 10:        # Corresponding to ENTER
                 self.confirm = True
                 break
@@ -21,9 +24,12 @@ class EditBox:
                 break
 
             else:
-                cur_yx = win.getyx()
-                win.insch(cur_yx[0], cur_yx[1] + 1, chr(ch))
-                tweet +=  chr(ch)
+                cur_yx = self.win.getyx()
+                #ch = str(chr(ch)).encode(sys.stdout.encoding)
+                ch = chr(ch)
+                #self.win.addstr(cur_yx[0], cur_yx[1] + 1, ch)
+                tweet += ch
+                print 'tweet: %s' % tweet
 
         self.tweet = tweet
 
@@ -53,9 +59,9 @@ class EditBox:
         # print "height:%s width:%s, start_y:%s, start_x:%s" % (height, width, start_y, start_x)
 
         win = screen.subwin(height, width, start_y, start_x)
+
         win.border(0)
         win.addstr(0, 3, ' What\'s up ? ', curses.color_pair(3))
-        win.refresh()
         return win
 
     def getTweet (self):
