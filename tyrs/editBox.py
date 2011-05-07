@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import sys
 import curses
 import curses.textpad
@@ -20,16 +22,15 @@ class EditBox:
             if ch == 10:        # Corresponding to ENTER
                 self.confirm = True
                 break
-            if ch == 27:        # Corresponding to ESC
+            elif ch == 27:        # Corresponding to ESC
                 break
 
             else:
                 cur_yx = self.win.getyx()
-                #ch = str(chr(ch)).encode(sys.stdout.encoding)
-                ch = chr(ch)
-                self.win.addstr(cur_yx[0], cur_yx[1] + 1, ch.encode(sys.stdout.encoding))
-                tweet += ch
-                print 'tweet: %s' % tweet
+
+                tweet += chr(ch)
+                self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
+
 
         self.tweet = tweet
 
