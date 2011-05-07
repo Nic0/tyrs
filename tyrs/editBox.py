@@ -21,9 +21,17 @@ class EditBox:
             if ch == 10:          # ENTER: send the tweet
                 self.confirm = True
                 break
+
             elif ch == 27:        # ESC: abord
                 break
 
+            elif ch == 127:       # DEL
+                cur_yx = self.win.getyx()
+                if cur_yx[1] > 0:
+                    self.win.move(cur_yx[0], cur_yx[1] - 1) # move back once
+                    cur_yx = self.win.getyx()               # store new position
+                    self.win.delch(cur_yx[0], cur_yx[1])    # delete the char
+                    tweet = tweet[:-1]                      # delete last char in tweet string
             else:
                 cur_yx = self.win.getyx()
 
