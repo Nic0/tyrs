@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding:utf8 -*-
+# -*- coding:utf-8 -*-
 
 from distutils.core import setup
 
@@ -12,6 +12,6 @@ setup(name='tyrs',
       author='Nicolas Paris',
       author_email='nicolas.caen@gmail.com',
       license='GPLv3',
-      requires=['python-twitter'],
+#      requires=['python-twitter'],
       packages=['tyrs'],
     )
