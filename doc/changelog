@@ -1,5 +1,7 @@
 * Version 0.1.0
 
+	* UTF-8 support
+	* Oauth authentification support
 	* Display tweets with some basics colors
 	* Configuration file very basic
 	* Send a tweet
