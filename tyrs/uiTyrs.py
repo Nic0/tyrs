@@ -1,6 +1,7 @@
 '''
 @package   tyrs
 @author    Nicolas Paris <nicolas.caen@gmail.com>
+@license   GPLv3
 '''
 
 import sys

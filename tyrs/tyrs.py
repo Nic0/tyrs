@@ -1,13 +1,15 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-##
-#       Tyrs
-#
-#   Author:     Nicolas Paris <nicolas.caen@gmail.com>
-#   Version:    0.0.1
-#   Licence:    GPLv3
-#
+'''
+   Tyrs
+
+   @author:     Nicolas Paris <nicolas.caen@gmail.com>
+   @version:    0.1.0
+   @date:       09/05/2011
+   @licence:    GPLv3
+
+'''
 
 import config
 import uiTyrs
@@ -40,7 +42,7 @@ class UpdateThread (threading.Thread):
         self.conf = conf
         threading.Thread.__init__(self, target=self.run)
         self._stopevent = threading.Event()
-        
+
 
     def run (self):
         while not self._stopevent.isSet():
