@@ -16,6 +16,7 @@ class uiTyrs:
     '''
 
     '''
+      self.status:
     current:  the current tweet highlight, from the statuses list
     first:    first status displayed, from the status list, mean if we display the midle
               of the list, the first won't be 0
@@ -141,6 +142,7 @@ class uiTyrs:
         if self.conf.params_tweet_border == 1:
             panel.border(0)
 
+        # Highlight (bold) the current status
         if self.status['current'] == i:
             panel.addstr(0,3, header,
                     curses.color_pair(self.conf.color_header)| curses.A_BOLD)
@@ -266,5 +268,6 @@ class uiTyrs:
         curses.endwin()
         curses.curs_set(1)
 
+    # Resize event callback
     def sigwinch_handler (self, *dummy):
         self.resize_event = True
