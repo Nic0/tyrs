@@ -77,12 +77,6 @@ class uiTyrs:
         self.appendNewStatus(self.api.updateHomeTimeline())
         self.countStatus()
 
-        # /!\ DEBUG
-        # curses.endwin()
-        # for status in self.statuses:
-        #     print status
-        # sys.exit(1)
-
     def appendNewStatus (self, newStatuses):
         # Fresh new start.
         if self.statuses == []:
