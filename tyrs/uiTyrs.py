@@ -43,6 +43,7 @@ class uiTyrs:
         '''
         self.api    = api
         self.conf   = conf
+        signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
 
     def initScreen (self):
@@ -63,8 +64,6 @@ class uiTyrs:
         curses.init_pair(6, curses.COLOR_RED, False)     # 6 red
         curses.init_pair(7, curses.COLOR_WHITE, False)   # 7 white
         curses.init_pair(8, curses.COLOR_YELLOW, False)  # 8 yellow
-
-        signal.signal(signal.SIGWINCH, self.sigwinch_handler)
 
         self.maxyx = screen.getmaxyx()
 
@@ -261,13 +260,6 @@ class uiTyrs:
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
-
-            #
-            # RESIZE EVENT
-            #
-            # elif ch == curses.KEY_RESIZE:
-            #     self.maxyx = self.screen.getmaxyx()
-            #     self.displayHomeTimeline()
 
     # Last function call when quiting, restore some defaults params
     def tearDown (self):
