@@ -110,7 +110,6 @@ class uiTyrs:
 
     def displayHomeTimeline (self):
         self.current_y = 1
-        self.screen.erase()
         self.initScreen()
         for i in range(len(self.statuses)):
             if i >= self.status['first']:
