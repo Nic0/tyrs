@@ -1,5 +1,6 @@
 * Version 0.1.1
 
+	* Resize window handle
 	* Warning message if the network's down
 	* No more bugs if network's down
 	* Configuration color for warning message
