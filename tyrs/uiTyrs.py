@@ -244,6 +244,13 @@ class uiTyrs:
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
 
+            #
+            # RESIZE EVENT
+            #
+            elif ch == curses.KEY_RESIZE:
+                self.maxyx = self.screen.getmaxyx()
+                self.displayHomeTimeline()
+
     # Last function call when quiting, restore some defaults params
     def tearDown (self):
         curses.endwin()
