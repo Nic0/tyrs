@@ -8,8 +8,10 @@ class EditBox:
 
     def __init__(self, screen):
 
+        self.screen = screen
         self.win = self.initWin(screen)
         self.startEdit()
+        self.win.erase()
 
     def startEdit (self):
         tweet = ''

@@ -253,6 +253,7 @@ class uiTyrs:
                 if box.confirm:
                     self.api.postTweet(box.getTweet())
 
+                self.displayHomeTimeline()
 
             #
             # QUIT
