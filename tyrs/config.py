@@ -81,6 +81,12 @@ class Config:
         else:
             self.color_attag        = 4
 
+        # Warning messages
+        if self.conf.has_option('colors', 'warning'):
+            self.color_warning      = int(self.conf.get('colors', 'warning'))
+        else:
+            self.color_warning      = 6
+
         #
         # KEYS
         #

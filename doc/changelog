@@ -1,3 +1,11 @@
+* Version 0.1.1
+
+	* Warning message if the network's down
+	* No more bugs if network's down
+	* Configuration color for warning message
+	* New tweets now keept as full history
+	* Refactoring StatusCount
+
 * Version 0.1.0 -- 2011-05-09
 
 	* UTF-8 support

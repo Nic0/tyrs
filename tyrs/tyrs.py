@@ -5,7 +5,7 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.1.0
+   @version:    0.1.1-dev
    @date:       09/05/2011
    @licence:    GPLv3
 
@@ -15,6 +15,7 @@ import config
 import uiTyrs
 import tweets
 import time
+import signal
 import threading
 
 def main():
