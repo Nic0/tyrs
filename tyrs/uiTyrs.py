@@ -21,7 +21,7 @@ class uiTyrs:
     count:    usefull, knowing if it's the last one on the statuses list
     '''
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
-
+    statuses = []
     '''
     self.api          The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
     self.conf         The configuration file parsed in config.py
@@ -65,7 +65,7 @@ class uiTyrs:
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
-        self.statuses = self.api.updateHomeTimeline()
+        self.appendNewStatus(self.api.updateHomeTimeline())
         self.countStatus()
 
         # /!\ DEBUG
@@ -73,6 +73,23 @@ class uiTyrs:
         # for status in self.statuses:
         #     print status
         # sys.exit(1)
+
+    def appendNewStatus (self, newStatuses):
+        # Fresh new start.
+        if self.statuses == []:
+            self.statuses = newStatuses
+        # No statuses retreive, probably network failure
+        if newStatuses == None:
+            self.screen.addstr(0, 3,'Could not retrieve tweets',
+                               curses.color_pair(self.conf.color_warning) | curses.A_BOLD)
+        # This mean there is no new status, we just leave then.
+        elif newStatuses[0] == self.statuses[0]:
+            pass
+        # Finally, we append tweets
+        else:
+            for i in range(len(newStatuses)):
+                if newStatuses[i] == self.statuses[0]:
+                    self.statuses = newStatuses[:i-1] + self.statuses
 
     def countStatus (self):
         self.status['count'] = len(self.statuses)
