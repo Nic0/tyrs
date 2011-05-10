@@ -43,6 +43,10 @@ class uiTyrs:
         '''
         self.api    = api
         self.conf   = conf
+        self.initScreen()
+
+    def initScreen (self):
+
         screen = curses.initscr()
 
         curses.noecho()         # Dont print anything
@@ -106,10 +110,12 @@ class uiTyrs:
 
     def displayHomeTimeline (self):
         self.current_y = 1
-
+        self.screen.erase()
+        self.initScreen()
         for i in range(len(self.statuses)):
             if i >= self.status['first']:
                 self.displayStatus(self.statuses[i], i)
+        self.screen.refresh()
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
@@ -150,8 +156,6 @@ class uiTyrs:
 
         self.current_y = start_y + height
         self.status['last'] = i
-        #tweet = {'status': status, 'panel': panel}
-        #return tweet
 
     def displayText (self, text, panel):
         '''needed to cut words properly, as it would cut it in a midle of a
@@ -211,8 +215,9 @@ class uiTyrs:
 
             if self.resize_event:
                 self.resize_event = False
+                curses.endwin()
                 self.maxyx = self.screen.getmaxyx()
-                print 'coin'
+                curses.doupdate()
                 self.displayHomeTimeline()
 
             # Down and Up key must act as a menu, and should navigate
