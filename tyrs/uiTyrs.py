@@ -5,9 +5,11 @@
 '''
 
 import sys
+import signal
 import curses
 import curses.textpad
 import editBox
+
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -22,6 +24,8 @@ class uiTyrs:
     '''
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
     statuses = []
+    # Terminal got resized ?
+    resize_event = False
     '''
     self.api          The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
     self.conf         The configuration file parsed in config.py
@@ -55,6 +59,8 @@ class uiTyrs:
         curses.init_pair(6, curses.COLOR_RED, False)     # 6 red
         curses.init_pair(7, curses.COLOR_WHITE, False)   # 7 white
         curses.init_pair(8, curses.COLOR_YELLOW, False)  # 8 yellow
+
+        signal.signal(signal.SIGWINCH, self.sigwinch_handler)
 
         self.maxyx = screen.getmaxyx()
 
@@ -202,6 +208,13 @@ class uiTyrs:
         while True:
 
             ch = self.screen.getch()
+
+            if self.resize_event:
+                self.resize_event = False
+                self.maxyx = self.screen.getmaxyx()
+                print 'coin'
+                self.displayHomeTimeline()
+
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
             #
@@ -247,11 +260,14 @@ class uiTyrs:
             #
             # RESIZE EVENT
             #
-            elif ch == curses.KEY_RESIZE:
-                self.maxyx = self.screen.getmaxyx()
-                self.displayHomeTimeline()
+            # elif ch == curses.KEY_RESIZE:
+            #     self.maxyx = self.screen.getmaxyx()
+            #     self.displayHomeTimeline()
 
     # Last function call when quiting, restore some defaults params
     def tearDown (self):
         curses.endwin()
         curses.curs_set(1)
+
+    def sigwinch_handler (self, *dummy):
+        self.resize_event = True
