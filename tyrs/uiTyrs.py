@@ -7,7 +7,6 @@
 import sys
 import signal
 import curses
-import curses.textpad
 import editBox
 
 
