@@ -80,8 +80,7 @@ class uiTyrs:
             self.statuses = newStatuses
         # No statuses retreive, probably network failure
         if newStatuses == None:
-            self.screen.addstr(0, 3,'Could not retrieve tweets',
-                               curses.color_pair(self.conf.color_warning) | curses.A_BOLD)
+            self.displayWarning('Could not retreive tweets')
         # This mean there is no new status, we just leave then.
         elif newStatuses[0] == self.statuses[0]:
             pass
@@ -89,10 +88,15 @@ class uiTyrs:
         else:
             for i in range(len(newStatuses)):
                 if newStatuses[i] == self.statuses[0]:
-                    self.statuses = newStatuses[:i-1] + self.statuses
+                    self.statuses = newStatuses[:i] + self.statuses
 
     def countStatus (self):
         self.status['count'] = len(self.statuses)
+
+    def displayWarning (self, msg):
+            self.screen.addstr(0, 3, msg,
+                               curses.color_pair(self.conf.color_warning) | curses.A_BOLD)
+            self.screen.refresh()
 
     def displayHomeTimeline (self):
         self.current_y = 1
