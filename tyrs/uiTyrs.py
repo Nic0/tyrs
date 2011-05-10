@@ -72,11 +72,10 @@ class uiTyrs:
         # curses.endwin()
         # for status in self.statuses:
         #     print status
+        # sys.exit(1)
 
     def countStatus (self):
-        self.status['count'] = 0
-        for status in self.statuses:
-            self.status['count'] += 1
+        self.status['count'] = len(self.statuses)
 
     def displayHomeTimeline (self):
         self.current_y = 1
