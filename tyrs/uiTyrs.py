@@ -172,25 +172,29 @@ class uiTyrs:
                         pass
                 curent_x += len(word) + 1
 
-    def getTime (self, date):
+    def getTime (self, date, status):
         '''Handle the time format given by the api with something more
         readeable
         @param  date: full iso time format
         @return string: readeable time
         '''
-        time = date.split(' ')
-        time = time[3]
-        time = time.split(':')
-        time = time[0:2]
-        time = ':'.join(time)
 
-        return time
+        if self.conf.params_relative_time== 1:
+            return status.GetRelativeCreatedAt()
+        else:
+            time =  status.GetCreatedAt()
+            time = date.split(' ')
+            time = time[3]
+            time = time.split(':')
+            time = time[0:2]
+            time = ':'.join(time)
+            return time
 
     def getHeader (self, status):
         '''@return string'''
         charset = sys.stdout.encoding
         pseudo  = status.user.screen_name.encode(charset)
-        time    = self.getTime(status.created_at).encode(charset)
+        time    = self.getTime(status.created_at, status).encode(charset)
         #name    = status.user.name.encode(charset)
 
         header = " %s (%s) " % (pseudo, time)

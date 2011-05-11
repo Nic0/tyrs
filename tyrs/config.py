@@ -115,6 +115,10 @@ class Config:
         else:
             self.keys_tweet         = 't'
 
+        if self.conf.has_option('keys', 'clear'):
+            self.keys_clear         = self.conf.get('keys', 'clear')
+        else:
+            self.keys_clear         = 'c'
         #
         # PARAMS
         #
@@ -131,6 +135,10 @@ class Config:
         else:
             self.params_tweet_border = 1
 
+        if self.conf.has_option('params', 'relative_time'):
+            self.params_relative_time = int(self.conf.get('params', 'relative_time'))
+        else:
+            self.params_relative_time = 0
 
     def authorization (self):
         ''' This function from python-twitter developers '''

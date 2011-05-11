@@ -1,3 +1,8 @@
+* Version 0.1.2
+
+	* Clear statuses when stock 'c'
+	* Relative time enable with config ('xx hours ago')
+
 * Version 0.1.1  -- 2011-05-11
 
 	* Resize window handle.
