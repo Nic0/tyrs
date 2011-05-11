@@ -35,7 +35,7 @@ class uiTyrs:
     statuses = []
     resize_event = False
     regexRetweet = re.compile('^RT @\w+:')
-
+    flash = [False]
     def __init__ (self, api, conf):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
@@ -96,10 +96,20 @@ class uiTyrs:
     def countStatuses (self):
         self.status['count'] = len(self.statuses)
 
-    def displayWarning (self, msg):
+    def setFlash (self):
+        if self.flash[1] == 'warning':
+            self.displayWarningMsg(self.flash[2])
+        else:
+            self.displayInfoMsg(self.flash[2])
+        self.flash[0] = False
+
+    def displayWarningMsg (self, msg):
             self.screen.addstr(0, 3, msg,
-                               curses.color_pair(self.conf.color_warning) | curses.A_BOLD)
-            self.screen.refresh()
+                               curses.color_pair(self.conf.color_warning_msg) | curses.A_BOLD)
+
+    def displayInfoMsg (self, msg):
+            self.screen.addstr(0, 3, msg,
+                               curses.color_pair(self.conf.color_info_msg) | curses.A_BOLD)
 
     def displayHomeTimeline (self):
         self.current_y = 1
@@ -107,6 +117,8 @@ class uiTyrs:
         for i in range(len(self.statuses)):
             if i >= self.status['first']:
                 self.displayStatus(self.statuses[i], i)
+        if self.flash[0]:
+            self.setFlash()
         self.screen.refresh()
 
     def displayStatus (self, status, i):
@@ -272,8 +284,11 @@ class uiTyrs:
                 box = editBox.EditBox(self.screen)
 
                 if box.confirm:
-                    self.api.postTweet(box.getTweet())
-
+                    try:
+                        self.api.postTweet(box.getTweet())
+                        self.flash = [True, 'info', 'Tweet has been send successfully']
+                    except:
+                        self.flash = [True, 'warning', "Couldn't send the tweet."]
                 needRefresh = True
 
             #

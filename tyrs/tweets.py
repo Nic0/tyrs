@@ -22,11 +22,8 @@ class Tweets:
             print 'Could\'t get statuses, network is down ?'
 
     def postTweet (self, tweet, reply_to=None):
-        try:
-            self.api.PostUpdate(tweet)
-        except:
-            print 'ERROR!! impossible to send: \'%s\'' % tweet
-
+        self.api.PostUpdate(tweet)
+        
     def retweet (self, id):
         self.api.PostRetweet(id)
 
