@@ -5,28 +5,20 @@
 '''
 
 import sys
-import signal
+import signal                   # resize event
 import curses
 import editBox
 
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
-    '''
 
-    '''
-      self.status:
-    current:  the current tweet highlight, from the statuses list
-    first:    first status displayed, from the status list, mean if we display the midle
-              of the list, the first won't be 0
-    last:     the last tweet from statuses list
-    count:    usefull, knowing if it's the last one on the statuses list
-    '''
-    status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
-    statuses = []
-    # Terminal got resized ?
-    resize_event = False
-    '''
+    self.status:
+        current:  the current tweet highlight, from the statuses list
+        first:    first status displayed, from the status list, mean if we display the midle
+                  of the list, the first won't be 0
+        last:     the last tweet from statuses list
+        count:    usefull, knowing if it's the last one on the statuses list
     self.api          The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
     self.conf         The configuration file parsed in config.py
     self.maxyx        Array contain the window size [y, x]
@@ -34,7 +26,12 @@ class uiTyrs:
     self.statuses     List of all status retrieve
     self.current_y    Current line in the screen
     self.status       See explanation above
+    self.resize_event boleen if the window is resize
     '''
+
+    status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
+    statuses = []
+    resize_event = False
 
     def __init__ (self, api, conf):
         '''
