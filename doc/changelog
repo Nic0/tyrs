@@ -6,7 +6,7 @@
 	* Refresh properly the home timeline after sending a tweet
 	* Configuration color for warning message
 	* New tweets now keept as full history
-	* Refactoring StatusCount
+	* Refactoring
 
 * Version 0.1.0 -- 2011-05-09
 
