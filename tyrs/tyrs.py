@@ -5,8 +5,8 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.1.1-dev
-   @date:       09/05/2011
+   @version:    0.1.2-dev
+   @date:       11/05/2011
    @licence:    GPLv3
 
 '''
