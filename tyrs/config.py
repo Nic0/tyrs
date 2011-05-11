@@ -91,6 +91,13 @@ class Config:
         # KEYS
         #
 
+        # up       k
+        # down     j
+        # quit     q
+        # tweet    t
+        # clear    c
+        # retweet  r
+
         # up
         if self.conf.has_option('keys', 'up'):
             self.keys_up            = self.conf.get('keys', 'up')
@@ -115,10 +122,19 @@ class Config:
         else:
             self.keys_tweet         = 't'
 
+        # clear
         if self.conf.has_option('keys', 'clear'):
             self.keys_clear         = self.conf.get('keys', 'clear')
         else:
             self.keys_clear         = 'c'
+
+        # retweet
+        if self.conf.has_option('keys', 'retweet'):
+            self.keys_retweet       = self.conf.get('keys', 'retweet')
+        else:
+            self.keys_retweet       = 'r'
+
+
         #
         # PARAMS
         #
@@ -135,10 +151,18 @@ class Config:
         else:
             self.params_tweet_border = 1
 
+        # Relative_time
         if self.conf.has_option('params', 'relative_time'):
             self.params_relative_time = int(self.conf.get('params', 'relative_time'))
         else:
             self.params_relative_time = 0
+
+        # Retweet_By
+        if self.conf.has_option('params', 'retweet_by'):
+            self.params_retweet_by = int(self.conf.get('params', 'retweet_by'))
+        else:
+            self.params_retweet_by = 1
+
 
     def authorization (self):
         ''' This function from python-twitter developers '''

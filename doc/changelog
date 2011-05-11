@@ -2,7 +2,9 @@
 
 	* Clear statuses when stock 'c'
 	* Relative time enable with config ('xx hours ago')
-
+	* original name and retweeter name display for retweet
+	* Better looking for retweets
+	
 * Version 0.1.1  -- 2011-05-11
 
 	* Resize window handle.

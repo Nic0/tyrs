@@ -157,7 +157,7 @@ class uiTyrs:
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.'''
 
-        status.SetTruncated = False
+        #status.SetTruncated = False
 
         if status.rt:
             text = text.split(':')[1:]
@@ -210,7 +210,7 @@ class uiTyrs:
         time    = self.getTime(status.created_at, status).encode(charset)
         #name    = status.user.name.encode(charset)
 
-        if status.rt:
+        if status.rt and self.conf.params_retweet_by == 1:
             rtby = pseudo
             origine = status.GetText()
             origine = origine[4:]
@@ -275,6 +275,13 @@ class uiTyrs:
                     self.api.postTweet(box.getTweet())
 
                 needRefresh = True
+
+            #
+            # RETWEET
+            #
+            if ch == ord(self.conf.keys_retweet):
+                status = self.statuses[self.status['current']]
+                self.api.retweet(status.GetId())
 
             #
             # CLEAR
