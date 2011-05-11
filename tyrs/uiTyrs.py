@@ -157,8 +157,11 @@ class uiTyrs:
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.'''
 
-        if self.isRetweet(status):
-            text = 'coin' + text
+        status.SetTruncated = False
+
+        if status.rt:
+            text = text.split(':')[1:]
+            text = ' '.join(text)
 
         words = text.split(' ')
         curent_x = 2
