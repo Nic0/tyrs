@@ -71,10 +71,10 @@ class uiTyrs:
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
-        self.appendNewStatus(self.api.updateHomeTimeline())
-        self.countStatus()
+        self.appendNewStatuses(self.api.updateHomeTimeline())
+        self.countStatuses()
 
-    def appendNewStatus (self, newStatuses):
+    def appendNewStatuses (self, newStatuses):
         # Fresh new start.
         if self.statuses == []:
             self.statuses = newStatuses
@@ -90,7 +90,7 @@ class uiTyrs:
                 if newStatuses[i] == self.statuses[0]:
                     self.statuses = newStatuses[:i] + self.statuses
 
-    def countStatus (self):
+    def countStatuses (self):
         self.status['count'] = len(self.statuses)
 
     def displayWarning (self, msg):
@@ -172,25 +172,29 @@ class uiTyrs:
                         pass
                 curent_x += len(word) + 1
 
-    def getTime (self, date):
+    def getTime (self, date, status):
         '''Handle the time format given by the api with something more
         readeable
         @param  date: full iso time format
         @return string: readeable time
         '''
-        time = date.split(' ')
-        time = time[3]
-        time = time.split(':')
-        time = time[0:2]
-        time = ':'.join(time)
 
-        return time
+        if self.conf.params_relative_time== 1:
+            return status.GetRelativeCreatedAt()
+        else:
+            time =  status.GetCreatedAt()
+            time = date.split(' ')
+            time = time[3]
+            time = time.split(':')
+            time = time[0:2]
+            time = ':'.join(time)
+            return time
 
     def getHeader (self, status):
         '''@return string'''
         charset = sys.stdout.encoding
         pseudo  = status.user.screen_name.encode(charset)
-        time    = self.getTime(status.created_at).encode(charset)
+        time    = self.getTime(status.created_at, status).encode(charset)
         #name    = status.user.name.encode(charset)
 
         header = " %s (%s) " % (pseudo, time)
@@ -203,12 +207,14 @@ class uiTyrs:
 
             ch = self.screen.getch()
 
+            needRefresh = False
+
             if self.resize_event:
                 self.resize_event = False
                 curses.endwin()
                 self.maxyx = self.screen.getmaxyx()
                 curses.doupdate()
-                self.displayHomeTimeline()
+                needRefresh = True
 
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
@@ -221,7 +227,7 @@ class uiTyrs:
                     if self.status['current'] == self.status['last']:
                         self.status['first'] += 1
                     self.status['current'] += 1
-                    self.displayHomeTimeline()
+                    needRefresh = True
             #
             # MOVE UP
             #
@@ -233,7 +239,7 @@ class uiTyrs:
                     if self.status['current'] == self.status['first']:
                         self.status['first'] -= 1
                     self.status['current'] -= 1
-                    self.displayHomeTimeline()
+                    needRefresh = True
 
             #
             # TWEET
@@ -244,7 +250,16 @@ class uiTyrs:
                 if box.confirm:
                     self.api.postTweet(box.getTweet())
 
-                self.displayHomeTimeline()
+                needRefresh = True
+
+            #
+            # CLEAR
+            #
+            elif ch == ord(self.conf.keys_clear):
+                self.clearStatuses()
+                self.countStatuses()
+                self.status['current'] = 0
+                needRefresh = True
 
             #
             # QUIT
@@ -252,6 +267,9 @@ class uiTyrs:
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
+
+            if needRefresh:
+                self.displayHomeTimeline()
 
     # Last function call when quiting, restore some defaults params
     def tearDown (self):
@@ -261,3 +279,6 @@ class uiTyrs:
     # Resize event callback
     def sigwinch_handler (self, *dummy):
         self.resize_event = True
+
+    def clearStatuses (self):
+        self.statuses = [self.statuses[0]]

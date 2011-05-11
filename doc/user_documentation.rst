@@ -22,6 +22,7 @@ Usage
 * Functions
   * Tweet      : t
   * Quit       : q
+  * Clear      : c
 
 * Tweet edition
   * Abord      : ESC
