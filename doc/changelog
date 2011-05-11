@@ -1,10 +1,13 @@
 * Version 0.1.2
 
+	* Retweet when strock 'r' touch
 	* Clear statuses when stock 'c'
 	* Relative time enable with config ('xx hours ago')
 	* original name and retweeter name display for retweet
 	* Better looking for retweets
-	
+	* Improving messages information
+	* More configuration possibilities
+
 * Version 0.1.1  -- 2011-05-11
 
 	* Resize window handle.

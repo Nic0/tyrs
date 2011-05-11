@@ -10,18 +10,14 @@ Functionnality
 - utf-8 support
 - Display home timeline with colorfull tweets
 - Send tweets
-- Retweets (TODO)
+- Retweets
+- Configuration file allow lots of customisation
 
-For more information, check doc/ files.
+Please check for more information `doc/user_documentation`.
+A documented configuration file is aviable in `doc/tyrs.sample.cfg`
 
 Licence
 -------
 
 GNU GENERAL PUBLIC LICENCE (GPL)
 Check `doc/LICENCE` for the full licence text.
-
------------------------------------------------------------
-
-**Warning**
-
-This software is in early development stage.
