@@ -4,6 +4,7 @@
 @license   GPLv3
 '''
 
+import re
 import sys
 import signal                   # resize event
 import curses
@@ -27,11 +28,13 @@ class uiTyrs:
     self.current_y    Current line in the screen
     self.status       See explanation above
     self.resize_event boleen if the window is resize
+    self.regexRetweet regex for retweet
     '''
 
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
     statuses = []
     resize_event = False
+    regexRetweet = re.compile('^RT @\w+:')
 
     def __init__ (self, api, conf):
         '''
@@ -111,6 +114,9 @@ class uiTyrs:
         depending on self.current_y, an array [status, panel] is return and
         will be stock in a array, to retreve status information (like id)'''
 
+        # Check if we have a retweet
+        self.isRetweet(status)
+
         # The content of the tweets is handle
         # text is needed for the height of a panel
         charset = sys.stdout.encoding
@@ -139,7 +145,7 @@ class uiTyrs:
         else:
             panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
 
-        self.displayText(text, panel)
+        self.displayText(text, panel, status)
 
         panel.refresh(0, 0, start_y, start_x,
             start_y + height, start_x + length)
@@ -147,9 +153,13 @@ class uiTyrs:
         self.current_y = start_y + height
         self.status['last'] = i
 
-    def displayText (self, text, panel):
+    def displayText (self, text, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.'''
+
+        if self.isRetweet(status):
+            text = 'coin' + text
+
         words = text.split(' ')
         curent_x = 2
         line = 1
@@ -197,9 +207,20 @@ class uiTyrs:
         time    = self.getTime(status.created_at, status).encode(charset)
         #name    = status.user.name.encode(charset)
 
-        header = " %s (%s) " % (pseudo, time)
+        if status.rt:
+            rtby = pseudo
+            origine = status.GetText()
+            origine = origine[4:]
+            origine = origine.split(':')[0]
+            origine = str(origine)
+            header = ' %s (%s) RT by %s ' % (origine, time, rtby)
+        else:
+            header = " %s (%s) " % (pseudo, time)
 
         return header
+
+    def isRetweet (self, status):
+        status.rt = self.regexRetweet.match(status.GetText())
 
     def handleKeybinding(self):
         '''Should have all keybinding handle here'''
