@@ -1,6 +1,7 @@
 * Version 0.1.2
 
 	* Retweet when strock 'r' touch
+	* Character counter add when tweeting
 	* Clear statuses when stock 'c'
 	* Relative time enable with config ('xx hours ago')
 	* Localtime bug fixed

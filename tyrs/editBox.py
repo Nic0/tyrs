@@ -46,6 +46,10 @@ class EditBox:
 
                 tweet += chr(ch)
                 self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
+                cur_yx = self.win.getyx()
+            position = cur_yx
+            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(tweet)))
+            self.win.move(position[0], position[1])
 
     def initWin (self, screen):
         '''
