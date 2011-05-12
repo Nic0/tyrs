@@ -71,7 +71,7 @@ class uiTyrs:
 
         self.maxyx = screen.getmaxyx()
 
-        screen.border(0)
+        screen.border()
         screen.refresh()
         self.screen = screen
 
@@ -142,8 +142,9 @@ class uiTyrs:
         header  = self.getHeader(status)
 
         # We get size and where to display the tweet
-        length = self.maxyx[1] - 4
-        height = len(text) / length + 3
+        size = self.getSizeStatus(status)
+        length = size['length']
+        height = size['height']
         start_y = self.current_y
         start_x = 2
 
@@ -198,10 +199,17 @@ class uiTyrs:
                                  curses.color_pair(self.conf.color_attag))
                 else:
                     try:
-                        panel.addstr(line, curent_x, word)
+                        panel.addstr(line, curent_x, word,
+                                     curses.color_pair(self.conf.color_text))
                     except:
                         pass
                 curent_x += len(word) + 1
+
+    def getSizeStatus (self, status):
+        length = self.maxyx[1] - 4
+        height = len(status.text) / length + 3
+        size = {'length': length, 'height': height}
+        return size
 
     def getTime (self, date, status):
         '''Handle the time format given by the api with something more
@@ -263,10 +271,23 @@ class uiTyrs:
             # MOVE DOWN
             #
             if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
-                # if we have some more tweets to display
                 if self.status['current'] < self.status['count'] - 1:
-                    if self.status['current'] == self.status['last']:
+                    if self.status['current'] >= self.status['last']:
+                    # We need to be sure it will have enough place to
+                    # display the next tweet, otherwise we still stay
+                    # to the current tweet
+                    # This is due to the dynamic height of a tweet.
+
+                    # height_first_status = self.getSizeStatus(self.statuses[self.status['first']])
+                    # next_status = self.status['last'] + 1
+                    # height_next_status  = self.getSizeStatus(self.statuses[next_status])
+                    # height_left = self.current_y - self.maxyx[0]-1
+                    # if height_next_status['height'] > (height_left + height_first_status['height']):
+                    #     self.status['current'] -=
+
                         self.status['first'] += 1
+
+
                     self.status['current'] += 1
                     needRefresh = True
             #
