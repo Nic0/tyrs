@@ -12,14 +12,7 @@ class Tweets:
                 conf.oauth_token_secret)
 
     def updateHomeTimeline (self):
-        ''' include_entities return some varius metadata in a structure, not use
-        yet, but it might be usefull
-        '''
-        try:
-            statuses = self.api.GetFriendsTimeline(retweets=True)
-            return statuses
-        except urllib2.URLError:
-            print 'Could\'t get statuses, network is down ?'
+        return self.api.GetFriendsTimeline(retweets=True)
 
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet)

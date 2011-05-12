@@ -14,7 +14,7 @@
 
 	* Resize window handle.
 	* Warning message if the network's down
-	* No more bugs if network's down
+	* No more bugs when network's down
 	* Refresh properly the home timeline after sending a tweet
 	* Configuration color for warning message
 	* New tweets now keept as full history

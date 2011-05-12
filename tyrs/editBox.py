@@ -21,7 +21,7 @@ class EditBox:
             ch = self.win.getch()
 
             if ch == 10:          # ENTER: send the tweet
-                self.tweet = tweet
+                self.tweet = tweet[:140]
                 self.confirm = True
                 break
 
@@ -47,9 +47,11 @@ class EditBox:
                 tweet += chr(ch)
                 self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
                 cur_yx = self.win.getyx()
-            position = cur_yx
-            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(tweet)))
-            self.win.move(position[0], position[1])
+
+            # Character counter
+            position = cur_yx   # Remember position of cursor
+            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(tweet))) # print number of char
+            self.win.move(position[0], position[1]) # go back to position
 
     def initWin (self, screen):
         '''
