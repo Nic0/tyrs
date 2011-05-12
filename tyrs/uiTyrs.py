@@ -29,6 +29,8 @@ class uiTyrs:
     self.status       See explanation above
     self.resize_event boleen if the window is resize
     self.regexRetweet regex for retweet
+    self.flash        [boleen, type_msg, msg]
+                      Use like "session-flash", to display some information/warning messages
     '''
 
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
@@ -45,7 +47,8 @@ class uiTyrs:
         self.conf   = conf
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
-
+        self.updateHomeTimeline()
+        self.displayHomeTimeline()
     def initScreen (self):
 
         screen = curses.initscr()
@@ -74,8 +77,13 @@ class uiTyrs:
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
-        self.appendNewStatuses(self.api.updateHomeTimeline())
-        self.countStatuses()
+        try:
+            self.flash = [True, 'info', 'Updating timeline...']
+            self.displayHomeTimeline()
+            self.appendNewStatuses(self.api.updateHomeTimeline())
+            self.countStatuses()
+        except:
+            self.flash = [True, 'warning', "Couldn't retrieve tweets"]
 
     def appendNewStatuses (self, newStatuses):
         # Fresh new start.
@@ -286,7 +294,7 @@ class uiTyrs:
                 if box.confirm:
                     try:
                         self.api.postTweet(box.getTweet())
-                        self.flash = [True, 'info', 'Tweet has been send successfully']
+                        self.flash = [True, 'info', 'Tweet has been send successfully.']
                     except:
                         self.flash = [True, 'warning', "Couldn't send the tweet."]
                 needRefresh = True
@@ -296,8 +304,12 @@ class uiTyrs:
             #
             if ch == ord(self.conf.keys_retweet):
                 status = self.statuses[self.status['current']]
-                self.api.retweet(status.GetId())
-
+                try:
+                    self.api.retweet(status.GetId())
+                    self.flash = [True, 'info', 'Retweet has been send successfully.']
+                except:
+                    self.flash = [True, 'warning', "Couldn't send the retweet."]
+                needRefresh = True
             #
             # CLEAR
             #
@@ -305,6 +317,13 @@ class uiTyrs:
                 self.clearStatuses()
                 self.countStatuses()
                 self.status['current'] = 0
+                needRefresh = True
+
+            #
+            # UPDATE
+            #
+            elif ch == ord(self.conf.keys_update):
+                self.updateHomeTimeline()
                 needRefresh = True
 
             #

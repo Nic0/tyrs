@@ -23,14 +23,12 @@ def main():
     api     = tweets.Tweets()
     api.authentification(conf)
     interface  = uiTyrs.uiTyrs(api, conf)
-    interface.updateHomeTimeline()
-    interface.displayHomeTimeline()
 
     update = UpdateThread(interface, conf)
     update.start()
-
     interface.handleKeybinding()
     update.stop()
+    print 'Waiting for thread stoping...'
 
     interface.tearDown()
 
@@ -48,8 +46,9 @@ class UpdateThread (threading.Thread):
     def run (self):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params_refresh * 60.0)
-            self.interface.updateHomeTimeline()
-            self.interface.displayHomeTimeline()
+            if not self._stopevent.isSet():
+                self.interface.updateHomeTimeline()
+                self.interface.displayHomeTimeline()
 
     def stop (self):
         self._stopevent.set()

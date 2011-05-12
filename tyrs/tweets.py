@@ -23,7 +23,7 @@ class Tweets:
 
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet)
-        
+
     def retweet (self, id):
         self.api.PostRetweet(id)
 

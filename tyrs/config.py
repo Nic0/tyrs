@@ -96,13 +96,16 @@ class Config:
         #
         # KEYS
         #
+        '''
+        up       k
+        down     j
+        quit     q
+        tweet    t
+        clear    c
+        retweet  r
+        update   u
+        '''
 
-        # up       k
-        # down     j
-        # quit     q
-        # tweet    t
-        # clear    c
-        # retweet  r
 
         # up
         if self.conf.has_option('keys', 'up'):
@@ -140,6 +143,11 @@ class Config:
         else:
             self.keys_retweet       = 'r'
 
+        # update
+        if self.conf.has_option('keys', 'update'):
+            self.keys_update        = self.conf.get('keys', 'update')
+        else:
+            self.keys_update        = 'u'
 
         #
         # PARAMS
