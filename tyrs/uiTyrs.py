@@ -89,9 +89,6 @@ class uiTyrs:
         # Fresh new start.
         if self.statuses == []:
             self.statuses = newStatuses
-        # No statuses retreive, probably network failure
-        if newStatuses == None:
-            self.displayWarning('Could not retreive tweets')
         # This mean there is no new status, we just leave then.
         elif newStatuses[0] == self.statuses[0]:
             pass
@@ -181,7 +178,7 @@ class uiTyrs:
 
         if status.rt:
             text = text.split(':')[1:]
-            text = ' '.join(text)
+            text = ':'.join(text)
 
         words = text.split(' ')
         curent_x = 2
