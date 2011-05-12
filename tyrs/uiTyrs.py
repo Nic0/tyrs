@@ -6,6 +6,7 @@
 
 import re
 import sys
+import time
 import signal                   # resize event
 import curses
 import editBox
@@ -212,13 +213,12 @@ class uiTyrs:
         if self.conf.params_relative_time== 1:
             return status.GetRelativeCreatedAt()
         else:
-            time =  status.GetCreatedAt()
-            time = date.split(' ')
-            time = time[3]
-            time = time.split(':')
-            time = time[0:2]
-            time = ':'.join(time)
-            return time
+            hour = status.GetCreatedAt()
+            hour = time.mktime(time.strptime(hour, '%a %b %d %H:%M:%S +0000 %Y')) - time.altzone
+            hour = time.localtime(hour)
+            hour = time.strftime('%H:%M', hour)
+
+            return hour
 
     def getHeader (self, status):
         '''@return string'''
