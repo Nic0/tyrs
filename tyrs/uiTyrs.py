@@ -9,8 +9,6 @@ import sys
 import time
 import signal                   # resize event
 import curses
-import editBox
-
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -216,7 +214,7 @@ class uiTyrs:
         size = {'length': length, 'height': height}
         return size
 
-    def getTime (self, date, status):
+    def getTime (self, status):
         '''Handle the time format given by the api with something more
         readeable
         @param  date: full iso time format
@@ -237,16 +235,13 @@ class uiTyrs:
         '''@return string'''
         charset = sys.stdout.encoding
         pseudo  = status.user.screen_name.encode(charset)
-        time    = self.getTime(status.created_at, status).encode(charset)
+        time    = self.getTime(status).encode(charset)
         #name    = status.user.name.encode(charset)
 
         if status.rt and self.conf.params_retweet_by == 1:
             rtby = pseudo
-            origine = status.GetText()
-            origine = origine[4:]
-            origine = origine.split(':')[0]
-            origine = str(origine)
-            header = ' %s (%s) RT by %s ' % (origine, time, rtby)
+            origin = self.originOfRetweet(status)
+            header = ' %s (%s) RT by %s ' % (origin, time, rtby)
         else:
             header = " %s (%s) " % (pseudo, time)
 
@@ -254,6 +249,13 @@ class uiTyrs:
 
     def isRetweet (self, status):
         status.rt = self.regexRetweet.match(status.GetText())
+
+    def originOfRetweet (self, status):
+        origin = status.GetText()
+        origin = origin[4:]
+        origin = origin.split(':')[0]
+        origin = str(origin)
+        return origin
 
     # Last function call when quiting, restore some defaults params
     def tearDown (self):
