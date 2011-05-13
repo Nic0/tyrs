@@ -21,17 +21,18 @@ class uiTyrs:
                   of the list, the first won't be 0
         last:     the last tweet from statuses list
         count:    usefull, knowing if it's the last one on the statuses list
-    self.api          The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
-    self.conf         The configuration file parsed in config.py
-    self.maxyx        Array contain the window size [y, x]
-    self.screen       Main screen (curse)
-    self.statuses     List of all status retrieve
-    self.current_y    Current line in the screen
-    self.status       See explanation above
-    self.resize_event boleen if the window is resize
-    self.regexRetweet regex for retweet
-    self.flash        [boleen, type_msg, msg]
-                      Use like "session-flash", to display some information/warning messages
+    self.api              The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
+    self.conf             The configuration file parsed in config.py
+    self.maxyx            Array contain the window size [y, x]
+    self.screen           Main screen (curse)
+    self.statuses         List of all status retrieve
+    self.current_y        Current line in the screen
+    self.status           See explanation above
+    self.resize_event     boleen if the window is resize
+    self.regexRetweet     regex for retweet
+    self.flash            [boleen, type_msg, msg]
+                          Use like "session-flash", to display some information/warning messages
+    self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     '''
 
     status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
@@ -39,6 +40,8 @@ class uiTyrs:
     resize_event = False
     regexRetweet = re.compile('^RT @\w+:')
     flash = [False]
+    refresh_token = False
+
     def __init__ (self, api, conf):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
@@ -118,14 +121,15 @@ class uiTyrs:
                                curses.color_pair(self.conf.color_info_msg) | curses.A_BOLD)
 
     def displayHomeTimeline (self):
-        self.current_y = 1
-        self.initScreen()
-        for i in range(len(self.statuses)):
-            if i >= self.status['first']:
-                self.displayStatus(self.statuses[i], i)
-        if self.flash[0]:
-            self.setFlash()
-        self.screen.refresh()
+        if not self.refresh_token:
+            self.current_y = 1
+            self.initScreen()
+            for i in range(len(self.statuses)):
+                if i >= self.status['first']:
+                    self.displayStatus(self.statuses[i], i)
+            if self.flash[0]:
+                self.setFlash()
+            self.screen.refresh()
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
@@ -307,8 +311,8 @@ class uiTyrs:
             # TWEET
             #
             elif ch == ord(self.conf.keys_tweet):
+                self.refresh_token = True
                 box = editBox.EditBox(self.screen)
-
                 if box.confirm:
                     try:
                         self.api.postTweet(box.getTweet())
@@ -316,6 +320,7 @@ class uiTyrs:
                     except:
                         self.flash = [True, 'warning', "Couldn't send the tweet."]
                 needRefresh = True
+                self.refresh_token = False
 
             #
             # RETWEET
