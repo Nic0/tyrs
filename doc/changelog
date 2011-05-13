@@ -5,6 +5,7 @@ Date Format : YYYY-MM-DD
 	* Retweet when strock 'r' touch
 	* Character counter add when tweeting
 	* Clear statuses when stock 'c'
+	* Update timeline with 'u'
 	* Relative time enable with config ('xx hours ago')
 	* Localtime bug fixed
 	* original name and retweeter name display for retweet

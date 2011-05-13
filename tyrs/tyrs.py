@@ -5,7 +5,7 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.1.2
+   @version:    0.1.3-dev
    @date:       13/05/2011
    @licence:    GPLv3
 
@@ -17,6 +17,7 @@ import tweets
 import time
 import signal
 import threading
+import keyBinding as keys
 
 def main():
     conf    = config.Config()
@@ -26,7 +27,8 @@ def main():
 
     update = UpdateThread(interface, conf)
     update.start()
-    interface.handleKeybinding()
+    keybinding = keys.KeyBinding(interface, conf, api)
+    keybinding.handleKeyBinding()
     update.stop()
     print 'Waiting for thread stoping...'
 
