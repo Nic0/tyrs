@@ -30,7 +30,7 @@ class uiTyrs:
     self.status           See explanation above
     self.resize_event     boleen if the window is resize
     self.regexRetweet     regex for retweet
-    self.flash            [boleen, type_msg, msg]
+    self.flash            [msg, type_msg]
                           Use like "session-flash", to display some information/warning messages
     self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     '''
@@ -39,7 +39,7 @@ class uiTyrs:
     statuses = []
     resize_event = False
     regexRetweet = re.compile('^RT @\w+:')
-    flash = [False]
+    flash = []
     refresh_token = False
 
     def __init__ (self, api, conf):
@@ -83,12 +83,12 @@ class uiTyrs:
         ''' Retrieves tweets, don't display them
         '''
         try:
-            self.flash = [True, 'info', 'Updating timeline...']
+            self.flash = ['Updating timeline...', 'info']
             self.displayHomeTimeline()
             self.appendNewStatuses(self.api.updateHomeTimeline())
             self.countStatuses()
         except:
-            self.flash = [True, 'warning', "Couldn't retrieve tweets"]
+            self.flash = ["Couldn't retrieve tweets", 'warning']
 
     def appendNewStatuses (self, newStatuses):
         # Fresh new start.
@@ -108,10 +108,10 @@ class uiTyrs:
 
     def setFlash (self):
         if self.flash[1] == 'warning':
-            self.displayWarningMsg(self.flash[2])
+            self.displayWarningMsg(self.flash[0])
         else:
-            self.displayInfoMsg(self.flash[2])
-        self.flash[0] = False
+            self.displayInfoMsg(self.flash[0])
+        self.flash = []
 
     def displayWarningMsg (self, msg):
             self.screen.addstr(0, 3, msg,
@@ -128,7 +128,7 @@ class uiTyrs:
             for i in range(len(self.statuses)):
                 if i >= self.status['first']:
                     self.displayStatus(self.statuses[i], i)
-            if self.flash[0]:
+            if len(self.flash) != 0:
                 self.setFlash()
             self.screen.refresh()
 

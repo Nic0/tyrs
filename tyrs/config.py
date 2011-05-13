@@ -156,6 +156,14 @@ class Config:
         if self.conf.has_option('keys', 'update'):
             self.keys_update        = self.conf.get('keys', 'update')
 
+        # follow_selected
+        if self.conf.has_option('keys', 'follow_selected'):
+            self.keys_follow_selected = self.conf.get('keys', 'follow_selected')
+
+        # unfollow_selected
+        if self.conf.has_option('keys', 'unfollow_selected'):
+            self.keys_unfollow_selected = self.conf.get('keys', 'unfollow_selected')
+
         #
         # PARAMS
         #
@@ -179,24 +187,24 @@ class Config:
 
     def authorization (self):
         ''' This function from python-twitter developers '''
-# Copyright 2007 The Python-Twitter Developers
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-        REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
-        ACCESS_TOKEN_URL  = 'https://api.twitter.com/oauth/access_token'
-        AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
-        consumer_key    = 'Eq9KLjwH9sJNcpF4OOYNw'
-        consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+        # Copyright 2007 The Python-Twitter Developers
+        #
+        # Licensed under the Apache License, Version 2.0 (the "License");
+        # you may not use this file except in compliance with the License.
+        # You may obtain a copy of the License at
+        #
+        #     http://www.apache.org/licenses/LICENSE-2.0
+        #
+        # Unless required by applicable law or agreed to in writing, software
+        # distributed under the License is distributed on an "AS IS" BASIS,
+        # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        # See the License for the specific language governing permissions and
+        # limitations under the License.
+        REQUEST_TOKEN_URL          = 'https://api.twitter.com/oauth/request_token'
+        ACCESS_TOKEN_URL           = 'https://api.twitter.com/oauth/access_token'
+        AUTHORIZATION_URL          = 'https://api.twitter.com/oauth/authorize'
+        consumer_key               = 'Eq9KLjwH9sJNcpF4OOYNw'
+        consumer_secret            = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
         signature_method_hmac_sha1 = oauth.SignatureMethod_HMAC_SHA1()
         oauth_consumer             = oauth.Consumer(key=consumer_key, secret=consumer_secret)
         oauth_client               = oauth.Client(oauth_consumer)

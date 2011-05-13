@@ -49,9 +49,9 @@ class KeyBinding:
         if box.confirm:
             try:
                 self.api.postTweet(box.getTweet())
-                self.ui.flash = [True, 'info', 'Tweet has been send successfully.']
+                self.ui.flash = ['Tweet has been send successfully.', "info"]
             except:
-                self.ui.flash = [True, 'warning', "Couldn't send the tweet."]
+                self.ui.flash = ["Couldn't send the tweet.", "warning"]
         self.needRefresh = True
         self.ui.refresh_token = False
 
@@ -59,9 +59,9 @@ class KeyBinding:
         status = self.ui.statuses[self.status['current']]
         try:
             self.api.retweet(status.GetId())
-            self.ui.flash = [True, 'info', 'Retweet has been send successfully.']
+            self.ui.flash = ['Retweet has been send successfully.', 'info']
         except:
-            self.ui.flash = [True, 'warning', "Couldn't send the retweet."]
+            self.ui.flash = ["Couldn't send the retweet.", 'warning']
         self.needRefresh = True
 
     def clear (self):
@@ -78,7 +78,13 @@ class KeyBinding:
         pass
 
     def unfollowSelected (self):
-        pass
+        pseudo = self.ui.statuses[self.ui.status['current']].user.screen_name
+        try:
+            self.api.DestroyFriendship(pseudo)
+            self.ui.flash = ["You have unfollowed %s" % pseudo, "info"]
+        except:
+            self.ui.flash = ["Failed to unfollow %s" % pseudo, "warning"]
+        self.needRefresh = True
 
     def handleKeyBinding(self):
         '''Should have all keybinding handle here'''

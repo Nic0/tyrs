@@ -3,7 +3,7 @@ from twitter import Api
 import urllib2
 import simplejson
 
-class Tweets:
+class Tweets(Api):
 
     def authentification(self, conf):
         self.api = ApiPatch(conf.consumer_key,
@@ -19,6 +19,12 @@ class Tweets:
 
     def retweet (self, id):
         self.api.PostRetweet(id)
+
+    def DestroyFriendship (self, pseudo):
+        self.api.DestroyFriendship(pseudo)
+
+    def CreateFriendship (self, pseudo):
+        self.CreateFriendship(pseudo)
 
 class ApiPatch (Api):
     def PostRetweet(self, id):
