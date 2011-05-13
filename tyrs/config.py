@@ -18,11 +18,34 @@ class Config:
     consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
     consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
 
+    color_header           = 3
+    color_hashtag          = 8
+    color_attag            = 4
+    color_text             = 7
+    color_warning_msg      = 6
+    color_info_msg         = 4
+
+    keys_up                = 'k'
+    keys_down              = 'j'
+    keys_quit              = 'q'
+    keys_tweet             = 't'
+    keys_clear             = 'c'
+    keys_retweet           = 'r'
+    keus_update            = 'u'
+    keys_follow_selected   = 'f'
+    keys_unfollow_selected = 'l'
+
+    params_refresh         = 10
+    params_tweet_border    = 1
+    params_relative_time   = 0
+    params_retweet_by      = 1
+
+    home       = os.environ['HOME']
+    configFile = home + '/.config/tyrs/tyrs.cfg'
+    tokenFile  = home + '/.config/tyrs/tyrs.tok'
+
     def __init__ (self):
 
-        self.home = os.environ['HOME']
-        self.configFile = self.home + '/.config/tyrs/tyrs.cfg'
-        self.tokenFile  = self.home + '/.config/tyrs/tyrs.tok'
 
         if not os.path.isfile(self.tokenFile):
             self.newAccount()
@@ -66,39 +89,26 @@ class Config:
         # header
         if self.conf.has_option('colors', 'header'):
             self.color_header       = int(self.conf.get('colors', 'header'))
-        else:
-            self.color_header       = 3
 
         # hashtag ('#')
         if self.conf.has_option('colors', 'hashtag'):
             self.color_hashtag      = int(self.conf.get('colors', 'hashtag'))
-        else:
-            self.color_hashtag      = 8
 
         # attag ('@')
         if self.conf.has_option('colors', 'attag'):
             self.color_attag        = int(self.conf.get('colors', 'attag'))
-        else:
-            self.color_attag        = 4
 
         # text
         if self.conf.has_option('colors', 'text'):
             self.color_text         = int(self.conf.get('colors', 'text'))
-        else:
-            self.color_text         = 7
-
 
         # Warning messages
         if self.conf.has_option('colors', 'warning_msg'):
             self.color_warning_msg      = int(self.conf.get('colors', 'warning_msg'))
-        else:
-            self.color_warning_msg      = 6
 
         # Information messages
         if self.conf.has_option('colors', 'info_msg'):
             self.color_info_msg        = int(self.conf.get('colors', 'info_msg'))
-        else:
-            self.color_info_msg        = 4
 
         #
         # KEYS
@@ -111,50 +121,40 @@ class Config:
         clear    c
         retweet  r
         update   u
+        follow_selected    f
+        unfollow_selected  l
+        follow             F
+        unfollow           L
         '''
 
 
         # up
         if self.conf.has_option('keys', 'up'):
             self.keys_up            = self.conf.get('keys', 'up')
-        else:
-            self.keys_up            = 'k'
 
         # down
         if self.conf.has_option('keys', 'down'):
             self.keys_down          = self.conf.get('keys', 'down')
-        else:
-            self.keys_down          = 'j'
 
         # quit
         if self.conf.has_option('keys', 'quit'):
             self.keys_quit          = self.conf.get('keys', 'quit')
-        else:
-            self.keys_quit          = 'q'
 
         # tweet
         if self.conf.has_option('keys', 'tweet'):
             self.keys_tweet         = self.conf.get('keys', 'tweet')
-        else:
-            self.keys_tweet         = 't'
 
         # clear
         if self.conf.has_option('keys', 'clear'):
             self.keys_clear         = self.conf.get('keys', 'clear')
-        else:
-            self.keys_clear         = 'c'
 
         # retweet
         if self.conf.has_option('keys', 'retweet'):
             self.keys_retweet       = self.conf.get('keys', 'retweet')
-        else:
-            self.keys_retweet       = 'r'
 
         # update
         if self.conf.has_option('keys', 'update'):
             self.keys_update        = self.conf.get('keys', 'update')
-        else:
-            self.keys_update        = 'u'
 
         #
         # PARAMS
@@ -163,26 +163,18 @@ class Config:
         # refresh (in minutes)
         if self.conf.has_option('params', 'refresh'):
             self.params_refresh     = int(self.conf.get('params', 'refresh'))
-        else:
-            self.params_refresh     = 10
 
         # tweet_border
         if self.conf.has_option('params', 'tweet_border'):
             self.params_tweet_border = int(self.conf.get('params', 'tweet_border'))
-        else:
-            self.params_tweet_border = 1
 
         # Relative_time
         if self.conf.has_option('params', 'relative_time'):
             self.params_relative_time = int(self.conf.get('params', 'relative_time'))
-        else:
-            self.params_relative_time = 0
 
         # Retweet_By
         if self.conf.has_option('params', 'retweet_by'):
             self.params_retweet_by = int(self.conf.get('params', 'retweet_by'))
-        else:
-            self.params_retweet_by = 1
 
 
     def authorization (self):

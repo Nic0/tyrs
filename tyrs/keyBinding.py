@@ -35,6 +35,14 @@ class KeyBinding:
             self.ui.status['current'] += 1
             self.needRefresh = True
 
+    def moveUp (self):
+        if self.ui.status['current'] > 0:
+            # if we need to move up the list to display
+            if self.ui.status['current'] == self.ui.status['first']:
+                self.ui.status['first'] -= 1
+            self.ui.status['current'] -= 1
+            self.needRefresh = True
+
     def tweet (self):
         self.ui.refresh_token = True
         box = editBox.EditBox(self.screen)
@@ -66,6 +74,12 @@ class KeyBinding:
         self.ui.updateHomeTimeline()
         self.needRefresh = True
 
+    def followSelected (self):
+        pass
+
+    def unfollowSelected (self):
+        pass
+
     def handleKeyBinding(self):
         '''Should have all keybinding handle here'''
         while True:
@@ -80,29 +94,29 @@ class KeyBinding:
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
             #
-            # MOVE DOWN
             if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
                 self.moveDown()
 
-            # MOVE UP
             elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
                 self.moveUp()
 
-            # TWEET
             elif ch == ord(self.conf.keys_tweet):
                 self.tweet()
 
-            # RETWEET
-            if ch == ord(self.conf.keys_retweet):
+            elif ch == ord(self.conf.keys_retweet):
                 self.retweet()
 
-            # CLEAR
             elif ch == ord(self.conf.keys_clear):
                 self.clear()
 
-            # UPDATE
             elif ch == ord(self.conf.keys_update):
                 self.update()
+
+            elif ch == ord(self.conf.keys_follow_selected):
+                self.followSelected()
+
+            elif ch == ord(self.conf.keys_unfollow_selected):
+                self.unfollowSelected()
 
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
