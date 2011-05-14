@@ -16,11 +16,24 @@ import uiTyrs
 import tweets
 import time
 import signal
+import argparse
 import threading
 import keyBinding as keys
 
+import sys
+
+def arguments ():
+
+    parser = argparse.ArgumentParser('Tyrs: Twitter python curses')
+    parser.add_argument('-a', '--account')
+    parser.add_argument('-c', '--config')
+    args = parser.parse_args()
+    return args
+
 def main():
-    conf    = config.Config()
+
+    args    = arguments()
+    conf    = config.Config(args)
     api     = tweets.Tweets()
     api.authentification(conf)
     interface  = uiTyrs.uiTyrs(api, conf)

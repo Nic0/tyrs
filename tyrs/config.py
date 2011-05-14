@@ -40,12 +40,18 @@ class Config:
     params_relative_time   = 0
     params_retweet_by      = 1
 
-    home       = os.environ['HOME']
-    configFile = home + '/.config/tyrs/tyrs.cfg'
-    tokenFile  = home + '/.config/tyrs/tyrs.tok'
 
-    def __init__ (self):
+    def __init__ (self, args):
 
+        home       = os.environ['HOME']
+
+        self.tokenFile = home + '/.config/tyrs/tyrs.tok'
+        if args.account != None:
+            self.tokenFile += '.' + args.account
+
+        self.configFile = home + '/.config/tyrs/tyrs.cfg'
+        if args.config != None:
+            self.config += '.' + args.config
 
         if not os.path.isfile(self.tokenFile):
             self.newAccount()

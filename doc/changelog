@@ -3,7 +3,9 @@ Date Format : YYYY-MM-DD
 * Version 0.1.3
 
 	* Desappearing tweet box bug fixed - issue #2
-	* Refactoring KeyBinding
+	* Follow and unfollow ('f', 'F', 'l', 'L')
+	* Commande line for account and config (changing the account directly with the CLI)
+	* Refactoring code
 
 * Version 0.1.2 -- 2011-05-13
 
