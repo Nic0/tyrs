@@ -80,26 +80,26 @@ class KeyBinding:
         self.destroyFriendship(pseudo)
 
     def follow (self):
-        box = self.pseudoBox()
+        box = self.pseudoBox('Follow Someone ?')
         self.createFriendship(box.getContent())
 
     def unfollow (self):
-        box = self.pseudoBox()
+        box = self.pseudoBox('Unfollow Someone ?')
         self.destroyFriendship(box.getContent())
 
     def createFriendship (self, pseudo):
         try:
-            self.api.CreateFriendship(pseudo, 'Follow Someone ?')
-            self.ui.flash = ["You are now following %s" % pseudo, 'info']
+            self.api.CreateFriendship(pseudo)
+            self.ui.flash = ['You are now following %s' % pseudo, 'info']
         except:
-            self.ui.flash = ["Couldn't follow %s" % pseudo, 'warning']
+            self.ui.flash = ['Failed to follow %s' % pseudo, 'warning']
 
     def destroyFriendship (self, pseudo):
         try:
-            self.api.DestroyFriendship(pseudo, 'Unfollow Someone ?')
-            self.ui.flash = ["You have unfollowed %s" % pseudo, "info"]
+            self.api.DestroyFriendship(pseudo)
+            self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
         except:
-            self.ui.flash = ["Failed to unfollow %s" % pseudo, "warning"]
+            self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
 
 
     def pseudoBox (self, header):
