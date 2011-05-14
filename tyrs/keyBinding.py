@@ -47,7 +47,7 @@ class KeyBinding:
         box = editBox.EditBox(self.ui.screen, params)
         if box.confirm:
             try:
-                self.api.postTweet(box.getTweet())
+                self.api.postTweet(box.getContent())
                 self.ui.flash = ['Tweet has been send successfully.', "info"]
             except:
                 self.ui.flash = ["Couldn't send the tweet.", "warning"]
@@ -69,26 +69,44 @@ class KeyBinding:
 
     def followSelected (self):
         status = self.ui.getCurrentStatus()
+        if self.ui.isRetweet(status):
+            pseudo = self.ui.originOfRetweet(status)
+        else:
+            pseudo = status.user.screen_name
+        self.createFriendship(pseudo)
+
+    def unfollowSelected (self):
+        pseudo = self.ui.getCurrentStatus().user.screen_name
+        self.destroyFriendship(pseudo)
+
+    def follow (self):
+        box = self.pseudoBox()
+        self.createFriendship(box.getContent())
+
+    def unfollow (self):
+        box = self.pseudoBox()
+        self.destroyFriendship(box.getContent())
+
+    def createFriendship (self, pseudo):
         try:
-            if self.ui.isRetweet(status):
-                pseudo = self.ui.originOfRetweet(status)
-                self.api.CreateFriendship(pseudo)
-            else:
-                pseudo = status.user.screen_name
-                self.api.CreateFriendship(pseudo)
+            self.api.CreateFriendship(pseudo, 'Follow Someone ?')
             self.ui.flash = ["You are now following %s" % pseudo, 'info']
         except:
             self.ui.flash = ["Couldn't follow %s" % pseudo, 'warning']
 
-    def unfollowSelected (self):
-        pseudo = self.ui.getCurrentStatus().user.screen_name
+    def destroyFriendship (self, pseudo):
         try:
-            self.api.DestroyFriendship(pseudo)
+            self.api.DestroyFriendship(pseudo, 'Unfollow Someone ?')
             self.ui.flash = ["You have unfollowed %s" % pseudo, "info"]
         except:
             self.ui.flash = ["Failed to unfollow %s" % pseudo, "warning"]
 
-    def handleKeyBinding(self):
+
+    def pseudoBox (self, header):
+        params = {'char': 40, 'width': 40, 'header': header}
+        return editBox.EditBox(self.ui.screen, params)
+
+    def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
 
@@ -100,30 +118,37 @@ class KeyBinding:
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
             #
+
+            # DOWN
             if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
                 self.moveDown()
-
+            # UP
             elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
                 self.moveUp()
-
+            # TWEET
             elif ch == ord(self.conf.keys_tweet):
                 self.tweet()
-
+            # RETWEET
             elif ch == ord(self.conf.keys_retweet):
                 self.retweet()
-
+            # CLEAR
             elif ch == ord(self.conf.keys_clear):
                 self.clear()
-
+            # UPDATE
             elif ch == ord(self.conf.keys_update):
                 self.update()
-
+            # FOLLOW SELECTED
             elif ch == ord(self.conf.keys_follow_selected):
                 self.followSelected()
-
+            # UNFOLLOW SELECTED
             elif ch == ord(self.conf.keys_unfollow_selected):
                 self.unfollowSelected()
-
+            # FOLLOW
+            elif ch == ord(self.conf.keys_follow):
+                self.follow()
+            # UNFOLLOW
+            elif ch == ord(self.conf.keys_unfollow):
+                self.unfollow()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:

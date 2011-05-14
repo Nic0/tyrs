@@ -19,14 +19,14 @@ class EditBox:
         self.win.erase()
 
     def startEdit (self):
-        tweet = ''
+        content = ''
         maxyx = self.win.getmaxyx()
 
         while True:
             ch = self.win.getch()
 
             if ch == 10:          # ENTER: send the tweet
-                self.tweet = tweet[:140]
+                self.content = content
                 self.confirm = True
                 break
 
@@ -39,7 +39,7 @@ class EditBox:
                     self.win.move(cur_yx[0], cur_yx[1] - 1) # move back once
                     cur_yx = self.win.getyx()               # store new position
                     self.win.delch(cur_yx[0], cur_yx[1])    # delete the char
-                    tweet = tweet[:-1]                      # delete last char in tweet string
+                    content = content[:-1]                      # delete last char in tweet string
             else:
                 cur_yx = self.win.getyx()
 
@@ -49,13 +49,13 @@ class EditBox:
                     self.win.move(cur_yx[0] +1, 2)
                     cur_yx = self.win.getyx()
 
-                tweet += chr(ch)
+                content += chr(ch)
                 self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
                 cur_yx = self.win.getyx()
 
             # Character counter
             position = cur_yx   # Remember position of cursor
-            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(tweet))) # print number of char
+            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(content))) # print number of char
             self.win.move(position[0], position[1]) # go back to position
 
     def initWin (self, screen):
@@ -90,5 +90,5 @@ class EditBox:
         win.move(2, 2)
         return win
 
-    def getTweet (self):
-        return self.tweet
+    def getContent (self):
+        return self.content

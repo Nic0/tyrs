@@ -34,6 +34,9 @@ class Config:
     keus_update            = 'u'
     keys_follow_selected   = 'f'
     keys_unfollow_selected = 'l'
+    keys_follow            = 'F'
+    keys_unfollow          = 'L'
+
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -50,7 +53,7 @@ class Config:
 
         self.configFile = self.home + '/.config/tyrs/tyrs.cfg'
         if args.config != None:
-            self.config += '.' + args.config
+            self.configFile += '.' + args.config
 
         if not os.path.isfile(self.tokenFile):
             self.newAccount()
@@ -168,6 +171,14 @@ class Config:
         # unfollow_selected
         if self.conf.has_option('keys', 'unfollow_selected'):
             self.keys_unfollow_selected = self.conf.get('keys', 'unfollow_selected')
+
+        # follow
+        if self.conf.has_option('keys', 'follow'):
+            self.keys_follow = self.conf.get('keys', 'follow')
+
+        # unfollow
+        if self.conf.has_option('keys', 'unfollow'):
+            self.keys_unfollow = self.conf.get('keys', 'unfollow')
 
         #
         # PARAMS
