@@ -2,8 +2,8 @@ Date Format : YYYY-MM-DD
 
 * Version 0.1.3
 
-	* Desappearing tweet box bug fixed - issue #2
 	* Follow and unfollow ('f', 'F', 'l', 'L')
+	* Desappearing tweet box bug fixed - issue #2
 	* Commande line for account and config (changing the account directly with the CLI)
 	* Refactoring code
 

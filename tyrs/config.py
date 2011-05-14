@@ -31,7 +31,7 @@ class Config:
     keys_tweet             = 't'
     keys_clear             = 'c'
     keys_retweet           = 'r'
-    keus_update            = 'u'
+    keys_update            = 'u'
     keys_follow_selected   = 'f'
     keys_unfollow_selected = 'l'
     keys_follow            = 'F'
