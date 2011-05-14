@@ -1,14 +1,19 @@
-import sys
 import curses
 import curses.textpad
 
 class EditBox:
+    ''' Popup box with editing faculty.
+    @param params {char, width, header}
+           with char, the approximative maximum charactere we want the edit box may contain
+    @param screen the main screen
+    '''
 
     confirm = False
 
-    def __init__(self, screen):
+    def __init__(self, screen, params):
 
         self.screen = screen
+        self.params = params
         self.win = self.initWin(screen)
         self.startEdit()
         self.win.erase()
@@ -62,13 +67,13 @@ class EditBox:
         maxyx = screen.getmaxyx()
 
         # Set width
-        if maxyx[1] > 80:
-            width = 80
+        if maxyx[1] > self.params['width']:
+            width = self.params['width']
         else:
             width = maxyx[1] - 4 # 4: leave 2pix on every side at least
 
         # Set height
-        height = int(200 / width) + 4
+        height = int(self.params['char'] / width) + 4
 
         # Start of EditWin, display in the middle of the main screen
         start_y = maxyx[0]/2 - int(height/2)
@@ -81,7 +86,7 @@ class EditBox:
         win = screen.subwin(height, width, start_y, start_x)
 
         win.border(0)
-        win.addstr(0, 3, ' What\'s up ? ', curses.color_pair(3))
+        win.addstr(0, 3, ' ' + self.params['header'] + ' ', curses.color_pair(3))
         win.move(2, 2)
         return win
 

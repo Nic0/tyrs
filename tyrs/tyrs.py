@@ -11,11 +11,9 @@
 
 '''
 
-import time
 import config
 import uiTyrs
 import tweets
-import signal
 import argparse
 import threading
 import keyBinding as keys

@@ -105,10 +105,11 @@ class uiTyrs:
         self.status['count'] = len(self.statuses)
 
     def setFlash (self):
+        msg = ' ' + self.flash[0] + ' '
         if self.flash[1] == 'warning':
-            self.displayWarningMsg(self.flash[0])
+            self.displayWarningMsg(msg)
         else:
-            self.displayInfoMsg(self.flash[0])
+            self.displayInfoMsg(msg)
         self.flash = []
 
     def displayWarningMsg (self, msg):

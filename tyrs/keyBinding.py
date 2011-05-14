@@ -42,8 +42,9 @@ class KeyBinding:
             self.ui.status['current'] -= 1
 
     def tweet (self):
+        params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
-        box = editBox.EditBox(self.ui.screen)
+        box = editBox.EditBox(self.ui.screen, params)
         if box.confirm:
             try:
                 self.api.postTweet(box.getTweet())
@@ -53,7 +54,7 @@ class KeyBinding:
         self.ui.refresh_token = False
 
     def retweet (self):
-        status = self.ui.statuses[self.status['current']]
+        status = self.ui.statuses[self.ui.status['current']]
         try:
             self.api.retweet(status.GetId())
             self.ui.flash = ['Retweet has been send successfully.', 'info']
@@ -62,7 +63,6 @@ class KeyBinding:
 
     def clear (self):
         self.ui.clearStatuses()
-
 
     def update (self):
         self.ui.updateHomeTimeline()
