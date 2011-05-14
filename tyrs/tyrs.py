@@ -11,22 +11,20 @@
 
 '''
 
+import time
 import config
 import uiTyrs
 import tweets
-import time
 import signal
 import argparse
 import threading
 import keyBinding as keys
 
-import sys
-
 def arguments ():
 
-    parser = argparse.ArgumentParser('Tyrs: Twitter python curses')
-    parser.add_argument('-a', '--account')
-    parser.add_argument('-c', '--config')
+    parser = argparse.ArgumentParser('Tyrs: a twitter client writen in python with curses')
+    parser.add_argument('-a', '--account', help='Use another account, store in a different file')
+    parser.add_argument('-c', '--config', help='Use another configuration file')
     args = parser.parse_args()
     return args
 
@@ -39,14 +37,15 @@ def main():
     interface  = uiTyrs.uiTyrs(api, conf)
 
     update = UpdateThread(interface, conf)
+    #refresh = RefreshThread(interface, conf)
     update.start()
+    #refresh.start()
     keybinding = keys.KeyBinding(interface, conf, api)
     keybinding.handleKeyBinding()
     update.stop()
-    print 'Waiting for thread stoping...'
-
+    #refresh.stop()
     interface.tearDown()
-
+    print 'Waiting for thread stopping...'
     return 0
 
 class UpdateThread (threading.Thread):
@@ -61,6 +60,25 @@ class UpdateThread (threading.Thread):
     def run (self):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params_refresh * 60.0)
+            if not self._stopevent.isSet():
+                self.interface.updateHomeTimeline()
+                self.interface.displayHomeTimeline()
+
+    def stop (self):
+        self._stopevent.set()
+
+class RefreshThread (threading.Thread):
+
+    def __init__ (self, interface, conf):
+        self.interface = interface
+        self.conf = conf
+        threading.Thread.__init__(self, target=self.run)
+        self._stopevent = threading.Event()
+
+
+    def run (self):
+        while not self._stopevent.isSet():
+            self._stopevent.wait(2.0)
             if not self._stopevent.isSet():
                 self.interface.updateHomeTimeline()
                 self.interface.displayHomeTimeline()

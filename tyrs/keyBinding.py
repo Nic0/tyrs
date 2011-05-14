@@ -1,4 +1,5 @@
 import curses
+import editBox
 
 class KeyBinding:
 
@@ -42,7 +43,7 @@ class KeyBinding:
 
     def tweet (self):
         self.ui.refresh_token = True
-        box = editBox.EditBox(self.screen)
+        box = editBox.EditBox(self.ui.screen)
         if box.confirm:
             try:
                 self.api.postTweet(box.getTweet())
@@ -61,8 +62,7 @@ class KeyBinding:
 
     def clear (self):
         self.ui.clearStatuses()
-        self.ui.countStatuses()
-        self.ui.status['current'] = 0
+
 
     def update (self):
         self.ui.updateHomeTimeline()
