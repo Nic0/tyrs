@@ -12,7 +12,6 @@ class KeyBinding:
         curses.endwin()
         self.ui.maxyx = self.ui.screen.getmaxyx()
         curses.doupdate()
-        self.needRefresh = True
 
     def moveDown (self):
         if self.ui.status['current'] < self.ui.status['count'] - 1:
@@ -33,7 +32,6 @@ class KeyBinding:
 
 
             self.ui.status['current'] += 1
-            self.needRefresh = True
 
     def moveUp (self):
         if self.ui.status['current'] > 0:
@@ -41,7 +39,6 @@ class KeyBinding:
             if self.ui.status['current'] == self.ui.status['first']:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
-            self.needRefresh = True
 
     def tweet (self):
         self.ui.refresh_token = True
@@ -52,7 +49,6 @@ class KeyBinding:
                 self.ui.flash = ['Tweet has been send successfully.', "info"]
             except:
                 self.ui.flash = ["Couldn't send the tweet.", "warning"]
-        self.needRefresh = True
         self.ui.refresh_token = False
 
     def retweet (self):
@@ -62,37 +58,41 @@ class KeyBinding:
             self.ui.flash = ['Retweet has been send successfully.', 'info']
         except:
             self.ui.flash = ["Couldn't send the retweet.", 'warning']
-        self.needRefresh = True
 
     def clear (self):
         self.ui.clearStatuses()
         self.ui.countStatuses()
         self.ui.status['current'] = 0
-        self.needRefresh = True
 
     def update (self):
         self.ui.updateHomeTimeline()
-        self.needRefresh = True
 
     def followSelected (self):
-        pass
+        status = self.ui.getCurrentStatus()
+        try:
+            if self.ui.isRetweet(status):
+                pseudo = self.ui.originOfRetweet(status)
+                self.api.CreateFriendship(pseudo)
+            else:
+                pseudo = status.user.screen_name
+                self.api.CreateFriendship(pseudo)
+            self.ui.flash = ["You are now following %s" % pseudo, 'info']
+        except:
+            self.ui.flash = ["Couldn't follow %s" % pseudo, 'warning']
 
     def unfollowSelected (self):
-        pseudo = self.ui.statuses[self.ui.status['current']].user.screen_name
+        pseudo = self.ui.getCurrentStatus().user.screen_name
         try:
             self.api.DestroyFriendship(pseudo)
             self.ui.flash = ["You have unfollowed %s" % pseudo, "info"]
         except:
             self.ui.flash = ["Failed to unfollow %s" % pseudo, "warning"]
-        self.needRefresh = True
 
     def handleKeyBinding(self):
         '''Should have all keybinding handle here'''
         while True:
 
             ch = self.ui.screen.getch()
-
-            self.needRefresh = False
 
             if self.ui.resize_event:
                 self.resizeEvent()
@@ -129,5 +129,4 @@ class KeyBinding:
             elif ch == ord(self.conf.keys_quit) or ch == 27:
                 break
 
-            if self.needRefresh:
-                self.ui.displayHomeTimeline()
+            self.ui.displayHomeTimeline()

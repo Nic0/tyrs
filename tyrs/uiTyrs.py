@@ -249,6 +249,7 @@ class uiTyrs:
 
     def isRetweet (self, status):
         status.rt = self.regexRetweet.match(status.GetText())
+        return status.rt
 
     def originOfRetweet (self, status):
         origin = status.GetText()
@@ -269,3 +270,5 @@ class uiTyrs:
     def clearStatuses (self):
         self.statuses = [self.statuses[0]]
 
+    def getCurrentStatus (self):
+        return self.statuses[self.status['current']]

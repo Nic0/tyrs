@@ -24,7 +24,7 @@ class Tweets(Api):
         self.api.DestroyFriendship(pseudo)
 
     def CreateFriendship (self, pseudo):
-        self.CreateFriendship(pseudo)
+        self.api.CreateFriendship(pseudo)
 
 class ApiPatch (Api):
     def PostRetweet(self, id):
