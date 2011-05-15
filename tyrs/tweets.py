@@ -1,4 +1,4 @@
-import twitter
+#import twitter
 from twitter import Api
 import urllib2
 import simplejson

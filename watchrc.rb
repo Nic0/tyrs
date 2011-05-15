@@ -5,5 +5,5 @@ watch '^tyrs/(.*)\.py$' do |match|
 end
 
 def pychecker file
-    system("pychecker --stdlib #{file}") if File.exists?(file)
+  system("pychecker --stdlib #{file}") if File.exists?(file)
 end
