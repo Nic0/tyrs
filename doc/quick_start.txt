@@ -1,0 +1,110 @@
+Tyrs Quick Start
+=================
+
+This is a small introduction to start using Tyrs quickly, and does't go in
+details like configuration or installation.
+
+For more information, you could read these documentations:
+
+* link:/reference.html[the full documentation.]
+* link:/installation.html[the installation guide.]
+
+First authentification
+----------------------
+
+You may know, Twitter use now a specific authentification call OAuth, and the
+first step is to obtain the permission from Twitter. It's very easy.
+
+First, you must have a web browser, and *identify to you account on twitter*. +
+When you start the application, and it don't find any profil file, it will give
+you something like:
+
+.Greeting when no profile is detected
+--------------------
+There is no profile detected.
+
+It should be in /home/nicolas/.config/tyrs/tyrs.cfg
+If you want to setup a new account, let's go through some basic steps
+If you want to skip this, just press return or ctrl-C.
+
+Requesting temp token from Twitter
+
+Please visit this Twitter page and retrieve the pincode to be used
+in the next step to obtaining an Authentication Token:
+
+https://api.twitter.com/oauth/authorize?oauth_token=OxFDW4zW3YeiueuizjazAa4VSdeuieuiMO5b8GpS8EoDKRM
+
+Pincode?
+-------------------
+
+You only need to go on the link show above, and return the code that the
+browser show you. And that's it, you are yet on twitter from your console.
+
+[TIP]
+===================
+you may have several account, and just need start the application with
+`-a` arguments.
+[source,bash]
+tyrs -a foo
+
+===================
+
+Usage
+-----
+
+Tyrs is mostly used with keybord, and come with some keys shortcuts, here are
+list some of the most commun one. You may check link:/reference.html[the full
+reference guide] for more details.
+
+Navigation
+~~~~~~~~~~
+
+* j: Move down
+* k: Move up
+
+Functions
+~~~~~~~~~
+
+* t: Open a box to edit a tweet 
+* r: Retweet the current tweet
+* f, F: Follow someone (f, follow the current, F ask you who you want follow)
+* l, L: Unfollow (leave) someone
+* q: Quit (also ESC is possible)
+* c: Clear the timeline
+* u: Update the timeline
+
+Tweet edition
+~~~~~~~~~~~~~
+
+* ESC: Abord the edition
+* ENTER: Validation/Send
+* DEL: delete last character
+
+
+Configuration
+-------------
+
+You can add a configuration file, there is no need to have one to get
+it work, but you can customized some keybinding, color and basic
+behavior.
+
+The configuration file should be place in `~/.config/tyrs/tyrs.cfg`
+
+For a full exemple with comments of a configuration file, check the
+`doc/tyrs.sample.cfg`.
+
+[TIP]
+You may have more than one configuration file, exactly as the account is
+handle, it's allow you to load two differents configuration without change
+directly them. Just start with an `-c` argument. (or `--config`)
+
+Related Sites
+-------------
+
+* Check the development on link:https://github.com/Nic0/tyrs[Github]
+* Found a bug ? or wan't propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
+* link:http://www.nicosphere.net[My blog], with a
+link:http://www.nicosphere.net/tyrs-premier-jet-dun-client-twitter-ncurses-2361/[first],
+and
+link:http://www.nicosphere.net/tyrs-client-twitter-ncurses-un-point-sur-levolution-2363/[second]
+post about Tyrs. (french)
