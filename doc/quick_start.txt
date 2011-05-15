@@ -1,13 +1,15 @@
 Tyrs Quick Start
 =================
+:author: Nicolas Paris
+
 
 This is a small introduction to start using Tyrs quickly, and does't go in
 details like configuration or installation.
 
 For more information, you could read these documentations:
 
-* link:/reference.html[the full documentation.]
-* link:/installation.html[the installation guide.]
+* link:reference.html[The full documentation.]
+* link:reference.html#installation[The installation guide.]
 
 First authentification
 ----------------------
@@ -43,7 +45,7 @@ browser show you. And that's it, you are yet on twitter from your console.
 [TIP]
 ===================
 you may have several account, and just need start the application with
-`-a` arguments.
+`-a` argument.
 [source,bash]
 tyrs -a foo
 
@@ -88,10 +90,10 @@ You can add a configuration file, there is no need to have one to get
 it work, but you can customized some keybinding, color and basic
 behavior.
 
-The configuration file should be place in `~/.config/tyrs/tyrs.cfg`
+The configuration file should be place in '~/.config/tyrs/tyrs.cfg'
 
 For a full exemple with comments of a configuration file, check the
-`doc/tyrs.sample.cfg`.
+'doc/tyrs.sample.cfg'.
 
 [TIP]
 You may have more than one configuration file, exactly as the account is

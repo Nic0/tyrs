@@ -1,0 +1,251 @@
+Tyrs Reference Guide
+====================
+:author: Nicolas Paris
+
+[[installation]]
+Installation
+------------
+
+Usage
+-----
+
+Console arguments
+-----------------
+
+Configuration
+-------------
+
+Introduction
+~~~~~~~~~~~~
+
+Tyrs allow you some configurations, let's see the way it's works.
+
+It's base on the 'ConfigParser' core module from python, and it's a very
+readable and easy to get through syntax. All the configuration is based on this
+schema:
+
+[source,conf]
+------------
+[section1]
+param1 = string
+param2 = 42
+[section2]
+other_param = otherValue
+...
+------------
+
+So far, there are only three sections for the configuration, they will be explain in details
+in this chapter. But a quick reminder:
+
+* *colors*: Customisation of colors.
+* *keybinding*: Customisation of keys shortcuts.
+* *params*: Some other params.
+
+NOTE: All sections and parameters are lower case, for params composed with two
+words, they are separate with an underscore `'_'' (no camelCase).
+
+Configuration file
+~~~~~~~~~~~~~~~~~~
+
+The configuration file is located in '~/.config/tyrs/tyrs.cfg'.
+You may handle several configuration file, as for the account, with an
+argument when you start Tyrs. The argument will append to the filename of the
+configuration.
+
+.Custom config file
+[source,bash]
+$ tyrs -c foo
+
+This will read the configuration from the '~/.config/tyrs/tyrs.cfg.foo'.
+
+CAUTION: You don't need to pass as argument the full filename, as it will read from
+some 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
+
+Colors
+~~~~~~
+
+Values possible
+^^^^^^^^^^^^^^^
+
+The possibles values are restricted with curse mode, here a list of aviable
+values.
+
+.List of values possible
+[width="25%"]
+|==================
+| Value | Color
+| 1     | Black
+| 2     | Blue
+| 3     | Cyan
+| 4     | Green
+| 5     | Magenta
+| 6     | Red
+| 7     | White
+| 8     | Yellow
+|==================
+
+Overview
+^^^^^^^^
+
+This allow the colors customisation, here are display as a configuration file
+all parameters possible, with there defaults values
+
+[source,conf]
+----------------
+[colors]
+header      = 3
+hashtag     = 8
+attag       = 4
+text        = 7
+warning_msg = 6
+info_msg    = 4
+----------------
+
+Listing
+^^^^^^^
+
+header::
+* Description: Corresponding to the first line of a tweet, and display
+informations such as user name of the tweeter, hours information, retweets
+information.
+* Default: 3 (cyan)
+
+hashtag::
+* Description: This will highlight the hashtag `#` word, usefull to follow some
+specific subjects, like _#Tyrs_.
+* Default: 8 (yellow)
+
+attag::
+* Description: This will highlight when a name is followed by a `at' tag like
+_@nic0sphere_.
+* Default: 4 (green)
+
+warning_msg::
+* Description: When something goes wrong, or unexpected, a warning message is
+displayed on the top left of the console, and let you know what's happen.
+* Exemples: `Couldn\'t retreive tweets', `Couldn\'t send tweet'...
+* Default: 6 (red)
+
+info_msg::
+* Description: When an action is successful, or just an information, Tyrs let
+you know, exactly as warning_msg.
+* Exemples: `Updating timeline', `Tweet send successfully'...
+* Default: 4 (green)
+
+text::
+* Description: This is all the basic text, such as tweets (without highlight),
+inputs in the tweet edit box.
+* Default: 7 (white)
+
+Keys Binding
+~~~~~~~~~~~~
+
+Overview
+^^^^^^^^
+
+This allow you to change keys shortcuts to your needs, here are display as a
+configuration file all params possible.
+
+[source,conf]
+--------------
+[keys]
+up                = k
+down              = j
+quit              = q
+tweet             = t
+clear             = c
+retweet           = r
+update            = u
+follow_selected   = f
+unfollow_selected = l
+follow            = F
+unfollow          = L
+---------------
+
+Listing
+^^^^^^^
+
+up::
+* Description: Navigation, Moves up in the timeline.
+* Alternative: Up arrow
+* Default: k
+
+down::
+* Description: Navigation, moves down in the timeline.
+* Alternative: Down arrow
+* Default: j
+
+quit::
+* Description: Leave Tyrs, and returning to a normal life. 
+* Alternative: ESC (escape)
+* Default: q
+
+tweet::
+* Description:
+* Default: t
+
+clear::
+* Description:
+* Default: c
+
+retweet::
+* Description:
+* Default: r
+
+update::
+* Description:
+* Default: u
+
+follow_selected::
+* Description:
+* Default: f
+
+unfollow_selected::
+* Description:
+* Default: l
+
+follow::
+* Description:
+* Default: F
+
+unfollow::
+* Description:
+* Default: L
+
+Parameters
+~~~~~~~~~~
+
+Overview
+^^^^^^^^
+
+[source,conf]
+-------------------
+[params]
+refresh       = 10
+tweet_border  = 1
+relative_time = 0
+retweet_by    = 1
+-------------------
+
+Listing
+^^^^^^^
+
+refresh::
+* Description:
+* Values:
+* Default: 10
+
+tweet_border::
+* Description:
+* Values:
+* Default: 1
+
+relative_time::
+* Description:
+* Values:
+* Default: 0
+
+retweet_by::
+* Description:
+* Values:
+* Default: 0
