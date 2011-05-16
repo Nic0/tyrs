@@ -111,6 +111,7 @@ Usage
 Console arguments
 -----------------
 
+[[configuration]]
 Configuration
 -------------
 

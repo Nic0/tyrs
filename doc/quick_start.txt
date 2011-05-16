@@ -61,19 +61,19 @@ reference guide] for more details.
 Navigation
 ~~~~~~~~~~
 
-* j: Move down
-* k: Move up
+* *j*: Move down
+* *k*: Move up
 
 Functions
 ~~~~~~~~~
 
-* t: Open a box to edit a tweet 
-* r: Retweet the current tweet
-* f, F: Follow someone (f, follow the current, F ask you who you want follow)
-* l, L: Unfollow (leave) someone
-* q: Quit (also ESC is possible)
-* c: Clear the timeline
-* u: Update the timeline
+* *t*: Open a box to edit a tweet 
+* *r*: Retweet the current tweet
+* *f*, *F*: Follow someone (f, follow the current, F ask you who you want follow)
+* *l*, *L*: Unfollow (leave) someone
+* *q*: Quit (also ESC is possible)
+* *c*: Clear the timeline
+* *u*: Update the timeline
 
 Tweet edition
 ~~~~~~~~~~~~~
@@ -92,8 +92,9 @@ behavior.
 
 The configuration file should be place in '~/.config/tyrs/tyrs.cfg'
 
-For a full exemple with comments of a configuration file, check the
-'doc/tyrs.sample.cfg'.
+To learn how the configuration works, check the
+link:reference.html#configuration[configuration part] of the reference guide.
+
 
 [TIP]
 You may have more than one configuration file, exactly as the account is
