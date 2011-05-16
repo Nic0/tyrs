@@ -11,9 +11,11 @@ Functionnality
 - Display home timeline with colorfull tweets
 - Send tweets
 - Retweets
+- Follow/Unfollow
 - Configuration file allow lots of customisation
 
-Please check for more information `doc/user_documentation`.
+Check for a quick start `doc/quick_start.txt`.
+Please check for more information `doc/reference.txt`.
 A documented configuration file is aviable in `doc/tyrs.sample.cfg`
 
 Licence
