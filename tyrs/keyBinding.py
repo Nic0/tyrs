@@ -1,3 +1,4 @@
+import os
 import curses
 import editBox
 
@@ -101,6 +102,14 @@ class KeyBinding:
         except:
             self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
 
+    def openurl (self):
+        urls = self.ui.getUrls()
+        for url in urls:
+            #try:
+            os.system(self.conf.params_openurl_command % url)
+            #except:
+                #self.ui.Flash  = ["Couldn't open url", 'warning']
+
     def pseudoBox (self, header):
         params = {'char': 40, 'width': 40, 'header': header}
         return editBox.EditBox(self.ui.screen, params)
@@ -148,6 +157,9 @@ class KeyBinding:
             # UNFOLLOW
             elif ch == ord(self.conf.keys_unfollow):
                 self.unfollow()
+            # OPENURL
+            elif ch == ord(self.conf.keys_openurl):
+                self.openurl()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:

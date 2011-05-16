@@ -36,12 +36,14 @@ class Config:
     keys_unfollow_selected = 'l'
     keys_follow            = 'F'
     keys_unfollow          = 'L'
+    keys_openurl           = 'o'
 
 
     params_refresh         = 10
     params_tweet_border    = 1
     params_relative_time   = 0
     params_retweet_by      = 1
+    params_openurl_command = 'firefox %s'
 
     home       = os.environ['HOME']
 
@@ -180,6 +182,10 @@ class Config:
         if self.conf.has_option('keys', 'unfollow'):
             self.keys_unfollow = self.conf.get('keys', 'unfollow')
 
+        # openurl
+        if self.conf.has_option('keys', 'openurl'):
+            self.keys_openurl = self.conf.get('keys', 'openurl')
+        
         #
         # PARAMS
         #
@@ -199,6 +205,11 @@ class Config:
         # Retweet_By
         if self.conf.has_option('params', 'retweet_by'):
             self.params_retweet_by = int(self.conf.get('params', 'retweet_by'))
+
+        # Retweet_By
+        if self.conf.has_option('params', 'openurl_command'):
+            self.params_openurl_command = int(self.conf.get('params',
+                'openurl_command'))
 
 
     def authorization (self):
