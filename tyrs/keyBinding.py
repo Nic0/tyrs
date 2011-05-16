@@ -81,12 +81,16 @@ class KeyBinding:
         self.destroyFriendship(pseudo)
 
     def follow (self):
+        self.ui.refresh_token = True
         box = self.pseudoBox('Follow Someone ?')
         self.createFriendship(box.getContent())
+        self.ui.refresh_token = False
 
     def unfollow (self):
+        self.ui.refresh_token = True
         box = self.pseudoBox('Unfollow Someone ?')
         self.destroyFriendship(box.getContent())
+        self.ui.refresh_token = False
 
     def createFriendship (self, pseudo):
         try:
