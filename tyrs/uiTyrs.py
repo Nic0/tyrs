@@ -33,7 +33,7 @@ class uiTyrs:
     self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     '''
 
-    status = {'current': 0, 'current_id': '', 'first': 0, 'last': 0, 'count': 0}
+    status = {'current': 0, 'first': 0, 'last': 0, 'count': 0}
     statuses = []
     resize_event = False
     regexRetweet = re.compile('^RT @\w+:')
@@ -80,13 +80,14 @@ class uiTyrs:
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
-        try:
-            self.flash = ['Updating timeline...', 'info']
-            self.appendNewStatuses(self.api.updateHomeTimeline())
-            self.displayHomeTimeline()
-            self.countStatuses()
-        except:
-            self.flash = ["Couldn't retrieve tweets", 'warning']
+        #try:
+        self.flash = ['Updating timeline...', 'info']
+        self.displayHomeTimeline()
+        self.appendNewStatuses(self.api.updateHomeTimeline())
+        self.displayHomeTimeline()
+        self.countStatuses()
+        #except:
+            #self.flash = ["Couldn't retrieve tweets", 'warning']
 
     def appendNewStatuses (self, newStatuses):
         # Fresh new start.
@@ -99,11 +100,14 @@ class uiTyrs:
         else:
             # backtotop is used to make sure we will display the first tweet
             # if the first status was displayed
+            backToTop = False
             if self.statuses[0] == self.status['first']:
                 backToTop = True
+            
             for i in range(len(newStatuses)):
                 if newStatuses[i] == self.statuses[0]:
                     self.statuses = newStatuses[:i] + self.statuses
+                    self.status['current'] += len(newStatuses[:i])
             if backToTop:
                 self.status['first'] = self.statuses[0]
 
