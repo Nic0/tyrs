@@ -6,6 +6,105 @@ Tyrs Reference Guide
 Installation
 ------------
 
+ArchLinux
+~~~~~~~~~
+
+As Tyrs is aviable on AUR, the installation is the easiest way. Just use
+'Yaourt' or any AUR-helpers, and grab a copy from the user repository
+
+[source,bash]
+yaourt -S tyrs
+
+From source
+~~~~~~~~~~~
+
+Dependency
+^^^^^^^^^^
+
+Tyrs requires some dependencies
+
+* Python 2
+* link:http://code.google.com/p/python-twitter/[python-twitter]
+* link:https://github.com/simplegeo/python-oauth2[python-oauth2]
+
+The installation depends of the distribution use, with debian or ubuntu it will be
+[source,bash]
+apt-get install python-twitter python-oauth2
+
+.Issue with Ubuntu 11.04
+[IMPORTANT]
+================================
+An issue was found with Ubuntu 11.04 and the current python-twitter package,
+this wasn't fixed yet, but can work fine, if you get the last library aviable,
+as follow in a console:
+[source,bash]
+apt-get remove python-twitter
+wget http://python-twitter.googlecode.com/files/python-twitter-0.8.2.tar.gz
+tar xvf python-twitter-0.8.2.tar.gz && cd python-twitter-0.8.2
+python setup.py build
+sudo python setup.py install
+
+=================================
+
+Installation
+^^^^^^^^^^^^
+
+There is two way to get Tyrs installed:
+
+* With _setup.py_, this allow a clean install, like with the autotools for C
+programs (you surely know, `configure', `make', `make install')
+* Just lauch the main file like a python script will work fine as well
+
+We will go throught both way, I recommends to use the first solution
+
+First, get the last tarball (curently, the last one is the {revision}) +
+http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
+
+[source,bash]
+tar xvf tyrs-0.1.3.tar.gz
+cd tyrs
+
+.With setup.py
+
+python setup.py build
+sudo python setup.py install
+
+Those commands decompress the tarball, go to the repertory, prepare the
+installation (you can checks files that will be install here), and then install
+it, note that _the last command need to be done as_ *root*. And that's all, just
+run Tyrs with a simple :
+
+[source,bash]
+tyrs
+
+.Without setup.py
+
+Well, you just need to lauch it, the main entry of the script is 'tyrs/tyrs.py'
+so you need to call it with python like this:
+
+[source,bash]
+python tyrs/tyrs.py
+
+Github
+~~~~~~
+
+The development of Tyrs is based at link:https://github.com/Nic0/tyrs[Github],
+you can easely get the lastest development version.
+
+[source,bash]
+git clone git://github.com/Nic0/tyrs.git
+
+You may follow the same installation steps seen above to get this version work.
+
+.Arch Linux
+[TIP]
+=================================
+A package is aviable from AUR to retrieve the last verion from github.
+[source,bash]
+yaourt -S tyrs-git
+
+=================================
+
 Usage
 -----
 
@@ -168,49 +267,53 @@ Listing
 up::
 * Description: Navigation, Moves up in the timeline.
 * Alternative: Up arrow
-* Default: k
+* Default: *k*
 
 down::
 * Description: Navigation, moves down in the timeline.
 * Alternative: Down arrow
-* Default: j
+* Default: *j*
 
 quit::
 * Description: Leave Tyrs, and returning to a normal life. 
 * Alternative: ESC (escape)
-* Default: q
+* Default: *q*
 
 tweet::
-* Description:
-* Default: t
+* Description: Open an input box to write your tweet.
+* Default: *t*
 
 clear::
-* Description:
-* Default: c
+* Description: Clear the timeline and live only the last tweet.
+* Default: *c*
 
 retweet::
-* Description:
-* Default: r
+* Description: Retweet the current tweet.
+* Default: *r*
 
 update::
-* Description:
-* Default: u
+* Description: Force the update of you timeline.
+* Default: *u*
 
 follow_selected::
-* Description:
-* Default: f
+* Description: Follow the current tweet, this only make sense for the case of
+retweets, as you already follow the others, but if you follow a selected tweet,
+you will follow the original tweeter one.
+* Default: *f*
 
 unfollow_selected::
-* Description:
-* Default: l
+* Description: Unfollow (leave) the personne who tweets (or retweets) the current
+tweet.
+* Default: *l*
 
 follow::
-* Description:
-* Default: F
+* Description: Follow someone, but the difference with `follow_selected' is
+that you will have a small input box, and can enter someone to follow.
+* Default: *F*
 
-unfollow::
-* Description:
-* Default: L
+unfollow:: 
+* Description: Unfollow someone, display an input box to enter the name.
+* Default: *L*
 
 Parameters
 ~~~~~~~~~~
@@ -231,21 +334,27 @@ Listing
 ^^^^^^^
 
 refresh::
-* Description:
-* Values:
+* Description: Define the frequency that the timeline will be
+refresh, meaning that Tyrs will try to retreive some new tweets.
+* Values: Any positive value.
+* Unit: Minute
 * Default: 10
 
 tweet_border::
-* Description:
-* Values:
+* Description: Display some border on every tweets
+* Values: 0 or 1
 * Default: 1
 
 relative_time::
-* Description:
-* Values:
+* Description: If set to 1, this will display the time of each tweets like `xx
+minutes ago', otherwise, will display a more classic format like `HH:MM'.
+* Values: 0 or 1
 * Default: 0
 
 retweet_by::
-* Description:
-* Values:
-* Default: 0
+* Description: Normally, if a tweet is retweet, the header will be like
+`tweeter (some time ago) RT by retweeter', with name of each one, if you find
+it to verbose, set to 0 will only display the retweeter.
+* Values: 0 or 1
+* Default: 1
+

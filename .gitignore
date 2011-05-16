@@ -7,4 +7,8 @@ tyrsrc
 doc/html
 doc/latex
 doc/*.html
+doc/css
+doc/javascripts
+doc/*.conf
 doc/images/*
+doc/reference-dev.*

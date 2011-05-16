@@ -101,11 +101,10 @@ class KeyBinding:
         except:
             self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
 
-
     def pseudoBox (self, header):
         params = {'char': 40, 'width': 40, 'header': header}
         return editBox.EditBox(self.ui.screen, params)
-
+    
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
