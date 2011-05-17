@@ -1,3 +1,4 @@
+#! -*- coding: utf-8 -*-
 import curses
 import curses.textpad
 
@@ -9,6 +10,7 @@ class EditBox:
     '''
 
     confirm = False
+    content = ''
 
     def __init__(self, screen, params):
 
@@ -19,14 +21,12 @@ class EditBox:
         self.win.erase()
 
     def startEdit (self):
-        content = ''
-        maxyx = self.win.getmaxyx()
+        self.maxyx = self.win.getmaxyx()
 
         while True:
             ch = self.win.getch()
 
             if ch == 10:          # ENTER: send the tweet
-                self.content = content
                 self.confirm = True
                 break
 
@@ -36,27 +36,35 @@ class EditBox:
             elif ch == 127:       # DEL
                 cur_yx = self.win.getyx()
                 if cur_yx[1] > 0:
-                    self.win.move(cur_yx[0], cur_yx[1] - 1) # move back once
-                    cur_yx = self.win.getyx()               # store new position
-                    self.win.delch(cur_yx[0], cur_yx[1])    # delete the char
-                    content = content[:-1]                      # delete last char in tweet string
+                    if ord(self.content[-1]) <= 128:
+                        self.content = self.content[:-1]
+                    else:
+                        self.content = self.content[:-2]
             else:
-                cur_yx = self.win.getyx()
+                self.content += chr(ch)
 
-                # for new lines, we don't want to start right in the border
-                # we move the cursor, and get the correct value back to cur_yx
-                if cur_yx[1] == maxyx[1] - 2:
-                    self.win.move(cur_yx[0] +1, 2)
-                    cur_yx = self.win.getyx()
+            self.refresh()
 
-                content += chr(ch)
-                self.win.addstr(cur_yx[0], cur_yx[1], chr(ch))
-                cur_yx = self.win.getyx()
+    def refresh (self):
+        self.win.erase()
+        self.win = self.initWin(self.screen)
+        self.displayContent()
+        self.win.refresh()
 
-            # Character counter
-            position = cur_yx   # Remember position of cursor
-            self.win.addstr((maxyx[0]-1), (maxyx[1]-5), str(len(content))) # print number of char
-            self.win.move(position[0], position[1]) # go back to position
+    def displayContent (self):
+        yx = [2,2]
+        token = False
+        for ch in self.content:
+            if yx[1] == self.maxyx[1]-2:
+                yx[0] += 1
+                yx[1] = 2
+            self.win.addstr(yx[0], yx[1], ch)
+            if not token:
+                yx[1] += 1
+                if not ord(ch) <= 128:
+                    token = True
+            else:
+                token = False
 
     def initWin (self, screen):
         '''
@@ -86,9 +94,25 @@ class EditBox:
         win = screen.subwin(height, width, start_y, start_x)
 
         win.border(0)
-        win.addstr(0, 3, ' ' + self.params['header'] + ' ', curses.color_pair(3))
-        win.move(2, 2)
+        counter = str(self.countChr())
+        header = ' %s %s ' % (self.params['header'], counter)
+
+        #win.addstr(0, 3, ' ' + self.params['header'] + ' ' + counter + ' ', curses.color_pair(3))
+        win.addstr(0, 3, header, curses.color_pair(3))
         return win
+
+    def countChr (self):
+        i = 0
+        token = False
+        for ch in self.content:
+            if not token:
+                i += 1
+                if not ord(ch) <= 128:
+                    token = True
+            else:
+                token = False
+        return i
 
     def getContent (self):
         return self.content
+    
