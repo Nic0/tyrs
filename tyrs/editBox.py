@@ -34,8 +34,7 @@ class EditBox:
                 break
 
             elif ch == 127:       # DEL
-                cur_yx = self.win.getyx()
-                if cur_yx[1] > 0:
+                if len(self.content) > 0:
                     if ord(self.content[-1]) <= 128:
                         self.content = self.content[:-1]
                     else:
