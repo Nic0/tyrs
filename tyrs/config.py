@@ -44,6 +44,7 @@ class Config:
     params_relative_time   = 0
     params_retweet_by      = 1
     params_openurl_command = 'firefox %s'
+    params_transparency    = True
 
     home       = os.environ['HOME']
 
@@ -211,6 +212,10 @@ class Config:
             self.params_openurl_command = int(self.conf.get('params',
                 'openurl_command'))
 
+        # Transparency
+        if self.conf.has_option('params', 'transparency'):
+            if int(self.conf.get('params', 'transparency')) == 0:
+                self.params_transparency = False
 
     def authorization (self):
         ''' This function from python-twitter developers '''

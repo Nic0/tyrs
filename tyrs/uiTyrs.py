@@ -60,16 +60,23 @@ class uiTyrs:
         curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
         curses.curs_set(0)      # Dont display cursor
-
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_BLACK, False)   # 1 black
-        curses.init_pair(2, curses.COLOR_BLUE, False)    # 2 blue
-        curses.init_pair(3, curses.COLOR_CYAN, False)    # 3 cyan
-        curses.init_pair(4, curses.COLOR_GREEN, False)   # 4 green
-        curses.init_pair(5, curses.COLOR_MAGENTA, False) # 5 magenta
-        curses.init_pair(6, curses.COLOR_RED, False)     # 6 red
-        curses.init_pair(7, curses.COLOR_WHITE, False)   # 7 white
-        curses.init_pair(8, curses.COLOR_YELLOW, False)  # 8 yellow
+
+        if conf.params_transparency:
+            curses.use_default_colors()
+            bgcolor = -1
+        else:
+            bgcolor = 0
+
+
+        curses.init_pair(1, curses.COLOR_BLACK, bgcolor)   # 1 black
+        curses.init_pair(2, curses.COLOR_BLUE, bgcolor)    # 2 blue
+        curses.init_pair(3, curses.COLOR_CYAN, bgcolor)    # 3 cyan
+        curses.init_pair(4, curses.COLOR_GREEN, bgcolor)   #g 4 green
+        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor) # 5 magenta
+        curses.init_pair(6, curses.COLOR_RED, bgcolor)     # 6 red
+        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)   # 7 white
+        curses.init_pair(8, curses.COLOR_YELLOW, bgcolor)  # 8 yellow
 
         self.maxyx = screen.getmaxyx()
 
