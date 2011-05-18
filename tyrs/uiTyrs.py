@@ -109,10 +109,10 @@ class uiTyrs:
                     self.statuses = newStatuses[:i] + self.statuses
                     self.status['current'] += len(newStatuses[:i])
                     updated = True
-                if backToTop:
-                self.status['first'] = self.statuses[0]
                 if not updated:
                     self.statuses = newStatuses
+                if backToTop:
+                    self.status['first'] = self.statuses[0]
 
     def countStatuses (self):
         self.status['count'] = len(self.statuses)
