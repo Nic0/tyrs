@@ -251,7 +251,7 @@ class uiTyrs:
             hour = time.localtime(hour)
             hour = time.strftime('%H:%M', hour)
 
-            return status.GetCreatedAt()
+            return hour
 
     def getHeader (self, status):
         '''@return string'''
