@@ -80,14 +80,14 @@ class uiTyrs:
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
-        #try:
-        self.flash = ['Updating timeline...', 'info']
-        self.displayHomeTimeline()
-        self.appendNewStatuses(self.api.updateHomeTimeline())
-        self.displayHomeTimeline()
-        self.countStatuses()
-        #except:
-            #self.flash = ["Couldn't retrieve tweets", 'warning']
+        try:
+            self.flash = ['Updating timeline...', 'info']
+            self.displayHomeTimeline()
+            self.appendNewStatuses(self.api.updateHomeTimeline())
+            self.displayHomeTimeline()
+            self.countStatuses()
+        except:
+            self.flash = ["Couldn't retrieve tweets", 'warning']
 
     def appendNewStatuses (self, newStatuses):
         # Fresh new start.

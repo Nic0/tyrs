@@ -42,7 +42,7 @@ class EditBox:
                     else:
                         self.content = self.content[:-2]
 
-                    if self.content[-1] > 128:
+                    if len(self.content) > 0 and self.content[-1] > 128:
                         self.del_utf = True
 
             else:
@@ -72,12 +72,11 @@ class EditBox:
                 token = False
 
         if self.del_utf == True:
-            if self.content > 0:
+            if len(self.content) > 0:
                 if ord(self.content[-1]) >= 128:
                     curyx = self.win.getyx()
-                    #self.win.move(curyx[0], curyx[1]-1)
-                    self.win.delch(curyx[0], curyx[1]-1)
-
+                    self.win.delch(curyx[0], curyx[1])
+            self.del_utf == False
     def initWin (self, screen):
         '''
         This try to find a good size for the tweet window,
@@ -127,4 +126,4 @@ class EditBox:
 
     def getContent (self):
         return self.content
-    
+
