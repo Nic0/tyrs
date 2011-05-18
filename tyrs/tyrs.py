@@ -18,6 +18,9 @@ import argparse
 import threading
 import keyBinding as keys
 
+#import locale
+#locale.setlocale(locale.LC_ALL, '')
+
 def arguments ():
 
     parser = argparse.ArgumentParser('Tyrs: a twitter client writen in python with curses')

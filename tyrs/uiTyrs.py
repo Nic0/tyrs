@@ -62,7 +62,7 @@ class uiTyrs:
         curses.curs_set(0)      # Dont display cursor
         curses.start_color()
 
-        if conf.params_transparency:
+        if self.conf.params_transparency:
             curses.use_default_colors()
             bgcolor = -1
         else:
@@ -251,7 +251,7 @@ class uiTyrs:
             hour = time.localtime(hour)
             hour = time.strftime('%H:%M', hour)
 
-            return hour
+            return status.GetCreatedAt()
 
     def getHeader (self, status):
         '''@return string'''
