@@ -1,11 +1,10 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.1.4 --
+* Version 0.1.4 -- 2011-05-18
 
 	* All documentation review
 	* Stay on current tweet when updated timeline (issue #5)
 	* Open url of the current tweet with firefox when stock 'o' (issue #4)
-	* Updating issue #6 fixed
 
 * Version 0.1.3 -- 2011-05-15
 
