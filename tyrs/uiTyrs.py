@@ -101,6 +101,7 @@ class uiTyrs:
             # backtotop is used to make sure we will display the first tweet
             # if the first status was displayed
             backToTop = False
+            updated   = False
             if self.statuses[0] == self.status['first']:
                 backToTop = True
 
