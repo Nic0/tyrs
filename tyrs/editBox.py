@@ -11,6 +11,7 @@ class EditBox:
 
     confirm = False
     content = ''
+    del_utf = False
 
     def __init__(self, screen, params):
 
@@ -34,11 +35,16 @@ class EditBox:
                 break
 
             elif ch == 127:       # DEL
+
                 if len(self.content) > 0:
                     if ord(self.content[-1]) <= 128:
                         self.content = self.content[:-1]
                     else:
                         self.content = self.content[:-2]
+
+                    if self.content[-1] > 128:
+                        self.del_utf = True
+
             else:
                 self.content += chr(ch)
 
@@ -64,6 +70,13 @@ class EditBox:
                     token = True
             else:
                 token = False
+
+        if self.del_utf == True:
+            if self.content > 0:
+                if ord(self.content[-1]) >= 128:
+                    curyx = self.win.getyx()
+                    #self.win.move(curyx[0], curyx[1]-1)
+                    self.win.delch(curyx[0], curyx[1]-1)
 
     def initWin (self, screen):
         '''
