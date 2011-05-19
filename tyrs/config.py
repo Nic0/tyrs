@@ -1,3 +1,4 @@
+#! -*- coding: utf-8 -*-
 '''
    @package  tyrs
    @author   Nicolas Paris <nicolas.caen@gmail.com>
@@ -164,7 +165,7 @@ class Config:
         if self.conf.has_option('keys', 'retweet'):
             self.keys_retweet       = self.conf.get('keys', 'retweet')
 
-        # retweet and edit
+        # retweet and edit
         if self.conf.has_option('keys', 'retweet_and_edit'):
             self.keys_retweet_and_edit = self.conf.get('keys', 'retweet_and_edit')
 
