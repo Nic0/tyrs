@@ -260,6 +260,7 @@ follow_selected   = f
 unfollow_selected = l
 follow            = F
 unfollow          = L
+openurl           = o
 ---------------
 
 Listing
@@ -316,6 +317,10 @@ unfollow::
 * Description: Unfollow someone, display an input box to enter the name.
 * Default: *L*
 
+openurl::
+* Description: will open the link in the select tweet.
+* Default: *o*
+
 Parameters
 ~~~~~~~~~~
 
@@ -325,10 +330,12 @@ Overview
 [source,conf]
 -------------------
 [params]
-refresh       = 10
-tweet_border  = 1
-relative_time = 0
-retweet_by    = 1
+refresh          = 10
+tweet_border     = 1
+relative_time    = 0
+retweet_by       = 1
+openurl_command  = firefox %s
+transparency     = 1
 -------------------
 
 Listing
@@ -359,3 +366,8 @@ it to verbose, set to 0 will only display the retweeter.
 * Values: 0 or 1
 * Default: 1
 
+openurl_command::
+* Description: Let you to chose your favorite navigator for opening urls, note
+the %s *Required* that corresponding to the url that will be open
+* Values: any values that will open a web browser
+* Default: firefox %s
