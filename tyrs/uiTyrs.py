@@ -245,7 +245,7 @@ class uiTyrs:
         @param  date: full iso time format
         @return string: readeable time
         '''
-        self.conf.params_relative_time == 1
+        self.conf.params_relative_time = 1
         if self.conf.params_relative_time== 1:
             hour =  status.GetRelativeCreatedAt()
         else:
