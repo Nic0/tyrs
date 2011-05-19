@@ -1,3 +1,4 @@
+#! -*- coding: utf-8 -*-
 '''
 @package   tyrs
 @author    Nicolas Paris <nicolas.caen@gmail.com>
@@ -250,8 +251,10 @@ class uiTyrs:
             hour =  status.GetRelativeCreatedAt()
         else:
             hour = status.GetCreatedAt().encode('utf-8')
-            format = '%a %b %d %H:%M:%S +0000 %Y'.encode('utf-8')
-            hour = time.mktime(time.strptime(hour, format)) - time.altzone
+            format = u'%a %b %d %H:%M:%S +0000 %Y'
+            hour = time.strptime(hour, format)
+            hour -= time.altezone
+            hour = time.mktime(hour)
             hour = time.localtime(hour)
             hour = time.strftime('%H:%M', hour)
 

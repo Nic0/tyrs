@@ -66,7 +66,7 @@ class KeyBinding:
         status = self.ui.getCurrentStatus()
         txt = status.text
         name = status.user.screen_name
-        data = 'RT %s: %s' % (name, txt)
+        data = 'RT @%s: %s' % (name, txt)
         self.tweet(data)
 
     def clear (self):
