@@ -31,6 +31,7 @@ class Config:
     keys_tweet             = 't'
     keys_clear             = 'c'
     keys_retweet           = 'r'
+    keys_retweet_and_edit  = 'R'
     keys_update            = 'u'
     keys_follow_selected   = 'f'
     keys_unfollow_selected = 'l'
@@ -163,6 +164,10 @@ class Config:
         if self.conf.has_option('keys', 'retweet'):
             self.keys_retweet       = self.conf.get('keys', 'retweet')
 
+        # retweet and edit
+        if self.conf.has_option('keys', 'retweet_and_edit'):
+            self.keys_retweet_and_edit = self.conf.get('keys', 'retweet_and_edit')
+
         # update
         if self.conf.has_option('keys', 'update'):
             self.keys_update        = self.conf.get('keys', 'update')
@@ -186,7 +191,7 @@ class Config:
         # openurl
         if self.conf.has_option('keys', 'openurl'):
             self.keys_openurl = self.conf.get('keys', 'openurl')
-        
+
         #
         # PARAMS
         #

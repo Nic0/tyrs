@@ -255,6 +255,7 @@ quit              = q
 tweet             = t
 clear             = c
 retweet           = r
+retweet_and_edit  = R
 update            = u
 follow_selected   = f
 unfollow_selected = l
@@ -293,7 +294,14 @@ retweet::
 * Description: Retweet the current tweet.
 * Default: *r*
 
-update::
+retweet_and_edit::
+* Description: This allow you to add some comment to a retweet, it will display like "RT user_name: his_tweet<editable_part>".
+* Defaurt. *R*
+
+[NOTE]
+This kind of retweet is not realy a retweet, it more like a normal tweet but, with the content of the original tweet with the username update.
+
+added::
 * Description: Force the update of you timeline.
 * Default: *u*
 
