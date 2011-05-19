@@ -42,10 +42,10 @@ class KeyBinding:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
 
-    def tweet (self):
+    def tweet (self, data):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
-        box = editBox.EditBox(self.ui.screen, params)
+        box = editBox.EditBox(self.ui.screen, params, data)
         if box.confirm:
             try:
                 self.api.postTweet(box.getContent())
@@ -61,6 +61,13 @@ class KeyBinding:
             self.ui.flash = ['Retweet has been send successfully.', 'info']
         except:
             self.ui.flash = ["Couldn't send the retweet.", 'warning']
+
+    def retweetAndEdit (self):
+        status = self.ui.getCurrentStatus()
+        txt = status.text
+        name = status.user.screen_name
+        data = 'RT %s: %s' % (name, txt)
+        self.tweet(data)
 
     def clear (self):
         self.ui.clearStatuses()
@@ -116,8 +123,8 @@ class KeyBinding:
 
     def pseudoBox (self, header):
         params = {'char': 40, 'width': 40, 'header': header}
-        return editBox.EditBox(self.ui.screen, params)
-    
+        return editBox.EditBox(self.ui.screen, params, None)
+
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
@@ -139,10 +146,14 @@ class KeyBinding:
                 self.moveUp()
             # TWEET
             elif ch == ord(self.conf.keys_tweet):
-                self.tweet()
+                self.tweet(None)
             # RETWEET
             elif ch == ord(self.conf.keys_retweet):
                 self.retweet()
+            # RETWEET AND EDIT
+#            elif ch == ord(self.conf.keys_retweet_and_edit):
+            elif ch == ord('R'):
+                self.retweetAndEdit()
             # CLEAR
             elif ch == ord(self.conf.keys_clear):
                 self.clear()

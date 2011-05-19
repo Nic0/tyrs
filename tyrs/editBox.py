@@ -11,17 +11,22 @@ class EditBox:
 
     confirm = False
     content = ''
-    del_utf = False
 
-    def __init__(self, screen, params):
+    def __init__(self, screen, params, data):
 
         self.screen = screen
         self.params = params
+        self.data   = data
         self.win = self.initWin(screen)
         self.startEdit()
         self.win.erase()
 
     def startEdit (self):
+
+        if self.data:
+            self.content = self.data.encode('utf-8')
+            self.refresh()
+
         self.maxyx = self.win.getmaxyx()
 
         while True:
