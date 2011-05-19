@@ -9,6 +9,7 @@ import sys
 import time
 import signal                   # resize event
 import curses
+import curses.wrapper
 
 class uiTyrs:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -49,6 +50,8 @@ class uiTyrs:
         self.conf   = conf
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
+        curses.wrapper(self.tearDown)
+
         self.updateHomeTimeline()
         self.displayHomeTimeline()
 
@@ -242,16 +245,17 @@ class uiTyrs:
         @param  date: full iso time format
         @return string: readeable time
         '''
-
+        self.conf.params_relative_time == 1
         if self.conf.params_relative_time== 1:
-            return status.GetRelativeCreatedAt()
+            hour =  status.GetRelativeCreatedAt()
         else:
-            hour = status.GetCreatedAt()
-            hour = time.mktime(time.strptime(hour, '%a %b %d %H:%M:%S +0000 %Y')) - time.altzone
+            hour = status.GetCreatedAt().encode('utf-8')
+            format = '%a %b %d %H:%M:%S +0000 %Y'.encode('utf-8')
+            hour = time.mktime(time.strptime(hour, format)) - time.altzone
             hour = time.localtime(hour)
             hour = time.strftime('%H:%M', hour)
 
-            return hour
+        return hour
 
     def getHeader (self, status):
         '''@return string'''
@@ -281,9 +285,12 @@ class uiTyrs:
         return origin
 
     # Last function call when quiting, restore some defaults params
-    def tearDown (self):
-        curses.endwin()
+    def tearDown (self, *dummy):
+        self.screen.keypad(0)
+        curses.echo()
+        curses.nocbreak()
         curses.curs_set(1)
+        curses.endwin()
 
     # Resize event callback
     def sigwinch_handler (self, *dummy):

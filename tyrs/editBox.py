@@ -37,10 +37,7 @@ class EditBox:
             elif ch == 127:       # DEL
 
                 if len(self.content) > 0:
-                    if ord(self.content[-1]) <= 128:
-                        self.content = self.content[:-1]
-                    else:
-                        self.content = self.content[:-2]
+                    self.content = self.content[:-1]
 
             else:
                 self.content += chr(ch)
@@ -54,19 +51,7 @@ class EditBox:
         self.win.refresh()
 
     def displayContent (self):
-        yx = [2,2]
-        token = False
-        for ch in self.content:
-            if yx[1] == self.maxyx[1]-2:
-                yx[0] += 1
-                yx[1] = 2
-            self.win.addstr(yx[0], yx[1], ch)
-            if not token:
-                yx[1] += 1
-                if not ord(ch) <= 128:
-                    token = True
-            else:
-                token = False
+        self.win.addstr(2, 2, self.content)
 
     def initWin (self, screen):
         '''
