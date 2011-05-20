@@ -51,7 +51,7 @@ class uiTyrs:
         self.conf   = conf
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
-       
+
         self.updateHomeTimeline()
         self.displayHomeTimeline()
 
@@ -111,26 +111,15 @@ class uiTyrs:
         if self.statuses == []:
             self.statuses = newStatuses
         # This mean there is no new status, we just leave then.
-        elif newStatuses[0] == self.statuses[0]:
+        # TODO, this might meen we didn't fetch enought statuses
+        elif newStatuses[0].id == self.statuses[0].id:
             pass
         # Finally, we append tweets
         else:
-            # backtotop is used to make sure we will display the first tweet
-            # if the first status was displayed
-            backToTop = False
-            updated   = False
-            if self.statuses[0] == self.status['first']:
-                backToTop = True
-
             for i in range(len(newStatuses)):
                 if newStatuses[i].id == self.statuses[0].id:
                     self.statuses = newStatuses[:i] + self.statuses
                     self.status['current'] += len(newStatuses[:i])
-                    updated = True
-                if not updated:
-                    self.statuses = newStatuses
-                if backToTop:
-                    self.status['first'] = self.statuses[0]
 
     def countStatuses (self):
         self.status['count'] = len(self.statuses)
