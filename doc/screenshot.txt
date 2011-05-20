@@ -1,0 +1,36 @@
+Screenshot of Tyrs with configuration
+=====================================
+
+[NOTE]
+If you have some nice looking theme, please send me some screenshot with the
+configuration file, I will add some more screenshot in this section soon.
+
+Default Values Screenshot
+-------------------------
+
+image:images/tyrs.png[]
+
+
+Blue Theme
+----------
+
+image:images/darkblue.png[]
+
+.Blue Theme Configuration
+[source,conf]
+-------------------------
+[params]                                                        
+tweet_border  = 0                                               
+relative_time = 1                                               
+                                                                
+[colors]                                                        
+hashtag = 5                                                     
+text = 4                                                        
+attag = 3                                                       
+                                                                
+color_set3 = 800 800 1000                                       
+color_set4 = 600 600 1000                                       
+color_set5 = 950 800 950                                        
+color_set6 = 600 0 600
+
+-------------------------
