@@ -90,14 +90,19 @@ class KeyBinding:
     def follow (self):
         self.ui.refresh_token = True
         box = self.pseudoBox('Follow Someone ?')
-        self.createFriendship(box.getContent())
+        self.createFriendship(self.cutAtTag(box.getContent()))
         self.ui.refresh_token = False
 
     def unfollow (self):
         self.ui.refresh_token = True
         box = self.pseudoBox('Unfollow Someone ?')
-        self.destroyFriendship(box.getContent())
+        self.destroyFriendship(self.cutAtTag(box.getContent()))
         self.ui.refresh_token = False
+
+    def cutAtTag (self, name):
+        if name[0] == '@':
+            name = name[1:]
+        return name
 
     def createFriendship (self, pseudo):
         try:

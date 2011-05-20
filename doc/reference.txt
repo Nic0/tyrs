@@ -325,6 +325,10 @@ unfollow::
 * Description: Unfollow someone, display an input box to enter the name.
 * Default: *L*
 
+[NOTE]
+You may enter the name to follow with or without the '@', so it's quicker to do
+without.
+
 openurl::
 * Description: will open the link in the select tweet.
 * Default: *o*
