@@ -137,11 +137,11 @@ class uiTyrs:
 
     def displayWarningMsg (self, msg):
             self.screen.addstr(0, 3, msg,
-                               curses.color_pair(self.conf.color_warning_msg) | curses.A_BOLD)
+                               curses.color_pair(self.conf.color_warning_msg))
 
     def displayInfoMsg (self, msg):
             self.screen.addstr(0, 3, msg,
-                               curses.color_pair(self.conf.color_info_msg) | curses.A_BOLD)
+                               curses.color_pair(self.conf.color_info_msg))
 
     def displayHomeTimeline (self):
         if not self.refresh_token:
@@ -192,7 +192,7 @@ class uiTyrs:
         # Highlight (bold) the current status
         if self.status['current'] == i:
             panel.addstr(0,3, header,
-                    curses.color_pair(self.conf.color_header)| curses.A_BOLD)
+                    curses.color_pair(self.conf.color_current_tweet))
         else:
             panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
 

@@ -88,5 +88,8 @@ class RefreshThread (threading.Thread):
     def stop (self):
         self._stopevent.set()
 
-if __name__ == "__main__":
+def start ():
     curses.wrapper(main)
+
+if __name__ == "__main__":
+    self.start()

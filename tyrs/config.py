@@ -25,6 +25,7 @@ class Config:
     color_text             = 7
     color_warning_msg      = 1
     color_info_msg         = 2
+    color_current_tweet    = 5
 
     color_set = [False, False, False, False, False, False, False, False]
 
