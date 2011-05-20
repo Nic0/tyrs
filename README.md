@@ -3,10 +3,10 @@ Description
 
 Tyrs is a twitter client based on curse easely configurable.
 
-[Home Site](http://tyrs.nicosphere.net)
-[Quick Start](http://tyrs.nicosphere.net/quick_start.html)
-[Screenshot](http://tyrs.nicosphere.net/screenshot.html)
-[Reference guide](http://tyrs.nicosphere.net/reference.html)
+- [Home Site](http://tyrs.nicosphere.net)
+- [Quick Start](http://tyrs.nicosphere.net/quick_start.html)
+- [Screenshot](http://tyrs.nicosphere.net/screenshot.html)
+- [Reference guide](http://tyrs.nicosphere.net/reference.html)
 
 Functionnality
 --------------
