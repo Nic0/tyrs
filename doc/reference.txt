@@ -174,14 +174,14 @@ values.
 [width="25%"]
 |==================
 | Value | Color
-| 1     | Black
-| 2     | Blue
-| 3     | Cyan
-| 4     | Green
+| 0     | Black
+| 1     | Red
+| 2     | Green
+| 3     | Yellow
+| 4     | Blue
 | 5     | Magenta
-| 6     | Red
+| 6     | Cyan
 | 7     | White
-| 8     | Yellow
 |==================
 
 Overview
@@ -193,12 +193,12 @@ all parameters possible, with there defaults values
 [source,conf]
 ----------------
 [colors]
-header      = 3
-hashtag     = 8
-attag       = 4
+header      = 6
+hashtag     = 3
+attag       = 2
 text        = 7
-warning_msg = 6
-info_msg    = 4
+warning_msg = 1
+info_msg    = 2
 ----------------
 
 Listing
@@ -236,6 +236,49 @@ text::
 * Description: This is all the basic text, such as tweets (without highlight),
 inputs in the tweet edit box.
 * Default: 7 (white)
+
+Configuration 256 Colors
+------------------------
+
+The idea is to redifine a color to another one from 256 colors. For exemple,
+the green one is not the one we want, we may change it for a lighter one. +
+As 256 colors is not support by every terminals, the defaults values is to set
+them off.
+
+[IMPORTANT]
+=====================
+The format used, is a RGB code, this meen it have to be define with three
+numbers from 0 to 1000. You *must* leave spaces between numbers in the
+configuration file, for exemple:
+[source,conf]
+color_set3 = 300 400 500
+
+====================
+
+color_set0::
+Redefine the Black.
+color_set1::
+Redefine the Red.
+color_set2::
+Redefine the Green.
+color_set3::
+Redefine the Yellow.
+color_set4::
+Redefine the Blue.
+color_set5::
+Redefine the Magenta.
+color_set6::
+Redefine the Cyan.
+color_set7::
+Redefine the White.
+
+[IMPORTANT]
+If you turn off one of them, for exemple you redefine some green, and change
+your mind after to go back on the default green, this may take effect only if
+you restart your terminal, otherwise, it will stay on the last color defined. +
+You don't need to restart your terminal if you just change the color setup with
+another one, it will take effect immediatly after restart Tyrs.
+
 
 Keys Binding
 ~~~~~~~~~~~~

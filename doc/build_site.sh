@@ -18,6 +18,6 @@ HTML="asciidoc \
 
 $HTML --attribute=revision=$VERS --attribute=devel=$DEV \
 --attribute=date=$DATE index.txt
-#$HTML --attribute=revision=$VERS quick_start.txt
-#$HTML --attribute=revision=$VERS -a toc -a numbered reference.txt
+$HTML --attribute=revision=$VERS quick_start.txt
+$HTML --attribute=revision=$VERS -a toc -a numbered reference.txt
 #$HTML --attribute=revision=$DEV -a toc -a numbered reference-dev.txt
