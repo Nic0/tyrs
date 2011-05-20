@@ -10,6 +10,10 @@ class Tweets(Api):
                 conf.consumer_secret,
                 conf.oauth_token,
                 conf.oauth_token_secret)
+        self.setMyUser()
+
+    def setMyUser(self):
+        self.me = self.api.VerifyCredentials()
 
     def updateHomeTimeline (self):
         return self.api.GetFriendsTimeline(retweets=True)

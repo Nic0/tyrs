@@ -19,6 +19,7 @@ class Config:
     consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
     consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
 
+    color_highlight        = 1
     color_header           = 6
     color_hashtag          = 3
     color_attag            = 2
@@ -105,6 +106,10 @@ class Config:
         # header
         if self.conf.has_option('colors', 'header'):
             self.color_header       = int(self.conf.get('colors', 'header'))
+
+        # highlight
+        if self.conf.has_option('colors', 'header'):
+            self.color_highlight    = int(self.conf.get('colors', 'highlight'))
 
         # hashtag ('#')
         if self.conf.has_option('colors', 'hashtag'):

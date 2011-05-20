@@ -193,6 +193,7 @@ all parameters possible, with there defaults values
 [source,conf]
 ----------------
 [colors]
+highlight   = 1
 header      = 6
 hashtag     = 3
 attag       = 2
@@ -204,33 +205,38 @@ info_msg    = 2
 Listing
 ^^^^^^^
 
+highlight::
+* Description: this will highlight when your pseudo is display in the tweet,
+for exemple, a tweet « blabla @you blabla », @you will be in a different colors.
+* Default: 1 (red)
+
 header::
 * Description: Corresponding to the first line of a tweet, and display
 informations such as user name of the tweeter, hours information, retweets
 information.
-* Default: 3 (cyan)
+* Default: 6 (cyan)
 
 hashtag::
 * Description: This will highlight the hashtag `#` word, usefull to follow some
 specific subjects, like _#Tyrs_.
-* Default: 8 (yellow)
+* Default: 3 (yellow)
 
 attag::
 * Description: This will highlight when a name is followed by a `at' tag like
 _@nic0sphere_.
-* Default: 4 (green)
+* Default: 2 (green)
 
 warning_msg::
 * Description: When something goes wrong, or unexpected, a warning message is
 displayed on the top left of the console, and let you know what's happen.
 * Exemples: `Couldn\'t retreive tweets', `Couldn\'t send tweet'...
-* Default: 6 (red)
+* Default: 1 (red)
 
 info_msg::
 * Description: When an action is successful, or just an information, Tyrs let
 you know, exactly as warning_msg.
 * Exemples: `Updating timeline', `Tweet send successfully'...
-* Default: 4 (green)
+* Default: 2 (green)
 
 text::
 * Description: This is all the basic text, such as tweets (without highlight),
