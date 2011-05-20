@@ -244,7 +244,7 @@ inputs in the tweet edit box.
 * Default: 7 (white)
 
 Configuration 256 Colors
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The idea is to redifine a color to another one from 256 colors. For exemple,
 the green one is not the one we want, we may change it for a lighter one. +
