@@ -1,0 +1,50 @@
+Tyrs, Twitter client easely configurable based on ncurses
+=========================================================
+
+* *Current version* {revision}, Release the {date}
+* *Devel version* {devel}
+
+image:images/tyrs.png["Tyrs screenshot", width=128, link="images/tyrs.png"]
+
+Download link:http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz[the last
+version of tyrs]. +
+Get the last development version on link:http://github.com/Nic0/tyrs[github]. +
+This is a free (as freedom) software, release under the GNU General Public
+Licence v3.
+
+If it's your first visite, you might check some
+link:screenshot.html[screenshots], or get started with the
+link:quick_start.html[Tyrs quick start guide].
+
+Features
+--------
+
+Here a list of some intersesting features you can have with Tyrs.
+
+* OAuth authentification.
+* UTF-8 support.
+* Transarency and colors.
+* Based on ncurses.
+* Customisation of keys binding.
+* Customisation of colors.
+* Easely configurable, readable configuration.
+* Opens URL just with 'o' touch.
+* Tweets, Retweets, Follow, Unfollow.
+
+[IMPORTANT]
+This client is relatively new, started current May 2011,  and curently in full development phase, there
+are lots of functionnality that will be done soon.
+
+
+Some links
+----------
+
+* Ask any questions, or just follow lastest news on the
+link:http://groups.google.com/group/tyrs[mailing list].
+* Send me a email at <nicolas.caen@gmail.com>.
+* Check the development on link:http://github.com/Nic0/tyrs[github].
+* If you like Tyrs, you may send a quick hello to
+link:http://twitter.com/nic0sphere[my twitter account `@nic0sphere`].
+* link:http://www.nicosphere.net[My blog], mostly in french.
+
+(C) Copyright 2011 ~ Nicolas Paris.
