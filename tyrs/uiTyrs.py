@@ -74,7 +74,14 @@ class uiTyrs:
 
 
         curses.init_pair(1, curses.COLOR_BLACK, bgcolor)   # 1 black
+        #curses.init_color(8, 500, 50, 400)
         curses.init_pair(2, curses.COLOR_BLUE, bgcolor)    # 2 blue
+#        curses.init_color(1, 200, 300, 30)
+#        curses.init_color(2, 200, 300, 30)
+#        curses.init_color(4, 200, 300, 30)
+#        curses.init_color(5, 200, 300, 30)
+#        curses.init_color(6, 200, 300, 30)
+
         curses.init_pair(3, curses.COLOR_CYAN, bgcolor)    # 3 cyan
         curses.init_pair(4, curses.COLOR_GREEN, bgcolor)   #g 4 green
         curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor) # 5 magenta
@@ -191,7 +198,8 @@ class uiTyrs:
             panel.addstr(0,3, header,
                     curses.color_pair(self.conf.color_header)| curses.A_BOLD)
         else:
-            panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
+            color = curses.color_pair(3)
+            panel.addstr(0,3, header, color)
 
         self.displayText(text, panel, status)
 
