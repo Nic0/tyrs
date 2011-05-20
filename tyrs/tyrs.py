@@ -92,4 +92,4 @@ def start ():
     curses.wrapper(main)
 
 if __name__ == "__main__":
-    self.start()
+    start()
