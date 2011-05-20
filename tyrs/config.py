@@ -19,12 +19,14 @@ class Config:
     consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
     consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
 
-    color_header           = 3
-    color_hashtag          = 8
-    color_attag            = 4
+    color_header           = 6
+    color_hashtag          = 3
+    color_attag            = 2
     color_text             = 7
-    color_warning_msg      = 6
-    color_info_msg         = 4
+    color_warning_msg      = 1
+    color_info_msg         = 2
+
+    color_set = [False, False, False, False, False, False, False, False]
 
     keys_up                = 'k'
     keys_down              = 'j'
@@ -122,6 +124,18 @@ class Config:
         # Information messages
         if self.conf.has_option('colors', 'info_msg'):
             self.color_info_msg        = int(self.conf.get('colors', 'info_msg'))
+
+        #
+        # COLOR SETUP
+        #
+
+        for i in range(len(self.color_set)):
+            if self.conf.has_option('colors', 'color_set'+str(i)):
+                self.color_set[i] = []
+                rgb = (self.conf.get('colors', 'color_set'+str(i)))
+                rgb = rgb.split(' ')
+                self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
+
 
         #
         # KEYS

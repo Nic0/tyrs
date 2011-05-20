@@ -63,6 +63,14 @@ class uiTyrs:
         curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
         curses.curs_set(0)      # Dont display cursor
+        self.initColors()
+        self.maxyx = screen.getmaxyx()
+
+        screen.border()
+        screen.refresh()
+        self.screen = screen
+
+    def initColors (self):
         curses.start_color()
 
         if self.conf.params_transparency:
@@ -71,28 +79,23 @@ class uiTyrs:
         else:
             bgcolor = 0
 
+        # Setup colors
+        # TODO, check the term capability before
+        for i in range(len(self.conf.color_set)):
+            if not self.conf.color_set[i]:
+                continue
+            else:
+                rgb = self.conf.color_set[i]
+                curses.init_color(i, rgb[0], rgb[1], rgb[2])
 
-        curses.init_pair(1, curses.COLOR_BLACK, bgcolor)   # 1 black
-        #curses.init_color(8, 500, 50, 400)
-        curses.init_pair(2, curses.COLOR_BLUE, bgcolor)    # 2 blue
-#        curses.init_color(1, 200, 300, 30)
-#        curses.init_color(2, 200, 300, 30)
-#        curses.init_color(4, 200, 300, 30)
-#        curses.init_color(5, 200, 300, 30)
-#        curses.init_color(6, 200, 300, 30)
-
-        curses.init_pair(3, curses.COLOR_CYAN, bgcolor)    # 3 cyan
-        curses.init_pair(4, curses.COLOR_GREEN, bgcolor)   #g 4 green
-        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor) # 5 magenta
-        curses.init_pair(6, curses.COLOR_RED, bgcolor)     # 6 red
-        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)   # 7 white
-        curses.init_pair(8, curses.COLOR_YELLOW, bgcolor)  # 8 yellow
-
-        self.maxyx = screen.getmaxyx()
-
-        screen.border()
-        screen.refresh()
-        self.screen = screen
+        curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 1 black
+        curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 2 red
+        curses.init_pair(2, curses.COLOR_GREEN, bgcolor)    # 3 green
+        curses.init_pair(3, curses.COLOR_YELLOW, bgcolor)   # 4 yellow
+        curses.init_pair(4, curses.COLOR_BLUE, bgcolor)     # 5 blue
+        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor)  # 6 magenta
+        curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 7 cyan
+        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 8 white
 
     def updateHomeTimeline (self):
         ''' Retrieves tweets, don't display them
@@ -186,8 +189,7 @@ class uiTyrs:
             panel.addstr(0,3, header,
                     curses.color_pair(self.conf.color_header)| curses.A_BOLD)
         else:
-            color = curses.color_pair(3)
-            panel.addstr(0,3, header, color)
+            panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
 
         self.displayText(text, panel, status)
 
