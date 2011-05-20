@@ -152,6 +152,8 @@ class uiTyrs:
                     self.displayStatus(self.statuses[i], i)
             if len(self.flash) != 0:
                 self.setFlash()
+            if self.status['current'] > self.status['last']:
+                self.status['current'] = self.status['last']
             self.screen.refresh()
 
     def displayStatus (self, status, i):
