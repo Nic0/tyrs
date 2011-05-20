@@ -1,13 +1,15 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.1.5
+* Version 0.2.0
 
 	* Transparency support added
 	* Unicode support improved
+	* 256 Colors configuration aviable
 	* Retweet can be editable with 'R' -  issue #3
+	* New online documentation and site aviable http://tyrs.nicosphere.net/
 
-* Version 0.1.4.1 and 0.1.4.2-- 2011-05-18
-	* Bug fixed
+* Version 0.1.4.1 to 0.1.4.3-- 2011-05-18
+	* Bugs fixed
 
 * Version 0.1.4 -- 2011-05-18
 

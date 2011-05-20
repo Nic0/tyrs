@@ -149,11 +149,14 @@ class uiTyrs:
             self.initScreen()
             for i in range(len(self.statuses)):
                 if i >= self.status['first']:
-                    self.displayStatus(self.statuses[i], i)
+                    br = self.displayStatus(self.statuses[i], i)
+                    if not br:
+                        break
             if len(self.flash) != 0:
                 self.setFlash()
             if self.status['current'] > self.status['last']:
                 self.status['current'] = self.status['last']
+                self.displayHomeTimeline()
             self.screen.refresh()
 
     def displayStatus (self, status, i):
@@ -179,7 +182,7 @@ class uiTyrs:
 
         # We leave if no more space left
         if start_y + height + 1 > self.maxyx[0]:
-            return
+            return False
 
         panel = curses.newpad(height, length)
 
@@ -200,6 +203,8 @@ class uiTyrs:
 
         self.current_y = start_y + height
         self.status['last'] = i
+
+        return True
 
     def displayText (self, text, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
