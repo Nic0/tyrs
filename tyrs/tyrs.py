@@ -17,6 +17,7 @@ import tweets
 import argparse
 import threading
 import keyBinding as keys
+import curses.wrapper
 
 import locale
 locale.setlocale(locale.LC_ALL, '')
@@ -29,7 +30,7 @@ def arguments ():
     args = parser.parse_args()
     return args
 
-def main():
+def main(scr):
 
     args    = arguments()
     conf    = config.Config(args)
@@ -88,4 +89,4 @@ class RefreshThread (threading.Thread):
         self._stopevent.set()
 
 if __name__ == "__main__":
-    main()
+    curses.wrapper(main)

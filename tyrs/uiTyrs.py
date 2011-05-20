@@ -51,8 +51,7 @@ class uiTyrs:
         self.conf   = conf
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
-        curses.wrapper(self.tearDown)
-
+       
         self.updateHomeTimeline()
         self.displayHomeTimeline()
 
@@ -254,16 +253,10 @@ class uiTyrs:
         @param  date: full iso time format
         @return string: readeable time
         '''
-        self.conf.params_relative_time = 1
         if self.conf.params_relative_time== 1:
             hour =  status.GetRelativeCreatedAt()
         else:
-            hour = status.GetCreatedAt().encode('utf-8')
-            format = u'%a %b %d %H:%M:%S +0000 %Y'
-            hour = time.strptime(hour, format)
-            hour -= time.altezone
-            hour = time.mktime(hour)
-            hour = time.localtime(hour)
+            hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
             hour = time.strftime('%H:%M', hour)
 
         return hour
@@ -272,7 +265,7 @@ class uiTyrs:
         '''@return string'''
         charset = sys.stdout.encoding
         pseudo  = status.user.screen_name.encode(charset)
-        time    = self.getTime(status).encode(charset)
+        time    = self.getTime(status)
         #name    = status.user.name.encode(charset)
 
         if status.rt and self.conf.params_retweet_by == 1:
