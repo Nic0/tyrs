@@ -18,21 +18,7 @@ class KeyBinding:
     def moveDown (self):
         if self.ui.status['current'] < self.ui.status['count'] - 1:
             if self.ui.status['current'] >= self.ui.status['last']:
-            # We need to be sure it will have enough place to
-            # display the next tweet, otherwise we still stay
-            # to the current tweet
-            # This is due to the dynamic height of a tweet.
-
-            # height_first_status = self.getSizeStatus(self.statuses[self.status['first']])
-            # next_status = self.status['last'] + 1
-            # height_next_status  = self.getSizeStatus(self.statuses[next_status])
-            # height_left = self.current_y - self.maxyx[0]-1
-            # if height_next_status['height'] > (height_left + height_first_status['height']):
-            #     self.status['current'] -=
-
                 self.ui.status['first'] += 1
-
-
             self.ui.status['current'] += 1
 
     def moveUp (self):
