@@ -30,10 +30,11 @@ def arguments ():
     args = parser.parse_args()
     return args
 
+conf = config.Config(arguments())
+
 def main(scr):
 
-    args    = arguments()
-    conf    = config.Config(args)
+
     api     = tweets.Tweets()
     api.authentification(conf)
     interface  = uiTyrs.uiTyrs(api, conf)
