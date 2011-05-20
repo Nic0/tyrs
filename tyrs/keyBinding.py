@@ -45,7 +45,7 @@ class KeyBinding:
     def tweet (self, data):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
-        box = editBox.EditBox(self.ui.screen, params, data)
+        box = editBox.EditBox(self.ui.screen, params, data, self.conf)
         if box.confirm:
             try:
                 self.api.postTweet(box.getContent())
@@ -128,7 +128,7 @@ class KeyBinding:
 
     def pseudoBox (self, header):
         params = {'char': 40, 'width': 40, 'header': header}
-        return editBox.EditBox(self.ui.screen, params, None)
+        return editBox.EditBox(self.ui.screen, params, None, self.conf)
 
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''

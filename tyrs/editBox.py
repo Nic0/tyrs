@@ -12,8 +12,9 @@ class EditBox:
     confirm = False
     content = ''
 
-    def __init__(self, screen, params, data):
+    def __init__(self, screen, params, data, conf):
 
+        self.conf   = conf
         self.screen = screen
         self.params = params
         self.data   = data
@@ -89,8 +90,7 @@ class EditBox:
         counter = str(self.countChr())
         header = ' %s %s ' % (self.params['header'], counter)
 
-        #win.addstr(0, 3, ' ' + self.params['header'] + ' ' + counter + ' ', curses.color_pair(3))
-        win.addstr(0, 3, header, curses.color_pair(3))
+        win.addstr(0, 3, header, curses.color_pair(self.conf.color_header))
         return win
 
     def countChr (self):
