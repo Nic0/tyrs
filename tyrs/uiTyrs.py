@@ -41,6 +41,7 @@ class uiTyrs:
     regexRetweet = re.compile('^RT @\w+:')
     flash = []
     refresh_token = False
+    buffer = 'home'
 
     def __init__ (self, api, conf):
         '''
@@ -52,7 +53,7 @@ class uiTyrs:
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
 
-        self.updateHomeTimeline()
+        self.updateTimeline()
         self.displayHomeTimeline()
 
     def initScreen (self):
@@ -97,17 +98,21 @@ class uiTyrs:
         curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 7 cyan
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 8 white
 
-    def updateHomeTimeline (self):
+    def updateTimeline (self):
         ''' Retrieves tweets, don't display them
         '''
         try:
             self.flash = ['Updating timeline...', 'info']
             self.displayHomeTimeline()
-            self.appendNewStatuses(self.api.updateHomeTimeline())
+            if self.buffer == 'home':
+                self.appendNewStatuses(self.api.updateHomeTimeline())
+            elif self.buffer == 'mentions':
+                self.appendNewStatuses(self.api.getMentions())
             self.displayHomeTimeline()
             self.countStatuses()
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
+
 
     def appendNewStatuses (self, newStatuses):
         # Fresh new start.

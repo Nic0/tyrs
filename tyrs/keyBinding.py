@@ -59,7 +59,7 @@ class KeyBinding:
         self.ui.clearStatuses()
 
     def update (self):
-        self.ui.updateHomeTimeline()
+        self.ui.updateTimeline()
 
     def followSelected (self):
         status = self.ui.getCurrentStatus()
@@ -117,10 +117,12 @@ class KeyBinding:
         return editBox.EditBox(self.ui.screen, params, None, self.conf)
 
     def getMentions (self):
+        self.ui.buffer = 'mentions'
         self.ui.statuses = self.api.getMentions()
         self.changeBuffer()
 
     def getHome (self):
+        self.ui.buffer = 'home'
         self.ui.statuses = self.api.updateHomeTimeline()
         self.changeBuffer()
 

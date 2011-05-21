@@ -64,7 +64,7 @@ class UpdateThread (threading.Thread):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params_refresh * 60.0)
             if not self._stopevent.isSet():
-                self.interface.updateHomeTimeline()
+                self.interface.updateTimeline()
                 self.interface.displayHomeTimeline()
 
     def stop (self):
