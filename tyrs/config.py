@@ -43,7 +43,8 @@ class Config:
     keys_follow            = 'F'
     keys_unfollow          = 'L'
     keys_openurl           = 'o'
-
+    keys_home              = 'h'
+    keys_mentions          = 'm'
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -142,24 +143,9 @@ class Config:
                 rgb = rgb.split(' ')
                 self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
 
-
         #
         # KEYS
-        #
-        '''
-        up       k
-        down     j
-        quit     q
-        tweet    t
-        clear    c
-        retweet  r
-        update   u
-        follow_selected    f
-        unfollow_selected  l
-        follow             F
-        unfollow           L
-        '''
-
+        # 
 
         # up
         if self.conf.has_option('keys', 'up'):
@@ -212,6 +198,14 @@ class Config:
         # openurl
         if self.conf.has_option('keys', 'openurl'):
             self.keys_openurl = self.conf.get('keys', 'openurl')
+
+        # home
+        if self.conf.has_option('keys', 'home'):
+            self.keys_home = self.conf.get('keys', 'home')
+
+        # mentions
+        if self.conf.has_option('keys', 'mentions'):
+            self.keys_mentions = self.conf.get('keys', 'mentions')
 
         #
         # PARAMS

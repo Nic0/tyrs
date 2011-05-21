@@ -229,7 +229,8 @@ class uiTyrs:
                     panel.addstr(line, curent_x, word,
                                  curses.color_pair(self.conf.color_hashtag))
                 elif word[0] == '@':
-                    if word == ('@'+self.api.me.screen_name):
+                    name = self.api.me.screen_name
+                    if word == '@'+name or word == '@'+name+':':
                         panel.addstr(line, curent_x, word,
                                      curses.color_pair(self.conf.color_highlight))
                     else:

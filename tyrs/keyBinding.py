@@ -116,6 +116,19 @@ class KeyBinding:
         params = {'char': 40, 'width': 40, 'header': header}
         return editBox.EditBox(self.ui.screen, params, None, self.conf)
 
+    def getMentions (self):
+        self.ui.statuses = self.api.getMentions()
+        self.changeBuffer()
+
+    def getHome (self):
+        self.ui.statuses = self.api.updateHomeTimeline()
+        self.changeBuffer()
+
+    def changeBuffer (self):
+        self.ui.status['current'] = 0
+        self.ui.status['first'] = 0
+        self.ui.displayHomeTimeline()
+
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
@@ -142,9 +155,14 @@ class KeyBinding:
             elif ch == ord(self.conf.keys_retweet):
                 self.retweet()
             # RETWEET AND EDIT
-#            elif ch == ord(self.conf.keys_retweet_and_edit):
-            elif ch == ord('R'):
+            elif ch == ord(self.conf.keys_retweet_and_edit):
                 self.retweetAndEdit()
+            # MENTIONS
+            elif ch == ord(self.conf.keys_mentions):
+                self.getMentions()
+            # HOME TIMELINE
+            elif ch == ord(self.conf.keys_home):
+                self.getHome()
             # CLEAR
             elif ch == ord(self.conf.keys_clear):
                 self.clear()

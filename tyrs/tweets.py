@@ -18,6 +18,9 @@ class Tweets(Api):
     def updateHomeTimeline (self):
         return self.api.GetFriendsTimeline(retweets=True)
 
+    def getMentions(self):
+        return self.api.GetMentions()
+
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet)
 
