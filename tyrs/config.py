@@ -45,6 +45,7 @@ class Config:
     keys_openurl           = 'o'
     keys_home              = 'h'
     keys_mentions          = 'm'
+    keys_back_on_top       = 'g'
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -206,6 +207,10 @@ class Config:
         # mentions
         if self.conf.has_option('keys', 'mentions'):
             self.keys_mentions = self.conf.get('keys', 'mentions')
+
+        # back on top
+        if self.conf.has_option('keys', 'back_on_top'):
+            self.keys_back_on_top = self.conf.get('keys', 'back_on_top')
 
         #
         # PARAMS

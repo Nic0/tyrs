@@ -186,6 +186,9 @@ class KeyBinding:
             # OPENURL
             elif ch == ord(self.conf.keys_openurl):
                 self.openurl()
+            # BACK ON TOP
+            elif ch == ord(self.conf.keys_back_on_top):
+                self.changeBuffer()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
