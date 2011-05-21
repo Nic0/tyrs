@@ -108,7 +108,7 @@ class Config:
             self.color_header       = int(self.conf.get('colors', 'header'))
 
         # highlight
-        if self.conf.has_option('colors', 'header'):
+        if self.conf.has_option('colors', 'highlight'):
             self.color_highlight    = int(self.conf.get('colors', 'highlight'))
 
         # hashtag ('#')
