@@ -66,7 +66,9 @@ class uiTyrs:
         self.initColors()
         self.maxyx = screen.getmaxyx()
 
-        screen.border()
+        if self.conf.params_tweet_border == 1:
+            screen.border()
+
         screen.refresh()
         self.screen = screen
 
