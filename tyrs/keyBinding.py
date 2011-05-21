@@ -131,6 +131,9 @@ class KeyBinding:
         self.ui.status['first'] = 0
         self.ui.displayHomeTimeline()
 
+    def backOnBottom (self):
+        self.ui.status['current'] = self.ui.status['last']
+
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
@@ -189,6 +192,9 @@ class KeyBinding:
             # BACK ON TOP
             elif ch == ord(self.conf.keys_back_on_top):
                 self.changeBuffer()
+            # BACK ON BOTTOM
+            elif ch == ord(self.conf.keys_back_on_bottom):
+                self.backOnBottom()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:

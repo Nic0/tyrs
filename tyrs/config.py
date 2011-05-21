@@ -46,6 +46,7 @@ class Config:
     keys_home              = 'h'
     keys_mentions          = 'm'
     keys_back_on_top       = 'g'
+    keys_back_on_bottom    = 'G'
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -211,6 +212,10 @@ class Config:
         # back on top
         if self.conf.has_option('keys', 'back_on_top'):
             self.keys_back_on_top = self.conf.get('keys', 'back_on_top')
+
+        # back on bottom
+        if self.conf.has_option('keys', 'back_on_bottom'):
+            self.keys_back_on_bottom = self.conf.get('keys', 'back_on_bottom')
 
         #
         # PARAMS
