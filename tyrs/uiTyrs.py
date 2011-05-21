@@ -65,9 +65,7 @@ class uiTyrs:
         curses.curs_set(0)      # Dont display cursor
         self.initColors()
         self.maxyx = screen.getmaxyx()
-
-        if self.conf.params_tweet_border == 1:
-            screen.border()
+        screen.border()
 
         screen.refresh()
         self.screen = screen
