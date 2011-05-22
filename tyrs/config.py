@@ -45,6 +45,7 @@ class Config:
     keys_openurl           = 'o'
     keys_home              = 'h'
     keys_mentions          = 'm'
+    keys_reply             = 'M'
     keys_back_on_top       = 'g'
     keys_back_on_bottom    = 'G'
 
@@ -216,6 +217,10 @@ class Config:
         # back on bottom
         if self.conf.has_option('keys', 'back_on_bottom'):
             self.keys_back_on_bottom = self.conf.get('keys', 'back_on_bottom')
+
+        # Reply
+        if self.conf.has_option('keys', 'reply'):
+            self.keys_reply = self.conf.get('keys', 'reply')
 
         #
         # PARAMS

@@ -28,16 +28,17 @@ class KeyBinding:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
 
-    def tweet (self, data):
+    def tweet (self, data, reply_to_id=None):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
         box = editBox.EditBox(self.ui.screen, params, data, self.conf)
         if box.confirm:
-            try:
-                self.api.postTweet(box.getContent())
-                self.ui.flash = ['Tweet has been send successfully.', "info"]
-            except:
-                self.ui.flash = ["Couldn't send the tweet.", "warning"]
+#            try:
+            content = box.getContent()
+            self.api.postTweet(content, reply_to_id)
+            self.ui.flash = ['Tweet has been send successfully.', "info"]
+#            except:
+ #               self.ui.flash = ["Couldn't send the tweet.", "warning"]
         self.ui.refresh_token = False
 
     def retweet (self):
@@ -54,6 +55,12 @@ class KeyBinding:
         name = status.user.screen_name
         data = 'RT @%s: %s' % (name, txt)
         self.tweet(data)
+
+    def reply (self):
+        status = self.ui.getCurrentStatus()
+        reply_to_id = status.GetId()
+        data = '@'+status.user.screen_name
+        self.tweet(data, reply_to_id)
 
     def clear (self):
         self.ui.clearStatuses()
@@ -195,6 +202,9 @@ class KeyBinding:
             # BACK ON BOTTOM
             elif ch == ord(self.conf.keys_back_on_bottom):
                 self.backOnBottom()
+            # REPLY
+            elif ch == ord(self.conf.keys_reply):
+                self.reply()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:

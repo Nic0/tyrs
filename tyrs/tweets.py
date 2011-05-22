@@ -22,7 +22,7 @@ class Tweets(Api):
         return self.api.GetMentions()
 
     def postTweet (self, tweet, reply_to=None):
-        self.api.PostUpdate(tweet)
+        self.api.PostUpdate(tweet, reply_to)
 
     def retweet (self, id):
         self.api.PostRetweet(id)

@@ -313,6 +313,7 @@ unfollow          = L
 openurl           = o
 home              = h
 mentions          = m
+reply             = M
 ---------------
 
 Listing
@@ -349,6 +350,9 @@ retweet_and_edit::
 * Description: This allow you to add some comment to a retweet, it will display like "RT user_name: his_tweet<editable_part>".
 * Default: *R*
 
+[NOTE]
+This kind of retweet is not realy a retweet, it more like a normal tweet but, with the content of the original tweet with the username update.
+
 home::
 * Description: Go back to your home timeline.
 * Default: *h*
@@ -359,8 +363,9 @@ that you are not following put your @name in a tweet, you will see it. You may
 leave this timeline just using 'h' (home) to go back on your home timeline.
 * Default: *m*
 
-[NOTE]
-This kind of retweet is not realy a retweet, it more like a normal tweet but, with the content of the original tweet with the username update.
+reply::
+* Description: Reply to the current tweet, open an edit box, with the name of the current tweet on. It will be show as a response to the current tweet selected.
+* Defaurt *M*
 
 added::
 * Description: Force the update of you timeline.
