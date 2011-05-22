@@ -144,6 +144,8 @@ class KeyBinding:
         try:
             self.ui.statuses = self.api.api.GetSearch(search_word)
             self.changeBuffer()
+            if len(self.ui.statuses) == 0:
+                self.ui.flash = ['The research does not return any result', 'info']
         except:
             self.ui.flash = ['Failed with the research']
 
