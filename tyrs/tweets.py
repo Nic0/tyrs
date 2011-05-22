@@ -18,26 +18,8 @@ class Tweets(Api):
     def updateHomeTimeline (self):
         return self.api.GetFriendsTimeline(retweets=True)
 
-    def getMentions(self):
-        return self.api.GetMentions()
-
-    def getDirectMessages(self):
-        return self.api.GetDirectMessages()
-
-    def postDirectMessage(self, pseudo, text):
-        self.api.PostDirectMessage(pseudo, text)
-
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet, reply_to)
-
-    def retweet (self, id):
-        self.api.PostRetweet(id)
-
-    def DestroyFriendship (self, pseudo):
-        self.api.DestroyFriendship(pseudo)
-
-    def CreateFriendship (self, pseudo):
-        self.api.CreateFriendship(pseudo)
 
 class ApiPatch (Api):
     def PostRetweet(self, id):

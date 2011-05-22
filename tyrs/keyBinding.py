@@ -40,7 +40,7 @@ class KeyBinding:
                 self.ui.flash = ['Tweet has been send successfully.', "info"]
             else:
                 # note in the DM case, we have a screen_name, and not the id
-                self.api.postDirectMessage(reply_to_id, content)
+                self.api.api.PostDirectMessage(reply_to_id, content)
                 self.ui.flash = ['The direct message has benn send.', 'info']
 #           except:
  #               self.ui.flash = ["Couldn't send the tweet.", "warning"]
@@ -49,7 +49,7 @@ class KeyBinding:
     def retweet (self):
         status = self.ui.statuses[self.ui.status['current']]
         try:
-            self.api.retweet(status.GetId())
+            self.api.api.Postretweet(status.GetId())
             self.ui.flash = ['Retweet has been send successfully.', 'info']
         except:
             self.ui.flash = ["Couldn't send the retweet.", 'warning']
@@ -104,14 +104,14 @@ class KeyBinding:
 
     def createFriendship (self, pseudo):
         try:
-            self.api.CreateFriendship(pseudo)
+            self.api.api.CreateFriendship(pseudo)
             self.ui.flash = ['You are now following %s' % pseudo, 'info']
         except:
             self.ui.flash = ['Failed to follow %s' % pseudo, 'warning']
 
     def destroyFriendship (self, pseudo):
         try:
-            self.api.DestroyFriendship(pseudo)
+            self.api.api.DestroyFriendship(pseudo)
             self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
         except:
             self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
@@ -130,7 +130,7 @@ class KeyBinding:
 
     def getMentions (self):
         self.ui.buffer = 'mentions'
-        self.ui.statuses = self.api.getMentions()
+        self.ui.statuses = self.api.api.GetMentions()
         self.changeBuffer()
 
     def getHome (self):
@@ -140,7 +140,7 @@ class KeyBinding:
 
     def getDirectMessages (self):
         self.ui.buffer = 'dm'
-        self.ui.statuses = self.api.getDirectMessages()
+        self.ui.statuses = self.api.api.GetDirectMessages()
         if len(self.ui.statuses) == 0:
             self.ui.flash = ["You don't have any direct message", 'info']
         self.changeBuffer
