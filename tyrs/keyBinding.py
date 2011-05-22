@@ -42,7 +42,7 @@ class KeyBinding:
                     # note in the DM case, we have a screen_name, and not the id
                     self.api.api.PostDirectMessage(reply_to_id, content)
                     self.ui.flash = ['The direct message has benn send.', 'info']
-           except:
+            except:
                self.ui.flash = ["Couldn't send the tweet.", "warning"]
         self.ui.refresh_token = False
 
