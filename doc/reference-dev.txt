@@ -408,6 +408,7 @@ getDM::
 sendDM::
 * Description: Send a direct message, Tyrs will propose you to send a direct message to the personne display on the current tweet, but you may change, or just validate, and then, write your message.
 * Default: *D*
+
 Parameters
 ~~~~~~~~~~
 
