@@ -272,7 +272,11 @@ class uiTyrs:
     def getHeader (self, status):
         '''@return string'''
         charset = sys.stdout.encoding
-        pseudo  = status.user.screen_name.encode(charset)
+        try:
+            pseudo  = status.user.screen_name.encode(charset)
+        except:
+            # Only for the Direct Message case
+            pseudo = status.sender_screen_name.encode(charset)
         time    = self.getTime(status)
         #name    = status.user.name.encode(charset)
 

@@ -48,6 +48,8 @@ class Config:
     keys_reply             = 'M'
     keys_back_on_top       = 'g'
     keys_back_on_bottom    = 'G'
+    keys_getDM             = 'd'
+    keys_sendDM            = 'D'
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -221,6 +223,14 @@ class Config:
         # Reply
         if self.conf.has_option('keys', 'reply'):
             self.keys_reply = self.conf.get('keys', 'reply')
+        
+        # getDM
+        if self.conf.has_option('keys'), 'getDM'):
+            self.keys_getDM = self.conf.get('keys,' 'getDM')
+
+        #send
+        if self.conf.has_option('keys', 'sendDM'):
+            self.keys_sendDM = self.conf.get('keys', 'sendDM')
 
         #
         # PARAMS

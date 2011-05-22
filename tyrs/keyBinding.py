@@ -133,6 +133,16 @@ class KeyBinding:
         self.ui.statuses = self.api.updateHomeTimeline()
         self.changeBuffer()
 
+    def getDirectMessages (self):
+        self.ui.buffer = 'dm'
+        self.ui.statuses = self.api.getDirectMessages()
+        if len(self.ui.statuses) == 0:
+            self.ui.flash = ["You don't have any direct message", 'info']
+        self.changeBuffer
+
+    def sendDirectMessage (self):
+        pass
+
     def changeBuffer (self):
         self.ui.status['current'] = 0
         self.ui.status['first'] = 0
@@ -205,6 +215,12 @@ class KeyBinding:
             # REPLY
             elif ch == ord(self.conf.keys_reply):
                 self.reply()
+            # GET DIRECT MESSAGE
+            elif ch == ord(self.conf.keys_getDM):
+                self.getDirectMessages()
+            # SEND DIRECT MESSAGE
+            elif ch == ord(self.conf.keys_sendDM):
+                self.sendDirectMessage()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:
