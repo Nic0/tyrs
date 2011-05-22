@@ -316,6 +316,7 @@ mentions          = m
 reply             = M
 getDM             = d
 sendDM            = D
+search            = s
 ---------------
 
 Listing
@@ -408,6 +409,10 @@ getDM::
 sendDM::
 * Description: Send a direct message, Tyrs will propose you to send a direct message to the personne display on the current tweet, but you may change, or just validate, and then, write your message.
 * Default: *D*
+
+search::
+* Description: Return a list of tweets that contain the word of your research, a box will appeare to let you enter the word of your research
+* Default: *s*
 
 Parameters
 ~~~~~~~~~~
