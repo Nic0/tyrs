@@ -18,6 +18,8 @@ Functionnality
 - Display home timeline with colorfull tweets
 - Send tweets, retweets
 - Follow/Unfollow
+- Display mentions tweets, reply to tweets
+- Direct messages in/out
 - Configuration file allow lots of customisation
 
 Licence
