@@ -314,6 +314,8 @@ openurl           = o
 home              = h
 mentions          = m
 reply             = M
+getDM             = d
+sendDM            = D
 ---------------
 
 Listing
@@ -367,7 +369,7 @@ reply::
 * Description: Reply to the current tweet, open an edit box, with the name of the current tweet on. It will be show as a response to the current tweet selected.
 * Defaurt *M*
 
-added::
+update::
 * Description: Force the update of you timeline.
 * Default: *u*
 
@@ -399,6 +401,13 @@ openurl::
 * Description: will open the link in the select tweet.
 * Default: *o*
 
+getDM::
+* Description: Retrieve your direct messages
+* Default: *d*
+
+sendDM::
+* Description: Send a direct message, Tyrs will propose you to send a direct message to the personne display on the current tweet, but you may change, or just validate, and then, write your message.
+* Default: *D*
 Parameters
 ~~~~~~~~~~
 

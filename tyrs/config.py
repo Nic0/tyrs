@@ -224,11 +224,11 @@ class Config:
         if self.conf.has_option('keys', 'reply'):
             self.keys_reply = self.conf.get('keys', 'reply')
         
-        # getDM
-        if self.conf.has_option('keys'), 'getDM'):
+        # get DM
+        if self.conf.has_option('keys', 'getDM'):
             self.keys_getDM = self.conf.get('keys,' 'getDM')
 
-        #send
+        # send DM
         if self.conf.has_option('keys', 'sendDM'):
             self.keys_sendDM = self.conf.get('keys', 'sendDM')
 

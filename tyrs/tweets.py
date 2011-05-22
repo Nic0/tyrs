@@ -24,6 +24,9 @@ class Tweets(Api):
     def getDirectMessages(self):
         return self.api.GetDirectMessages()
 
+    def postDirectMessage(self, pseudo, text):
+        self.api.PostDirectMessage(pseudo, text)
+
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet, reply_to)
 

@@ -28,16 +28,21 @@ class KeyBinding:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
 
-    def tweet (self, data, reply_to_id=None):
+    def tweet (self, data, reply_to_id=None, dm=False):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
         box = editBox.EditBox(self.ui.screen, params, data, self.conf)
         if box.confirm:
 #            try:
             content = box.getContent()
-            self.api.postTweet(content, reply_to_id)
-            self.ui.flash = ['Tweet has been send successfully.', "info"]
-#            except:
+            if not dm:
+                self.api.postTweet(content, reply_to_id)
+                self.ui.flash = ['Tweet has been send successfully.', "info"]
+            else:
+                # note in the DM case, we have a screen_name, and not the id
+                self.api.postDirectMessage(reply_to_id, content)
+                self.ui.flash = ['The direct message has benn send.', 'info']
+#           except:
  #               self.ui.flash = ["Couldn't send the tweet.", "warning"]
         self.ui.refresh_token = False
 
@@ -119,9 +124,9 @@ class KeyBinding:
             #except:
                 #self.ui.Flash  = ["Couldn't open url", 'warning']
 
-    def pseudoBox (self, header):
+    def pseudoBox (self, header, pseudo=None):
         params = {'char': 40, 'width': 40, 'header': header}
-        return editBox.EditBox(self.ui.screen, params, None, self.conf)
+        return editBox.EditBox(self.ui.screen, params, pseudo, self.conf)
 
     def getMentions (self):
         self.ui.buffer = 'mentions'
@@ -141,7 +146,15 @@ class KeyBinding:
         self.changeBuffer
 
     def sendDirectMessage (self):
-        pass
+        ''' Two editing box, one for the name, and one for the content'''
+        status = self.ui.getCurrentStatus()
+        try:
+            pseudo = status.user.screen_name
+        except:
+            pseudo = status.sender_screen_name
+        pseudobox = self.pseudoBox("Send a Direct Message at whom ?", pseudo)
+        pseudo = pseudobox.getContent()
+        self.tweet(False, pseudo, True)
 
     def changeBuffer (self):
         self.ui.status['current'] = 0
