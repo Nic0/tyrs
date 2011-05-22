@@ -33,17 +33,17 @@ class KeyBinding:
         self.ui.refresh_token = True
         box = editBox.EditBox(self.ui.screen, params, data, self.conf)
         if box.confirm:
-#            try:
-            content = box.getContent()
-            if not dm:
-                self.api.postTweet(content, reply_to_id)
-                self.ui.flash = ['Tweet has been send successfully.', "info"]
-            else:
-                # note in the DM case, we have a screen_name, and not the id
-                self.api.api.PostDirectMessage(reply_to_id, content)
-                self.ui.flash = ['The direct message has benn send.', 'info']
-#           except:
- #               self.ui.flash = ["Couldn't send the tweet.", "warning"]
+            try:
+                content = box.getContent()
+                if not dm:
+                    self.api.postTweet(content, reply_to_id)
+                    self.ui.flash = ['Tweet has been send successfully.', "info"]
+                else:
+                    # note in the DM case, we have a screen_name, and not the id
+                    self.api.api.PostDirectMessage(reply_to_id, content)
+                    self.ui.flash = ['The direct message has benn send.', 'info']
+           except:
+               self.ui.flash = ["Couldn't send the tweet.", "warning"]
         self.ui.refresh_token = False
 
     def retweet (self):
