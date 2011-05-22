@@ -138,6 +138,15 @@ class KeyBinding:
         self.ui.statuses = self.api.updateHomeTimeline()
         self.changeBuffer()
 
+    def search (self):
+        self.ui.buffer = 'search'
+        search_word = self.pseudoBox('What should I search?').getContent()
+        try:
+            self.ui.statuses = self.api.api.GetSearch(search_word)
+            self.changeBuffer()
+        except:
+            self.ui.flash = ['Failed with the research']
+
     def getDirectMessages (self):
         self.ui.buffer = 'dm'
         self.ui.statuses = self.api.api.GetDirectMessages()
@@ -234,6 +243,9 @@ class KeyBinding:
             # SEND DIRECT MESSAGE
             elif ch == ord(self.conf.keys_sendDM):
                 self.sendDirectMessage()
+            elif ch == ord(self.conf.keys_search):
+                self.search()
+
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == ord(self.conf.keys_quit) or ch == 27:

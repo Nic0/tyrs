@@ -50,6 +50,7 @@ class Config:
     keys_back_on_bottom    = 'G'
     keys_getDM             = 'd'
     keys_sendDM            = 'D'
+    keys_search            = 's'
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -232,6 +233,10 @@ class Config:
         if self.conf.has_option('keys', 'sendDM'):
             self.keys_sendDM = self.conf.get('keys', 'sendDM')
 
+        # search
+        if self.conf.has_option('keys', 'search'):
+            self.keys_search = self.conf.get('keys', 'search')
+
         #
         # PARAMS
         #
@@ -252,10 +257,10 @@ class Config:
         if self.conf.has_option('params', 'retweet_by'):
             self.params_retweet_by = int(self.conf.get('params', 'retweet_by'))
 
-        # Retweet_By
+        # Openurl_command
         if self.conf.has_option('params', 'openurl_command'):
-            self.params_openurl_command = int(self.conf.get('params',
-                'openurl_command'))
+            self.params_openurl_command = self.conf.get('params',
+                'openurl_command')
 
         # Transparency
         if self.conf.has_option('params', 'transparency'):
