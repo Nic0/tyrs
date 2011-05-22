@@ -64,6 +64,7 @@ class uiTyrs:
         curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
         curses.curs_set(0)      # Dont display cursor
+        curses.meta(1)          # allow 8bits inputs
         self.initColors()
         self.maxyx = screen.getmaxyx()
         screen.border()
