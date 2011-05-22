@@ -1,6 +1,7 @@
 #! -*- coding: utf-8 -*-
 import curses
 import curses.textpad
+import sys
 
 class EditBox:
     ''' Popup box with editing faculty.
@@ -19,6 +20,8 @@ class EditBox:
         self.params = params
         self.data   = data
         self.win = self.initWin(screen)
+        self.win.keypad(1)
+        curses.curs_set(1)
         self.startEdit()
         self.win.erase()
 
@@ -32,8 +35,11 @@ class EditBox:
 
         while True:
             ch = self.win.getch()
+            if ch == curses.KEY_UP or ch == curses.KEY_DOWN \
+                    or ch == curses.KEY_LEFT or ch == curses.KEY_RIGHT:
+                continue
 
-            if ch == 10:          # ENTER: send the tweet
+            elif ch == 10:          # ENTER: send the tweet
                 self.confirm = True
                 break
 
@@ -41,10 +47,8 @@ class EditBox:
                 break
 
             elif ch == 127:       # DEL
-
                 if len(self.content) > 0:
                     self.content = self.content[:-1]
-
             else:
                 self.content += chr(ch)
 
