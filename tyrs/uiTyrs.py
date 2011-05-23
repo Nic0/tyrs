@@ -255,6 +255,11 @@ class uiTyrs:
                         pass
                 curent_x += len(word) + 1
 
+                # We check for ugly empty spaces
+                while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
+                    curent_x -= 1
+
+
     def getSizeStatus (self, status):
         length = self.maxyx[1] - 4
         height = len(status.text) / length + 3
