@@ -154,7 +154,7 @@ class KeyBinding:
         self.ui.statuses = self.api.api.GetDirectMessages()
         if len(self.ui.statuses) == 0:
             self.ui.flash = ["You don't have any direct message", 'info']
-        self.changeBuffer
+        self.changeBuffer()
 
     def sendDirectMessage (self):
         ''' Two editing box, one for the name, and one for the content'''
