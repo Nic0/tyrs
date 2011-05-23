@@ -28,10 +28,10 @@ Installation
 
 Dependency to python-twitter and python-oauth2
 
-  git clone git://github.com/Nic0/tyrs.git
-  cd tyrs
-  python setup.py build
-  sudo python setup.py install
+    git clone git://github.com/Nic0/tyrs.git
+    cd tyrs
+    python setup.py build
+    sudo python setup.py install
 
 check the [installation guide](http://tyrs.nicosphere.net/reference.html#installation) for more information.
 
