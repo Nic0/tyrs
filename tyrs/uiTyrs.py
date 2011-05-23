@@ -108,7 +108,7 @@ class uiTyrs:
             if self.buffer == 'home':
                 self.appendNewStatuses(self.api.updateHomeTimeline())
             elif self.buffer == 'mentions':
-                self.appendNewStatuses(self.api.getMentions())
+                self.appendNewStatuses(self.api.api.GetMentions())
             self.displayHomeTimeline()
             self.countStatuses()
         except:
