@@ -10,7 +10,7 @@
    @licence:    GPLv3
 
 '''
-
+import sys
 import config
 import uiTyrs
 import tweets
@@ -32,9 +32,15 @@ def arguments ():
 
 conf = config.Config(arguments())
 
+def setTitle ():
+    try:
+        sys.stdout.write("\x1b]2;Tyrs\x07")
+    except:
+        pass
+
 def main(scr):
 
-
+    setTitle()
     api     = tweets.Tweets()
     api.authentification(conf)
     interface  = uiTyrs.uiTyrs(api, conf)
