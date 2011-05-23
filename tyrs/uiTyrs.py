@@ -103,8 +103,7 @@ class uiTyrs:
         ''' Retrieves tweets, don't display them
         '''
         try:
-            self.flash = ['Updating timeline...', 'info']
-            self.displayHomeTimeline()
+            self.displayUpdateMsg()
 
             if self.buffer == 'home':
                 self.appendNewStatuses(self.api.updateHomeTimeline())
@@ -144,6 +143,10 @@ class uiTyrs:
         else:
             self.displayInfoMsg(msg)
         self.flash = []
+
+    def displayUpdateMsg (self):
+        self.displayInfoMsg(' Updating timeline... ')
+        self.screen.refresh()
 
     def displayWarningMsg (self, msg):
             self.screen.addstr(0, 3, msg,
