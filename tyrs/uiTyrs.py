@@ -59,7 +59,6 @@ class uiTyrs:
     def initScreen (self):
 
         screen = curses.initscr()
-
         curses.noecho()         # Dont print anything
         curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
@@ -83,12 +82,13 @@ class uiTyrs:
 
         # Setup colors
         # TODO, check the term capability before
-        for i in range(len(self.conf.color_set)):
-            if not self.conf.color_set[i]:
-                continue
-            else:
-                rgb = self.conf.color_set[i]
-                curses.init_color(i, rgb[0], rgb[1], rgb[2])
+        if curses.can_change_color():
+            for i in range(len(self.conf.color_set)):
+                if not self.conf.color_set[i]:
+                    continue
+                else:
+                    rgb = self.conf.color_set[i]
+                    curses.init_color(i, rgb[0], rgb[1], rgb[2])
 
         curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 1 black
         curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 2 red
