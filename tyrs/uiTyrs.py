@@ -105,10 +105,14 @@ class uiTyrs:
         try:
             self.flash = ['Updating timeline...', 'info']
             self.displayHomeTimeline()
+
             if self.buffer == 'home':
                 self.appendNewStatuses(self.api.updateHomeTimeline())
             elif self.buffer == 'mentions':
                 self.appendNewStatuses(self.api.api.GetMentions())
+            elif self.buffer == 'search':
+                self.appendNewStatuses(self.api.api.GetSearch(self.api.search_word))
+
             self.displayHomeTimeline()
             self.countStatuses()
         except:
@@ -215,8 +219,6 @@ class uiTyrs:
     def displayText (self, text, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.'''
-
-        #status.SetTruncated = False
 
         if status.rt:
             text = text.split(':')[1:]

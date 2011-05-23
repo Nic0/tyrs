@@ -140,9 +140,9 @@ class KeyBinding:
 
     def search (self):
         self.ui.buffer = 'search'
-        search_word = self.pseudoBox('What should I search?').getContent()
+        self.api.search_word = self.pseudoBox('What should I search?').getContent()
         try:
-            self.ui.statuses = self.api.api.GetSearch(search_word)
+            self.ui.statuses = self.api.api.GetSearch(self.api.search_word)
             self.changeBuffer()
             if len(self.ui.statuses) == 0:
                 self.ui.flash = ['The research does not return any result', 'info']
