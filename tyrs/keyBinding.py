@@ -49,7 +49,7 @@ class KeyBinding:
     def retweet (self):
         status = self.ui.statuses[self.ui.status['current']]
         try:
-            self.api.api.Postretweet(status.GetId())
+            self.api.api.PostRetweet(status.GetId())
             self.ui.flash = ['Retweet has been send successfully.', 'info']
         except:
             self.ui.flash = ["Couldn't send the retweet.", 'warning']
