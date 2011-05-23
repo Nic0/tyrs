@@ -16,6 +16,9 @@ If it's your first visite, you might check some
 link:screenshot.html[screenshots], or get started with the
 link:quick_start.html[Tyrs quick start guide].
 
+Check the link:reference.html#installation[installation guide] for any
+questions to get your Tyrs running.
+
 Features
 --------
 
@@ -23,13 +26,16 @@ Here a list of some intersesting features you can have with Tyrs.
 
 * OAuth authentification.
 * UTF-8 support.
+* Tweets, Retweets, Follow, Unfollow.
+* Mentions, Reply
+* Search
+* Direct messages
 * Transarency and colors.
 * Based on ncurses.
 * Customisation of keys binding.
 * Customisation of colors.
 * Easely configurable, readable configuration.
 * Opens URL just with 'o' touch.
-* Tweets, Retweets, Follow, Unfollow.
 
 [IMPORTANT]
 This client is relatively new, started current May 2011,  and curently in full development phase, there

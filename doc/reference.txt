@@ -311,6 +311,12 @@ unfollow_selected = l
 follow            = F
 unfollow          = L
 openurl           = o
+home              = h
+mentions          = m
+reply             = M
+getDM             = d
+sendDM            = D
+search            = s
 ---------------
 
 Listing
@@ -345,12 +351,26 @@ retweet::
 
 retweet_and_edit::
 * Description: This allow you to add some comment to a retweet, it will display like "RT user_name: his_tweet<editable_part>".
-* Defaurt. *R*
+* Default: *R*
 
 [NOTE]
 This kind of retweet is not realy a retweet, it more like a normal tweet but, with the content of the original tweet with the username update.
 
-added::
+home::
+* Description: Go back to your home timeline.
+* Default: *h*
+
+mentions::
+* Description: Show you all tweets that contain @you_pseudo, meaning if someone
+that you are not following put your @name in a tweet, you will see it. You may
+leave this timeline just using 'h' (home) to go back on your home timeline.
+* Default: *m*
+
+reply::
+* Description: Reply to the current tweet, open an edit box, with the name of the current tweet on. It will be show as a response to the current tweet selected.
+* Defaurt *M*
+
+update::
 * Description: Force the update of you timeline.
 * Default: *u*
 
@@ -381,6 +401,18 @@ without.
 openurl::
 * Description: will open the link in the select tweet.
 * Default: *o*
+
+getDM::
+* Description: Retrieve your direct messages
+* Default: *d*
+
+sendDM::
+* Description: Send a direct message, Tyrs will propose you to send a direct message to the personne display on the current tweet, but you may change, or just validate, and then, write your message.
+* Default: *D*
+
+search::
+* Description: Return a list of tweets that contain the word of your research, a box will appeare to let you enter the word of your research
+* Default: *s*
 
 Parameters
 ~~~~~~~~~~

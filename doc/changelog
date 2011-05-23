@@ -1,11 +1,12 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.2.1
+* Version 0.2.1 -- 2011-05-23
 
 	* Direct messages in/out 'd', 'D' - issue #7
 	* Mentions tweets timeline 'm' - issue #12
+	* Reply to a tweet 'M'
 	* Go back to bottom, top 'g', 'G' - issue #14
-	
+	* Search 's'
 
 * Version 0.2.0 -- 2011-05-21
 
