@@ -20,7 +20,20 @@ Functionnality
 - Follow/Unfollow
 - Display mentions tweets, reply to tweets
 - Direct messages in/out
+- Search
 - Configuration file allow lots of customisation
+
+Installation
+------------
+
+Dependency to python-twitter and python-oauth2
+
+  git clone git://github.com/Nic0/tyrs.git
+  cd tyrs
+  python setup.py build
+  sudo python setup.py install
+
+check the [installation guide](http://tyrs.nicosphere.net/reference.html#installation) for more information.
 
 Licence
 -------
