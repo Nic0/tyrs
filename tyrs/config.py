@@ -6,6 +6,7 @@
 '''
 import os
 import sys
+import curses
 import oauth2 as oauth
 import ConfigParser
 
@@ -30,27 +31,27 @@ class Config:
 
     color_set = [False, False, False, False, False, False, False, False]
 
-    keys_up                = 'k'
-    keys_down              = 'j'
-    keys_quit              = 'q'
-    keys_tweet             = 't'
-    keys_clear             = 'c'
-    keys_retweet           = 'r'
-    keys_retweet_and_edit  = 'R'
-    keys_update            = 'u'
-    keys_follow_selected   = 'f'
-    keys_unfollow_selected = 'l'
-    keys_follow            = 'F'
-    keys_unfollow          = 'L'
-    keys_openurl           = 'o'
-    keys_home              = 'h'
-    keys_mentions          = 'm'
-    keys_reply             = 'M'
-    keys_back_on_top       = 'g'
-    keys_back_on_bottom    = 'G'
-    keys_getDM             = 'd'
-    keys_sendDM            = 'D'
-    keys_search            = 's'
+    keys_up                = ord('k')
+    keys_down              = ord('j')
+    keys_quit              = ord('q')
+    keys_tweet             = ord('t')
+    keys_clear             = ord('c')
+    keys_retweet           = ord('r')
+    keys_retweet_and_edit  = ord('R')
+    keys_update            = ord('u')
+    keys_follow_selected   = ord('f')
+    keys_unfollow_selected = ord('l')
+    keys_follow            = ord('F')
+    keys_unfollow          = ord('L')
+    keys_openurl           = ord('o')
+    keys_home              = ord('h')
+    keys_mentions          = ord('m')
+    keys_reply             = ord('M')
+    keys_back_on_top       = ord('g')
+    keys_back_on_bottom    = ord('G')
+    keys_getDM             = ord('d')
+    keys_sendDM            = ord('D')
+    keys_search            = ord('s')
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -155,87 +156,87 @@ class Config:
 
         # up
         if self.conf.has_option('keys', 'up'):
-            self.keys_up            = self.conf.get('keys', 'up')
+            self.keys_up            = self.charValue(self.conf.get('keys', 'up'))
 
         # down
         if self.conf.has_option('keys', 'down'):
-            self.keys_down          = self.conf.get('keys', 'down')
+            self.keys_down          = self.charValue(self.conf.get('keys', 'down'))
 
         # quit
         if self.conf.has_option('keys', 'quit'):
-            self.keys_quit          = self.conf.get('keys', 'quit')
+            self.keys_quit          = self.charValue(self.conf.get('keys', 'quit'))
 
         # tweet
         if self.conf.has_option('keys', 'tweet'):
-            self.keys_tweet         = self.conf.get('keys', 'tweet')
+            self.keys_tweet         = self.charValue(self.conf.get('keys', 'tweet'))
 
         # clear
         if self.conf.has_option('keys', 'clear'):
-            self.keys_clear         = self.conf.get('keys', 'clear')
+            self.keys_clear         = self.charValue(self.conf.get('keys', 'clear'))
 
         # retweet
         if self.conf.has_option('keys', 'retweet'):
-            self.keys_retweet       = self.conf.get('keys', 'retweet')
+            self.keys_retweet       = self.charValue(self.conf.get('keys', 'retweet'))
 
         # retweet and edit
         if self.conf.has_option('keys', 'retweet_and_edit'):
-            self.keys_retweet_and_edit = self.conf.get('keys', 'retweet_and_edit')
+            self.keys_retweet_and_edit = self.charValue(self.conf.get('keys', 'retweet_and_edit'))
 
         # update
         if self.conf.has_option('keys', 'update'):
-            self.keys_update        = self.conf.get('keys', 'update')
+            self.keys_update        = self.charValue(self.conf.get('keys', 'update'))
 
         # follow_selected
         if self.conf.has_option('keys', 'follow_selected'):
-            self.keys_follow_selected = self.conf.get('keys', 'follow_selected')
+            self.keys_follow_selected = self.charValue(self.conf.get('keys', 'follow_selected'))
 
         # unfollow_selected
         if self.conf.has_option('keys', 'unfollow_selected'):
-            self.keys_unfollow_selected = self.conf.get('keys', 'unfollow_selected')
+            self.keys_unfollow_selected = self.charValue(self.conf.get('keys', 'unfollow_selected'))
 
         # follow
         if self.conf.has_option('keys', 'follow'):
-            self.keys_follow = self.conf.get('keys', 'follow')
+            self.keys_follow = self.charValue(self.conf.get('keys', 'follow'))
 
         # unfollow
         if self.conf.has_option('keys', 'unfollow'):
-            self.keys_unfollow = self.conf.get('keys', 'unfollow')
+            self.keys_unfollow = self.charValue(self.conf.get('keys', 'unfollow'))
 
         # openurl
         if self.conf.has_option('keys', 'openurl'):
-            self.keys_openurl = self.conf.get('keys', 'openurl')
+            self.keys_openurl = self.charValue(self.conf.get('keys', 'openurl'))
 
         # home
         if self.conf.has_option('keys', 'home'):
-            self.keys_home = self.conf.get('keys', 'home')
+            self.keys_home = self.charValue(self.conf.get('keys', 'home'))
 
         # mentions
         if self.conf.has_option('keys', 'mentions'):
-            self.keys_mentions = self.conf.get('keys', 'mentions')
+            self.keys_mentions = self.charValue(self.conf.get('keys', 'mentions'))
 
         # back on top
         if self.conf.has_option('keys', 'back_on_top'):
-            self.keys_back_on_top = self.conf.get('keys', 'back_on_top')
+            self.keys_back_on_top = self.charValue(self.conf.get('keys', 'back_on_top'))
 
         # back on bottom
         if self.conf.has_option('keys', 'back_on_bottom'):
-            self.keys_back_on_bottom = self.conf.get('keys', 'back_on_bottom')
+            self.keys_back_on_bottom = self.charValue(self.conf.get('keys', 'back_on_bottom'))
 
         # Reply
         if self.conf.has_option('keys', 'reply'):
-            self.keys_reply = self.conf.get('keys', 'reply')
+            self.keys_reply = self.charValue(self.conf.get('keys', 'reply'))
         
         # get DM
         if self.conf.has_option('keys', 'getDM'):
-            self.keys_getDM = self.conf.get('keys,' 'getDM')
+            self.keys_getDM = self.charValue(self.conf.get('keys,' 'getDM'))
 
         # send DM
         if self.conf.has_option('keys', 'sendDM'):
-            self.keys_sendDM = self.conf.get('keys', 'sendDM')
+            self.keys_sendDM = self.charValue(self.conf.get('keys', 'sendDM'))
 
         # search
         if self.conf.has_option('keys', 'search'):
-            self.keys_search = self.conf.get('keys', 'search')
+            self.keys_search = self.charValue(self.conf.get('keys', 'search'))
 
         #
         # PARAMS
@@ -266,6 +267,15 @@ class Config:
         if self.conf.has_option('params', 'transparency'):
             if int(self.conf.get('params', 'transparency')) == 0:
                 self.params_transparency = False
+
+    def charValue (self, ch):
+        if ch[0] == '^':
+            i = 0
+            while i <= 31:
+                if curses.ascii.unctrl(i) == ch:
+                    return i
+                i +=1
+        return ord(ch)
 
     def authorization (self):
         ''' This function from python-twitter developers '''

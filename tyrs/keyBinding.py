@@ -189,68 +189,68 @@ class KeyBinding:
             #
 
             # DOWN
-            if ch == ord(self.conf.keys_down) or ch == curses.KEY_DOWN:
+            if ch == self.conf.keys_down or ch == curses.KEY_DOWN:
                 self.moveDown()
             # UP
-            elif ch == ord(self.conf.keys_up) or ch == curses.KEY_UP:
+            elif ch == self.conf.keys_up or ch == curses.KEY_UP:
                 self.moveUp()
             # TWEET
-            elif ch == ord(self.conf.keys_tweet):
+            elif ch == self.conf.keys_tweet:
                 self.tweet(None)
             # RETWEET
-            elif ch == ord(self.conf.keys_retweet):
+            elif ch == self.conf.keys_retweet:
                 self.retweet()
             # RETWEET AND EDIT
-            elif ch == ord(self.conf.keys_retweet_and_edit):
+            elif ch == self.conf.keys_retweet_and_edit:
                 self.retweetAndEdit()
             # MENTIONS
-            elif ch == ord(self.conf.keys_mentions):
+            elif ch == self.conf.keys_mentions:
                 self.getMentions()
             # HOME TIMELINE
-            elif ch == ord(self.conf.keys_home):
+            elif ch == self.conf.keys_home:
                 self.getHome()
             # CLEAR
-            elif ch == ord(self.conf.keys_clear):
+            elif ch == self.conf.keys_clear:
                 self.clear()
             # UPDATE
-            elif ch == ord(self.conf.keys_update):
+            elif ch == self.conf.keys_update:
                 self.update()
             # FOLLOW SELECTED
-            elif ch == ord(self.conf.keys_follow_selected):
+            elif ch == self.conf.keys_follow_selected:
                 self.followSelected()
             # UNFOLLOW SELECTED
-            elif ch == ord(self.conf.keys_unfollow_selected):
+            elif ch == self.conf.keys_unfollow_selected:
                 self.unfollowSelected()
             # FOLLOW
-            elif ch == ord(self.conf.keys_follow):
+            elif ch == self.conf.keys_follow:
                 self.follow()
             # UNFOLLOW
-            elif ch == ord(self.conf.keys_unfollow):
+            elif ch == self.conf.keys_unfollow:
                 self.unfollow()
             # OPENURL
-            elif ch == ord(self.conf.keys_openurl):
+            elif ch == self.conf.keys_openurl:
                 self.openurl()
             # BACK ON TOP
-            elif ch == ord(self.conf.keys_back_on_top):
+            elif ch == self.conf.keys_back_on_top:
                 self.changeBuffer()
             # BACK ON BOTTOM
-            elif ch == ord(self.conf.keys_back_on_bottom):
+            elif ch == self.conf.keys_back_on_bottom:
                 self.backOnBottom()
             # REPLY
-            elif ch == ord(self.conf.keys_reply):
+            elif ch == self.conf.keys_reply:
                 self.reply()
             # GET DIRECT MESSAGE
-            elif ch == ord(self.conf.keys_getDM):
+            elif ch == self.conf.keys_getDM:
                 self.getDirectMessages()
             # SEND DIRECT MESSAGE
-            elif ch == ord(self.conf.keys_sendDM):
+            elif ch == self.conf.keys_sendDM:
                 self.sendDirectMessage()
-            elif ch == ord(self.conf.keys_search):
+            elif ch == self.conf.keys_search:
                 self.search()
 
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
-            elif ch == ord(self.conf.keys_quit) or ch == 27:
+            elif ch == self.conf.keys_quit or ch == 27:
                 break
 
             self.ui.displayHomeTimeline()
