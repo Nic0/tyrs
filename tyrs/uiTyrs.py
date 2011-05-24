@@ -78,7 +78,7 @@ class uiTyrs:
             curses.use_default_colors()
             bgcolor = -1
         else:
-            bgcolor = 0
+            bgcolor = False
 
         # Setup colors
         # TODO, check the term capability before

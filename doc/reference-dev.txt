@@ -161,6 +161,9 @@ This will read the configuration from the '~/.config/tyrs/tyrs.cfg.foo'.
 CAUTION: You don't need to pass as argument the full filename, as it will read from
 some 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
 
+TIP: You may add some comments on your configuration file, you just need to
+start the line with '#' ou ';'.
+
 Colors
 ~~~~~~
 
