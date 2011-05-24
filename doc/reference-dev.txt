@@ -218,7 +218,7 @@ bold = highlight warning_msg header
 
 That's all you need!
 
-NOTE:
+[NOTE]
 =================
 * You need to leave a space between each one, otherwise it won't work.
 * This works as well with RGB colors.
