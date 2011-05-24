@@ -29,6 +29,17 @@ class Config:
     color_info_msg         = 2
     color_current_tweet    = 5
 
+    color_bold = {
+        'highlight':     False,
+        'header':        False,
+        'hashtag':       False,
+        'attag':         False,
+        'text':          False,
+        'warning_msg':   False,
+        'info_msg':      False,
+        'current_tweet': False,
+        }
+
     color_set = [False, False, False, False, False, False, False, False]
 
     keys_up                = ord('k')
@@ -133,11 +144,16 @@ class Config:
 
         # Warning messages
         if self.conf.has_option('colors', 'warning_msg'):
-            self.color_warning_msg      = int(self.conf.get('colors', 'warning_msg'))
+            self.color_warning_msg  = int(self.conf.get('colors', 'warning_msg'))
 
         # Information messages
         if self.conf.has_option('colors', 'info_msg'):
-            self.color_info_msg        = int(self.conf.get('colors', 'info_msg'))
+            self.color_info_msg     = int(self.conf.get('colors', 'info_msg'))
+
+        # Bold
+        if self.conf.has_option('colors', 'bold'):
+            self.getBoldColors(self.conf.get('colors', 'bold'))
+
 
         #
         # COLOR SETUP
@@ -152,7 +168,7 @@ class Config:
 
         #
         # KEYS
-        # 
+        #
 
         # up
         if self.conf.has_option('keys', 'up'):
@@ -225,7 +241,7 @@ class Config:
         # Reply
         if self.conf.has_option('keys', 'reply'):
             self.keys_reply = self.charValue(self.conf.get('keys', 'reply'))
-        
+
         # get DM
         if self.conf.has_option('keys', 'getDM'):
             self.keys_getDM = self.charValue(self.conf.get('keys,' 'getDM'))
@@ -276,6 +292,11 @@ class Config:
                     return i
                 i +=1
         return ord(ch)
+
+    def getBoldColors (self, str):
+        bolds = str.split(' ')
+        for bold in bolds:
+            self.color_bold[bold] = True
 
     def authorization (self):
         ''' This function from python-twitter developers '''

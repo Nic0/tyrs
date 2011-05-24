@@ -202,6 +202,28 @@ warning_msg = 1
 info_msg    = 2
 ----------------
 
+Bold font
+^^^^^^^^^
+
+You may activate bold with every item of the colors parameters, we activate
+them with one parameter, containing the list of elements to activate bold. +
+Let's take an exemple, we wan't activate bold for highlight, warning_msg and
+header. We simply do:
+
+[source,conf]
+---------------
+[colors]
+bold = highlight warning_msg header
+---------------
+
+That's all you need!
+
+NOTE:
+=================
+* You need to leave a space between each one, otherwise it won't work.
+* This works as well with RGB colors.
+=================
+
 Listing
 ^^^^^^^
 
@@ -242,6 +264,9 @@ text::
 * Description: This is all the basic text, such as tweets (without highlight),
 inputs in the tweet edit box.
 * Default: 7 (white)
+
+bold::
+* Description: Activate bold, check above for more information.
 
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -149,10 +149,18 @@ class uiTyrs:
         self.screen.refresh()
 
     def displayWarningMsg (self, msg):
+        if self.conf.color_bold['warning_msg'] == True:
+            self.screen.addstr(0, 3, msg,
+                               curses.color_pair(self.conf.color_warning_msg) | curses.A_BOLD)
+        else:
             self.screen.addstr(0, 3, msg,
                                curses.color_pair(self.conf.color_warning_msg))
 
     def displayInfoMsg (self, msg):
+        if self.conf.color_bold['info_msg'] == True:
+            self.screen.addstr(0, 3, msg,
+                               curses.color_pair(self.conf.color_info_msg) | curses.A_BOLD)
+        else:
             self.screen.addstr(0, 3, msg,
                                curses.color_pair(self.conf.color_info_msg))
 
@@ -202,13 +210,19 @@ class uiTyrs:
         if self.conf.params_tweet_border == 1:
             panel.border(0)
 
-        # Highlight (bold) the current status
+        # Highlight the current status
         if self.status['current'] == i:
-            panel.addstr(0,3, header,
-                    curses.color_pair(self.conf.color_current_tweet))
+            if self.conf.color_bold['current_tweet']:
+                panel.addstr(0,3, header,
+                             curses.color_pair(self.conf.color_current_tweet) | curses.A_BOLD)
+            else:
+                panel.addstr(0,3, header,
+                             curses.color_pair(self.conf.color_current_tweet))
         else:
-            panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
-
+            if self.conf.color_bold['header']:
+                panel.addstr(0,3, header, curses.color_pair(self.conf.color_header) | curses.A_BOLD)
+            else:
+                panel.addstr(0,3, header, curses.color_pair(self.conf.color_header))
         self.displayText(text, panel, status)
 
         panel.refresh(0, 0, start_y, start_x,
@@ -236,21 +250,42 @@ class uiTyrs:
                 curent_x = 2
 
             if word != '':
+                # The word is an HASHTAG ? '#'
                 if word[0] == '#':
-                    panel.addstr(line, curent_x, word,
-                                 curses.color_pair(self.conf.color_hashtag))
-                elif word[0] == '@':
-                    name = self.api.me.screen_name
-                    if word == '@'+name or word == '@'+name+':':
+                    if self.conf.color_bold['hashtag']:
                         panel.addstr(line, curent_x, word,
-                                     curses.color_pair(self.conf.color_highlight))
+                                     curses.color_pair(self.conf.color_hashtag) | curses.A_BOLD)
                     else:
                         panel.addstr(line, curent_x, word,
-                                     curses.color_pair(self.conf.color_attag))
+                                     curses.color_pair(self.conf.color_hashtag))
+                # Or is it an 'AT TAG' ? '@'
+                elif word[0] == '@':
+                    name = self.api.me.screen_name
+                    # The AT TAG is,  @myself
+                    if word == '@'+name or word == '@'+name+':':
+                        if self.conf.color_bold['highlight']:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_highlight) | curses.A_BOLD)
+                        else:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_highlight))
+                    # @anyone
+                    else:
+                        if self.conf.color_bold['attag']:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_attag) | curses.A_BOLD)
+                        else:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_attag))
+                # It's just a normal word
                 else:
                     try:
-                        panel.addstr(line, curent_x, word,
-                                     curses.color_pair(self.conf.color_text))
+                        if self.conf.color_bold['text']:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_text) | curses.A_BOLD)
+                        else:
+                            panel.addstr(line, curent_x, word,
+                                         curses.color_pair(self.conf.color_text))
                     except:
                         pass
                 curent_x += len(word) + 1
