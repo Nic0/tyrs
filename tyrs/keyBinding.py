@@ -16,7 +16,7 @@ class KeyBinding:
         curses.doupdate()
 
     def moveDown (self):
-        if self.ui.status['current'] < self.ui.status['count'] - 1:
+        if self.ui.status['current'] < self.ui.count[self.ui.buffer] - 1:
             if self.ui.status['current'] >= self.ui.status['last']:
                 self.ui.status['first'] += 1
             self.ui.status['current'] += 1
@@ -47,7 +47,7 @@ class KeyBinding:
         self.ui.refresh_token = False
 
     def retweet (self):
-        status = self.ui.statuses[self.ui.status['current']]
+        status = self.ui.getCurrentStatus()
         try:
             self.api.api.PostRetweet(status.GetId())
             self.ui.flash = ['Retweet has been send successfully.', 'info']
@@ -71,7 +71,7 @@ class KeyBinding:
         self.ui.clearStatuses()
 
     def update (self):
-        self.ui.updateTimeline()
+        self.ui.updateTimeline(self.ui.buffer)
 
     def followSelected (self):
         status = self.ui.getCurrentStatus()
@@ -130,39 +130,38 @@ class KeyBinding:
 
     def getMentions (self):
         self.ui.buffer = 'mentions'
-        self.ui.statuses = self.api.api.GetMentions()
         self.changeBuffer()
 
     def getHome (self):
         self.ui.buffer = 'home'
-        self.ui.statuses = self.api.updateHomeTimeline()
         self.changeBuffer()
 
     def search (self):
         self.ui.buffer = 'search'
         self.api.search_word = self.pseudoBox('What should I search?').getContent()
         try:
-            self.ui.statuses = self.api.api.GetSearch(self.api.search_word)
+            self.ui.statuses['search'] = self.api.api.GetSearch(self.api.search_word)
             self.changeBuffer()
-            if len(self.ui.statuses) == 0:
+            if len(self.ui.statuses['search']) == 0:
                 self.ui.flash = ['The research does not return any result', 'info']
         except:
             self.ui.flash = ['Failed with the research']
 
     def getDirectMessages (self):
-        self.ui.buffer = 'dm'
-        self.ui.statuses = self.api.api.GetDirectMessages()
-        if len(self.ui.statuses) == 0:
-            self.ui.flash = ["You don't have any direct message", 'info']
+        self.ui.buffer = 'direct'
         self.changeBuffer()
 
     def sendDirectMessage (self):
         ''' Two editing box, one for the name, and one for the content'''
-        status = self.ui.getCurrentStatus()
         try:
-            pseudo = status.user.screen_name
+            status = self.ui.getCurrentStatus()
+            try:
+                pseudo = status.user.screen_name
+            except:
+                pseudo = status.sender_screen_name
         except:
-            pseudo = status.sender_screen_name
+            pseudo = ''
+
         pseudobox = self.pseudoBox("Send a Direct Message at whom ?", pseudo)
         pseudo = pseudobox.getContent()
         self.tweet(False, pseudo, True)
@@ -170,7 +169,7 @@ class KeyBinding:
     def changeBuffer (self):
         self.ui.status['current'] = 0
         self.ui.status['first'] = 0
-        self.ui.displayHomeTimeline()
+        self.ui.displayTimeline()
 
     def backOnBottom (self):
         self.ui.status['current'] = self.ui.status['last']
@@ -253,4 +252,4 @@ class KeyBinding:
             elif ch == self.conf.keys_quit or ch == 27:
                 break
 
-            self.ui.displayHomeTimeline()
+            self.ui.displayTimeline()

@@ -46,13 +46,10 @@ def main(scr):
     interface  = uiTyrs.uiTyrs(api, conf)
 
     update = UpdateThread(interface, conf)
-    #refresh = RefreshThread(interface, conf)
     update.start()
-    #refresh.start()
     keybinding = keys.KeyBinding(interface, conf, api)
     keybinding.handleKeyBinding()
     update.stop()
-    #refresh.stop()
     interface.tearDown()
     print 'Waiting for thread stopping...'
     return 0
@@ -70,27 +67,10 @@ class UpdateThread (threading.Thread):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params_refresh * 60.0)
             if not self._stopevent.isSet():
-                self.interface.updateTimeline()
-                self.interface.displayHomeTimeline()
-
-    def stop (self):
-        self._stopevent.set()
-
-class RefreshThread (threading.Thread):
-
-    def __init__ (self, interface, conf):
-        self.interface = interface
-        self.conf = conf
-        threading.Thread.__init__(self, target=self.run)
-        self._stopevent = threading.Event()
-
-
-    def run (self):
-        while not self._stopevent.isSet():
-            self._stopevent.wait(2.0)
-            if not self._stopevent.isSet():
-                self.interface.updateHomeTimeline()
-                self.interface.displayHomeTimeline()
+                self.interface.updateTimeline('home')
+                self.interface.updateTimeline('mentions')
+                self.interface.updateTimeline('direct')
+                self.interface.displayTimeline()
 
     def stop (self):
         self._stopevent.set()
