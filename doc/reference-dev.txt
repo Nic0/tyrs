@@ -319,6 +319,22 @@ sendDM            = D
 search            = s
 ---------------
 
+Control keys support
+^^^^^^^^^^^^^^^^^^^^^
+
+You may wish activate some control keys (ctrl+something) in the configuration
+file, for exemple, remap your reply with a ctrl-r. It is possible as following:
+
+[source,conf]
+---------------
+[keys]
+reply  = ^R
+---------------
+
+CAUTION: The letter followed by '^' *must* be upper case, as it's a
+conventionnal things. this mean you can't have a ctrl-r and ctrl-R, you will
+have the ctrl-r by putting '^R' in your configuration file.
+
 Listing
 ^^^^^^^
 
