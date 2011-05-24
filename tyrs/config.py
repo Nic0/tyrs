@@ -344,4 +344,4 @@ class Config:
         with open(self.tokenFile, 'wb') as tokens:
             conf.write(tokens)
 
-        print 'you\'re account as been saved'
+        print 'your account has been saved'
