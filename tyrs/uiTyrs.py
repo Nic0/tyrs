@@ -212,12 +212,12 @@ class uiTyrs:
 
         # Highlight the current status
         if self.status['current'] == i:
-            if self.conf.color_bold['current_tweet']:
+            if self.conf.color_bold['current']:
                 panel.addstr(0,3, header,
-                             curses.color_pair(self.conf.color_current_tweet) | curses.A_BOLD)
+                             curses.color_pair(self.conf.color_current) | curses.A_BOLD)
             else:
                 panel.addstr(0,3, header,
-                             curses.color_pair(self.conf.color_current_tweet))
+                             curses.color_pair(self.conf.color_current))
         else:
             if self.conf.color_bold['header']:
                 panel.addstr(0,3, header, curses.color_pair(self.conf.color_header) | curses.A_BOLD)

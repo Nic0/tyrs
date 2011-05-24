@@ -195,6 +195,7 @@ all parameters possible, with there defaults values
 [colors]
 highlight   = 1
 header      = 6
+current     = 5
 hashtag     = 3
 attag       = 2
 text        = 7
@@ -237,6 +238,10 @@ header::
 informations such as user name of the tweeter, hours information, retweets
 information.
 * Default: 6 (cyan)
+
+current::
+* Description: Corresponding to the header color of the current tweet and let you reconize where you are on the navigation of your tweets.
+* Default: 5
 
 hashtag::
 * Description: This will highlight the hashtag `#` word, usefull to follow some

@@ -27,7 +27,7 @@ class Config:
     color_text             = 7
     color_warning_msg      = 1
     color_info_msg         = 2
-    color_current_tweet    = 5
+    color_current          = 5
 
     color_bold = {
         'highlight':     False,
@@ -37,7 +37,7 @@ class Config:
         'text':          False,
         'warning_msg':   False,
         'info_msg':      False,
-        'current_tweet': False,
+        'current': False,
         }
 
     color_set = [False, False, False, False, False, False, False, False]
@@ -149,6 +149,10 @@ class Config:
         # Information messages
         if self.conf.has_option('colors', 'info_msg'):
             self.color_info_msg     = int(self.conf.get('colors', 'info_msg'))
+
+        # current_tweet
+        if self.conf.has_option('colors', 'current'):
+            self.color_current      = int(self.conf.get('colors', 'current'))
 
         # Bold
         if self.conf.has_option('colors', 'bold'):
