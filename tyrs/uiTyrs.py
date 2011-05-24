@@ -59,9 +59,6 @@ class uiTyrs:
         self.initStatuses()
         self.updateTimeline('home')
         self.displayTimeline()
-        # TODO retreive this later, as it block keysbinding
-        self.updateTimeline('mentions')
-        self.updateTimeline('direct')
 
     def initScreen (self):
 
@@ -127,7 +124,7 @@ class uiTyrs:
             elif buffer == 'direct':
                 self.appendNewStatuses(self.api.api.GetDirectMessages(), buffer)
             #TODO does it realy need to display the timeline here ?!
-            self.displayTimeline()
+#            self.displayTimeline()
             self.countStatuses(buffer)
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
@@ -151,7 +148,7 @@ class uiTyrs:
     def countStatuses (self, buffer):
         self.count[buffer] = len(self.statuses[buffer])
 
-    def setFlash (self):
+    def displayFlash (self):
         msg = ' ' + self.flash[0] + ' '
         if self.flash[1] == 'warning':
             self.displayWarningMsg(msg)
@@ -180,6 +177,9 @@ class uiTyrs:
                                curses.color_pair(self.conf.color_info_msg))
 
     def displayTimeline (self):
+        if len(self.statuses[self.buffer]) == 0:
+            self.updateTimeline(self.buffer)
+
         if not self.refresh_token:
             self.current_y = 1
             self.initScreen()
@@ -189,7 +189,7 @@ class uiTyrs:
                     if not br:
                         break
             if len(self.flash) != 0:
-                self.setFlash()
+                self.displayFlash()
             if self.status['current'] > self.status['last']:
                 self.status['current'] = self.status['last']
                 self.displayTimeline()
