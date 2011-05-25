@@ -128,28 +128,16 @@ class KeyBinding:
         params = {'char': 40, 'width': 40, 'header': header}
         return editBox.EditBox(self.ui.screen, params, pseudo, self.conf)
 
-    def getMentions (self):
-        self.ui.buffer = 'mentions'
-        self.changeBuffer()
-
-    def getHome (self):
-        self.ui.buffer = 'home'
-        self.changeBuffer()
-
     def search (self):
         self.ui.buffer = 'search'
         self.api.search_word = self.pseudoBox('What should I search?').getContent()
         try:
             self.ui.statuses['search'] = self.api.api.GetSearch(self.api.search_word)
-            self.changeBuffer()
+            self.changeBuffer('search')
             if len(self.ui.statuses['search']) == 0:
                 self.ui.flash = ['The research does not return any result', 'info']
         except:
             self.ui.flash = ['Failed with the research']
-
-    def getDirectMessages (self):
-        self.ui.buffer = 'direct'
-        self.changeBuffer()
 
     def sendDirectMessage (self):
         ''' Two editing box, one for the name, and one for the content'''
@@ -166,9 +154,11 @@ class KeyBinding:
         pseudo = pseudobox.getContent()
         self.tweet(False, pseudo, True)
 
-    def changeBuffer (self):
+    def changeBuffer (self, buffer):
+        self.ui.buffer = buffer
         self.ui.status['current'] = 0
         self.ui.status['first'] = 0
+        self.ui.countUnread(buffer)
         self.ui.displayTimeline()
 
     def backOnBottom (self):
@@ -204,10 +194,10 @@ class KeyBinding:
                 self.retweetAndEdit()
             # MENTIONS
             elif ch == self.conf.keys_mentions:
-                self.getMentions()
+                self.changeBuffer('mentions')
             # HOME TIMELINE
             elif ch == self.conf.keys_home:
-                self.getHome()
+                self.changeBuffer('home')
             # CLEAR
             elif ch == self.conf.keys_clear:
                 self.clear()
@@ -231,7 +221,7 @@ class KeyBinding:
                 self.openurl()
             # BACK ON TOP
             elif ch == self.conf.keys_back_on_top:
-                self.changeBuffer()
+                self.changeBuffer(self.ui.buffer)
             # BACK ON BOTTOM
             elif ch == self.conf.keys_back_on_bottom:
                 self.backOnBottom()
@@ -240,7 +230,7 @@ class KeyBinding:
                 self.reply()
             # GET DIRECT MESSAGE
             elif ch == self.conf.keys_getDM:
-                self.getDirectMessages()
+                self.changeBuffer('direct')
             # SEND DIRECT MESSAGE
             elif ch == self.conf.keys_sendDM:
                 self.sendDirectMessage()

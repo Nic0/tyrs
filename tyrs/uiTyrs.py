@@ -25,10 +25,11 @@ class uiTyrs:
     self.conf             The configuration file parsed in config.py
     self.maxyx            Array contain the window size [y, x]
     self.screen           Main screen (curse)
+    self.last_read        keep the ID of the status for each lists of statuses
+    self.unread           keep the count of tweet that haven't been read in other buffer, usefull to see active buffer
     self.statuses         4 lists for each buffer containing all status in each list, the name of each list
                           is the name of the buffer
     self.current_y        Current line in the screen
-    self.status           See explanation above
     self.resize_event     boleen if the window is resize
     self.regexRetweet     regex for retweet
     self.flash            [msg, type_msg]
@@ -37,15 +38,16 @@ class uiTyrs:
     self.buffer           The current buffer we're looking at, (home, mentions, direct search)
     '''
 
-    status = {'current': 0, 'first': 0, 'last': 0}
-    statuses = {}
-    count = {}
-    last_read = {}
-    resize_event = False
-    regexRetweet = re.compile('^RT @\w+:')
+    status           = {'current': 0, 'first': 0, 'last': 0}
+    statuses         = {}
+    count            = {}
+    unread           = {}
+    last_read        = {}
+    resize_event     = False
+    regexRetweet     = re.compile('^RT @\w+:')
     flash = []
-    refresh_token = False
-    buffer = 'home'
+    refresh_token    = False
+    buffer           = 'home'
 
     def __init__ (self, api, conf):
         '''
@@ -56,7 +58,7 @@ class uiTyrs:
         self.conf   = conf
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.initScreen()
-        self.initStatuses()
+        self.initDict()
         self.updateTimeline('home')
         self.displayTimeline()
 
@@ -103,11 +105,13 @@ class uiTyrs:
         curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 7 cyan
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 8 white
 
-    def initStatuses (self):
-        self.statuses['home']      = []
-        self.statuses['mentions']  = []
-        self.statuses['direct']    = []
-        self.statuses['search']    = []
+    def initDict (self):
+        buffers = ('home', 'mentions', 'direct', 'search')
+        for buffer in buffers:
+            self.statuses[buffer]   = []
+            self.unread[buffer]     = 0
+            self.count[buffer]      = 0
+            self.last_read[buffer]  = 0
 
     def updateTimeline (self, buffer):
         ''' Retrieves tweets, don't display them
@@ -124,11 +128,11 @@ class uiTyrs:
             elif buffer == 'direct':
                 self.appendNewStatuses(self.api.api.GetDirectMessages(), buffer)
             #TODO does it realy need to display the timeline here ?!
-#            self.displayTimeline()
-            self.countStatuses(buffer)
+            self.displayTimeline()
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
-
+        self.countStatuses(buffer)
+        self.countUnread(buffer)
 
     def appendNewStatuses (self, newStatuses, buffer):
         # Fresh new start.
@@ -147,6 +151,13 @@ class uiTyrs:
 
     def countStatuses (self, buffer):
         self.count[buffer] = len(self.statuses[buffer])
+
+    def countUnread (self, buffer):
+        self.unread[buffer] = 0
+        for i in range(len(self.statuses[buffer])):
+            if self.statuses[buffer][i].id == self.last_read[buffer]:
+                break
+            self.unread[buffer] += 1
 
     def displayFlash (self):
         msg = ' ' + self.flash[0] + ' '
@@ -177,10 +188,15 @@ class uiTyrs:
                                curses.color_pair(self.conf.color_info_msg))
 
     def displayTimeline (self):
+        # It might have no tweets yet, we try to retrieve some then
         if len(self.statuses[self.buffer]) == 0:
             self.updateTimeline(self.buffer)
 
         if not self.refresh_token:
+            # The first status become the last_read for this buffer
+            if len(self.statuses[self.buffer]) > 0:
+                self.last_read[self.buffer] = self.statuses[self.buffer][0].id
+
             self.current_y = 1
             self.initScreen()
             for i in range(len(self.statuses[self.buffer])):
@@ -193,7 +209,15 @@ class uiTyrs:
             if self.status['current'] > self.status['last']:
                 self.status['current'] = self.status['last']
                 self.displayTimeline()
+
+            self.displayActivity()
             self.screen.refresh()
+
+    def displayActivity (self):
+        self.unread[self.buffer] = 0
+        activity = ' H:%d M:%d D:%d ' % (self.unread['home'], self.unread['mentions'],
+                                         self.unread['direct'])
+        self.screen.addstr(0, 50, activity)
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
