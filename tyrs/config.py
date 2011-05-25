@@ -23,40 +23,40 @@ class Config:
     # c: color value
     # b: bold
     colors = {
-        'highlight':    {'c': 1, 'b': False},
-        'header':       {'c': 6, 'b': False},
-        'hashtag':      {'c': 3, 'b': False},
-        'attag':        {'c': 2, 'b': False},
-        'text':         {'c': 7, 'b': False},
-        'warning_msg':  {'c': 1, 'b': False},
-        'info_msg':     {'c': 2, 'b': False},
-        'current':      {'c': 5, 'b': False},
+        'highlight':    {'c': 1},
+        'header':       {'c': 6},
+        'hashtag':      {'c': 3},
+        'attag':        {'c': 2},
+        'text':         {'c': 7},
+        'warning_msg':  {'c': 1},
+        'info_msg':     {'c': 2},
+        'current':      {'c': 5},
     }
 
     color_set = [False, False, False, False, False, False, False, False]
 
     keys = {
-        'up':                ord('k'),
-        'down':              ord('j'),
-        'quit':              ord('q'),
-        'tweet':             ord('t'),
-        'clear':             ord('c'),
-        'retweet':           ord('r'),
-        'retweet_and_edit':  ord('R'),
-        'update':            ord('u'),
-        'follow_selected':   ord('f'),
-        'unfollow_selected': ord('l'),
-        'follow':            ord('F'),
-        'unfollow':          ord('L'),
-        'openurl':           ord('o'),
-        'home':              ord('h'),
-        'mentions':          ord('m'),
-        'reply':             ord('M'),
-        'back_on_top':       ord('g'),
-        'back_on_bottom':    ord('G'),
-        'getDM':             ord('d'),
-        'sendDM':            ord('D'),
-        'search':            ord('s'),
+        'up':                'k',
+        'down':              'j',
+        'quit':              'q',
+        'tweet':             't',
+        'clear':             'c',
+        'retweet':           'r',
+        'retweet_and_edit':  'R',
+        'update':            'u',
+        'follow_selected':   'f',
+        'unfollow_selected': 'l',
+        'follow':            'F',
+        'unfollow':          'L',
+        'openurl':           'o',
+        'home':              'h',
+        'mentions':          'm',
+        'reply':             'M',
+        'back_on_top':       'g',
+        'back_on_bottom':    'G',
+        'getDM':             'd',
+        'sendDM':            'D',
+        'search':            's',
     }
 
     params_refresh         = 10
@@ -113,6 +113,7 @@ class Config:
         # COLORS
         #
         for c in self.colors:
+            self.colors[c]['b'] = False
             if self.conf.has_option('colors', c):
                 self.colors[c]['c'] = int(self.conf.get('colors', c))
         # Bold
@@ -133,7 +134,8 @@ class Config:
         for key in self.keys:
             if self.conf.has_option('keys', key):
                 self.keys[key] = self.charValue(self.conf.get('keys', key))
-
+            else:
+                self.keys[key] = ord(self.keys[key])
         #
         # PARAMS
         #
