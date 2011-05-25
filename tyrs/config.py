@@ -23,14 +23,14 @@ class Config:
     # c: color value
     # b: bold
     colors = {
-        'highlight':    {'c': 1},
-        'header':       {'c': 6},
-        'hashtag':      {'c': 3},
-        'attag':        {'c': 2},
-        'text':         {'c': 7},
-        'warning_msg':  {'c': 1},
-        'info_msg':     {'c': 2},
-        'current':      {'c': 5},
+        'highlight':      {'c': 1},
+        'header':         {'c': 6},
+        'hashtag':        {'c': 3},
+        'attag':          {'c': 2},
+        'text':           {'c': 7},
+        'warning_msg':    {'c': 1},
+        'info_msg':       {'c': 2},
+        'current_tweet':  {'c': 5},
     }
 
     color_set = [False, False, False, False, False, False, False, False]

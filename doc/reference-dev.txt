@@ -108,8 +108,31 @@ yaourt -S tyrs-git
 Usage
 -----
 
+Please check the configuration part for a list of possible keys.
+
+Activities bar
+~~~~~~~~~~~~~~
+
+The activities bar, is the bar contening the 'H:0 M:0 D:0' on the top, this
+allow you to know if there is some new tweets in other buffers, for exemple if
+your in the mentions timeline, and there is a new tweet in the home timeline,
+the counter will increase.
+
+Fiew things to know:
+* The current buffer is always set to zero, as your actualy reading it, there
+no need to increase it.
+* On startup, others timeline are delayed for the update, so there will be
+display as new read after the first update, a short while after the start.
+
 Console arguments
 -----------------
+
+There is more information on those commandes in each sections (configuration
+and installation)
+
+* '-a', or '--account': take another file account
+* '-c', or '--config': take another config file
+* '-h', or '--help': help
 
 [[configuration]]
 Configuration

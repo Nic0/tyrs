@@ -15,7 +15,7 @@ class EditBox:
 
     def __init__(self, screen, params, data, conf):
 
-        self.conf   = conf
+        self.conf = conf
         self.screen = screen
         self.params = params
         self.data   = data
@@ -94,6 +94,7 @@ class EditBox:
         counter = str(self.countChr())
         header = ' %s %s ' % (self.params['header'], counter)
 
+        #TODO this doen't take bold
         win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
         return win
 

@@ -1,5 +1,15 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.2.2 -- 2011-05-25
+
+	* Managment of differents timelimes review
+	* Empty spaces bug in tweets fixed
+	* Control keys enable in configuration file - issue #18
+	* Bold colors enable and easely configurable
+	* Current tweet color added
+	* Buffer activities conter added (need improvement)
+	* Refactoring codes
+
 * Version 0.2.1 -- 2011-05-23
 
 	* Direct messages in/out 'd', 'D' - issue #7

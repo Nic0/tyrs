@@ -245,7 +245,7 @@ class uiTyrs:
 
         # Highlight the current status
         if self.status['current'] == i:
-            panel.addstr(0,3, header, self.getColor('current'))
+            panel.addstr(0,3, header, self.getColor('current_tweet'))
         else:
             panel.addstr(0, 3, header, self.getColor('header'))
 

@@ -108,8 +108,31 @@ yaourt -S tyrs-git
 Usage
 -----
 
+Please check the configuration part for a list of possible keys.
+
+Activities bar
+~~~~~~~~~~~~~~
+
+The activities bar, is the bar contening the 'H:0 M:0 D:0' on the top, this
+allow you to know if there is some new tweets in other buffers, for exemple if
+your in the mentions timeline, and there is a new tweet in the home timeline,
+the counter will increase.
+
+Fiew things to know:
+* The current buffer is always set to zero, as your actualy reading it, there
+no need to increase it.
+* On startup, others timeline are delayed for the update, so there will be
+display as new read after the first update, a short while after the start.
+
 Console arguments
 -----------------
+
+There is more information on those commandes in each sections (configuration
+and installation)
+
+* '-a', or '--account': take another file account
+* '-c', or '--config': take another config file
+* '-h', or '--help': help
 
 [[configuration]]
 Configuration
@@ -161,6 +184,9 @@ This will read the configuration from the '~/.config/tyrs/tyrs.cfg.foo'.
 CAUTION: You don't need to pass as argument the full filename, as it will read from
 some 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
 
+TIP: You may add some comments on your configuration file, you just need to
+start the line with '#' ou ';'.
+
 Colors
 ~~~~~~
 
@@ -195,12 +221,35 @@ all parameters possible, with there defaults values
 [colors]
 highlight   = 1
 header      = 6
+current     = 5
 hashtag     = 3
 attag       = 2
 text        = 7
 warning_msg = 1
 info_msg    = 2
 ----------------
+
+Bold font
+^^^^^^^^^
+
+You may activate bold with every item of the colors parameters, we activate
+them with one parameter, containing the list of elements to activate bold. +
+Let's take an exemple, we wan't activate bold for highlight, warning_msg and
+header. We simply do:
+
+[source,conf]
+---------------
+[colors]
+bold = highlight warning_msg header
+---------------
+
+That's all you need!
+
+[NOTE]
+=================
+* You need to leave a space between each one, otherwise it won't work.
+* This works as well with RGB colors.
+=================
 
 Listing
 ^^^^^^^
@@ -215,6 +264,10 @@ header::
 informations such as user name of the tweeter, hours information, retweets
 information.
 * Default: 6 (cyan)
+
+current::
+* Description: Corresponding to the header color of the current tweet and let you reconize where you are on the navigation of your tweets.
+* Default: 5
 
 hashtag::
 * Description: This will highlight the hashtag `#` word, usefull to follow some
@@ -242,6 +295,9 @@ text::
 * Description: This is all the basic text, such as tweets (without highlight),
 inputs in the tweet edit box.
 * Default: 7 (white)
+
+bold::
+* Description: Activate bold, check above for more information.
 
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -318,6 +374,22 @@ getDM             = d
 sendDM            = D
 search            = s
 ---------------
+
+Control keys support
+^^^^^^^^^^^^^^^^^^^^^
+
+You may wish activate some control keys (ctrl+something) in the configuration
+file, for exemple, remap your reply with a ctrl-r. It is possible as following:
+
+[source,conf]
+---------------
+[keys]
+reply  = ^R
+---------------
+
+CAUTION: The letter followed by '^' *must* be upper case, as it's a
+conventionnal things. this mean you can't have a ctrl-r and ctrl-R, you will
+have the ctrl-r by putting '^R' in your configuration file.
 
 Listing
 ^^^^^^^
