@@ -94,7 +94,7 @@ class EditBox:
         counter = str(self.countChr())
         header = ' %s %s ' % (self.params['header'], counter)
 
-        win.addstr(0, 3, header, curses.color_pair(self.conf.color_header))
+        win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
         return win
 
     def countChr (self):
