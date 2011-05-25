@@ -20,49 +20,44 @@ class Config:
     consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
     consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
 
-    color_highlight        = 1
-    color_header           = 6
-    color_hashtag          = 3
-    color_attag            = 2
-    color_text             = 7
-    color_warning_msg      = 1
-    color_info_msg         = 2
-    color_current          = 5
-
-    color_bold = {
-        'highlight':     False,
-        'header':        False,
-        'hashtag':       False,
-        'attag':         False,
-        'text':          False,
-        'warning_msg':   False,
-        'info_msg':      False,
-        'current': False,
-        }
+    # c: color value
+    # b: bold
+    colors = {
+        'highlight':    {'c': 1, 'b': False},
+        'header':       {'c': 6, 'b': False},
+        'hashtag':      {'c': 3, 'b': False},
+        'attag':        {'c': 2, 'b': False},
+        'text':         {'c': 7, 'b': False},
+        'warning_msg':  {'c': 1, 'b': False},
+        'info_msg':     {'c': 2, 'b': False},
+        'current':      {'c': 5, 'b': False},
+    }
 
     color_set = [False, False, False, False, False, False, False, False]
 
-    keys_up                = ord('k')
-    keys_down              = ord('j')
-    keys_quit              = ord('q')
-    keys_tweet             = ord('t')
-    keys_clear             = ord('c')
-    keys_retweet           = ord('r')
-    keys_retweet_and_edit  = ord('R')
-    keys_update            = ord('u')
-    keys_follow_selected   = ord('f')
-    keys_unfollow_selected = ord('l')
-    keys_follow            = ord('F')
-    keys_unfollow          = ord('L')
-    keys_openurl           = ord('o')
-    keys_home              = ord('h')
-    keys_mentions          = ord('m')
-    keys_reply             = ord('M')
-    keys_back_on_top       = ord('g')
-    keys_back_on_bottom    = ord('G')
-    keys_getDM             = ord('d')
-    keys_sendDM            = ord('D')
-    keys_search            = ord('s')
+    keys = {
+        'up':                ord('k'),
+        'down':              ord('j'),
+        'quit':              ord('q'),
+        'tweet':             ord('t'),
+        'clear':             ord('c'),
+        'retweet':           ord('r'),
+        'retweet_and_edit':  ord('R'),
+        'update':            ord('u'),
+        'follow_selected':   ord('f'),
+        'unfollow_selected': ord('l'),
+        'follow':            ord('F'),
+        'unfollow':          ord('L'),
+        'openurl':           ord('o'),
+        'home':              ord('h'),
+        'mentions':          ord('m'),
+        'reply':             ord('M'),
+        'back_on_top':       ord('g'),
+        'back_on_bottom':    ord('G'),
+        'getDM':             ord('d'),
+        'sendDM':            ord('D'),
+        'search':            ord('s'),
+    }
 
     params_refresh         = 10
     params_tweet_border    = 1
@@ -114,55 +109,16 @@ class Config:
         ''' This parse the configuration file, and set
         some defaults values if the parameter is not given'''
 
-        # self.pseudo             = self.conf.get('account', 'pseudo')
-        # self.oauth_token        = self.conf.get('token', 'oauth_token')
-        # self.oauth_token_secret = self.conf.get('token', 'oauth_token_secret')
-
         #
         # COLORS
         #
-
-        # header
-        if self.conf.has_option('colors', 'header'):
-            self.color_header       = int(self.conf.get('colors', 'header'))
-
-        # highlight
-        if self.conf.has_option('colors', 'highlight'):
-            self.color_highlight    = int(self.conf.get('colors', 'highlight'))
-
-        # hashtag ('#')
-        if self.conf.has_option('colors', 'hashtag'):
-            self.color_hashtag      = int(self.conf.get('colors', 'hashtag'))
-
-        # attag ('@')
-        if self.conf.has_option('colors', 'attag'):
-            self.color_attag        = int(self.conf.get('colors', 'attag'))
-
-        # text
-        if self.conf.has_option('colors', 'text'):
-            self.color_text         = int(self.conf.get('colors', 'text'))
-
-        # Warning messages
-        if self.conf.has_option('colors', 'warning_msg'):
-            self.color_warning_msg  = int(self.conf.get('colors', 'warning_msg'))
-
-        # Information messages
-        if self.conf.has_option('colors', 'info_msg'):
-            self.color_info_msg     = int(self.conf.get('colors', 'info_msg'))
-
-        # current_tweet
-        if self.conf.has_option('colors', 'current'):
-            self.color_current      = int(self.conf.get('colors', 'current'))
-
+        for c in self.colors:
+            if self.conf.has_option('colors', c):
+                self.colors[c]['c'] = int(self.conf.get('colors', c))
         # Bold
         if self.conf.has_option('colors', 'bold'):
             self.getBoldColors(self.conf.get('colors', 'bold'))
-
-
-        #
-        # COLOR SETUP
-        #
-
+        # Setup
         for i in range(len(self.color_set)):
             if self.conf.has_option('colors', 'color_set'+str(i)):
                 self.color_set[i] = []
@@ -174,89 +130,9 @@ class Config:
         # KEYS
         #
 
-        # up
-        if self.conf.has_option('keys', 'up'):
-            self.keys_up            = self.charValue(self.conf.get('keys', 'up'))
-
-        # down
-        if self.conf.has_option('keys', 'down'):
-            self.keys_down          = self.charValue(self.conf.get('keys', 'down'))
-
-        # quit
-        if self.conf.has_option('keys', 'quit'):
-            self.keys_quit          = self.charValue(self.conf.get('keys', 'quit'))
-
-        # tweet
-        if self.conf.has_option('keys', 'tweet'):
-            self.keys_tweet         = self.charValue(self.conf.get('keys', 'tweet'))
-
-        # clear
-        if self.conf.has_option('keys', 'clear'):
-            self.keys_clear         = self.charValue(self.conf.get('keys', 'clear'))
-
-        # retweet
-        if self.conf.has_option('keys', 'retweet'):
-            self.keys_retweet       = self.charValue(self.conf.get('keys', 'retweet'))
-
-        # retweet and edit
-        if self.conf.has_option('keys', 'retweet_and_edit'):
-            self.keys_retweet_and_edit = self.charValue(self.conf.get('keys', 'retweet_and_edit'))
-
-        # update
-        if self.conf.has_option('keys', 'update'):
-            self.keys_update        = self.charValue(self.conf.get('keys', 'update'))
-
-        # follow_selected
-        if self.conf.has_option('keys', 'follow_selected'):
-            self.keys_follow_selected = self.charValue(self.conf.get('keys', 'follow_selected'))
-
-        # unfollow_selected
-        if self.conf.has_option('keys', 'unfollow_selected'):
-            self.keys_unfollow_selected = self.charValue(self.conf.get('keys', 'unfollow_selected'))
-
-        # follow
-        if self.conf.has_option('keys', 'follow'):
-            self.keys_follow = self.charValue(self.conf.get('keys', 'follow'))
-
-        # unfollow
-        if self.conf.has_option('keys', 'unfollow'):
-            self.keys_unfollow = self.charValue(self.conf.get('keys', 'unfollow'))
-
-        # openurl
-        if self.conf.has_option('keys', 'openurl'):
-            self.keys_openurl = self.charValue(self.conf.get('keys', 'openurl'))
-
-        # home
-        if self.conf.has_option('keys', 'home'):
-            self.keys_home = self.charValue(self.conf.get('keys', 'home'))
-
-        # mentions
-        if self.conf.has_option('keys', 'mentions'):
-            self.keys_mentions = self.charValue(self.conf.get('keys', 'mentions'))
-
-        # back on top
-        if self.conf.has_option('keys', 'back_on_top'):
-            self.keys_back_on_top = self.charValue(self.conf.get('keys', 'back_on_top'))
-
-        # back on bottom
-        if self.conf.has_option('keys', 'back_on_bottom'):
-            self.keys_back_on_bottom = self.charValue(self.conf.get('keys', 'back_on_bottom'))
-
-        # Reply
-        if self.conf.has_option('keys', 'reply'):
-            self.keys_reply = self.charValue(self.conf.get('keys', 'reply'))
-
-        # get DM
-        if self.conf.has_option('keys', 'getDM'):
-            self.keys_getDM = self.charValue(self.conf.get('keys,' 'getDM'))
-
-        # send DM
-        if self.conf.has_option('keys', 'sendDM'):
-            self.keys_sendDM = self.charValue(self.conf.get('keys', 'sendDM'))
-
-        # search
-        if self.conf.has_option('keys', 'search'):
-            self.keys_search = self.charValue(self.conf.get('keys', 'search'))
+        for key in self.keys:
+            if self.conf.has_option('keys', key):
+                self.keys[key] = self.charValue(self.conf.get('keys', key))
 
         #
         # PARAMS
@@ -300,7 +176,7 @@ class Config:
     def getBoldColors (self, str):
         bolds = str.split(' ')
         for bold in bolds:
-            self.color_bold[bold] = True
+            self.colors[bold]['b'] = True
 
     def authorization (self):
         ''' This function from python-twitter developers '''
