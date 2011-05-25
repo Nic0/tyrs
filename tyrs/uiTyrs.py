@@ -147,7 +147,10 @@ class uiTyrs:
             for i in range(len(newStatuses)):
                 if newStatuses[i].id == self.statuses[buffer][0].id:
                     self.statuses[buffer] = newStatuses[:i] + self.statuses[buffer]
-                    self.status['current'] += len(newStatuses[:i])
+                    # we don't want to move our current position
+                    # if the update is in another buffer
+                    if buffer == self.buffer:
+                        self.status['current'] += len(newStatuses[:i])
 
     def countStatuses (self, buffer):
         self.count[buffer] = len(self.statuses[buffer])
