@@ -265,7 +265,7 @@ informations such as user name of the tweeter, hours information, retweets
 information.
 * Default: 6 (cyan)
 
-current::
+current_tweet::
 * Description: Corresponding to the header color of the current tweet and let you reconize where you are on the navigation of your tweets.
 * Default: 5
 
