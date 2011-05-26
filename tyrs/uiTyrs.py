@@ -366,7 +366,7 @@ class uiTyrs:
 
     def clearStatuses (self):
         self.statuses[self.buffer] = [self.statuses[self.buffer][0]]
-        self.countStatuses()
+        self.countStatuses(self.buffer)
         self.status['current'] = 0
 
     def getCurrentStatus (self):
