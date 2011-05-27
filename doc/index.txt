@@ -1,5 +1,5 @@
-Tyrs, Twitter client easely configurable based on ncurses
-=========================================================
+Tyrs: easily configured ncurses Twitter client
+==============================================
 
 * *Current version* {revision}, Release the {date}
 * *Devel version* {devel}
@@ -7,22 +7,22 @@ Tyrs, Twitter client easely configurable based on ncurses
 image:images/tyrs.png["Tyrs screenshot", width=128, link="images/tyrs.png"]
 
 Download link:http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz[the last
-version of tyrs]. +
+version of Tyrs]. +
 Get the last development version on link:http://github.com/Nic0/tyrs[github]. +
-This is a free (as freedom) software, release under the GNU General Public
+This is a free (as in freedom) software, released under the GNU General Public
 Licence v3.
 
-If it's your first visite, you might check some
+If it's your first visit, you might like to check out some
 link:screenshot.html[screenshots], or get started with the
 link:quick_start.html[Tyrs quick start guide].
 
-Check the link:reference.html#installation[installation guide] for any
-questions to get your Tyrs running.
+You can use the link:reference.html#installation[installation guide] to
+get your Tyrs up and running.
 
 Features
 --------
 
-Here a list of some intersesting features you can have with Tyrs.
+A list of some interesting features:
 
 * OAuth authentification.
 * UTF-8 support.
@@ -35,22 +35,22 @@ Here a list of some intersesting features you can have with Tyrs.
 * Customisation of keys binding.
 * Customisation of colors.
 * Easely configurable, readable configuration.
-* Opens URL just with 'o' touch.
+* Opens URL just with single key.
 
 [IMPORTANT]
-This client is relatively new, started current May 2011,  and curently in full development phase, there
-are lots of functionnality that will be done soon.
+This project is relatively new, started in May 2011, and curently in heavy
+development, there is lots of planned functionality still to be coded.
 
-
-Some links
-----------
+Helpfull links
+--------------
 
 * Ask any questions, or just follow lastest news on the
 link:http://groups.google.com/group/tyrs[mailing list].
-* Send me a email at <nicolas.caen@gmail.com>.
+* Send me an email at <nicolas.caen@gmail.com>.
 * Check the development on link:http://github.com/Nic0/tyrs[github].
 * If you like Tyrs, you may send a quick hello to
-link:http://twitter.com/nic0sphere[my twitter account `@nic0sphere`].
+link:http://twitter.com/nic0sphere[my twitter account `@nic0sphere`], or use
+the '#Tyrs' tag.
 * link:http://www.nicosphere.net[My blog], mostly in french.
 
 (C) Copyright 2011 ~ Nicolas Paris.
