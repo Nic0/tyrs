@@ -71,18 +71,12 @@ class Config:
     browser    = os.environ['BROWSER']
 
     def __init__ (self, args):
-        if self.xdg_config != '':
-            self.tyrsPath = self.xdg_config + '/tyrs/'
-        else:
-            self.tyrsPath = self.home + '/.config/tyrs/'
-        self.tokenFile = self.tyrsPath + 'tyrs.tok'
-        if args.account != None:
-            self.tokenFile += '.' + args.account
 
-        self.configFile = self.tyrsPath + 'tyrs.cfg'
-        if args.config != None:
-            self.configFile += '.' + args.config
+        # generate the config file
+        if args.generate_config != None:
+            self.generateConfigFile(args)
 
+        self.setPath(args)
         if not os.path.isfile(self.tokenFile):
             self.newAccount()
         else:
@@ -91,6 +85,42 @@ class Config:
         self.conf = ConfigParser.RawConfigParser()
         self.conf.read(self.configFile)
         self.parseConfig()
+
+    def generateConfigFile (self, args):
+
+        configFile = args.generate_config
+        conf = ConfigParser.RawConfigParser()
+        conf.read(configFile)
+
+        # COLOR
+        conf.add_section('colors')
+        for c in self.colors:
+            conf.set('colors', c, self.colors[c]['c'])
+        conf.set('colors', 'bold', '')
+        # KEYS
+        conf.add_section('keys')
+        for k in self.keys:
+            conf.set('keys', k, self.keys[k])
+
+        with open(configFile, 'wb') as config:
+            conf.write(config)
+
+        sys.exit(0)
+
+    def setPath (self, args):
+        # Default config path set
+        if self.xdg_config != '':
+            self.tyrsPath = self.xdg_config + '/tyrs/'
+        else:
+            self.tyrsPath = self.home + '/.config/tyrs/'
+        # Setup the token file
+        self.tokenFile = self.tyrsPath + 'tyrs.tok'
+        if args.account != None:
+            self.tokenFile += '.' + args.account
+        # Setup the config file
+        self.configFile = self.tyrsPath + 'tyrs.cfg'
+        if args.config != None:
+            self.configFile += '.' + args.config
 
     def newAccount (self):
         print ''
@@ -189,6 +219,7 @@ class Config:
                 self.colors[bold]['b'] = True
             except:
                 print 'The param "%s" does not exist for bold colors' % bold
+
     def authorization (self):
         ''' This function from python-twitter developers '''
         # Copyright 2007 The Python-Twitter Developers
@@ -252,9 +283,9 @@ class Config:
 
     def createTokenFile(self):
 
-        if not os.path.isdir(self.home + '/.config/tyrs'):
+        if not os.path.isdir(self.tyrsPath):
             try:
-                os.mkdir(self.home + '/.config/tyrs')
+                os.mkdir(self.tyrsPath)
             except:
                 print 'Error to create directory .config/tyrs'
 

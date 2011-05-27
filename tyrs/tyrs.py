@@ -24,9 +24,10 @@ locale.setlocale(locale.LC_ALL, '')
 
 def arguments ():
 
-    parser = argparse.ArgumentParser('Tyrs: a twitter client writen in python with curses')
-    parser.add_argument('-a', '--account', help='Use another account, store in a different file')
-    parser.add_argument('-c', '--config', help='Use another configuration file')
+    parser = argparse.ArgumentParser('Tyrs: a twitter client writen in python with curses.')
+    parser.add_argument('-a', '--account', help='Use another account, store in a different file.')
+    parser.add_argument('-c', '--config', help='Use another configuration file.')
+    parser.add_argument('-g', '--generate-config', help='Generate a default configuration file.')
     args = parser.parse_args()
     return args
 
