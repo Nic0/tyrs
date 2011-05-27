@@ -67,15 +67,19 @@ class Config:
     params_transparency    = True
 
     home       = os.environ['HOME']
+    xdg_config = os.environ['XDG_CONFIG_HOME']
     browser    = os.environ['BROWSER']
 
     def __init__ (self, args):
-
-        self.tokenFile = self.home + '/.config/tyrs/tyrs.tok'
+        if self.xdg_config != '':
+            self.tyrsPath = self.xdg_config + '/tyrs/'
+        else:
+            self.tyrsPath = self.home + '/.config/tyrs/'
+        self.tokenFile = self.tyrsPath + 'tyrs.tok'
         if args.account != None:
             self.tokenFile += '.' + args.account
 
-        self.configFile = self.home + '/.config/tyrs/tyrs.cfg'
+        self.configFile = self.tyrsPath + 'tyrs.cfg'
         if args.config != None:
             self.configFile += '.' + args.config
 
