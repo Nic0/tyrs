@@ -181,8 +181,10 @@ class Config:
     def getBoldColors (self, str):
         bolds = str.split(' ')
         for bold in bolds:
-            self.colors[bold]['b'] = True
-
+            try:
+                self.colors[bold]['b'] = True
+            except:
+                print 'The param "%s" does not exist for bold colors' % bold
     def authorization (self):
         ''' This function from python-twitter developers '''
         # Copyright 2007 The Python-Twitter Developers
