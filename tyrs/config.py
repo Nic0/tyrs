@@ -65,7 +65,7 @@ class Config:
         'relative_time':        0,
         'retweet_by':           1,
         'openurl_command':      'firefox %s',
-        'params_transparency':  True
+        'transparency':         True
     }
 
 #    params_refresh         = 10
