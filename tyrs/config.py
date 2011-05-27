@@ -110,6 +110,15 @@ class Config:
         conf.add_section('keys')
         for k in self.keys:
             conf.set('keys', k, self.keys[k])
+        # PARAMS
+        conf.add_section('params')
+        for p in self.params:
+            if self.params[p] == True:
+                value = 1
+            else:
+                value = self.params[p]
+
+            conf.set('params', p, value)
 
         with open(configFile, 'wb') as config:
             conf.write(config)
