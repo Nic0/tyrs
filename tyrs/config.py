@@ -67,6 +67,7 @@ class Config:
     params_transparency    = True
 
     home       = os.environ['HOME']
+    browser    = os.environ['BROWSER']
 
     def __init__ (self, args):
 
@@ -160,6 +161,8 @@ class Config:
         if self.conf.has_option('params', 'openurl_command'):
             self.params_openurl_command = self.conf.get('params',
                 'openurl_command')
+        elif self.browser != '':
+            self.params_openurl_command = self.browser + ' %s'
 
         # Transparency
         if self.conf.has_option('params', 'transparency'):

@@ -9,8 +9,8 @@ Installation
 ArchLinux
 ~~~~~~~~~
 
-As Tyrs is aviable on AUR, the installation is the easiest way. Just use
-'Yaourt' or any AUR-helpers, and grab a copy from the user repository
+As Tyrs is available in AUR, this installation is the most straightforward. Just use an
+AUR helper such as 'Yaourt', and grab a copy from the user repository:
 
 [source,bash]
 yaourt -S tyrs
@@ -18,8 +18,8 @@ yaourt -S tyrs
 From source
 ~~~~~~~~~~~
 
-Dependency
-^^^^^^^^^^
+Dependencies
+^^^^^^^^^^^^
 
 Tyrs requires some dependencies
 
@@ -27,7 +27,7 @@ Tyrs requires some dependencies
 * link:http://code.google.com/p/python-twitter/[python-twitter]
 * link:https://github.com/simplegeo/python-oauth2[python-oauth2]
 
-The installation depends of the distribution use, with debian or ubuntu it will be
+The installation will depend on your distribution, with debian or ubuntu it will be
 [source,bash]
 apt-get install python-twitter python-oauth2
 
@@ -35,8 +35,8 @@ apt-get install python-twitter python-oauth2
 [IMPORTANT]
 ================================
 An issue was found with Ubuntu 11.04 and the current python-twitter package,
-this wasn't fixed yet, but can work fine, if you get the last library aviable,
-as follow in a console:
+this hasn’t been fixed yet, but can be worked around if you install the last
+library available. To do so, open a console and:
 [source,bash]
 apt-get remove python-twitter
 wget http://python-twitter.googlecode.com/files/python-twitter-0.8.2.tar.gz
@@ -49,13 +49,13 @@ sudo python setup.py install
 Installation
 ^^^^^^^^^^^^
 
-There is two way to get Tyrs installed:
+Once you have the package and dependencies, there are two way to get Tyrs installed:
 
-* With _setup.py_, this allow a clean install, like with the autotools for C
-programs (you surely know, `configure', `make', `make install')
-* Just lauch the main file like a python script will work fine as well
+* With _setup.py_, this allows a clean install, similar to the autotools for C
+programs (`configure', `make', `make install')
+* Just calling the main file as a python script will work fine as well
 
-We will go throught both way, I recommends to use the first solution
+I'll decribe both ways, but I recommend you use the first solution.
 
 First, get the last tarball (curently, the last one is the {revision}) +
 http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
@@ -69,37 +69,41 @@ cd tyrs
 python setup.py build
 sudo python setup.py install
 
-Those commands decompress the tarball, go to the repertory, prepare the
-installation (you can checks files that will be install here), and then install
-it, note that _the last command need to be done as_ *root*. And that's all, just
-run Tyrs with a simple :
+Those commands decompress the tarball, go to the directory, prepare the
+installation (you can check the files that will be install here), and then install
+it. Note that _the last command must be issued as_ *root*. And that's all, just
+run Tyrs with a simple:
 
 [source,bash]
 tyrs
 
 .Without setup.py
 
-Well, you just need to lauch it, the main entry of the script is 'tyrs/tyrs.py'
-so you need to call it with python like this:
+You just need to to call it as a python script, the script is 'tyrs/tyrs.py'
+so you need:
 
 [source,bash]
 python tyrs/tyrs.py
 
+You may need to call Python2
+python2 tyrs/tyrs.py
+
 Github
 ~~~~~~
 
-The development of Tyrs is based at link:https://github.com/Nic0/tyrs[Github],
+The development of Tyrs is based on link:https://github.com/Nic0/tyrs[Github],
 you can easely get the lastest development version.
 
 [source,bash]
 git clone git://github.com/Nic0/tyrs.git
 
-You may follow the same installation steps seen above to get this version work.
+You may follow the same installation steps seen above to install and run the
+git.
 
 .Arch Linux
 [TIP]
 =================================
-A package is aviable from AUR to retrieve the last verion from github.
+A package is available from AUR to retrieve the last verion from github.
 [source,bash]
 yaourt -S tyrs-git
 
@@ -108,30 +112,30 @@ yaourt -S tyrs-git
 Usage
 -----
 
-Please check the configuration part for a list of possible keys.
+Please check the configuration section for a list of keybinding.
 
 Activities bar
 ~~~~~~~~~~~~~~
 
-The activities bar, is the bar contening the 'H:0 M:0 D:0' on the top, this
-allow you to know if there is some new tweets in other buffers, for exemple if
-your in the mentions timeline, and there is a new tweet in the home timeline,
-the counter will increase.
+The activities bar, is the bar containing information about your messages
+(the 'H:0 M:0 D:0' on the top), this
+displays new tweets in other buffers, for example if
+you have new mentions in your timeline, the counter will increase.
 
-Fiew things to know:
-* The current buffer is always set to zero, as your actualy reading it, there
+A few  things to note:
+* The current buffer is always set to zero, as your actually reading it, there
 no need to increase it.
-* On startup, others timeline are delayed for the update, so there will be
-display as new read after the first update, a short while after the start.
+* On startup, other buffers are delayed for the
+initially, so they won't display new counts until after the first update.
 
 Console arguments
 -----------------
 
-There is more information on those commandes in each sections (configuration
-and installation)
+There is more information on these commandes in each section (configuration and
+installation).
 
-* '-a', or '--account': take another file account
-* '-c', or '--config': take another config file
+* '-a', or '--account': source another account
+* '-c', or '--config': source another config file
 * '-h', or '--help': help
 
 [[configuration]]
@@ -141,10 +145,10 @@ Configuration
 Introduction
 ~~~~~~~~~~~~
 
-Tyrs allow you some configurations, let's see the way it's works.
+Tyrs is quite customizable.
 
-It's base on the 'ConfigParser' core module from python, and it's a very
-readable and easy to get through syntax. All the configuration is based on this
+It's based on the 'ConfigParser' core module from python, and it's a very
+readable and to understand the syntax. All the configuration is based on this
 schema:
 
 [source,conf]
@@ -157,12 +161,11 @@ other_param = otherValue
 ...
 ------------
 
-So far, there are only three sections for the configuration, they will be explain in details
-in this chapter. But a quick reminder:
+So far, there are only three sections for configuration:
 
 * *colors*: Customisation of colors.
 * *keybinding*: Customisation of keys shortcuts.
-* *params*: Some other params.
+* *params*: Other params.
 
 NOTE: All sections and parameters are lower case, for params composed with two
 words, they are separate with an underscore `'_'' (no camelCase).
@@ -171,9 +174,9 @@ Configuration file
 ~~~~~~~~~~~~~~~~~~
 
 The configuration file is located in '~/.config/tyrs/tyrs.cfg'.
-You may handle several configuration file, as for the account, with an
-argument when you start Tyrs. The argument will append to the filename of the
-configuration.
+You may have several configuration files, or account,
+passed as an argument when you start Tyrs. The argument
+is appended to the filename of the configuration.
 
 .Custom config file
 [source,bash]
@@ -181,11 +184,11 @@ $ tyrs -c foo
 
 This will read the configuration from the '~/.config/tyrs/tyrs.cfg.foo'.
 
-CAUTION: You don't need to pass as argument the full filename, as it will read from
-some 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
+CAUTION: You don't need to pass as an argument the full filename, as it will
+attempt to read from some 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
 
-TIP: You may add some comments on your configuration file, you just need to
-start the line with '#' ou ';'.
+TIP: You may add some comments in your configuration file, you just need to
+start the line with '#' or ';'.
 
 Colors
 ~~~~~~
@@ -193,7 +196,7 @@ Colors
 Values possible
 ^^^^^^^^^^^^^^^
 
-The possibles values are restricted with curse mode, here a list of aviable
+The possibles values are restricted with curse mode, here a list of available
 values.
 
 .List of values possible
@@ -213,8 +216,7 @@ values.
 Overview
 ^^^^^^^^
 
-This allow the colors customisation, here are display as a configuration file
-all parameters possible, with there defaults values
+These are the default values:
 
 [source,conf]
 ----------------
@@ -232,10 +234,11 @@ info_msg    = 2
 Bold font
 ^^^^^^^^^
 
-You may activate bold with every item of the colors parameters, we activate
-them with one parameter, containing the list of elements to activate bold. +
-Let's take an exemple, we wan't activate bold for highlight, warning_msg and
-header. We simply do:
+You may activate bold with any of the colors parameters, you activate
+them with one parameter, containing the list of elements you require to be
+drown bold. +
+As an example, to activate bold for highlight, warning_msg and
+header. You do:
 
 [source,conf]
 ---------------
@@ -255,63 +258,63 @@ Listing
 ^^^^^^^
 
 highlight::
-* Description: this will highlight when your pseudo is display in the tweet,
-for exemple, a tweet « blabla @you blabla », @you will be in a different colors.
+* Description: this will highlight when your nick is display in a tweet,
+for example, a tweet « blabla @you blabla », @you will be color highlighted.
 * Default: 1 (red)
 
 header::
-* Description: Corresponding to the first line of a tweet, and display
-informations such as user name of the tweeter, hours information, retweets
-information.
+* Description: Corresponding to the display information above the tweet
+such as user name of the tweeter, time, and any retweet information.
 * Default: 6 (cyan)
 
 current_tweet::
-* Description: Corresponding to the header color of the current tweet and let you reconize where you are on the navigation of your tweets.
+* Description: Corresponding to the header color of the current (selected)
+tweet.
 * Default: 5
 
 hashtag::
-* Description: This will highlight the hashtag `#` word, usefull to follow some
+* Description: This will highlight the hashtag `#` word, usefull to follow
 specific subjects, like _#Tyrs_.
 * Default: 3 (yellow)
 
 attag::
-* Description: This will highlight when a name is followed by a `at' tag like
+* Description: This will highlight when a name is followed by a `@' tag like
 _@nic0sphere_.
 * Default: 2 (green)
 
 warning_msg::
 * Description: When something goes wrong, or unexpected, a warning message is
-displayed on the top left of the console, and let you know what's happen.
-* Exemples: `Couldn\'t retreive tweets', `Couldn\'t send tweet'...
+displayed on the top left of the console.
+* Examples: `Couldn\'t retrieve tweets', `Couldn\'t send tweet'...
 * Default: 1 (red)
 
 info_msg::
-* Description: When an action is successful, or just an information, Tyrs let
-you know, exactly as warning_msg.
-* Exemples: `Updating timeline', `Tweet send successfully'...
+* Description: When an action is successful or other feedback is required, Tyrs 
+let you know. Similar to warning_msg.
+* Examples: `Updating timeline', `Tweet send successfully'...
 * Default: 2 (green)
 
 text::
 * Description: This is all the basic text, such as tweets (without highlight),
-inputs in the tweet edit box.
+or input in the tweet edit box.
 * Default: 7 (white)
 
 bold::
-* Description: Activate bold, check above for more information.
+* Description: Activate bold, see above for more information.
 
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The idea is to redifine a color to another one from 256 colors. For exemple,
-the green one is not the one we want, we may change it for a lighter one. +
-As 256 colors is not support by every terminals, the defaults values is to set
-them off.
+The idea is to redefine a color using 256 colors. For example, green is
+is not the hue you want, you can change it for a lighter one.
+As 256 colors is not supported by all terminals, the default values is to set them off.
+
 
 [IMPORTANT]
 =====================
-The format used, is a RGB code, this meen it have to be define with three
+The format used, is a RGB code, it is defined with three
 numbers from 0 to 1000. You *must* leave spaces between numbers in the
-configuration file, for exemple:
+configuration file, for example:
 [source,conf]
 color_set3 = 300 400 500
 
@@ -335,21 +338,21 @@ color_set7::
 Redefine the White.
 
 [IMPORTANT]
-If you turn off one of them, for exemple you redefine some green, and change
-your mind after to go back on the default green, this may take effect only if
-you restart your terminal, otherwise, it will stay on the last color defined. +
+If you turn off one of them, for example you redefine green, and then change
+your mind and revert to the default green, this will take effect only if
+Important you restart your terminal. Otherwise, it will stay on the last color
+defined. +
 You don't need to restart your terminal if you just change the color setup with
-another one, it will take effect immediatly after restart Tyrs.
+another one, it will take effect immediatly after restarting Tyrs.
 
 
-Keys Binding
-~~~~~~~~~~~~
+Key Binding
+~~~~~~~~~~~
 
 Overview
 ^^^^^^^^
 
-This allow you to change keys shortcuts to your needs, here are display as a
-configuration file all params possible.
+This allows you to change keys shortcuts to suit your needs. These are the defaults:
 
 [source,conf]
 --------------
@@ -378,8 +381,8 @@ search            = s
 Control keys support
 ^^^^^^^^^^^^^^^^^^^^^
 
-You may wish activate some control keys (ctrl+something) in the configuration
-file, for exemple, remap your reply with a ctrl-r. It is possible as following:
+You may activate control keys (ctrl+something) in the configuration file, for
+example, remap your reply with a ctrl-R:
 
 [source,conf]
 ---------------
@@ -387,25 +390,24 @@ file, for exemple, remap your reply with a ctrl-r. It is possible as following:
 reply  = ^R
 ---------------
 
-CAUTION: The letter followed by '^' *must* be upper case, as it's a
-conventionnal things. this mean you can't have a ctrl-r and ctrl-R, you will
-have the ctrl-r by putting '^R' in your configuration file.
+CAUTION: The letter followed by '^' *must* be upper case, 
+Caution You can’t have a ctrl-r and ctrl-R, only '^R' will work in
 
 Listing
 ^^^^^^^
 
 up::
-* Description: Navigation, Moves up in the timeline.
+* Description: Navigation — moves up in the timeline.
 * Alternative: Up arrow
 * Default: *k*
 
 down::
-* Description: Navigation, moves down in the timeline.
+* Description: Navigation —  moves down in the timeline.
 * Alternative: Down arrow
 * Default: *j*
 
 quit::
-* Description: Leave Tyrs, and returning to a normal life. 
+* Description: Leave Tyrs, and return to a normal life. 
 * Alternative: ESC (escape)
 * Default: *q*
 
@@ -414,7 +416,7 @@ tweet::
 * Default: *t*
 
 clear::
-* Description: Clear the timeline and live only the last tweet.
+* Description: Clear the timeline and leave only the last tweet.
 * Default: *c*
 
 retweet::
@@ -422,24 +424,27 @@ retweet::
 * Default: *r*
 
 retweet_and_edit::
-* Description: This allow you to add some comment to a retweet, it will display like "RT user_name: his_tweet<editable_part>".
+* Description: This allows you to add some comment to a retweet, it will
+display as: "RT @user_name: his_tweet<editable_part>".
 * Default: *R*
 
 [NOTE]
-This kind of retweet is not realy a retweet, it more like a normal tweet but, with the content of the original tweet with the username update.
+This kind of retweet is not realy a retweet, its more like a normal tweet but, with the content of the original tweet with the username update.
 
 home::
 * Description: Go back to your home timeline.
 * Default: *h*
 
 mentions::
-* Description: Show you all tweets that contain @you_pseudo, meaning if someone
-that you are not following put your @name in a tweet, you will see it. You may
+* Description: Show you all tweets that contain your nick (@you), meaning if someone
+that you are not following puts your @name in a tweet, you will see it. You may
 leave this timeline just using 'h' (home) to go back on your home timeline.
 * Default: *m*
 
 reply::
-* Description: Reply to the current tweet, open an edit box, with the name of the current tweet on. It will be show as a response to the current tweet selected.
+* Description: Reply to the current tweet, open an edit box, with the name of
+* the current tweet preloaded. It will be show as a response to the current
+* selected tweet.
 * Defaurt *M*
 
 update::
@@ -447,23 +452,24 @@ update::
 * Default: *u*
 
 follow_selected::
-* Description: Follow the current tweet, this only make sense for the case of
+* Description: Follow the current tweeter, this only make sense for the case of
 retweets, as you already follow the others, but if you follow a selected tweet,
 you will follow the original tweeter one.
 * Default: *f*
 
 unfollow_selected::
-* Description: Unfollow (leave) the personne who tweets (or retweets) the current
+* Description: Unfollow (leave) the person who tweets (or retweets) the current
 tweet.
 * Default: *l*
 
 follow::
 * Description: Follow someone, but the difference with `follow_selected' is
-that you will have a small input box, and can enter someone to follow.
+that you will have a small input box, and can enter someone's nick to follow
+them.
 * Default: *F*
 
 unfollow:: 
-* Description: Unfollow someone, display an input box to enter the name.
+* Description: Unfollow someone, display an input box to enter their nick.
 * Default: *L*
 
 [NOTE]
@@ -479,11 +485,13 @@ getDM::
 * Default: *d*
 
 sendDM::
-* Description: Send a direct message, Tyrs will propose you to send a direct message to the personne display on the current tweet, but you may change, or just validate, and then, write your message.
+* Description: Send a direct message, Tyrs will propose you to send a direct
+* message to the current tweeter, but you may change, or just validate, and then, write your message.
 * Default: *D*
 
 search::
-* Description: Return a list of tweets that contain the word of your research, a box will appeare to let you enter the word of your research
+* Description: Return a list of tweets that contain the string of your search,
+a box will appear to let you enter the word of your search
 * Default: *s*
 
 Parameters
@@ -507,32 +515,31 @@ Listing
 ^^^^^^^
 
 refresh::
-* Description: Define the frequency that the timeline will be
-refresh, meaning that Tyrs will try to retreive some new tweets.
+* Description: Define the frequency that the timeline will be refreshed.
 * Values: Any positive value.
-* Unit: Minute
+* Unit: Minutes
 * Default: 10
 
 tweet_border::
-* Description: Display some border on every tweets
+* Description: Display a border around each tweet
 * Values: 0 or 1
 * Default: 1
 
 relative_time::
-* Description: If set to 1, this will display the time of each tweets like `xx
+* Description: If set to 1, this will display the time of each tweet like `xx
 minutes ago', otherwise, will display a more classic format like `HH:MM'.
 * Values: 0 or 1
 * Default: 0
 
 retweet_by::
-* Description: Normally, if a tweet is retweet, the header will be like
-`tweeter (some time ago) RT by retweeter', with name of each one, if you find
-it to verbose, set to 0 will only display the retweeter.
+* Description: Normally, if a tweet is retweet, the header will be:
+`tweeter (some time ago) RT by retweeter', if you find
+it to verbose, setting it to 0 will only display the retweeter.
 * Values: 0 or 1
 * Default: 1
 
 openurl_command::
-* Description: Let you to chose your favorite navigator for opening urls, note
-the %s *Required* that corresponding to the url that will be open
-* Values: any values that will open a web browser
+* Description: Let you to choose your favorite browser for opening urls, note
+the %s *required* to pass the corresponding url that will be opened.
+* Values: any web browser
 * Default: firefox %s
