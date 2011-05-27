@@ -31,6 +31,10 @@ class Config:
         'warning_msg':    {'c': 1},
         'info_msg':       {'c': 2},
         'current_tweet':  {'c': 5},
+        'current_tab':    {'c': 6},
+        'other_tab':      {'c': 7},
+        'unread':         {'c': 1},
+        'read':           {'c': 7},
     }
 
     color_set = [False, False, False, False, False, False, False, False]
@@ -65,15 +69,9 @@ class Config:
         'relative_time':        0,
         'retweet_by':           1,
         'openurl_command':      'firefox %s',
-        'transparency':         True
+        'transparency':         True,
+        'activities':           True,
     }
-
-#    params_refresh         = 10
-#    params_tweet_border    = 1
-#    params_relative_time   = 0
-#    params_retweet_by      = 1
-#    params_openurl_command = 'firefox %s'
-#    params_transparency    = True
 
     home       = os.environ['HOME']
     xdg_config = os.environ['XDG_CONFIG_HOME']
@@ -172,7 +170,7 @@ class Config:
         # Bold
         if self.conf.has_option('colors', 'bold'):
             self.getBoldColors(self.conf.get('colors', 'bold'))
-        # Setup
+        # Setup rgb
         for i in range(len(self.color_set)):
             if self.conf.has_option('colors', 'color_set'+str(i)):
                 self.color_set[i] = []

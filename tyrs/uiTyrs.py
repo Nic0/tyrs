@@ -56,9 +56,13 @@ class uiTyrs:
         '''
         self.api    = api
         self.conf   = conf
+        # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
+        # startup the ncurses mode
         self.initScreen()
+        # initialize statuses, count, unread...
         self.initDict()
+        # first update of home timeline
         self.updateTimeline('home')
         self.displayTimeline()
 
@@ -86,8 +90,7 @@ class uiTyrs:
         else:
             bgcolor = False
 
-        # Setup colors
-        # TODO, check the term capability before
+        # Setup colors rgb
         if curses.can_change_color():
             for i in range(len(self.conf.color_set)):
                 if not self.conf.color_set[i]:
@@ -96,14 +99,14 @@ class uiTyrs:
                     rgb = self.conf.color_set[i]
                     curses.init_color(i, rgb[0], rgb[1], rgb[2])
 
-        curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 1 black
-        curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 2 red
-        curses.init_pair(2, curses.COLOR_GREEN, bgcolor)    # 3 green
-        curses.init_pair(3, curses.COLOR_YELLOW, bgcolor)   # 4 yellow
-        curses.init_pair(4, curses.COLOR_BLUE, bgcolor)     # 5 blue
-        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor)  # 6 magenta
-        curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 7 cyan
-        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 8 white
+        curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 0 black
+        curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 1 red
+        curses.init_pair(2, curses.COLOR_GREEN, bgcolor)    # 2 green
+        curses.init_pair(3, curses.COLOR_YELLOW, bgcolor)   # 3 yellow
+        curses.init_pair(4, curses.COLOR_BLUE, bgcolor)     # 4 blue
+        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor)  # 5 magenta
+        curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 6 cyan
+        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
     def initDict (self):
         buffers = ('home', 'mentions', 'direct', 'search')
@@ -161,6 +164,7 @@ class uiTyrs:
             if self.statuses[buffer][i].id == self.last_read[buffer]:
                 break
             self.unread[buffer] += 1
+        self.unread[self.buffer] = 0
 
     def displayFlash (self):
         msg = ' ' + self.flash[0] + ' '
@@ -204,14 +208,34 @@ class uiTyrs:
                 self.status['current'] = self.status['last']
                 self.displayTimeline()
 
-            self.displayActivity()
+            if self.conf.params['activities']:
+                self.displayActivity()
             self.screen.refresh()
 
     def displayActivity (self):
-        self.unread[self.buffer] = 0
-        activity = ' H:%d M:%d D:%d ' % (self.unread['home'], self.unread['mentions'],
-                                         self.unread['direct'])
-        self.screen.addstr(0, 50, activity)
+
+        buffer = ['home', 'mentions', 'direct' ]
+        max = self.screen.getmaxyx()
+        max_x = max[1]
+        self.screen.addstr(0, max_x - 15, ' ')
+        for b in buffer:
+            self.displayBufferActivities(b)
+            self.displayCounterActivities(b)
+
+    def displayBufferActivities (self, buffer):
+        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:' }
+        if self.buffer == buffer:
+            self.screen.addstr(display[buffer], self.getColor('current_tab'))
+        else:
+            self.screen.addstr(display[buffer], self.getColor('other_tab'))
+
+    def displayCounterActivities (self, buffer):
+        if self.unread[buffer] == 0:
+            color = 'read'
+        else:
+            color = 'unread'
+
+        self.screen.addstr('%s ' % str(self.unread[buffer]), self.getColor(color))
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
