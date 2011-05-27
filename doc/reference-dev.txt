@@ -136,6 +136,7 @@ installation).
 
 * '-a', or '--account': source another account
 * '-c', or '--config': source another config file
+* '-g', or '--generate-config': generate a default configuration file.
 * '-h', or '--help': help
 
 [[configuration]]
@@ -150,6 +151,13 @@ Tyrs is quite customizable.
 It's based on the 'ConfigParser' core module from python, and it's a very
 readable and to understand the syntax. All the configuration is based on this
 schema:
+
+A quick way to get started with configuration is to generate one from command
+line. with the '-g' option (or '--generate-config'), this parameter take one
+argument, the filename.
+
+[source,bash]
+tyrs -g ~/.config/tyrs/tyrs.cfg
 
 [source,conf]
 ------------
