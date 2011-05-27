@@ -120,7 +120,7 @@ class KeyBinding:
         urls = self.ui.getUrls()
         for url in urls:
             #try:
-            os.system(self.conf.params_openurl_command % url)
+            os.system(self.conf.params['openurl_command'] % url)
             #except:
                 #self.ui.Flash  = ["Couldn't open url", 'warning']
 

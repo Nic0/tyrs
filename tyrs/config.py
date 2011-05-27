@@ -59,12 +59,21 @@ class Config:
         'search':            's',
     }
 
-    params_refresh         = 10
-    params_tweet_border    = 1
-    params_relative_time   = 0
-    params_retweet_by      = 1
-    params_openurl_command = 'firefox %s'
-    params_transparency    = True
+    params = {
+        'refresh':              10,
+        'tweet_border':         1,
+        'relative_time':        0,
+        'retweet_by':           1,
+        'openurl_command':      'firefox %s',
+        'params_transparency':  True
+    }
+
+#    params_refresh         = 10
+#    params_tweet_border    = 1
+#    params_relative_time   = 0
+#    params_retweet_by      = 1
+#    params_openurl_command = 'firefox %s'
+#    params_transparency    = True
 
     home       = os.environ['HOME']
     xdg_config = os.environ['XDG_CONFIG_HOME']
@@ -177,31 +186,31 @@ class Config:
 
         # refresh (in minutes)
         if self.conf.has_option('params', 'refresh'):
-            self.params_refresh     = int(self.conf.get('params', 'refresh'))
+            self.params['refresh']     = int(self.conf.get('params', 'refresh'))
 
         # tweet_border
         if self.conf.has_option('params', 'tweet_border'):
-            self.params_tweet_border = int(self.conf.get('params', 'tweet_border'))
+            self.params['tweet_border'] = int(self.conf.get('params', 'tweet_border'))
 
         # Relative_time
         if self.conf.has_option('params', 'relative_time'):
-            self.params_relative_time = int(self.conf.get('params', 'relative_time'))
+            self.params['relative_time'] = int(self.conf.get('params', 'relative_time'))
 
         # Retweet_By
         if self.conf.has_option('params', 'retweet_by'):
-            self.params_retweet_by = int(self.conf.get('params', 'retweet_by'))
+            self.params['retweet_by'] = int(self.conf.get('params', 'retweet_by'))
 
         # Openurl_command
         if self.conf.has_option('params', 'openurl_command'):
-            self.params_openurl_command = self.conf.get('params',
+            self.params['openurl_command'] = self.conf.get('params',
                 'openurl_command')
         elif self.browser != '':
-            self.params_openurl_command = self.browser + ' %s'
+            self.params['openurl_command'] = self.browser + ' %s'
 
         # Transparency
         if self.conf.has_option('params', 'transparency'):
             if int(self.conf.get('params', 'transparency')) == 0:
-                self.params_transparency = False
+                self.params['transparency'] = False
 
     def charValue (self, ch):
         if ch[0] == '^':

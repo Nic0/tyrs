@@ -66,7 +66,7 @@ class UpdateThread (threading.Thread):
 
     def run (self):
         while not self._stopevent.isSet():
-            self._stopevent.wait(self.conf.params_refresh * 60.0)
+            self._stopevent.wait(self.conf.params['refresh'] * 60.0)
             if not self._stopevent.isSet():
                 self.interface.updateTimeline('home')
                 self.interface.updateTimeline('mentions')

@@ -80,7 +80,7 @@ class uiTyrs:
     def initColors (self):
         curses.start_color()
 
-        if self.conf.params_transparency:
+        if self.conf.params['transparency']:
             curses.use_default_colors()
             bgcolor = -1
         else:
@@ -240,7 +240,7 @@ class uiTyrs:
 
         panel = curses.newpad(height, length)
 
-        if self.conf.params_tweet_border == 1:
+        if self.conf.params['tweet_border'] == 1:
             panel.border(0)
 
         # Highlight the current status
@@ -313,7 +313,7 @@ class uiTyrs:
         @param  date: full iso time format
         @return string: readeable time
         '''
-        if self.conf.params_relative_time== 1:
+        if self.conf.params['relative_time'] == 1:
             hour =  status.GetRelativeCreatedAt()
         else:
             hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
@@ -332,7 +332,7 @@ class uiTyrs:
         time    = self.getTime(status)
         #name    = status.user.name.encode(charset)
 
-        if status.rt and self.conf.params_retweet_by == 1:
+        if status.rt and self.conf.params['retweet_by'] == 1:
             rtby = pseudo
             origin = self.originOfRetweet(status)
             header = ' %s (%s) RT by %s ' % (origin, time, rtby)
