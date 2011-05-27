@@ -214,16 +214,16 @@ class uiTyrs:
 
     def displayActivity (self):
 
-        buffer = ['home', 'mentions', 'direct' ]
+        buffer = ['home', 'mentions', 'direct', 'search' ]
         max = self.screen.getmaxyx()
         max_x = max[1]
-        self.screen.addstr(0, max_x - 15, ' ')
+        self.screen.addstr(0, max_x - 20, ' ')
         for b in buffer:
             self.displayBufferActivities(b)
             self.displayCounterActivities(b)
 
     def displayBufferActivities (self, buffer):
-        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:' }
+        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 'search': 'S:' }
         if self.buffer == buffer:
             self.screen.addstr(display[buffer], self.getColor('current_tab'))
         else:
