@@ -74,6 +74,7 @@ class Config:
         'openurl_command':      'firefox %s',
         'transparency':         True,
         'activities':           True,
+        'compress':             False,
     }
 
     home       = os.environ['HOME']
@@ -119,6 +120,8 @@ class Config:
         for p in self.params:
             if self.params[p] == True:
                 value = 1
+            elif self.params[p] == False:
+                value = 0
             else:
                 value = self.params[p]
 
@@ -224,6 +227,10 @@ class Config:
         if self.conf.has_option('params', 'transparency'):
             if int(self.conf.get('params', 'transparency')) == 0:
                 self.params['transparency'] = False
+
+        if self.conf.has_option('params', 'compress'):
+            if int(self.conf.get('params', 'compress')) == 1:
+                slf.params['compress'] = True
 
     def charValue (self, ch):
         if ch[0] == '^':

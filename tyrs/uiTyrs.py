@@ -185,7 +185,6 @@ class uiTyrs:
     def displayInfoMsg (self, msg):
         self.screen.addstr(0, 3, msg, self.getColor('info_msg'))
 
-
     def displayRedrawScreen (self):
         self.screen.erase()
         self.displayTimeline ()
@@ -218,7 +217,6 @@ class uiTyrs:
             self.screen.refresh()
 
     def displayActivity (self):
-
         buffer = ['home', 'mentions', 'direct', 'search' ]
         max = self.screen.getmaxyx()
         max_x = max[1]
@@ -283,7 +281,12 @@ class uiTyrs:
         panel.refresh(0, 0, start_y, start_x,
             start_y + height, start_x + length)
 
-        self.current_y = start_y + height
+        if self.conf.params['compress']:
+            c = -1
+        else:
+            c = 0
+
+        self.current_y = start_y + height + c
         self.status['last'] = i
 
         return True
