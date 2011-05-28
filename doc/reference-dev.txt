@@ -410,6 +410,7 @@ reply             = M
 getDM             = d
 sendDM            = D
 search            = s
+redraw            = ^L
 ---------------
 
 Control keys support
@@ -546,6 +547,10 @@ search::
 * Description: Return a list of tweets that contain the string of your search,
 a box will appear to let you enter the word of your search
 * Default: *s*
+
+redraw::
+* Description: Force Tyrs to be redraw.
+* Default: *^L* (ctrl-l)
 
 Parameters
 ~~~~~~~~~~
