@@ -64,7 +64,6 @@ class EditBox:
         self.win.refresh()
 
     def displayContent (self):
-        #self.win.addstr(2, 2, self.content)
         x = 2
         y = 2
         words = self.content.split(' ')

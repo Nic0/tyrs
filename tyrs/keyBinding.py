@@ -157,8 +157,7 @@ class KeyBinding:
         except:
             pseudo = ''
 
-        pseudobox = self.pseudoBox("Send a Direct Message at whom ?", pseudo)
-        pseudo = pseudobox.getContent()
+        pseudo = self.pseudoBox("Send a Direct Message at whom ?", pseudo)
         self.tweet(False, pseudo, True)
 
     def changeBuffer (self, buffer):
