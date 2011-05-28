@@ -81,7 +81,7 @@ class Config:
     try:
         browser    = os.environ['BROWSER']
     except:
-        pass
+        browser    = ''
     
     def __init__ (self, args):
 
