@@ -1,5 +1,16 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.2.3 --
+
+	* Environment variable read from $BROWSER, issue #23
+	* Warning for invalide arguments on bold list, issue #19
+	* Environment variable read from $XDG_CONFIG_HOME
+	* Config file generator from command line, with --generate-config filename, or -g filename
+	* Colors in activities bar, with current tab, and unread highlight color
+	* Navigation throught timelines enable with left/right arrow or 'J', 'K'
+	* Documentation and website corrected. Cheers @jasonwryan
+	* Lots code refactored
+
 * Version 0.2.2 -- 2011-05-25
 
 	* Managment of differents timelimes review
