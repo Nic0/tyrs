@@ -63,6 +63,7 @@ class Config:
         'getDM':             'd',
         'sendDM':            'D',
         'search':            's',
+        'redraw':            '^L',
     }
 
     params = {

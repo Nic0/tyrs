@@ -185,6 +185,10 @@ class uiTyrs:
         self.screen.addstr(0, 3, msg, self.getColor('info_msg'))
 
 
+    def displayRedrawScreen (self):
+        self.screen.erase()
+        self.displayTimeline ()
+
     def displayTimeline (self):
         # It might have no tweets yet, we try to retrieve some then
         if len(self.statuses[self.buffer]) == 0:

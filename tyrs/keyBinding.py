@@ -250,7 +250,9 @@ class KeyBinding:
             # SEARCH
             elif ch == self.conf.keys['search']:
                 self.search()
-
+            # Redraw screen
+            elif ch == self.conf.keys['redraw']:
+                self.ui.displayRedrawScreen()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == self.conf.keys['quit'] or ch == 27:
