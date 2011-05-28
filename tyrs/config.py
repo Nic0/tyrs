@@ -77,8 +77,11 @@ class Config:
 
     home       = os.environ['HOME']
     xdg_config = os.environ['XDG_CONFIG_HOME']
-    browser    = os.environ['BROWSER']
-
+    try:
+        browser    = os.environ['BROWSER']
+    except:
+        pass
+    
     def __init__ (self, args):
 
         # generate the config file
