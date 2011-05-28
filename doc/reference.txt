@@ -123,6 +123,7 @@ displays new tweets in other buffers, for example if
 you have new mentions in your timeline, the counter will increase.
 
 A few  things to note:
+
 * The current buffer is always set to zero, as your actually reading it, there
 no need to increase it.
 * On startup, other buffers are delayed for the
@@ -136,6 +137,7 @@ installation).
 
 * '-a', or '--account': source another account
 * '-c', or '--config': source another config file
+* '-g', or '--generate-config': generate a default configuration file.
 * '-h', or '--help': help
 
 [[configuration]]
@@ -150,6 +152,13 @@ Tyrs is quite customizable.
 It's based on the 'ConfigParser' core module from python, and it's a very
 readable and to understand the syntax. All the configuration is based on this
 schema:
+
+A quick way to get started with configuration is to generate one from command
+line. with the '-g' option (or '--generate-config'), this parameter take one
+argument, the filename.
+
+[source,bash]
+tyrs -g ~/.config/tyrs/tyrs.cfg
 
 [source,conf]
 ------------
@@ -221,14 +230,18 @@ These are the default values:
 [source,conf]
 ----------------
 [colors]
-highlight   = 1
-header      = 6
-current     = 5
-hashtag     = 3
-attag       = 2
-text        = 7
-warning_msg = 1
-info_msg    = 2
+highlight      = 1
+header         = 6
+current_tweet  = 5
+current_tab    = 6
+other_tab      = 7
+hashtag        = 3
+attag          = 2
+text           = 7
+warning_msg    = 1
+info_msg       = 2
+unread         = 1
+read           = 7
 ----------------
 
 Bold font
@@ -258,7 +271,7 @@ Listing
 ^^^^^^^
 
 highlight::
-* Description: this will highlight when your nick is display in a tweet,
+* Description: This will highlight when your nick is display in a tweet,
 for example, a tweet « blabla @you blabla », @you will be color highlighted.
 * Default: 1 (red)
 
@@ -270,7 +283,16 @@ such as user name of the tweeter, time, and any retweet information.
 current_tweet::
 * Description: Corresponding to the header color of the current (selected)
 tweet.
-* Default: 5
+* Default: 5 (magenta)
+
+current_tab::
+* Description: Display the current timeline (home, mentions or direct message)
+in highlighted color.
+* Default: 1 (red)
+
+other_tab::
+* Description: Color of any other than the current buffer, in the activities bar.
+* Defaurt: 7 (white)
 
 hashtag::
 * Description: This will highlight the hashtag `#` word, usefull to follow
@@ -298,6 +320,14 @@ text::
 * Description: This is all the basic text, such as tweets (without highlight),
 or input in the tweet edit box.
 * Default: 7 (white)
+
+read::
+* Description: Color in the activities bar when its set to 0.
+* Default: 7 (white)
+
+unread::
+* Description: Color in the activities bar when you have unread tweets.
+* Default: 1 (red)
 
 bold::
 * Description: Activate bold, see above for more information.
@@ -359,6 +389,10 @@ This allows you to change keys shortcuts to suit your needs. These are the defau
 [keys]
 up                = k
 down              = j
+left              = J
+right             = K
+back_to_top       = g
+back_to_bottom    = G
 quit              = q
 tweet             = t
 clear             = c
@@ -405,6 +439,25 @@ down::
 * Description: Navigation —  moves down in the timeline.
 * Alternative: Down arrow
 * Default: *j*
+
+left::
+* Description: Navigation — moves left in differents timelines (home, mentions,
+direct, search)
+* Alternative: Left arrow
+* Default: *J*
+
+right::
+* Description: Navigation — moves right in differents timelines.
+* Alternative: Right arrow
+* Default: *K*
+
+back_to_top::
+* Description: Navigation — moves on top in the timeline.
+* Default: *g*
+
+back_to_bottom::
+* Description: Navigation — moves on bottom of the screen.
+* Default: *G*
 
 quit::
 * Description: Leave Tyrs, and return to a normal life. 
@@ -509,6 +562,7 @@ relative_time    = 0
 retweet_by       = 1
 openurl_command  = firefox %s
 transparency     = 1
+activities       = 1
 -------------------
 
 Listing
@@ -543,3 +597,8 @@ openurl_command::
 the %s *required* to pass the corresponding url that will be opened.
 * Values: any web browser
 * Default: firefox %s
+
+activities::
+* Description: Disable the activities bar if set to 0.
+* Values: 0 or 1
+* Default: 1
