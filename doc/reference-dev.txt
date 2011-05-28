@@ -388,6 +388,8 @@ This allows you to change keys shortcuts to suit your needs. These are the defau
 [keys]
 up                = k
 down              = j
+left              = J
+right             = K
 back_to_top       = g
 back_to_bottom    = G
 quit              = q
@@ -436,6 +438,17 @@ down::
 * Description: Navigation —  moves down in the timeline.
 * Alternative: Down arrow
 * Default: *j*
+
+left::
+* Description: Navigation — moves left in differents timelines (home, mentions,
+direct, search)
+* Alternative: Left arrow
+* Default: *J*
+
+right::
+* Description: Navigation — moves right in differents timelines.
+* Alternative: Right arrow
+* Default: *K*
 
 back_to_top::
 * Description: Navigation — moves on top in the timeline.
