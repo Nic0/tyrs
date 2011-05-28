@@ -123,6 +123,7 @@ displays new tweets in other buffers, for example if
 you have new mentions in your timeline, the counter will increase.
 
 A few  things to note:
+
 * The current buffer is always set to zero, as your actually reading it, there
 no need to increase it.
 * On startup, other buffers are delayed for the
