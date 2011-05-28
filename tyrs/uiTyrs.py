@@ -337,7 +337,7 @@ class uiTyrs:
         @param  date: full iso time format
         @return string: readeable time
         '''
-        if self.conf.params['relative_time'] == 1:
+        if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
             hour =  status.GetRelativeCreatedAt()
         else:
             hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
