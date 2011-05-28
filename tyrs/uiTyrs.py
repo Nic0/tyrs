@@ -329,10 +329,18 @@ class uiTyrs:
                 while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
                     curent_x -= 1
 
-
     def getSizeStatus (self, status):
         length = self.maxyx[1] - 4
-        height = len(status.text) / length + 3
+        x = 2
+        y = 1
+        words = status.text.split(' ')
+        for w in words:
+            if x+len(w) > length - 2:
+                y += 1
+                x =  2
+            x += len(w)+1
+
+        height = y + 2
         size = {'length': length, 'height': height}
         return size
 
