@@ -42,6 +42,8 @@ class Config:
     keys = {
         'up':                'k',
         'down':              'j',
+        'left':              'J',
+        'right':             'K',
         'quit':              'q',
         'tweet':             't',
         'clear':             'c',
@@ -186,7 +188,7 @@ class Config:
             if self.conf.has_option('keys', key):
                 self.keys[key] = self.charValue(self.conf.get('keys', key))
             else:
-                self.keys[key] = ord(self.keys[key])
+                self.keys[key] = self.charValue(self.keys[key])
         #
         # PARAMS
         #

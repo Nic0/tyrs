@@ -28,6 +28,13 @@ class KeyBinding:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
 
+    def moveBuffer (self, move):
+        buffer = ['home', 'mentions', 'direct', 'search']
+        id = buffer.index(self.ui.buffer)
+        new_id = id + move
+        if new_id >= 0 and new_id <= 3:
+            self.changeBuffer(buffer[new_id])
+
     def tweet (self, data, reply_to_id=None, dm=False):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         self.ui.refresh_token = True
@@ -183,6 +190,12 @@ class KeyBinding:
             # UP
             elif ch == self.conf.keys['up'] or ch == curses.KEY_UP:
                 self.moveUp()
+            # LEFT
+            elif ch == self.conf.keys['left'] or ch == curses.KEY_LEFT:
+                self.moveBuffer(-1)
+            # RIGHT
+            elif ch == self.conf.keys['right'] or ch == curses.KEY_RIGHT:
+                self.moveBuffer(+1)
             # TWEET
             elif ch == self.conf.keys['tweet']:
                 self.tweet(None)
