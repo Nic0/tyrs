@@ -64,7 +64,18 @@ class EditBox:
         self.win.refresh()
 
     def displayContent (self):
-        self.win.addstr(2, 2, self.content)
+        #self.win.addstr(2, 2, self.content)
+        x = 2
+        y = 2
+        words = self.content.split(' ')
+        max = self.win.getmaxyx()
+        for w in words:
+            if x+len(w) > max[1] - 4:
+                y += 1
+                x = 2
+            self.win.addstr(y, x, w, self.ui.getColor('text'))
+            x += len(w)+1
+
 
     def initWin (self, screen):
         '''
