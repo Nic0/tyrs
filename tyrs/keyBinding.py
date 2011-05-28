@@ -137,7 +137,7 @@ class KeyBinding:
 
     def search (self):
         self.ui.buffer = 'search'
-        self.api.search_word = self.pseudoBox('What should I search?').getContent()
+        self.api.search_word = self.pseudoBox('What should I search?')
         try:
             self.ui.statuses['search'] = self.api.api.GetSearch(self.api.search_word)
             self.changeBuffer('search')
