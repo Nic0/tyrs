@@ -13,13 +13,13 @@ class EditBox:
     confirm = False
     content = ''
 
-    def __init__(self, screen, params, data, conf):
+    def __init__(self, ui, params, data, conf):
 
         self.conf = conf
-        self.screen = screen
+        self.ui = ui
         self.params = params
         self.data   = data
-        self.win = self.initWin(screen)
+        self.win = self.initWin(self.ui.screen)
         self.win.keypad(1)
         curses.curs_set(1)
         self.startEdit()
@@ -27,6 +27,7 @@ class EditBox:
 
     def startEdit (self):
 
+        self.ui.refresh_token = True
         if self.data:
             self.content = self.data.encode('utf-8')
             self.refresh()
@@ -44,6 +45,7 @@ class EditBox:
                 break
 
             elif ch == 27:        # ESC: abord
+                self.content = ''
                 break
 
             elif ch == 127:       # DEL
@@ -53,10 +55,11 @@ class EditBox:
                 self.content += chr(ch)
 
             self.refresh()
+        self.ui.refresh_token = False
 
     def refresh (self):
         self.win.erase()
-        self.win = self.initWin(self.screen)
+        self.win = self.initWin(self.ui.screen)
         self.displayContent()
         self.win.refresh()
 

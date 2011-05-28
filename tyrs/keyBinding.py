@@ -37,8 +37,7 @@ class KeyBinding:
 
     def tweet (self, data, reply_to_id=None, dm=False):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
-        self.ui.refresh_token = True
-        box = editBox.EditBox(self.ui.screen, params, data, self.conf)
+        box = editBox.EditBox(self.ui, params, data, self.conf)
         if box.confirm:
             try:
                 content = box.getContent()
@@ -51,7 +50,6 @@ class KeyBinding:
                     self.ui.flash = ['The direct message has benn send.', 'info']
             except:
                self.ui.flash = ["Couldn't send the tweet.", "warning"]
-        self.ui.refresh_token = False
 
     def retweet (self):
         status = self.ui.getCurrentStatus()
@@ -93,16 +91,14 @@ class KeyBinding:
         self.destroyFriendship(pseudo)
 
     def follow (self):
-        self.ui.refresh_token = True
-        box = self.pseudoBox('Follow Someone ?')
-        self.createFriendship(self.cutAtTag(box.getContent()))
-        self.ui.refresh_token = False
+        nick = self.pseudoBox('Follow Someone ?')
+        if nick != False:
+            self.createFriendship(nick)
 
     def unfollow (self):
-        self.ui.refresh_token = True
-        box = self.pseudoBox('Unfollow Someone ?')
-        self.destroyFriendship(self.cutAtTag(box.getContent()))
-        self.ui.refresh_token = False
+        nick = self.pseudoBox('Unfollow Someone ?')
+        if nick != False:
+            self.destroyFriendship(nick)
 
     def cutAtTag (self, name):
         if name[0] == '@':
@@ -133,7 +129,11 @@ class KeyBinding:
 
     def pseudoBox (self, header, pseudo=None):
         params = {'char': 40, 'width': 40, 'header': header}
-        return editBox.EditBox(self.ui.screen, params, pseudo, self.conf)
+        box = editBox.EditBox(self.ui, params, pseudo, self.conf)
+        if box.confirm:
+            return self.cutAtTag(box.getContent())
+        else:
+            return False
 
     def search (self):
         self.ui.buffer = 'search'
