@@ -82,7 +82,7 @@ class Config:
         browser    = os.environ['BROWSER']
     except:
         browser    = ''
-    
+
     def __init__ (self, args):
 
         # generate the config file

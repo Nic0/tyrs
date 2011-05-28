@@ -120,7 +120,8 @@ class uiTyrs:
         ''' Retrieves tweets, don't display them
         '''
         try:
-            self.displayUpdateMsg()
+            if not self.refresh_token:
+                self.displayUpdateMsg()
 
             if buffer == 'home':
                 self.appendNewStatuses(self.api.updateHomeTimeline(), buffer)
