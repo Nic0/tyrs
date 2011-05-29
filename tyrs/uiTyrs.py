@@ -212,8 +212,13 @@ class uiTyrs:
                 self.status['current'] = self.status['last']
                 self.displayTimeline()
 
+            # Activities bar
             if self.conf.params['activities']:
                 self.displayActivity()
+            # Help bar
+            if self.conf.params['help']:
+                self.displayHelpBar()
+
             self.screen.refresh()
 
     def displayActivity (self):
@@ -239,6 +244,21 @@ class uiTyrs:
             color = 'unread'
 
         self.screen.addstr('%s ' % str(self.unread[buffer]), self.getColor(color))
+
+    def displayHelpBar (self):
+        max = self.screen.getmaxyx()
+        self.screen.addnstr(max[0] -1, 2,
+            'up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
+                           (chr(self.conf.keys['up']),
+                            chr(self.conf.keys['down']),
+                            chr(self.conf.keys['tweet']),
+                            chr(self.conf.keys['retweet']),
+                            chr(self.conf.keys['reply']),
+                            chr(self.conf.keys['home']),
+                            chr(self.conf.keys['mentions']),
+                            chr(self.conf.keys['update']),
+                           ), max[1] -4, self.getColor('text')
+        )
 
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,

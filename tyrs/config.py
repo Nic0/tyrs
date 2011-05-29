@@ -75,6 +75,7 @@ class Config:
         'transparency':         True,
         'activities':           True,
         'compress':             False,
+        'help':                 True,
     }
 
     home       = os.environ['HOME']
@@ -227,10 +228,14 @@ class Config:
         if self.conf.has_option('params', 'transparency'):
             if int(self.conf.get('params', 'transparency')) == 0:
                 self.params['transparency'] = False
-
+        # Compress display
         if self.conf.has_option('params', 'compress'):
             if int(self.conf.get('params', 'compress')) == 1:
-                slf.params['compress'] = True
+                self.params['compress'] = True
+        # Help bar
+        if self.conf.has_option('params', 'help'):
+            if int(self.conf.get('params', 'help')) == 0:
+                self.params['help'] = False
 
     def charValue (self, ch):
         if ch[0] == '^':
