@@ -3,25 +3,27 @@ Tyrs Quick Start
 :author: Nicolas Paris
 
 
-This is a small introduction to start using Tyrs quickly, and does't go in
-details like configuration or installation.
+This is a short introduction to using Tyrs, and doesn't go into
+too much detail about configuration or installation. It is intended
+to get you up and running Tyrs quickly.
 
-For more information, you could read these documentations:
+For more information, you could read these documents:
 
-* link:reference.html[The full documentation.]
+* link:reference.html[Full documentation.]
 * link:reference.html#installation[The installation guide.]
 
 First authentification
 ----------------------
 
-You may know, Twitter use now a specific authentification call OAuth, and the
-first step is to obtain the permission from Twitter. It's very easy.
+You may be aware, Twitter uses a specific authentification called OAuth, and the
+first step is to authenticate with Twitter. It's very easy.
 
-First, you must have a web browser, and *identify to you account on twitter*. +
-When you start the application, and it don't find any profil file, it will give
-you something like:
+First, in a web browser, you will be prompted to allow Tyrs to *access your
+Twitter account*. +
+When you start the application, and it doesn't find a profile file, it will
+print:
 
-.Greeting when no profile is detected
+.Message when no profile is detected
 --------------------
 There is no profile detected.
 
@@ -39,12 +41,12 @@ https://api.twitter.com/oauth/authorize?oauth_token=OxFDW4zW3YeiueuizjazAa4VSdeu
 Pincode?
 -------------------
 
-You only need to go on the link show above, and return the code that the
-browser show you. And that's it, you are yet on twitter from your console.
+You only need to go to the link show above, and copy the code that the
+Twitter provides. And that's it, you are now able to access Twitter from your console.
 
 [TIP]
 ===================
-you may have several account, and just need start the application with
+If you have several accounts, you can specify which one to use by starting the application with
 `-a` argument.
 [source,bash]
 tyrs -a foo
@@ -54,8 +56,8 @@ tyrs -a foo
 Usage
 -----
 
-Tyrs is mostly used with keybord, and come with some keys shortcuts, here are
-list some of the most commun one. You may check link:/reference.html[the full
+Tyrs is mostly used with keybord, and comes with some keys shortcuts. This is
+the list of the most common ones. You may check link:/reference.html[the full
 reference guide] for more details.
 
 Navigation
@@ -75,10 +77,10 @@ Functions
 * *c*: Clear the timeline
 * *u*: Update the timeline
 
-Tweet edition
+Tweet editing
 ~~~~~~~~~~~~~
 
-* ESC: Abord the edition
+* ESC: Abord the edit
 * ENTER: Validation/Send
 * DEL: delete last character
 
@@ -86,26 +88,24 @@ Tweet edition
 Configuration
 -------------
 
-You can add a configuration file, there is no need to have one to get
-it work, but you can customized some keybinding, color and basic
-behavior.
+You can add a configuration file, there is no need to have one for Tyrs to work, 
+but you can customize your keybindings, color and basic behavior.
 
-The configuration file should be place in '~/.config/tyrs/tyrs.cfg'
+The configuration file should be placed in '~/.config/tyrs/tyrs.cfg'
 
 To learn how the configuration works, check the
 link:reference.html#configuration[configuration part] of the reference guide.
 
 
 [TIP]
-You may have more than one configuration file, exactly as the account is
-handle, it's allow you to load two differents configuration without change
-directly them. Just start with an `-c` argument. (or `--config`)
+You may have more than one configuration file. To use an account-specific .cfg
+file, start with a `-c` argument. (or `--config`)
 
 Related Sites
 -------------
 
 * Check the development on link:https://github.com/Nic0/tyrs[Github]
-* Found a bug ? or wan't propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
+* Found a bug ? or wan't to propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
 * link:http://www.nicosphere.net[My blog], with a
 link:http://www.nicosphere.net/tyrs-premier-jet-dun-client-twitter-ncurses-2361/[first],
 and
