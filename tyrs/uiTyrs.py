@@ -82,6 +82,7 @@ class uiTyrs:
         self.screen = screen
 
     def initColors (self):
+        '''Setup all colors stuff, rgb as well.'''
         curses.start_color()
 
         if self.conf.params['transparency']:
@@ -117,7 +118,9 @@ class uiTyrs:
             self.last_read[buffer]  = 0
 
     def updateTimeline (self, buffer):
-        ''' Retrieves tweets, don't display them
+        '''
+        Retrieves tweets, don't display them
+        @param the buffer to retreive tweets
         '''
         try:
             if not self.refresh_token:
@@ -139,6 +142,12 @@ class uiTyrs:
         self.countUnread(buffer)
 
     def appendNewStatuses (self, newStatuses, buffer):
+        '''This take care to add in the corresponding list new statuses
+           that been retrieved, this just make sure lists are up ta date,
+           and does not display them
+           @param newStatuses are a list of new statuses retreives to append
+           @param buffer used to know on wich list we appends tweets
+        '''
         # Fresh new start.
         if self.statuses[buffer] == []:
             self.statuses[buffer] = newStatuses
@@ -168,6 +177,9 @@ class uiTyrs:
         self.unread[self.buffer] = 0
 
     def displayFlash (self):
+        '''Should be the main entry to display Flash,
+           it will take care of the warning/infor difference.
+        '''
         msg = ' ' + self.flash[0] + ' '
         if self.flash[1] == 'warning':
             self.displayWarningMsg(msg)
@@ -190,6 +202,9 @@ class uiTyrs:
         self.displayTimeline ()
 
     def displayTimeline (self):
+        '''Main entry to display a timeline, as it does not take arguments,
+           make sure to set self.buffer before
+        '''
         # It might have no tweets yet, we try to retrieve some then
         if len(self.statuses[self.buffer]) == 0:
             self.updateTimeline(self.buffer)
@@ -222,6 +237,7 @@ class uiTyrs:
             self.screen.refresh()
 
     def displayActivity (self):
+        '''Main entry to display the activities bar'''
         buffer = ['home', 'mentions', 'direct', 'search' ]
         max = self.screen.getmaxyx()
         max_x = max[1]
@@ -246,6 +262,8 @@ class uiTyrs:
         self.screen.addstr('%s ' % str(self.unread[buffer]), self.getColor(color))
 
     def displayHelpBar (self):
+        '''The help bar display at the bottom of the screen,
+           for keysbinding reminder'''
         max = self.screen.getmaxyx()
         self.screen.addnstr(max[0] -1, 2,
             'up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
@@ -263,7 +281,12 @@ class uiTyrs:
     def displayStatus (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
         depending on self.current_y, an array [status, panel] is return and
-        will be stock in a array, to retreve status information (like id)'''
+        will be stock in a array, to retreve status information (like id)
+        @param status, the status to display
+        @param i, to know on witch status we're display (this could be refactored)
+        @return True if the tweet as been displayed, to know it may carry on to display some
+                more, otherwise return False
+        '''
 
         # Check if we have a retweet
         self.isRetweet(status)
@@ -300,7 +323,7 @@ class uiTyrs:
 
         panel.refresh(0, 0, start_y, start_x,
             start_y + height, start_x + length)
-
+        # An adjustment to compress a little the display
         if self.conf.params['compress']:
             c = -1
         else:
@@ -313,7 +336,8 @@ class uiTyrs:
 
     def displayText (self, text, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
-        world without. handle highlighting of '#' and '@' tags.'''
+        world without. handle highlighting of '#' and '@' tags.
+        '''
         # Some tweets have '\n' thats break the layout
         text = text.replace('\n', ' ')
 
@@ -355,6 +379,9 @@ class uiTyrs:
                     curent_x -= 1
 
     def getSizeStatus (self, status):
+        '''Allow to know how height will be the tweet, it calculate it exactly
+           as it will display it.
+        '''
         length = self.maxyx[1] - 4
         x = 2
         y = 1
@@ -409,22 +436,25 @@ class uiTyrs:
         return status.rt
 
     def originOfRetweet (self, status):
+        '''When its a retweet, return the first person who tweet it,
+           not the retweeter
+        '''
         origin = status.GetText()
         origin = origin[4:]
         origin = origin.split(':')[0]
         origin = str(origin)
         return origin
 
-    # Last function call when quiting, restore some defaults params
     def tearDown (self, *dummy):
+        '''Last function call when quiting, restore some defaults params'''
         self.screen.keypad(0)
         curses.echo()
         curses.nocbreak()
         curses.curs_set(1)
         curses.endwin()
 
-    # Resize event callback
     def sigwinch_handler (self, *dummy):
+        '''Resize event callback'''
         self.resize_event = True
 
     def clearStatuses (self):
@@ -433,12 +463,20 @@ class uiTyrs:
         self.status['current'] = 0
 
     def getCurrentStatus (self):
+        '''@return the status object itself'''
         return self.statuses[self.buffer][self.status['current']]
 
     def getUrls (self):
+        '''
+        @return array of urls find in the text
+        '''
         return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.statuses[self.buffer][self.status['current']].text)
 
     def getColor (self, color):
+        '''Return the curses code, with bold if enable of the color
+           given in argument of the function
+           @return color_pair code
+        '''
         cp = curses.color_pair(self.conf.colors[color]['c'])
         if self.conf.colors[color]['b']:
             cp |= curses.A_BOLD
