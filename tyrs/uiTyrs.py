@@ -294,6 +294,8 @@ class uiTyrs:
     def displayText (self, text, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.'''
+        # Some tweets have '\n' thats break the layout
+        text = text.replace('\n', ' ')
 
         if status.rt:
             text = text.split(':')[1:]
@@ -336,7 +338,8 @@ class uiTyrs:
         length = self.maxyx[1] - 4
         x = 2
         y = 1
-        words = status.text.split(' ')
+        txt = status.text.replace('\n', ' ')
+        words = txt.split(' ')
         for w in words:
             if x+len(w) > length - 2:
                 y += 1
