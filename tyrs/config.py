@@ -35,6 +35,7 @@ class Config:
         'other_tab':      {'c': 7},
         'unread':         {'c': 1},
         'read':           {'c': 7},
+        'help':           {'c': 6},
     }
 
     color_set = [False, False, False, False, False, False, False, False]

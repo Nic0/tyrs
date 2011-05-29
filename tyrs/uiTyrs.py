@@ -266,7 +266,7 @@ class uiTyrs:
            for keysbinding reminder'''
         max = self.screen.getmaxyx()
         self.screen.addnstr(max[0] -1, 2,
-            'up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
+            'help:? up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
                            (chr(self.conf.keys['up']),
                             chr(self.conf.keys['down']),
                             chr(self.conf.keys['tweet']),
@@ -305,7 +305,7 @@ class uiTyrs:
         start_x = 2
 
         # We leave if no more space left
-        if start_y + height + 1 > self.maxyx[0]:
+        if start_y + height +1 > self.maxyx[0]:
             return False
 
         panel = curses.newpad(height, length)
@@ -482,3 +482,95 @@ class uiTyrs:
             cp |= curses.A_BOLD
 
         return cp
+
+
+class Help:
+
+    y = 2
+    col = [2, 25, 30]
+
+    def __init__ (self, ui, conf):
+        self.ui = ui
+        self.conf = conf
+        self.max = self.ui.screen.getmaxyx()
+        self.displayHelpScreen()
+
+    def displayHelpScreen (self):
+        self.ui.refresh_token = True
+        self.ui.screen.erase()
+
+        self.displayHeader()
+
+        self.displayDivision('Navigation')
+        self.displayHelpItem('up', 'Moves up')
+        self.displayHelpItem('down', 'Moves down')
+        self.displayHelpItem('back_on_top', 'Move back on top')
+        self.displayHelpItem('back_on_bottom', 'Move to the bottom of the screen')
+
+        self.displayDivision('Timelines')
+        self.displayHelpItem('left', 'Moves left in timelines')
+        self.displayHelpItem('right', 'Moves right in timelines')
+        self.displayHelpItem('update', 'Refresh the current timeline')
+        self.displayHelpItem('clear', 'Clear, and leave the last tweet in your timeline')
+        self.displayHelpItem('home', 'Moves to the home timeline')
+        self.displayHelpItem('mentions', 'Moves to the mentions timeline')
+        self.displayHelpItem('getDM', 'Moves to the direct message timeline')
+        self.displayHelpItem('search', 'Ask for a term to search and move to his timeline')
+
+        self.displayDivision('Tweets')
+        self.displayHelpItem('tweet', 'Send a tweet')
+        self.displayHelpItem('retweet', 'Retweet the selected tweet')
+        self.displayHelpItem('retweet_and_edit', 'Retweet with response the selected tweet')
+        self.displayHelpItem('reply', 'Reply to the selected tweet')
+        self.displayHelpItem('sendDM', 'Send a direct message')
+
+        self.displayDivision('Follow/Unfollow')
+        self.displayHelpItem('follow_selected', 'Follow the selected twitter')
+        self.displayHelpItem('unfollow_selected', 'Unfollow the selected twitter')
+        self.displayHelpItem('follow', 'Follow a twitter')
+        self.displayHelpItem('unfollow', 'Unfollow a twitter')
+
+        self.displayDivision('Others')
+        self.displayHelpItem('quit', 'Leave Tyrs')
+        self.displayHelpItem('openurl', 'Open an url with your browser')
+        self.displayHelpItem('redraw', 'Force to redraw the all screen')
+
+        self.ui.screen.refresh()
+        self.ui.screen.getch()
+        self.ui.screen.erase()
+
+        self.ui.refresh_token = False
+
+    def displayDivision (self, title):
+        self.increase(2)
+        cp = curses.color_pair(5)
+        title = '-- ' + title + ' --'
+        self.ui.screen.addstr(self.y, self.col[0], title, cp)
+        self.increase(1)
+
+    def displayHeader (self):
+        scr = self.ui.screen
+        cp = curses.color_pair(5)
+        scr.addstr(self.y, self.col[0], 'Name', cp)
+        scr.addstr(self.y, self.col[1], 'Key', cp)
+        scr.addstr(self.y, self.col[2], 'Description', cp)
+
+    def displayHelpItem (self, key, description):
+        scr = self.ui.screen
+        cp = self.ui.getColor('help')
+        scr.addstr(self.y, self.col[0], key, cp)
+        scr.addstr(self.y, self.col[1], chr(self.conf.keys[key]), cp)
+        scr.addstr(self.y, self.col[2], description, cp)
+        self.increase(1)
+
+    def increase (self, incr):
+        '''This make sure there some space left on the screen.'''
+        if self.y + incr >= self.max[0]:
+            self.ui.screen.refresh()
+            self.ui.screen.getch()
+            self.y = 2
+            self.ui.screen.erase()
+            self.displayHeader()
+            self.increase(2)
+        else:
+            self.y += incr
