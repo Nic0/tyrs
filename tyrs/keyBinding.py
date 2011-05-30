@@ -30,10 +30,10 @@ class KeyBinding:
             self.ui.status['current'] -= 1
 
     def moveBuffer (self, move):
-        buffer = ['home', 'mentions', 'direct', 'search']
+        buffer = ['home', 'mentions', 'direct', 'search', 'user']
         id = buffer.index(self.ui.buffer)
         new_id = id + move
-        if new_id >= 0 and new_id <= 3:
+        if new_id >= 0 and new_id <= 4:
             self.changeBuffer(buffer[new_id])
 
     def tweet (self, data, reply_to_id=None, dm=False):

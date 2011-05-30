@@ -131,17 +131,26 @@ class uiTyrs:
         try:
             if not self.refresh_token:
                 self.displayUpdateMsg()
-
+            # HOME
             if buffer == 'home':
-                self.appendNewStatuses(self.api.updateHomeTimeline(), buffer)
+                self.appendNewStatuses(
+                    self.api.updateHomeTimeline(), buffer)
+            # MENTIONS
             elif buffer == 'mentions':
-                self.appendNewStatuses(self.api.api.GetMentions(), buffer)
-            elif buffer == 'search':
-                self.appendNewStatuses(self.api.api.GetSearch(self.api.search_word), buffer)
+                self.appendNewStatuses(
+                    self.api.api.GetMentions(), buffer)
+            # SEARCH
+            elif buffer == 'search' and self.api.search_word != '':
+                self.appendNewStatuses(
+                    self.api.api.GetSearch(self.api.search_word), buffer)
+            # DIRECT
             elif buffer == 'direct':
-                self.appendNewStatuses(self.api.api.GetDirectMessages(), buffer)
-            elif buffer == 'user':
-                self.appendNewStatuses(self.api.api.GetUserTimeline(self.api.search_user), buffer)
+                self.appendNewStatuses(
+                    self.api.api.GetDirectMessages(), buffer)
+            # USER
+            elif buffer == 'user' and self.api.search_user != '':
+                self.appendNewStatuses(
+                    self.api.api.GetUserTimeline(self.api.search_user), buffer)
             #TODO does it realy need to display the timeline here ?!
             self.displayTimeline()
         except:
@@ -246,16 +255,16 @@ class uiTyrs:
 
     def displayActivity (self):
         '''Main entry to display the activities bar'''
-        buffer = ['home', 'mentions', 'direct', 'search' ]
+        buffer = ['home', 'mentions', 'direct', 'search', 'user' ]
         max = self.screen.getmaxyx()
         max_x = max[1]
-        self.screen.addstr(0, max_x - 20, ' ')
+        self.screen.addstr(0, max_x - 23, ' ')
         for b in buffer:
             self.displayBufferActivities(b)
             self.displayCounterActivities(b)
 
     def displayBufferActivities (self, buffer):
-        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 'search': 'S:' }
+        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 'search': 'S:', 'user': 'U:' }
         if self.buffer == buffer:
             self.screen.addstr(display[buffer], self.getColor('current_tab'))
         else:
