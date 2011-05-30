@@ -553,7 +553,7 @@ class Help:
         self.displayDivision('Others')
         self.displayHelpItem('quit', 'Leave Tyrs')
         self.displayHelpItem('openurl', 'Open an url with your browser')
-        self.displayHelpItem('redraw', 'Force to redraw the all screen')
+        self.displayHelpItem('redraw', 'Force to redraw the screen')
 
         self.ui.screen.refresh()
         self.ui.screen.getch()
