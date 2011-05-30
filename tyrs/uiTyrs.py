@@ -517,13 +517,13 @@ class Help:
         self.ui.screen.erase()
 
         self.displayHeader()
-
+        # Navigation
         self.displayDivision('Navigation')
         self.displayHelpItem('up', 'Moves up')
         self.displayHelpItem('down', 'Moves down')
         self.displayHelpItem('back_on_top', 'Move back on top')
         self.displayHelpItem('back_on_bottom', 'Move to the bottom of the screen')
-
+        # Timelines
         self.displayDivision('Timelines')
         self.displayHelpItem('left', 'Moves left in timelines')
         self.displayHelpItem('right', 'Moves right in timelines')
@@ -535,7 +535,7 @@ class Help:
         self.displayHelpItem('search', 'Ask for a term to search and move to his timeline')
         self.displayHelpItem('search_user', 'Retrieve someone public timeline')
         self.displayHelpItem('search_myself', 'Retrieve your public timeline')
-
+        # Tweets
         self.displayDivision('Tweets')
         self.displayHelpItem('tweet', 'Send a tweet')
         self.displayHelpItem('retweet', 'Retweet the selected tweet')
@@ -543,13 +543,13 @@ class Help:
         self.displayHelpItem('reply', 'Reply to the selected tweet')
         self.displayHelpItem('sendDM', 'Send a direct message')
         self.displayHelpItem('delete', 'Delete the selected tweet, must be your tweet')
-
+        # Follow/Unfollow
         self.displayDivision('Follow/Unfollow')
         self.displayHelpItem('follow_selected', 'Follow the selected twitter')
         self.displayHelpItem('unfollow_selected', 'Unfollow the selected twitter')
         self.displayHelpItem('follow', 'Follow a twitter')
         self.displayHelpItem('unfollow', 'Unfollow a twitter')
-
+        # Others
         self.displayDivision('Others')
         self.displayHelpItem('quit', 'Leave Tyrs')
         self.displayHelpItem('openurl', 'Open an url with your browser')
