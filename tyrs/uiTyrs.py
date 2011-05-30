@@ -150,7 +150,7 @@ class uiTyrs:
             # USER
             elif buffer == 'user' and self.api.search_user != '':
                 self.appendNewStatuses(
-                    self.api.api.GetUserTimeline(self.api.search_user), buffer)
+                    self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
             #TODO does it realy need to display the timeline here ?!
             self.displayTimeline()
         except:
