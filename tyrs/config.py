@@ -50,6 +50,7 @@ class Config:
         'clear':             'c',
         'retweet':           'r',
         'retweet_and_edit':  'R',
+        'delete':            'C',
         'update':            'u',
         'follow_selected':   'f',
         'unfollow_selected': 'l',

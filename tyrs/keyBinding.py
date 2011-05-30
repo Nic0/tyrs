@@ -79,6 +79,16 @@ class KeyBinding:
     def update (self):
         self.ui.updateTimeline(self.ui.buffer)
 
+    def delete (self):
+        id = self.ui.getCurrentStatus().GetId()
+        # In case we want delete direct message, it will handle
+        # with DestroyDirectMessage(id)
+        try:
+            self.api.api.DestroyStatus(id)
+            self.ui.flash = ['Tweet destroyed successfully.', 'info']
+        except:
+            self.ui.flash = ['The tweet could not been destroyed.', 'warning']
+
     def followSelected (self):
         status = self.ui.getCurrentStatus()
         if self.ui.isRetweet(status):
@@ -205,6 +215,9 @@ class KeyBinding:
             # RETWEET AND EDIT
             elif ch == self.conf.keys['retweet_and_edit']:
                 self.retweetAndEdit()
+            # DELETE TwEET
+            elif ch == self.conf.keys['delete']:
+                self.delete()
             # MENTIONS
             elif ch == self.conf.keys['mentions']:
                 self.changeBuffer('mentions')
