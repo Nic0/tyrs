@@ -110,7 +110,7 @@ class uiTyrs:
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
     def initDict (self):
-        buffers = ('home', 'mentions', 'direct', 'search')
+        buffers = ('home', 'mentions', 'direct', 'search', 'user')
         for buffer in buffers:
             self.statuses[buffer]   = []
             self.unread[buffer]     = 0
@@ -134,6 +134,8 @@ class uiTyrs:
                 self.appendNewStatuses(self.api.api.GetSearch(self.api.search_word), buffer)
             elif buffer == 'direct':
                 self.appendNewStatuses(self.api.api.GetDirectMessages(), buffer)
+            elif buffer == 'user':
+                self.appendNewStatuses(self.api.api.GetUserTimeline(self.api.search_user), buffer)
             #TODO does it realy need to display the timeline here ?!
             self.displayTimeline()
         except:

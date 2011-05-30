@@ -65,6 +65,8 @@ class Config:
         'getDM':             'd',
         'sendDM':            'D',
         'search':            's',
+        'search_user':       'U',
+        'search_myself':     '^U',
         'redraw':            '^L',
     }
 

@@ -146,6 +146,16 @@ class KeyBinding:
         else:
             return False
 
+    def userTimeline (self, myself=False):
+        if not myself:
+            nick = self.pseudoBox('Looking for someone?')
+        else:
+            nick = self.api.me.screen_name
+        if nick != False:
+            self.api.search_user = nick
+            self.changeBuffer('user')
+
+
     def search (self):
         self.ui.buffer = 'search'
         self.api.search_word = self.pseudoBox('What should I search?')
@@ -263,6 +273,12 @@ class KeyBinding:
             # SEARCH
             elif ch == self.conf.keys['search']:
                 self.search()
+            # SEARCH USER
+            elif ch == self.conf.keys['search_user']:
+                self.userTimeline()
+            # SEARCH MYSELF
+            elif ch == self.conf.keys['search_myself']:
+                self.userTimeline(True)
             # Redraw screen
             elif ch == self.conf.keys['redraw']:
                 self.ui.displayRedrawScreen()
