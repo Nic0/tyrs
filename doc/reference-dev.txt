@@ -411,6 +411,9 @@ getDM             = d
 sendDM            = D
 search            = s
 redraw            = ^L
+search_user	  = U
+search_myself	  = ^U
+delete   	  = C
 ---------------
 
 Control keys support
@@ -551,6 +554,18 @@ a box will appear to let you enter the word of your search
 redraw::
 * Description: Force Tyrs to be redraw.
 * Default: *^L* (ctrl-l)
+
+search_user::
+* Description: Retrieve the specified user's TL (usually useful to know if you will follow or not someone).
+* Default: *U*
+
+search_myself::
+* Description: Retrieve your own TL (useful to delete a tweet).
+* Default: *^U*
+
+delete::
+* Description: Destroy the selected tweet.
+* Default: *C*
 
 Parameters
 ~~~~~~~~~~
