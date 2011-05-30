@@ -117,6 +117,12 @@ class uiTyrs:
             self.count[buffer]      = 0
             self.last_read[buffer]  = 0
 
+    def emptyDict (self, buffer):
+        self.statuses[buffer]  = []
+        self.unread[buffer]    = 0
+        self.count[buffer]     = 0
+        self.last_read[buffer] = 0
+
     def updateTimeline (self, buffer):
         '''
         Retrieves tweets, don't display them

@@ -152,9 +152,10 @@ class KeyBinding:
         else:
             nick = self.api.me.screen_name
         if nick != False:
+            if self.api.search_user != nick:
+                self.ui.emptyDict('user')
             self.api.search_user = nick
             self.changeBuffer('user')
-
 
     def search (self):
         self.ui.buffer = 'search'

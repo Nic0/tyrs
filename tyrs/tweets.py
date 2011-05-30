@@ -5,6 +5,9 @@ import simplejson
 
 class Tweets(Api):
 
+    search_user = ''
+    search_word = ''
+
     def authentification(self, conf):
         self.api = ApiPatch(conf.consumer_key,
                 conf.consumer_secret,
