@@ -533,6 +533,8 @@ class Help:
         self.displayHelpItem('mentions', 'Moves to the mentions timeline')
         self.displayHelpItem('getDM', 'Moves to the direct message timeline')
         self.displayHelpItem('search', 'Ask for a term to search and move to his timeline')
+        self.displayHelpItem('search_user', 'Retrieve someone public timeline')
+        self.displayHelpItem('search_myself', 'Retrieve your public timeline')
 
         self.displayDivision('Tweets')
         self.displayHelpItem('tweet', 'Send a tweet')
@@ -540,6 +542,7 @@ class Help:
         self.displayHelpItem('retweet_and_edit', 'Retweet with response the selected tweet')
         self.displayHelpItem('reply', 'Reply to the selected tweet')
         self.displayHelpItem('sendDM', 'Send a direct message')
+        self.displayHelpItem('delete', 'Delete the selected tweet, must be your tweet')
 
         self.displayDivision('Follow/Unfollow')
         self.displayHelpItem('follow_selected', 'Follow the selected twitter')
