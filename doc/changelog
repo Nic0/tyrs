@@ -1,6 +1,18 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.2.3 -- 2001-05-28
+* Version 0.2.4 -- 2011-05-31
+
+	* Help screen with '?'
+	* Help bar on bottom desactivable with params: help=0
+	* Navigation between timelines improves
+	* User timeline, with a shortcut for self public timeline
+	* Destroy tweets with 'C'
+	* Compress params, allow more visible tweets on screen
+	* Better display tweets - issue #29
+	* Redraw screen with '^L'
+	* Lots of bugs fixed
+
+* Version 0.2.3 -- 2011-05-28
 
 	* Environment variable read from $BROWSER, issue #23
 	* Warning for invalide arguments on bold list, issue #19

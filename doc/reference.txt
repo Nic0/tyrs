@@ -410,6 +410,10 @@ reply             = M
 getDM             = d
 sendDM            = D
 search            = s
+redraw            = ^L
+search_user	      = U
+search_myself	  = ^U
+delete   	      = C
 ---------------
 
 Control keys support
@@ -547,6 +551,26 @@ search::
 a box will appear to let you enter the word of your search
 * Default: *s*
 
+search_user::
+* Description: Retrieve the specified user's timeline (usually useful to know if you will follow or not someone).
+* Default: *U*
+
+search_myself::
+* Description: Retrieve your own timeline (useful to delete a tweet).
+* Default: *^U*
+
+delete::
+* Description: Destroy the selected tweet.
+* Default: *C*
+
+redraw::
+* Description: Force Tyrs to be redraw.
+* Default: *^L* (ctrl-l)
+
+[CAUTION]
+Commands does not ask for comfirmation. Be careful when using commands such as
+delete or unfollow.
+
 Parameters
 ~~~~~~~~~~
 
@@ -563,6 +587,7 @@ retweet_by       = 1
 openurl_command  = firefox %s
 transparency     = 1
 activities       = 1
+help             = 1
 -------------------
 
 Listing
@@ -600,5 +625,11 @@ the %s *required* to pass the corresponding url that will be opened.
 
 activities::
 * Description: Disable the activities bar if set to 0.
+* Values: 0 or 1
+* Default: 1
+
+help::
+* Description: Display at the bottom of the screen informations to get started
+with keybindings, set to 0 to disable it.
 * Values: 0 or 1
 * Default: 1

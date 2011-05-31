@@ -1,7 +1,7 @@
 #!/bin/sh
 
-VERS="0.2.3"
-DEV="0.2.4-dev"
+VERS="0.2.4"
+DEV="0.2.5-dev"
 DATE="2011-05-28"
 EMAIL="nicolas.caen@gmail.com"
 
