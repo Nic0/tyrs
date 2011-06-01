@@ -30,10 +30,10 @@ class KeyBinding:
             self.ui.status['current'] -= 1
 
     def moveBuffer (self, move):
-        buffer = ['home', 'mentions', 'direct', 'search', 'user']
+        buffer = ['home', 'mentions', 'direct', 'search', 'user', 'favorite']
         id = buffer.index(self.ui.buffer)
         new_id = id + move
-        if new_id >= 0 and new_id <= 4:
+        if new_id >= 0 and new_id < len(buffer):
             self.changeBuffer(buffer[new_id])
 
     def tweet (self, data, reply_to_id=None, dm=False):
@@ -129,6 +129,25 @@ class KeyBinding:
             self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
         except:
             self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
+
+    def setFavorite (self):
+        status = self.ui.getCurrentStatus()
+        try:
+            self.api.api.CreateFavorite(status)
+            self.ui.flash = ['The tweet is now in your favorite list', 'info']
+        except:
+            self.ui.flash = ['Could not set the current tweet as favorite', 'warning']
+
+    def getFavorites (self):
+        self.changeBuffer('favorite')
+
+    def destroyFavorite (self):
+        status = self.ui.getCurrentStatus()
+        try:
+            self.api.api.DestroyFavorite(status)
+            self.ui.flash = ['The current favorite has been destroyed', 'info']
+        except:
+            self.ui.flash = ['Could not destroy the favorite tweet', 'warning']
 
     def openurl (self):
         urls = self.ui.getUrls()
@@ -286,9 +305,19 @@ class KeyBinding:
             # Help
             elif ch == ord('?'):
                 uiTyrs.Help(self.ui, self.conf)
+            # Create favorite
+            elif ch == self.conf.keys['fav']:
+                self.setFavorite()
+            # Get favorite
+            elif ch == self.conf.keys['get_fav']:
+                self.getFavorites()
+            # Destroy favorite
+            elif ch == self.conf.keys['delete_fav']:
+                self.destroyFavorite()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == self.conf.keys['quit'] or ch == 27:
                 break
 
             self.ui.displayTimeline()
+

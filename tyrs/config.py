@@ -76,6 +76,9 @@ class Config:
         'search_user':       'U',
         'search_myself':     '^U',
         'redraw':            '^L',
+        'fav':               'b',
+        'get_fav':           'B',
+        'delete_fav':        '^B',
     }
 
     params = {

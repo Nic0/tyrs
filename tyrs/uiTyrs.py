@@ -110,7 +110,7 @@ class uiTyrs:
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
     def initDict (self):
-        buffers = ('home', 'mentions', 'direct', 'search', 'user')
+        buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
         for buffer in buffers:
             self.statuses[buffer]   = []
             self.unread[buffer]     = 0
@@ -151,6 +151,10 @@ class uiTyrs:
             elif buffer == 'user' and self.api.search_user != '':
                 self.appendNewStatuses(
                     self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
+            # FAVORITES
+            elif buffer == 'favorite':
+                self.appendNewStatuses(self.api.api.GetFavorites(), buffer)
+
             # TODO does it realy need to display the timeline here ?!
             # DO NOT decomment it, unless the loop with the displayTimeline and empty newstatuses
             # call here for checking (needed for start, and changing buffer, retrieves tweets in 
