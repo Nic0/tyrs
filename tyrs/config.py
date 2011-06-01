@@ -91,7 +91,11 @@ class Config:
     }
 
     home       = os.environ['HOME']
-    xdg_config = os.environ['XDG_CONFIG_HOME']
+    try:
+        xdg_config = os.environ['XDG_CONFIG_HOME']
+    except:
+        xdg_config = home+'/.config'
+
     try:
         browser    = os.environ['BROWSER']
     except:
