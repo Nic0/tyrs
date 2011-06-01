@@ -152,7 +152,7 @@ class uiTyrs:
                 self.appendNewStatuses(
                     self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
             #TODO does it realy need to display the timeline here ?!
-            self.displayTimeline()
+#            self.displayTimeline()
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
         self.countStatuses(buffer)
@@ -171,6 +171,9 @@ class uiTyrs:
         # This mean there is no new status, we just leave then.
         # TODO, this might meen we didn't fetch enought statuses
         elif newStatuses[0].id == self.statuses[buffer][0].id:
+            pass
+        # We may just don't have tweets, in case for DM for example
+        elif len(newStatuses) == 0:
             pass
         # Finally, we append tweets
         else:
