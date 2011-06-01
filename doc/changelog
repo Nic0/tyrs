@@ -1,5 +1,11 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.3.0 --
+	
+	* Identi.ca support
+	* Favorites create, destroy and timeline
+	* Bugs on empty DM timeline fixed - issue #33
+
 * Version 0.2.4 -- 2011-05-31
 
 	* Help screen with '?'

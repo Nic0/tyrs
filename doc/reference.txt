@@ -414,6 +414,9 @@ redraw            = ^L
 search_user	      = U
 search_myself	  = ^U
 delete   	      = C
+fav               = b
+get_fav           = B
+delete_fav        = '^B'
 ---------------
 
 Control keys support
@@ -566,6 +569,22 @@ delete::
 redraw::
 * Description: Force Tyrs to be redraw.
 * Default: *^L* (ctrl-l)
+
+fav::
+* Description: Tag the current tweet as favorite.
+* Default: *b*
+
+get_fav::
+* Description: Retrieve all your favorites in a timeline.
+* Default: *B*
+
+delete_fav::
+* Description: Destroy the selected favorite.
+* Default: *^B* (ctrl-b)
+
+[TIP]
+A good way to remember favorites shortcut, thinks they are your *b*est tweets.
+
 
 [CAUTION]
 Commands does not ask for comfirmation. Be careful when using commands such as

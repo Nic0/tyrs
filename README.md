@@ -1,7 +1,7 @@
 Description
 -----------
 
-Tyrs is a twitter client based on curse easely configurable.
+Tyrs is a twitter and identi.ca client based on curse easely configurable.
 
 - [Home Site](http://tyrs.nicosphere.net)
 - [Quick Start](http://tyrs.nicosphere.net/quick_start.html)
@@ -12,6 +12,7 @@ Functionnality
 --------------
 
 - **Oauth authentification**
+- Identi.ca and Twitter support
 - utf-8 support
 - 256 Colors
 - Transparency
@@ -20,6 +21,8 @@ Functionnality
 - Follow/Unfollow
 - Display mentions tweets, reply to tweets
 - Direct messages in/out
+- Favorites
+- Users timelines
 - Search
 - Configuration file allow lots of customisation
 

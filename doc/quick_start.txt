@@ -16,7 +16,8 @@ First authentification
 ----------------------
 
 You may be aware, Twitter uses a specific authentification called OAuth, and the
-first step is to authenticate with Twitter. It's very easy.
+first step is to authenticate with Twitter. It's very easy. Identi.ca works
+with the same authentification.
 
 First, in a web browser, you will be prompted to allow Tyrs to *access your
 Twitter account*. +
@@ -31,6 +32,11 @@ It should be in /home/nicolas/.config/tyrs/tyrs.cfg
 If you want to setup a new account, let's go through some basic steps
 If you want to skip this, just press return or ctrl-C.
 
+Which service do you want to use?
+
+1. Twitter
+2. Identi.ca
+
 Requesting temp token from Twitter
 
 Please visit this Twitter page and retrieve the pincode to be used
@@ -43,6 +49,15 @@ Pincode?
 
 You only need to go to the link show above, and copy the code that the
 Twitter provides. And that's it, you are now able to access Twitter from your console.
+
+[NOTE]
+====================
+For Identi.ca, one more question will be asked:
+    Which root url do you want? (leave blank for default value, https://identi.ca/api)
+
+If you are using identi.ca, leave the default value, and just press return. You
+only need to change if you have your own StatusNet server running.
+====================
 
 [TIP]
 ===================
@@ -65,6 +80,7 @@ Navigation
 
 * *j*: Move down
 * *k*: Move up
+* arrows keys allows you to navigate between timelines or tweets
 
 Functions
 ~~~~~~~~~
@@ -96,6 +112,12 @@ The configuration file should be placed in '~/.config/tyrs/tyrs.cfg'
 To learn how the configuration works, check the
 link:reference.html#configuration[configuration part] of the reference guide.
 
+[NOTE]
+An easy way to start with the configuration file, it's to generate one from the
+command line interface. It will generate you a file with almost all parameters
+possible.
+[source,bash]
+tyrs -g ~/.config/tyrs/tyrs.cfg
 
 [TIP]
 You may have more than one configuration file. To use an account-specific .cfg
@@ -106,8 +128,5 @@ Related Sites
 
 * Check the development on link:https://github.com/Nic0/tyrs[Github]
 * Found a bug ? or wan't to propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
-* link:http://www.nicosphere.net[My blog], with a
-link:http://www.nicosphere.net/tyrs-premier-jet-dun-client-twitter-ncurses-2361/[first],
-and
-link:http://www.nicosphere.net/tyrs-client-twitter-ncurses-un-point-sur-levolution-2363/[second]
-post about Tyrs. (french)
+* Ask any questions, or just follow lastest news on the
+link:http://groups.google.com/group/tyrs[mailing list].
