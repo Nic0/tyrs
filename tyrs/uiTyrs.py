@@ -151,7 +151,10 @@ class uiTyrs:
             elif buffer == 'user' and self.api.search_user != '':
                 self.appendNewStatuses(
                     self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
-            #TODO does it realy need to display the timeline here ?!
+            # TODO does it realy need to display the timeline here ?!
+            # DO NOT decomment it, unless the loop with the displayTimeline and empty newstatuses
+            # call here for checking (needed for start, and changing buffer, retrieves tweets in 
+            # this case
 #            self.displayTimeline()
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
