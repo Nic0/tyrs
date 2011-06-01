@@ -17,8 +17,16 @@ except:
 
 class Config:
 
-    consumer_key = 'Eq9KLjwH9sJNcpF4OOYNw'
-    consumer_secret = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+    token = {
+        'twitter': {
+            'consumer_key':     'Eq9KLjwH9sJNcpF4OOYNw',
+            'consumer_secret':  '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+        },
+        'identica': {
+            'consumer_key':     '4e82c3bfb004cd2f4b00930b2eaa4902',
+            'consumer_secret':  '91835545656283cce0406a42c50fa114'
+        }
+    }
 
     # c: color value
     # b: bold
@@ -161,12 +169,46 @@ class Config:
         print 'If you want to skip this, just press return or ctrl-C.'
         print ''
 
+        print ''
+        print 'Which service do you want to use?'
+        print ''
+        print '1. Twitter'
+        print '2. Identi.ca'
+        print ''
+        choice = raw_input('Your choice? > ')
+
+        if choice == '1':
+            self.service = 'twitter'
+        elif choice == '2':
+            self.service = 'identica'
+        else:
+            sys.exit(1)
+
+        if choice == '2':
+            print ''
+            print ''
+            print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
+            print ''
+            url = raw_input('Your choice? > ')
+            if url == '':
+                self.base_url = 'https://identi.ca/api'
+            else:
+                self.base_url = url
+
         self.authorization()
         self.createTokenFile()
 
     def parseToken (self):
         token = ConfigParser.RawConfigParser()
         token.read(self.tokenFile)
+        if token.has_option('token', 'service'):
+            self.service = token.get('token', 'service')
+        else:
+            self.service = 'twitter'
+
+        if token.has_option('token', 'base_url'):
+            self.base_url = token.get('token', 'base_url')
+
         self.oauth_token = token.get('token', 'oauth_token')
         self.oauth_token_secret = token.get('token', 'oauth_token_secret')
 
@@ -273,11 +315,22 @@ class Config:
         # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         # See the License for the specific language governing permissions and
         # limitations under the License.
-        REQUEST_TOKEN_URL          = 'https://api.twitter.com/oauth/request_token'
-        ACCESS_TOKEN_URL           = 'https://api.twitter.com/oauth/access_token'
-        AUTHORIZATION_URL          = 'https://api.twitter.com/oauth/authorize'
-        consumer_key               = 'Eq9KLjwH9sJNcpF4OOYNw'
-        consumer_secret            = '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+
+        if self.service == 'twitter':
+            base_url = 'https://api.twitter.com'
+            self.base_url = base_url
+        else:
+            base_url = self.base_url
+
+
+        REQUEST_TOKEN_URL          = base_url + '/oauth/request_token'
+        if self.service == 'identica':
+            REQUEST_TOKEN_URL += '?oauth_callback=oob'
+
+        ACCESS_TOKEN_URL           = base_url + '/oauth/access_token'
+        AUTHORIZATION_URL          = base_url + '/oauth/authorize'
+        consumer_key               = self.token[self.service]['consumer_key']
+        consumer_secret            = self.token[self.service]['consumer_secret']
         signature_method_hmac_sha1 = oauth.SignatureMethod_HMAC_SHA1()
         oauth_consumer             = oauth.Consumer(key=consumer_key, secret=consumer_secret)
         oauth_client               = oauth.Client(oauth_consumer)
@@ -329,6 +382,8 @@ class Config:
 
         conf = ConfigParser.RawConfigParser()
         conf.add_section('token')
+        conf.set('token', 'service', self.service)
+        conf.set('token', 'base_url', self.base_url)
         conf.set('token', 'oauth_token', self.oauth_token)
         conf.set('token', 'oauth_token_secret', self.oauth_token_secret)
 

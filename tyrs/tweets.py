@@ -9,10 +9,18 @@ class Tweets(Api):
     search_word = ''
 
     def authentification(self, conf):
-        self.api = ApiPatch(conf.consumer_key,
-                conf.consumer_secret,
-                conf.oauth_token,
-                conf.oauth_token_secret)
+        if conf.service == 'identica':
+            url = conf.base_url
+        else:
+            url = None
+
+        self.api = ApiPatch(
+            conf.token[conf.service]['consumer_key'],
+            conf.token[conf.service]['consumer_secret'],
+            conf.oauth_token,
+            conf.oauth_token_secret,
+            base_url=url
+        )
         self.setMyUser()
 
     def setMyUser(self):
