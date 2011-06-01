@@ -23,8 +23,8 @@ class Config:
             'consumer_secret':  '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
         },
         'identica': {
-            'consumer_key':     '4e82c3bfb004cd2f4b00930b2eaa4902',
-            'consumer_secret':  '91835545656283cce0406a42c50fa114'
+            'consumer_key':     '6b2cf8346a141d530739f72b977b7078',
+            'consumer_secret':  '31b342b348502345d4a343a331e00edb'
         }
     }
 
