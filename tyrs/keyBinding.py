@@ -44,11 +44,11 @@ class KeyBinding:
                 content = box.getContent()
                 if not dm:
                     self.api.postTweet(content, reply_to_id)
-                    self.ui.flash = ['Tweet has been send successfully.', "info"]
+                    self.ui.flash = ['Tweet has been sent successfully.', "info"]
                 else:
                     # note in the DM case, we have a screen_name, and not the id
                     self.api.api.PostDirectMessage(reply_to_id, content)
-                    self.ui.flash = ['The direct message has benn send.', 'info']
+                    self.ui.flash = ['The direct message has been sent.', 'info']
             except:
                self.ui.flash = ["Couldn't send the tweet.", "warning"]
 
@@ -56,9 +56,9 @@ class KeyBinding:
         status = self.ui.getCurrentStatus()
         try:
             self.api.api.PostRetweet(status.GetId())
-            self.ui.flash = ['Retweet has been send successfully.', 'info']
+            self.ui.flash = ['Retweet has been sent successfully.', 'info']
         except:
-            self.ui.flash = ["Couldn't send the retweet.", 'warning']
+            self.ui.flash = ["Could not send the retweet.", 'warning']
 
     def retweetAndEdit (self):
         status = self.ui.getCurrentStatus()
@@ -183,9 +183,9 @@ class KeyBinding:
             self.ui.statuses['search'] = self.api.api.GetSearch(self.api.search_word)
             self.changeBuffer('search')
             if len(self.ui.statuses['search']) == 0:
-                self.ui.flash = ['The research does not return any result', 'info']
+                self.ui.flash = ['The search does not return any result', 'info']
         except:
-            self.ui.flash = ['Failed with the research']
+            self.ui.flash = ['Failed with the search']
 
     def sendDirectMessage (self):
         ''' Two editing box, one for the name, and one for the content'''
@@ -198,7 +198,7 @@ class KeyBinding:
         except:
             pseudo = ''
 
-        pseudo = self.pseudoBox("Send a Direct Message at whom ?", pseudo)
+        pseudo = self.pseudoBox("Send a Direct Message to whom ?", pseudo)
         self.tweet(False, pseudo, True)
 
     def changeBuffer (self, buffer):
