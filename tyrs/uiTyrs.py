@@ -369,11 +369,12 @@ class uiTyrs:
         text = text.replace('\n', ' ')
 
         if status.rt:
-            text = text.split(':')[1:]
-            text = ':'.join(text)
-            if hasattr(status.retweeted_status, 'text'):
-                if len(status.retweeted_status.text) > 0:
-                    text = status.retweeted_status.text
+            if hasattr(status.retweeted_status, 'text') \
+                    and len(status.retweeted_status.text) > 0:
+                text = status.retweeted_status.text
+            else:
+                text = text.split(':')[1:]
+                text = ':'.join(text)
 
         words = text.split(' ')
         curent_x = 2
