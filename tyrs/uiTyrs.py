@@ -371,11 +371,9 @@ class uiTyrs:
         if status.rt:
             text = text.split(':')[1:]
             text = ':'.join(text)
-        try:
+
             if len(status.retweeted_status.text) > 0:
                 text = status.retweeted_status.text
-        except:
-            pass
 
         words = text.split(' ')
         curent_x = 2
