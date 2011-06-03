@@ -1,7 +1,10 @@
 #import twitter
 from twitter import Api
 import urllib2
-import simplejson
+try:
+    import json
+except ImportError:
+    import simplejson as json
 
 class Tweets(Api):
 
@@ -54,7 +57,7 @@ class ApiPatch (Api):
         except ValueError:
             raise TwitterError("'id' must be an integer")
         url = 'http://api.twitter.com/1/statuses/retweet/%s.json' % id
-        json = self._FetchUrl(url, post_data={'dummy': None})
-        data = simplejson.loads(json)
+        json_data = self._FetchUrl(url, post_data={'dummy': None})
+        data = json.loads(json_data)
         self._CheckForTwitterError(data)
 #        return Status.NewFromJsonDict(data)
