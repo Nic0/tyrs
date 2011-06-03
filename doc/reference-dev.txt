@@ -411,9 +411,9 @@ getDM             = d
 sendDM            = D
 search            = s
 redraw            = ^L
-search_user	      = U
-search_myself	  = ^U
-delete   	      = C
+search_user       = U
+search_myself     = ^U
+delete            = C
 ---------------
 
 Control keys support
