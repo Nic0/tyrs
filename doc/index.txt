@@ -8,8 +8,8 @@ image:images/tyrs.png["Tyrs screenshot", width=128, link="images/tyrs.png"]
 
 Download link:http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz[the last
 version of Tyrs]. +
-Get the last development version on link:http://github.com/Nic0/tyrs[github]. +
-This is a free (as in freedom) software, released under the GNU General Public
+Get the latest development version on link:http://github.com/Nic0/tyrs[github]. +
+This is free (as in freedom) software, released under the GNU General Public
 Licence v3.
 
 If it's your first visit, you might like to check out some
@@ -17,14 +17,14 @@ link:screenshot.html[screenshots], or get started with the
 link:quick_start.html[Tyrs quick start guide].
 
 You can use the link:reference.html#installation[installation guide] to
-get your Tyrs up and running.
+get Tyrs up and running.
 
 Features
 --------
 
 A list of some interesting features:
 
-* OAuth authentification.
+* OAuth authentication.
 * UTF-8 support.
 * Tweets, Retweets, Follow, Unfollow.
 * Mentions, Reply
@@ -32,19 +32,19 @@ A list of some interesting features:
 * Direct messages
 * Transarency and colors.
 * Based on ncurses.
-* Customisation of keys binding.
-* Customisation of colors.
-* Easely configurable, readable configuration.
-* Opens URL just with single key.
+* Customization of keys binding.
+* Customization of colors.
+* Easily configurable, readable configuration.
+* Opens URL with just single key.
 
 [IMPORTANT]
-This project is relatively new, started in May 2011, and curently in heavy
-development, there is lots of planned functionality still to be coded.
+This project is relatively new, having started in May 2011, and curently in
+heavy development.  There is lots of planned functionality still to be coded.
 
 Helpfull links
 --------------
 
-* Ask any questions, or just follow lastest news on the
+* Ask any questions, or just follow latest news on the
 link:http://groups.google.com/group/tyrs[mailing list].
 * Send me an email at <nicolas.caen@gmail.com>.
 * Check the development on link:http://github.com/Nic0/tyrs[github].
@@ -52,6 +52,6 @@ link:http://groups.google.com/group/tyrs[mailing list].
 link:http://twitter.com/nic0sphere[my twitter account `@nic0sphere`], or use
 the '#Tyrs' tag.
 * You can catch me on freenode server, #tyrs -- recently open
-* link:http://www.nicosphere.net[My blog], mostly in french.
+* link:http://www.nicosphere.net[My blog], mostly in French.
 
 (C) Copyright 2011 ~ Nicolas Paris.
