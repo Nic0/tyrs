@@ -2,8 +2,8 @@ Screenshot of Tyrs with configuration
 =====================================
 
 [NOTE]
-If you have some nice looking theme, please send me some screenshot with the
-configuration file, I will add some more screenshot in this section soon.
+If you've designed a nice looking theme, please send me a screenshot with the
+configuration file.  I will add some more screenshots to this section soon.
 
 Default Values Screenshot
 -------------------------

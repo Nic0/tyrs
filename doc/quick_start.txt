@@ -12,15 +12,13 @@ For more information, you could read these documents:
 * link:reference.html[Full documentation.]
 * link:reference.html#installation[The installation guide.]
 
-First authentification
-----------------------
+First authentication
+--------------------
 
-You may be aware, Twitter uses a specific authentification called OAuth, and the
+You may be aware Twitter uses an authentication method called OAuth, and the
 first step is to authenticate with Twitter. It's very easy. Identi.ca works
-with the same authentification.
+with the same authentication.
 
-First, in a web browser, you will be prompted to allow Tyrs to *access your
-Twitter account*. +
 When you start the application, and it doesn't find a profile file, it will
 print:
 
@@ -40,7 +38,7 @@ Which service do you want to use?
 Requesting temp token from Twitter
 
 Please visit this Twitter page and retrieve the pincode to be used
-in the next step to obtaining an Authentication Token:
+in the next step for obtaining an Authentication Token:
 
 https://api.twitter.com/oauth/authorize?oauth_token=OxFDW4zW3YeiueuizjazAa4VSdeuieuiMO5b8GpS8EoDKRM
 
@@ -71,9 +69,9 @@ tyrs -a foo
 Usage
 -----
 
-Tyrs is mostly used with keybord, and comes with some keys shortcuts. This is
-the list of the most common ones. You may check link:/reference.html[the full
-reference guide] for more details.
+Tyrs is mostly used with the keybord, and comes with some keys shortcuts. Below
+is a list of the most common ones. You may check
+link:/reference.html[the full reference guide] for more details.
 
 Navigation
 ~~~~~~~~~~
@@ -85,7 +83,7 @@ Navigation
 Functions
 ~~~~~~~~~
 
-* *t*: Open a box to edit a tweet 
+* *t*: Open a box to edit a tweet
 * *r*: Retweet the current tweet
 * *f*, *F*: Follow someone (f, follow the current, F ask you who you want follow)
 * *l*, *L*: Unfollow (leave) someone
@@ -104,8 +102,8 @@ Tweet editing
 Configuration
 -------------
 
-You can add a configuration file, there is no need to have one for Tyrs to work, 
-but you can customize your keybindings, color and basic behavior.
+You can use a configuration file, although there is no need to have one for Tyrs
+to work, where you can customize your keybindings, color and basic behavior.
 
 The configuration file should be placed in '~/.config/tyrs/tyrs.cfg'
 
@@ -128,5 +126,5 @@ Related Sites
 
 * Check the development on link:https://github.com/Nic0/tyrs[Github]
 * Found a bug ? or wan't to propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
-* Ask any questions, or just follow lastest news on the
+* Ask any questions, or just follow latest news on the
 link:http://groups.google.com/group/tyrs[mailing list].
