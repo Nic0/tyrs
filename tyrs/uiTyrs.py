@@ -157,7 +157,7 @@ class uiTyrs:
 
             # TODO does it realy need to display the timeline here ?!
             # DO NOT decomment it, unless the loop with the displayTimeline and empty newstatuses
-            # call here for checking (needed for start, and changing buffer, retrieves tweets in 
+            # call here for checking (needed for start, and changing buffer, retrieves tweets in
             # this case
 #            self.displayTimeline()
         except:
@@ -367,15 +367,14 @@ class uiTyrs:
         '''
         # Some tweets have '\n' thats break the layout
         text = text.replace('\n', ' ')
-
         if status.rt:
+            text = text.split(':')[1:]
+            text = ':'.join(text)
+
             if hasattr(status, 'retweeted_status'):
                 if hasattr(status.retweeted_status, 'text') \
                         and len(status.retweeted_status.text) > 0:
                     text = status.retweeted_status.text
-            else:
-                text = text.split(':')[1:]
-                text = ':'.join(text)
 
         words = text.split(' ')
         curent_x = 2
