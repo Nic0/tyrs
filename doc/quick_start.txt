@@ -16,8 +16,8 @@ First authentication
 --------------------
 
 You may be aware Twitter uses an authentication method called OAuth, and the
-first step is to authenticate with Twitter. It's very easy. Identi.ca works
-with the same authentication.
+first step is to authenticate with Twitter. It's very easy. Identi.ca uses the
+same method of authentication.
 
 When you start the application, and it doesn't find a profile file, it will
 print:
@@ -26,7 +26,7 @@ print:
 --------------------
 There is no profile detected.
 
-It should be in /home/nicolas/.config/tyrs/tyrs.cfg
+The default location for a config file is /home/nicolas/.config/tyrs/tyrs.cfg
 If you want to setup a new account, let's go through some basic steps
 If you want to skip this, just press return or ctrl-C.
 
@@ -69,8 +69,9 @@ tyrs -a foo
 Usage
 -----
 
-Tyrs is mostly used with the keybord, and comes with some keys shortcuts. Below
-is a list of the most common ones. You may check
+Tyrs is mostly used with the keybord, and comes with default key shortcuts (you
+may customize these). 
+Below is a list of the most common ones. You may check
 link:/reference.html[the full reference guide] for more details.
 
 Navigation
@@ -78,14 +79,14 @@ Navigation
 
 * *j*: Move down
 * *k*: Move up
-* arrows keys allows you to navigate between timelines or tweets
+* arrow keys also allow you to navigate between timelines or tweets
 
 Functions
 ~~~~~~~~~
 
 * *t*: Open a box to edit a tweet
 * *r*: Retweet the current tweet
-* *f*, *F*: Follow someone (f, follow the current, F ask you who you want follow)
+* *f*, *F*: Follow someone (f, follow the current, F be prompted for who you want follow)
 * *l*, *L*: Unfollow (leave) someone
 * *q*: Quit (also ESC is possible)
 * *c*: Clear the timeline
@@ -94,7 +95,7 @@ Functions
 Tweet editing
 ~~~~~~~~~~~~~
 
-* ESC: Abord the edit
+* ESC: Abort the edit
 * ENTER: Validation/Send
 * DEL: delete last character
 
@@ -112,8 +113,8 @@ link:reference.html#configuration[configuration part] of the reference guide.
 
 [NOTE]
 An easy way to start with the configuration file, it's to generate one from the
-command line interface. It will generate you a file with almost all parameters
-possible.
+command line interface. It will generate a file with the required parameters
+(you can then edit this file to suit your requirements).
 [source,bash]
 tyrs -g ~/.config/tyrs/tyrs.cfg
 

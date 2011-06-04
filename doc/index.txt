@@ -1,5 +1,5 @@
-Tyrs: easily configured ncurses Twitter client
-==============================================
+Tyrs: easily configured ncurses microblogging  client
+=====================================================
 
 * *Current version* {revision}, Release the {date}
 * *Devel version* {devel}
@@ -24,10 +24,11 @@ Features
 
 A list of some interesting features:
 
+* Supports Identi.ca and Twitter services
 * OAuth authentication.
 * UTF-8 support.
 * Tweets, Retweets, Follow, Unfollow.
-* Mentions, Reply
+* Mentions, Replies
 * Search
 * Direct messages
 * Transarency and colors.
@@ -51,7 +52,7 @@ link:http://groups.google.com/group/tyrs[mailing list].
 * If you like Tyrs, you may send a quick hello to
 link:http://twitter.com/nic0sphere[my twitter account `@nic0sphere`], or use
 the '#Tyrs' tag.
-* You can catch me on freenode server, #tyrs -- recently open
+* You can catch me on freenode server, #tyrs -- recently opened
 * link:http://www.nicosphere.net[My blog], mostly in French.
 
 (C) Copyright 2011 ~ Nicolas Paris.
