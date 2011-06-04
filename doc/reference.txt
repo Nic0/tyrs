@@ -118,9 +118,9 @@ Activities bar
 ~~~~~~~~~~~~~~
 
 The activities bar, is the bar containing information about your messages
-(the 'H:0 M:0 D:0' on the top), this
-displays new tweets in other buffers, for example if
-you have new mentions in your timeline, the counter will increase.
+(the 'H:0 M:0 D:0' at the top), this
+displays new tweets in other buffers. For example, if
+you have new mentions in your timeline, the 'M' counter will increase.
 
 A few  things to note:
 
@@ -151,14 +151,7 @@ Tyrs is quite customizable.
 
 It's based on the 'ConfigParser' core module from python, and it's a very
 readable and to understand the syntax. All the configuration is based on this
-schema:
-
-A quick way to get started with configuration is to generate one from the
-command line. with the '-g' option (or '--generate-config'), this parameter
-take one argument, the filename.
-
-[source,bash]
-tyrs -g ~/.config/tyrs/tyrs.cfg
+schema.
 
 [source,conf]
 ------------
@@ -168,21 +161,29 @@ param2 = 42
 [section2]
 other_param = otherValue
 ...
+
+A quick way to get started with configuration is to generate a config file 
+from the command line. with the '-g' option (or '--generate-config'), this 
+parameter takes one argument: the filename.
+
+[source,bash]
+tyrs -g ~/.config/tyrs/tyrs.cfg
+
 ------------
 
 So far, there are only three sections for configuration:
 
 * *colors*: Customization of colors.
-* *keybinding*: Customization of keys shortcuts.
-* *params*: Other params.
+* *keybinding*: Customization of key shortcuts.
+* *params*: Other parameters.
 
-NOTE: All sections and parameters are lower case, for params composed with two
+NOTE: All sections and parameters are lower case. For params composed with two
 words, they are separate with an underscore `'_'' (no camelCase).
 
 Configuration file
 ~~~~~~~~~~~~~~~~~~
 
-The configuration file is located in '~/.config/tyrs/tyrs.cfg'.
+The configuration file is located at '~/.config/tyrs/tyrs.cfg'.
 You may have several configuration files, or accounts,
 passed as an argument when you start Tyrs. The argument
 is appended to the filename of the configuration.
@@ -196,7 +197,7 @@ This will read the configuration from the '~/.config/tyrs/tyrs.cfg.foo'.
 CAUTION: You don't need to pass the full filename, as it will attempt to read
 the file from 'tyrs.cfg.tyrs.cfg.foo' file if you do so.
 
-TIP: You may add some comments in your configuration file, you just need to
+TIP: You may add comments to your configuration file, you just need to
 start the line with '#' or ';'.
 
 Colors
@@ -205,8 +206,8 @@ Colors
 Values possible
 ^^^^^^^^^^^^^^^
 
-The possibles values are restricted with curses mode, here a list of available
-values.
+The possibles values are determined by curses mode. The available
+values are:
 
 .List of possible values
 [width="25%"]
@@ -247,7 +248,7 @@ read           = 7
 Bold font
 ^^^^^^^^^
 
-You may activate bold with any of the colors parameters.  You activate
+You may activate bold with any of the color parameters.  You activate
 them with one parameter, containing the list of elements you require to be
 displayed as bold. +
 As an example, to activate bold for highlight, warning_msg and
@@ -312,7 +313,7 @@ displayed on the top left of the console.
 
 info_msg::
 * Description: When an action is successful or other feedback is required, Tyrs
-let you know. Similar to warning_msg.
+lets you know. Similar to warning_msg.
 * Examples: `Updating timeline', `Tweet send successfully'...
 * Default: 2 (green)
 
@@ -335,11 +336,8 @@ bold::
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The idea is to redefine a color using 256 colors. For example, green is
-is not the hue you want, you can change it for a lighter one.
-As 256 color mode is not supported by all terminals, the default configuration
-doesn't use them.
-
+To use 256 colors in your terminal, use the relevant RGB number, from 0 to 1000. 
+You must leave spaces between the numbers in the configuration file, for example:
 
 [IMPORTANT]
 =====================
@@ -374,7 +372,7 @@ your mind and revert to the default green, this will take effect only if
 you restart your terminal. Otherwise, it will stay as the last color
 defined. +
 You don't need to restart your terminal if you just change the color setup with
-another one, it will take effect immediatly after restarting Tyrs.
+another one, it will take effect immediately after restarting Tyrs.
 
 
 Key Binding
@@ -433,7 +431,7 @@ reply  = ^R
 ---------------
 
 CAUTION: The letter followed by '^' *must* be upper case,
-Caution You can’t have a ctrl-r and ctrl-R, only '^R' will work in
+You can’t have a ctrl-r and ctrl-R, only '^R' will work.
 
 Listing
 ^^^^^^^
@@ -498,7 +496,7 @@ home::
 * Default: *h*
 
 mentions::
-* Description: Show you all tweets that contain your nick (@you), meaning if someone
+* Description: Shows you all tweets that contain your nick (@you), meaning if someone
 that you are not following puts your @name in a tweet, you will see it. You may
 leave this timeline using 'h' (home) to go back on your home timeline.
 * Default: *m*
@@ -545,8 +543,8 @@ getDM::
 * Default: *d*
 
 sendDM::
-* Description: Send a direct message, Tyrs will propose you to send a direct
-message to the current tweeter, but you may change(or simply check) the user
+* Description: Send a direct message, Tyrs will prompt you to send a direct
+message to the current tweeter, but you may change (or simply check) the user
 before writing your message.
 * Default: *D*
 
@@ -556,8 +554,8 @@ a box will appear to let you enter a string to search for
 * Default: *s*
 
 search_user::
-* Description: Retrieve the specified user's timeline (usually useful to know if
-you will follow or not someone).
+* Description: Retrieve the specified user's timeline (usually useful to review
+someone's tweets before deciding to follow them or not).
 * Default: *U*
 
 search_myself::
@@ -569,7 +567,7 @@ delete::
 * Default: *C*
 
 redraw::
-* Description: Force Tyrs to be redraw.
+* Description: Force Tyrs to be redrawn.
 * Default: *^L* (ctrl-l)
 
 fav::
@@ -585,7 +583,7 @@ delete_fav::
 * Default: *^B* (ctrl-b)
 
 [TIP]
-A good way to remember favorites shortcut, thinks they are your *b*est tweets.
+A good way to remember the favorites shortcut, think of them as your *b*est tweets.
 
 
 [CAUTION]

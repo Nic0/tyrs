@@ -8,7 +8,7 @@ Tyrs is a twitter and identi.ca client using curses that is easily configurable.
 - [Screenshot](http://tyrs.nicosphere.net/screenshot.html)
 - [Reference guide](http://tyrs.nicosphere.net/reference.html)
 
-Functionnality
+Functionality
 --------------
 
 - **Oauth authentication**
@@ -19,7 +19,7 @@ Functionnality
 - Display home timeline with colorful tweets
 - Send tweets, retweets
 - Follow/Unfollow
-- Display mentions tweets, reply to tweets
+- Display mention tweets, reply to tweets
 - Direct messages in/out
 - Favorites
 - User timelines
