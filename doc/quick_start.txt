@@ -26,7 +26,7 @@ print:
 --------------------
 There is no profile detected.
 
-The default location for a config file is /home/nicolas/.config/tyrs/tyrs.cfg
+The default location for a config file is $XDG_CONFIG_HOME/tyrs/tyrs.cfg which would usually be something like: /home/nicolas/.config/tyrs/tyrs.cfg
 If you want to setup a new account, let's go through some basic steps
 If you want to skip this, just press return or ctrl-C.
 
@@ -106,7 +106,9 @@ Configuration
 You can use a configuration file, although there is no need to have one for Tyrs
 to work, where you can customize your keybindings, color and basic behavior.
 
-The configuration file should be placed in '~/.config/tyrs/tyrs.cfg'
+The default location for a configuration file is
+'$XDG_CONFIG_HOME/tyrs/tyrs.cfg' which would usually be something like:
+'/home/nicolas/.config/tyrs/tyrs.cfg'
 
 To learn how the configuration works, check the
 link:reference.html#configuration[configuration part] of the reference guide.
