@@ -320,8 +320,7 @@ class uiTyrs:
 
         # The content of the tweets is handle
         # text is needed for the height of a panel
-        charset = sys.stdout.encoding
-        text    = status.text.encode(charset)
+        self.charset = sys.stdout.encoding
         header  = self.getHeader(status)
 
         # We get size and where to display the tweet
@@ -346,7 +345,7 @@ class uiTyrs:
         else:
             panel.addstr(0, 3, header, self.getColor('header'))
 
-        self.displayText(text, panel, status)
+        self.displayText(panel, status)
 
         panel.refresh(0, 0, start_y, start_x,
             start_y + height, start_x + length)
@@ -361,11 +360,8 @@ class uiTyrs:
 
         return True
 
-    def displayText (self, text, panel, status):
-        '''needed to cut words properly, as it would cut it in a midle of a
-        world without. handle highlighting of '#' and '@' tags.
-        '''
-        # Some tweets have '\n' thats break the layout
+    def getText (self, status):
+        text = status.text.encode(self.charset)
         text = text.replace('\n', ' ')
         if status.rt:
             text = text.split(':')[1:]
@@ -375,7 +371,13 @@ class uiTyrs:
                 if hasattr(status.retweeted_status, 'text') \
                         and len(status.retweeted_status.text) > 0:
                     text = status.retweeted_status.text
+        return text
 
+    def displayText (self, panel, status):
+        '''needed to cut words properly, as it would cut it in a midle of a
+        world without. handle highlighting of '#' and '@' tags.
+        '''
+        text = self.getText(status)
         words = text.split(' ')
         curent_x = 2
         line = 1
@@ -416,7 +418,7 @@ class uiTyrs:
         length = self.maxyx[1] - 4
         x = 2
         y = 1
-        txt = status.text.replace('\n', ' ')
+        txt = self.getText(status)
         words = txt.split(' ')
         for w in words:
             if x+len(w) > length - 2:
