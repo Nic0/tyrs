@@ -5,14 +5,16 @@ from distutils.core import setup
 
 setup(name='tyrs',
       version='0.1',
-      description='Twitter client based on curses',
+      description='Twitter and Identica client using curses',
       long_description=
       '''TODO''',
 
       author='Nicolas Paris',
       author_email='nicolas.caen@gmail.com',
       license='GPLv3',
+      url='http://tyrs.nicosphere.net',
 #      requires=['python-twitter'],
+      data_files= [('/usr/man/man1', ['doc/tyrs.1.gz'])],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
     )

@@ -12,3 +12,5 @@ doc/css
 doc/javascripts
 doc/*.conf
 doc/images/*
+
+build
