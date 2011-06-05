@@ -1,10 +1,14 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.3.0 --
-	
+* Version 0.3.0 -- 2011-06-05
+
 	* Identi.ca support
 	* Favorites create, destroy and timeline
 	* Bugs on empty DM timeline fixed - issue #33
+	* Man page added, with 'man tyrs' - thanks jasonwryan
+	* Setup.py review for better dependencies managment - issue #1
+	* Better display of tweets, the width should always correspond to the tweet now
+	* Few bugs fixed
 
 * Version 0.2.4 -- 2011-05-31
 
