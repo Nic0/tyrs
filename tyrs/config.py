@@ -168,6 +168,15 @@ class Config:
             self.configFile += '.' + args.config
 
     def newAccount (self):
+
+        choice = self.askService()
+        if choice == '2':
+            self.askRootUrl()
+
+        self.authorization()
+        self.createTokenFile()
+
+    def askService (self):
         print ''
         print 'There is no profile detected.'
         print ''
@@ -190,20 +199,18 @@ class Config:
             self.service = 'identica'
         else:
             sys.exit(1)
+        return choice
 
-        if choice == '2':
-            print ''
-            print ''
-            print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
-            print ''
-            url = raw_input('Your choice? > ')
-            if url == '':
-                self.base_url = 'https://identi.ca/api'
-            else:
-                self.base_url = url
-
-        self.authorization()
-        self.createTokenFile()
+    def askRootUrl (self):
+        print ''
+        print ''
+        print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
+        print ''
+        url = raw_input('Your choice? > ')
+        if url == '':
+            self.base_url = 'https://identi.ca/api'
+        else:
+            self.base_url = url
 
     def parseToken (self):
         token = ConfigParser.RawConfigParser()
@@ -222,10 +229,11 @@ class Config:
     def parseConfig (self):
         ''' This parse the configuration file, and set
         some defaults values if the parameter is not given'''
+        self.parseColor()
+        self.parseKeys()
+        self.parseParams()
 
-        #
-        # COLORS
-        #
+    def parseColor (self):
         for c in self.colors:
             self.colors[c]['b'] = False
             if self.conf.has_option('colors', c):
@@ -241,18 +249,14 @@ class Config:
                 rgb = rgb.split(' ')
                 self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
 
-        #
-        # KEYS
-        #
-
+    def parseKeys (self):
         for key in self.keys:
             if self.conf.has_option('keys', key):
                 self.keys[key] = self.charValue(self.conf.get('keys', key))
             else:
                 self.keys[key] = self.charValue(self.keys[key])
-        #
-        # PARAMS
-        #
+
+    def parseParams (self):
 
         # refresh (in minutes)
         if self.conf.has_option('params', 'refresh'):
