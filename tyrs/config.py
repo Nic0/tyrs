@@ -342,17 +342,17 @@ class Config:
         oauth_consumer             = oauth.Consumer(key=consumer_key, secret=consumer_secret)
         oauth_client               = oauth.Client(oauth_consumer)
 
-        print 'Requesting temp token from Twitter'
+        print 'Requesting temp token from ' + self.service.capitalize()
 
         resp, content = oauth_client.request(REQUEST_TOKEN_URL, 'GET')
 
         if resp['status'] != '200':
-            print 'Invalid respond from Twitter requesting temp token: %s' % resp['status']
+            print 'Invalid respond from ' +self.service.capitalize() + ' requesting temp token: %s' % resp['status']
         else:
             request_token = dict(parse_qsl(content))
 
             print ''
-            print 'Please visit this Twitter page and retrieve the pincode to be used'
+            print 'Please visit this ' + self.service.capitalize() + ' page and retrieve the pincode to be used'
             print 'in the next step to obtaining an Authentication Token:'
             print ''
             print '%s?oauth_token=%s' % (AUTHORIZATION_URL, request_token['oauth_token'])

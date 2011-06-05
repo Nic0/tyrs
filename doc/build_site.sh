@@ -1,7 +1,7 @@
 #!/bin/sh
 
-VERS="0.2.4"
-DEV="0.3.0-dev"
+VERS="0.3.0"
+DEV="0.3.1-dev"
 DATE="2011-05-28"
 EMAIL="nicolas.caen@gmail.com"
 
@@ -21,4 +21,4 @@ $HTML --attribute=revision=$VERS --attribute=devel=$DEV \
 $HTML --attribute=revision=$VERS quick_start.txt
 $HTML --attribute=revision=$VERS -a toc -a numbered reference.txt
 $HTML --attribute=revision=$VERS screenshot.txt
-$HTML --attribute=revision=$DEV -a toc -a numbered reference-dev.txt
+#$HTML --attribute=revision=$DEV -a toc -a numbered reference-dev.txt
