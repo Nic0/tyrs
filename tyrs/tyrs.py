@@ -48,6 +48,7 @@ def initTyrs ():
     initThread()
 
 def initConf ():
+    global container
     conf = config.Config(arguments())
     container.add('conf', conf)
 
