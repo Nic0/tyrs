@@ -169,7 +169,7 @@ class Tweets(Api):
         else:
             return False
 
-     def followSelected (self):
+    def followSelected (self):
         status = self.ui.getCurrentStatus()
         if self.ui.isRetweet(status):
             pseudo = self.ui.originOfRetweet(status)
