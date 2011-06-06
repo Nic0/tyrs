@@ -37,6 +37,7 @@ class Interface:
                           Use like "session-flash", to display some information/warning messages
     self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     self.buffer           The current buffer we're looking at, (home, mentions, direct search)
+    self.timelines        List of available timelines
     '''
 
     status           = {'current': 0, 'first': 0, 'last': 0}
@@ -112,8 +113,8 @@ class Interface:
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
     def initDict (self):
-        self.buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
-        for b in self.buffers:
+        self.timelines = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
+        for b in self.timelines:
             self.statuses[b]   = []
             self.unread[b]     = 0
             self.count[b]      = 0
@@ -220,10 +221,10 @@ class Interface:
         self.displayTimeline()
     
     def navigateBuffer (self, nav):
-        index = self.buffers.index(self.buffer)
+        index = self.timelines.index(self.buffer)
         new_index = index + nav
-        if new_index >= 0 and new_index < len(self.buffers):
-            self.changeBuffer(self.buffers[new_index])
+        if new_index >= 0 and new_index < len(self.timelines):
+            self.changeBuffer(self.timelines[new_index])
 
     def displayFlash (self):
         '''Should be the main entry to display Flash,
@@ -290,7 +291,7 @@ class Interface:
         maxyx = self.screen.getmaxyx()
         max_x = maxyx[1]
         self.screen.addstr(0, max_x - 23, ' ')
-        for b in self.buffers:
+        for b in self.timelines:
             self.displayBufferActivities(b)
             self.displayCounterActivities(b)
 
