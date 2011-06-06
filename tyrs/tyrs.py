@@ -11,18 +11,19 @@
 
 '''
 import sys
-import config
-from uiTyrs import uiTyrs as ui
-import argparse
-import keyBinding as keys
-from tweets import Tweets
-from container import Container
-from update import *
 import utils
-import curses.wrapper
-
+import config
 import locale
+import argparse
+from update import *
+import curses.wrapper
+from tweets import Tweets
+import keyBinding as keys
+from container import Container
+from uiTyrs import uiTyrs as ui
+
 locale.setlocale(locale.LC_ALL, '')
+container = Container()
 
 def arguments ():
 
@@ -33,32 +34,39 @@ def arguments ():
     args = parser.parse_args()
     return args
 
-container = Container()
-conf = config.Config(arguments())
-container.add('conf', conf)
-
-def setTitle ():
-    try:
-        sys.stdout.write("\x1b]2;Tyrs\x07")
-    except:
-        pass
-
 def main(scr):
 
     utils.setConsoleTitle()
+    initTyrs()
+    print 'Waiting for thread stopping...'
+    return 0
+
+def initTyrs ():
+    initConf()
+    initApi()
+    initUi()
+    initThread()
+
+def initConf ():
+    conf = config.Config(arguments())
+    container.add('conf', conf)
+
+def initApi ():
     api     = Tweets(container)
     container.add('api', api)
     api.authentification()
-    interface  = ui(container)
-    container.add('ui', interface)
+
+def initUi ():
+    interface = ui(container)
+    container.add ('ui', interface)
+
+def initThread ():
     update = UpdateThread(container)
     update.start()
     keybinding = keys.KeyBinding(container)
     keybinding.handleKeyBinding()
     update.stop()
-    interface.tearDown()
-    print 'Waiting for thread stopping...'
-    return 0
+    container['ui'].tearDown()
 
 def start ():
     curses.wrapper(main)
