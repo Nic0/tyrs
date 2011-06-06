@@ -18,9 +18,9 @@ import argparse
 from update import *
 import curses.wrapper
 from tweets import Tweets
-import keyBinding as keys
+from keys import Keys
 from container import Container
-from uiTyrs import uiTyrs as ui
+from interface import Interface
 
 locale.setlocale(locale.LC_ALL, '')
 container = Container()
@@ -44,7 +44,7 @@ def main(scr):
 def initTyrs ():
     initConf()
     initApi()
-    initUi()
+    initInterface()
     initThread()
 
 def initConf ():
@@ -56,19 +56,19 @@ def initApi ():
     container.add('api', api)
     api.authentification()
 
-def initUi ():
-    interface = ui()
-    container.add ('ui', interface)
+def initInterface ():
+    userInterface = Interface()
+    container.add ('interface', userInterface)
 
 def initThread ():
     update = UpdateThread()
     update.start()
     initKeys()
     update.stop()
-    container['ui'].tearDown()
+    container['interface'].tearDown()
 
 def initKeys ():
-    keys.KeyBinding().handleKeyBinding()
+    Keys().handleKeyBinding()
 
 def start ():
     curses.wrapper(main)

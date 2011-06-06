@@ -6,7 +6,7 @@ import threading
 class UpdateThread (threading.Thread):
 
     def __init__ (self):
-        self.ui = tyrs.container['ui']
+        self.ui = tyrs.container['interface']
         self.conf = tyrs.container['conf']
         threading.Thread.__init__(self, target=self.run)
         self._stopevent = threading.Event()

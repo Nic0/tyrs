@@ -1,26 +1,33 @@
 # -*- coding:utf-8 -*-
+'''
+@module     keys
+@author     Nicolas Paris <nicolas.caen@gmail.com
+@licence    GPLv3
+'''
 
-import os
 import tyrs
 import curses
-import editBox
-import uiTyrs
+from help import Help
 
-class KeyBinding:
-
+class Keys:
+    '''
+    This class handle the main keysbinding, as the main method contain every
+    keybinding, every case match a key to a method call, there is no logical
+    here
+    '''
     def __init__ (self):
         self.conf = tyrs.container['conf']
-        self.ui = tyrs.container['ui']
+        self.interface = tyrs.container['interface']
         self.api = tyrs.container['api']
 
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
         while True:
 
-            ch = self.ui.screen.getch()
+            ch = self.interface.screen.getch()
 
-            if self.ui.resize_event:
-                self.ui.resizeEvent()
+            if self.interface.resize_event:
+                self.interface.resizeEvent()
 
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
@@ -28,16 +35,16 @@ class KeyBinding:
 
             # DOWN
             if ch == self.conf.keys['down'] or ch == curses.KEY_DOWN:
-                self.ui.moveDown()
+                self.interface.moveDown()
             # UP
             elif ch == self.conf.keys['up'] or ch == curses.KEY_UP:
-                self.ui.moveUp()
+                self.interface.moveUp()
             # LEFT
             elif ch == self.conf.keys['left'] or ch == curses.KEY_LEFT:
-                self.ui.navigateBuffer(-1)
+                self.interface.navigateBuffer(-1)
             # RIGHT
             elif ch == self.conf.keys['right'] or ch == curses.KEY_RIGHT:
-                self.ui.navigateBuffer(+1)
+                self.interface.navigateBuffer(+1)
             # TWEET
             elif ch == self.conf.keys['tweet']:
                 self.api.tweet(None)
@@ -52,16 +59,16 @@ class KeyBinding:
                 self.api.delete()
             # MENTIONS
             elif ch == self.conf.keys['mentions']:
-                self.ui.changeBuffer('mentions')
+                self.interface.changeBuffer('mentions')
             # HOME TIMELINE
             elif ch == self.conf.keys['home']:
-                self.ui.changeBuffer('home')
+                self.interface.changeBuffer('home')
             # CLEAR
             elif ch == self.conf.keys['clear']:
-                self.ui.clearStatuses()
+                self.interface.clearStatuses()
             # UPDATE
             elif ch == self.conf.keys['update']:
-                self.ui.updateTimeline(self.ui.buffer)
+                self.interface.updateTimeline(self.interface.buffer)
             # FOLLOW SELECTED
             elif ch == self.conf.keys['follow_selected']:
                 self.api.followSelected()
@@ -76,19 +83,19 @@ class KeyBinding:
                 self.api.unfollow()
             # OPENURL
             elif ch == self.conf.keys['openurl']:
-                self.ui.openurl()
+                self.interface.openurl()
             # BACK ON TOP
             elif ch == self.conf.keys['back_on_top']:
-                self.ui.changeBuffer(self.ui.buffer)
+                self.interface.changeBuffer(self.interface.buffer)
             # BACK ON BOTTOM
             elif ch == self.conf.keys['back_on_bottom']:
-                self.ui.backOnBottom()
+                self.interface.backOnBottom()
             # REPLY
             elif ch == self.conf.keys['reply']:
                 self.api.reply()
             # GET DIRECT MESSAGE
             elif ch == self.conf.keys['getDM']:
-                self.ui.changeBuffer('direct')
+                self.interface.changeBuffer('direct')
             # SEND DIRECT MESSAGE
             elif ch == self.conf.keys['sendDM']:
                 self.api.sendDirectMessage()
@@ -103,10 +110,10 @@ class KeyBinding:
                 self.api.userTimeline(True)
             # Redraw screen
             elif ch == self.conf.keys['redraw']:
-                self.ui.displayRedrawScreen()
+                self.interface.displayRedrawScreen()
             # Help
             elif ch == ord('?'):
-                uiTyrs.Help(self.ui, self.conf)
+                Help()
             # Create favorite
             elif ch == self.conf.keys['fav']:
                 self.api.setFavorite()
@@ -121,4 +128,4 @@ class KeyBinding:
             elif ch == self.conf.keys['quit'] or ch == 27:
                 break
 
-            self.ui.displayTimeline()
+            self.interface.displayTimeline()

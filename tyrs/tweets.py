@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import tyrs
+import editBox
 import urllib2
 from twitter import Api, TwitterError
 
