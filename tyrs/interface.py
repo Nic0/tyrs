@@ -6,6 +6,7 @@
 '''
 
 import re
+import os
 import sys
 import tyrs
 import time
