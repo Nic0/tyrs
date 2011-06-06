@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import os
 import curses
 import editBox
@@ -65,12 +67,6 @@ class KeyBinding:
         reply_to_id = status.GetId()
         data = '@'+status.user.screen_name
         self.tweet(data, reply_to_id)
-
-    def clear (self):
-        self.ui.clearStatuses()
-
-    def update (self):
-        self.ui.updateTimeline(self.ui.buffer)
 
     def followSelected (self):
         status = self.ui.getCurrentStatus()
@@ -199,10 +195,10 @@ class KeyBinding:
                 self.ui.changeBuffer('home')
             # CLEAR
             elif ch == self.conf.keys['clear']:
-                self.clear()
+                self.ui.clearStatuses()
             # UPDATE
             elif ch == self.conf.keys['update']:
-                self.update()
+                self.ui.updateTimeline(self.ui.buffer)
             # FOLLOW SELECTED
             elif ch == self.conf.keys['follow_selected']:
                 self.followSelected()

@@ -1,4 +1,5 @@
-#import twitter
+# -*- coding:utf-8 -*-
+
 from twitter import Api, TwitterError
 import urllib2
 try:
