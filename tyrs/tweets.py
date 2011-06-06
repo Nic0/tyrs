@@ -155,12 +155,12 @@ class Tweets(Api):
         self.ui.buffer = 'search'
         self.search_word = self.pseudoBox('What should I search?')
         try:
-            self.ui.statuses['search'] = self.api.GetSearch(self.api.search_word)
+            self.ui.statuses['search'] = self.api.GetSearch(self.search_word)
             self.ui.changeBuffer('search')
             if len(self.ui.statuses['search']) == 0:
                 self.ui.flash = ['The search does not return any result', 'info']
         except:
-            self.ui.flash = ['Failed with the search']
+            self.ui.flash = ['Failed with the search', 'warning']
 
     def pseudoBox (self, header, pseudo=None):
         params = {'char': 40, 'width': 40, 'header': header}
