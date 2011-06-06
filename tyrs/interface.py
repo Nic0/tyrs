@@ -558,7 +558,7 @@ class Interface:
         self.ui.status['current'] = self.ui.status['last']
 
     def openurl (self):
-        urls = self.ui.getUrls()
+        urls = self.getUrls()
         for url in urls:
             #try:
             os.system(self.conf.params['openurl_command'] % url)
