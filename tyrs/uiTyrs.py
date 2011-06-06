@@ -125,6 +125,13 @@ class uiTyrs:
         self.count[buffer]     = 0
         self.last_read[buffer] = 0
 
+    def resizeEvent (self):
+        self.resize_event = False
+        curses.endwin()
+        self.maxyx = self.screen.getmaxyx()
+        curses.doupdate()
+
+
     def updateTimeline (self, buffer):
         '''
         Retrieves tweets, don't display them
@@ -533,7 +540,29 @@ class uiTyrs:
 
         return cp
 
+    def moveDown (self):
+        if self.status['current'] < self.count[self.buffer] - 1:
+            if self.status['current'] >= self.status['last']:
+                self.status['first'] += 1
+            self.status['current'] += 1
 
+    def moveUp (self):
+        if self.status['current'] > 0:
+            # if we need to move up the list to display
+            if self.status['current'] == self.status['first']:
+                self.status['first'] -= 1
+            self.status['current'] -= 1
+
+    def backOnBottom (self):
+        self.ui.status['current'] = self.ui.status['last']
+
+    def openurl (self):
+        urls = self.ui.getUrls()
+        for url in urls:
+            #try:
+            os.system(self.conf.params['openurl_command'] % url)
+            #except:
+                #self.ui.Flash  = ["Couldn't open url", 'warning']
 class Help:
 
     y = 2

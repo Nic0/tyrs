@@ -39,11 +39,62 @@ class Tweets(Api):
     def setMyUser(self):
         self.me = self.api.VerifyCredentials()
 
+    def tweet (self, data, reply_to_id=None, dm=False):
+        params = {'char': 200, 'width': 80, 'header': "What's up ?"}
+        box = editBox.EditBox(self.ui, params, data, self.conf)
+        if box.confirm:
+            try:
+                content = box.getContent()
+                if not dm:
+                    self.postTweet(content, reply_to_id)
+                    self.ui.flash = ['Tweet has been sent successfully.', "info"]
+                else:
+                    # note in the DM case, we have a screen_name, and not the id
+                    self.api.PostDirectMessage(reply_to_id, content)
+                    self.ui.flash = ['The direct message has been sent.', 'info']
+            except:
+               self.ui.flash = ["Couldn't send the tweet.", "warning"]
+
+    def sendDirectMessage (self):
+        ''' Two editing box, one for the name, and one for the content'''
+        try:
+            status = self.ui.getCurrentStatus()
+            try:
+                pseudo = status.user.screen_name
+            except:
+                pseudo = status.sender_screen_name
+        except:
+            pseudo = ''
+
+        pseudo = self.pseudoBox("Send a Direct Message to whom ?", pseudo)
+        self.tweet(False, pseudo, True)
+
     def updateHomeTimeline (self):
         return self.api.GetFriendsTimeline(retweets=True)
 
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet, reply_to)
+
+    def retweet (self):
+        status = self.ui.getCurrentStatus()
+        try:
+            self.api.api.PostRetweet(status.GetId())
+            self.ui.flash = ['Retweet has been sent successfully.', 'info']
+        except:
+            self.ui.flash = ["Could not send the retweet.", 'warning']
+
+    def retweetAndEdit (self):
+        status = self.ui.getCurrentStatus()
+        txt = status.text
+        name = status.user.screen_name
+        data = 'RT @%s: %s' % (name, txt)
+        self.tweet(data)
+
+    def reply (self):
+        status = self.ui.getCurrentStatus()
+        reply_to_id = status.GetId()
+        data = '@'+status.user.screen_name
+        self.tweet(data, reply_to_id)
 
     def delete (self):
         statusId = self.ui.getCurrentStatus().GetId()
@@ -87,6 +138,63 @@ class Tweets(Api):
 
     def getFavorites (self):
         self.ui.changeBuffer('favorite')
+
+    def userTimeline (self, myself=False):
+        if not myself:
+            nick = self.pseudoBox('Looking for someone?')
+        else:
+            nick = self.me.screen_name
+        if nick != False:
+            if self.search_user != nick:
+                self.ui.emptyDict('user')
+            self.search_user = nick
+            self.ui.changeBuffer('user')
+
+    def search (self):
+        self.ui.buffer = 'search'
+        self.search_word = self.pseudoBox('What should I search?')
+        try:
+            self.ui.statuses['search'] = self.api.GetSearch(self.api.search_word)
+            self.ui.changeBuffer('search')
+            if len(self.ui.statuses['search']) == 0:
+                self.ui.flash = ['The search does not return any result', 'info']
+        except:
+            self.ui.flash = ['Failed with the search']
+
+    def pseudoBox (self, header, pseudo=None):
+        params = {'char': 40, 'width': 40, 'header': header}
+        box = editBox.EditBox(self.ui, params, pseudo, self.conf)
+        if box.confirm:
+            return self.cutAtTag(box.getContent())
+        else:
+            return False
+
+     def followSelected (self):
+        status = self.ui.getCurrentStatus()
+        if self.ui.isRetweet(status):
+            pseudo = self.ui.originOfRetweet(status)
+        else:
+            pseudo = status.user.screen_name
+        self.api.createFriendship(pseudo)
+
+    def unfollowSelected (self):
+        pseudo = self.ui.getCurrentStatus().user.screen_name
+        self.api.destroyFriendship(pseudo)
+
+    def follow (self):
+        nick = self.pseudoBox('Follow Someone ?')
+        if nick != False:
+            self.api.createFriendship(nick)
+
+    def unfollow (self):
+        nick = self.pseudoBox('Unfollow Someone ?')
+        if nick != False:
+            self.api.destroyFriendship(nick)       
+
+    def cutAtTag (self, name):
+        if name[0] == '@':
+            name = name[1:]
+        return name
 
 class ApiPatch (Api):
     def PostRetweet(self, id):
