@@ -56,6 +56,7 @@ class uiTyrs:
         '''
         self.api    = api
         self.conf   = conf
+        self.api.setUi(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         # startup the ncurses mode
@@ -110,12 +111,12 @@ class uiTyrs:
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
     def initDict (self):
-        buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
-        for buffer in buffers:
-            self.statuses[buffer]   = []
-            self.unread[buffer]     = 0
-            self.count[buffer]      = 0
-            self.last_read[buffer]  = 0
+        self.buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
+        for b in self.buffers:
+            self.statuses[b]   = []
+            self.unread[b]     = 0
+            self.count[b]      = 0
+            self.last_read[b]  = 0
 
     def emptyDict (self, buffer):
         self.statuses[buffer]  = []
@@ -203,6 +204,19 @@ class uiTyrs:
             self.unread[buffer] += 1
         self.unread[self.buffer] = 0
 
+    def changeBuffer (self, buffer):
+        self.buffer = buffer
+        self.status['current'] = 0
+        self.status['first'] = 0
+        self.countUnread(buffer)
+        self.displayTimeline()
+    
+    def navigateBuffer (self, nav):
+        index = self.buffers.index(self.buffer)
+        new_index = index + nav
+        if new_index >= 0 and new_index < len(self.buffers):
+            self.changeBuffer(self.buffers[new_index])
+
     def displayFlash (self):
         '''Should be the main entry to display Flash,
            it will take care of the warning/infor difference.
@@ -265,34 +279,36 @@ class uiTyrs:
 
     def displayActivity (self):
         '''Main entry to display the activities bar'''
-        buffer = ['home', 'mentions', 'direct', 'search', 'user' ]
-        max = self.screen.getmaxyx()
-        max_x = max[1]
+        maxyx = self.screen.getmaxyx()
+        max_x = maxyx[1]
         self.screen.addstr(0, max_x - 23, ' ')
-        for b in buffer:
+        for b in self.buffers:
             self.displayBufferActivities(b)
             self.displayCounterActivities(b)
 
-    def displayBufferActivities (self, buffer):
-        display = { 'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 'search': 'S:', 'user': 'U:' }
-        if self.buffer == buffer:
-            self.screen.addstr(display[buffer], self.getColor('current_tab'))
+    def displayBufferActivities (self, buff):
+        display = { 'home': 'H', 'mentions': 'M',
+                    'direct': 'D', 'search': 'S ',
+                    'user': 'U ', 'favorite': 'F', }
+        if self.buffer == buff:
+            self.screen.addstr(display[buff], self.getColor('current_tab'))
         else:
-            self.screen.addstr(display[buffer], self.getColor('other_tab'))
+            self.screen.addstr(display[buff], self.getColor('other_tab'))
 
-    def displayCounterActivities (self, buffer):
-        if self.unread[buffer] == 0:
-            color = 'read'
-        else:
-            color = 'unread'
+    def displayCounterActivities (self, buff):
+        if buff in ['home', 'mentions', 'direct']:
+            if self.unread[buff] == 0:
+                color = 'read'
+            else:
+                color = 'unread'
 
-        self.screen.addstr('%s ' % str(self.unread[buffer]), self.getColor(color))
+            self.screen.addstr(':%s ' % str(self.unread[buff]), self.getColor(color))
 
     def displayHelpBar (self):
         '''The help bar display at the bottom of the screen,
            for keysbinding reminder'''
-        max = self.screen.getmaxyx()
-        self.screen.addnstr(max[0] -1, 2,
+        maxyx = self.screen.getmaxyx()
+        self.screen.addnstr(maxyx[0] -1, 2,
             'help:? up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
                            (chr(self.conf.keys['up']),
                             chr(self.conf.keys['down']),

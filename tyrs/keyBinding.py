@@ -29,13 +29,6 @@ class KeyBinding:
                 self.ui.status['first'] -= 1
             self.ui.status['current'] -= 1
 
-    def moveBuffer (self, move):
-        buffer = ['home', 'mentions', 'direct', 'search', 'user', 'favorite']
-        id = buffer.index(self.ui.buffer)
-        new_id = id + move
-        if new_id >= 0 and new_id < len(buffer):
-            self.changeBuffer(buffer[new_id])
-
     def tweet (self, data, reply_to_id=None, dm=False):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         box = editBox.EditBox(self.ui, params, data, self.conf)
@@ -79,75 +72,32 @@ class KeyBinding:
     def update (self):
         self.ui.updateTimeline(self.ui.buffer)
 
-    def delete (self):
-        id = self.ui.getCurrentStatus().GetId()
-        # In case we want delete direct message, it will handle
-        # with DestroyDirectMessage(id)
-        try:
-            self.api.api.DestroyStatus(id)
-            self.ui.flash = ['Tweet destroyed successfully.', 'info']
-        except:
-            self.ui.flash = ['The tweet could not been destroyed.', 'warning']
-
     def followSelected (self):
         status = self.ui.getCurrentStatus()
         if self.ui.isRetweet(status):
             pseudo = self.ui.originOfRetweet(status)
         else:
             pseudo = status.user.screen_name
-        self.createFriendship(pseudo)
+        self.api.createFriendship(pseudo)
 
     def unfollowSelected (self):
         pseudo = self.ui.getCurrentStatus().user.screen_name
-        self.destroyFriendship(pseudo)
+        self.api.destroyFriendship(pseudo)
 
     def follow (self):
         nick = self.pseudoBox('Follow Someone ?')
         if nick != False:
-            self.createFriendship(nick)
+            self.api.createFriendship(nick)
 
     def unfollow (self):
         nick = self.pseudoBox('Unfollow Someone ?')
         if nick != False:
-            self.destroyFriendship(nick)
+            self.api.destroyFriendship(nick)
 
     def cutAtTag (self, name):
         if name[0] == '@':
             name = name[1:]
         return name
-
-    def createFriendship (self, pseudo):
-        try:
-            self.api.api.CreateFriendship(pseudo)
-            self.ui.flash = ['You are now following %s' % pseudo, 'info']
-        except:
-            self.ui.flash = ['Failed to follow %s' % pseudo, 'warning']
-
-    def destroyFriendship (self, pseudo):
-        try:
-            self.api.api.DestroyFriendship(pseudo)
-            self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
-        except:
-            self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
-
-    def setFavorite (self):
-        status = self.ui.getCurrentStatus()
-        try:
-            self.api.api.CreateFavorite(status)
-            self.ui.flash = ['The tweet is now in your favorite list', 'info']
-        except:
-            self.ui.flash = ['Could not set the current tweet as favorite', 'warning']
-
-    def getFavorites (self):
-        self.changeBuffer('favorite')
-
-    def destroyFavorite (self):
-        status = self.ui.getCurrentStatus()
-        try:
-            self.api.api.DestroyFavorite(status)
-            self.ui.flash = ['The current favorite has been destroyed', 'info']
-        except:
-            self.ui.flash = ['Could not destroy the favorite tweet', 'warning']
 
     def openurl (self):
         urls = self.ui.getUrls()
@@ -174,14 +124,14 @@ class KeyBinding:
             if self.api.search_user != nick:
                 self.ui.emptyDict('user')
             self.api.search_user = nick
-            self.changeBuffer('user')
+            self.ui.changeBuffer('user')
 
     def search (self):
         self.ui.buffer = 'search'
         self.api.search_word = self.pseudoBox('What should I search?')
         try:
             self.ui.statuses['search'] = self.api.api.GetSearch(self.api.search_word)
-            self.changeBuffer('search')
+            self.ui.changeBuffer('search')
             if len(self.ui.statuses['search']) == 0:
                 self.ui.flash = ['The search does not return any result', 'info']
         except:
@@ -200,13 +150,6 @@ class KeyBinding:
 
         pseudo = self.pseudoBox("Send a Direct Message to whom ?", pseudo)
         self.tweet(False, pseudo, True)
-
-    def changeBuffer (self, buffer):
-        self.ui.buffer = buffer
-        self.ui.status['current'] = 0
-        self.ui.status['first'] = 0
-        self.ui.countUnread(buffer)
-        self.ui.displayTimeline()
 
     def backOnBottom (self):
         self.ui.status['current'] = self.ui.status['last']
@@ -232,10 +175,10 @@ class KeyBinding:
                 self.moveUp()
             # LEFT
             elif ch == self.conf.keys['left'] or ch == curses.KEY_LEFT:
-                self.moveBuffer(-1)
+                self.ui.navigateBuffer(-1)
             # RIGHT
             elif ch == self.conf.keys['right'] or ch == curses.KEY_RIGHT:
-                self.moveBuffer(+1)
+                self.ui.navigateBuffer(+1)
             # TWEET
             elif ch == self.conf.keys['tweet']:
                 self.tweet(None)
@@ -247,13 +190,13 @@ class KeyBinding:
                 self.retweetAndEdit()
             # DELETE TwEET
             elif ch == self.conf.keys['delete']:
-                self.delete()
+                self.api.delete()
             # MENTIONS
             elif ch == self.conf.keys['mentions']:
-                self.changeBuffer('mentions')
+                self.ui.changeBuffer('mentions')
             # HOME TIMELINE
             elif ch == self.conf.keys['home']:
-                self.changeBuffer('home')
+                self.ui.changeBuffer('home')
             # CLEAR
             elif ch == self.conf.keys['clear']:
                 self.clear()
@@ -277,7 +220,7 @@ class KeyBinding:
                 self.openurl()
             # BACK ON TOP
             elif ch == self.conf.keys['back_on_top']:
-                self.changeBuffer(self.ui.buffer)
+                self.ui.changeBuffer(self.ui.buffer)
             # BACK ON BOTTOM
             elif ch == self.conf.keys['back_on_bottom']:
                 self.backOnBottom()
@@ -286,7 +229,7 @@ class KeyBinding:
                 self.reply()
             # GET DIRECT MESSAGE
             elif ch == self.conf.keys['getDM']:
-                self.changeBuffer('direct')
+                self.ui.changeBuffer('direct')
             # SEND DIRECT MESSAGE
             elif ch == self.conf.keys['sendDM']:
                 self.sendDirectMessage()
@@ -307,13 +250,13 @@ class KeyBinding:
                 uiTyrs.Help(self.ui, self.conf)
             # Create favorite
             elif ch == self.conf.keys['fav']:
-                self.setFavorite()
+                self.api.setFavorite()
             # Get favorite
             elif ch == self.conf.keys['get_fav']:
-                self.getFavorites()
+                self.api.getFavorites()
             # Destroy favorite
             elif ch == self.conf.keys['delete_fav']:
-                self.destroyFavorite()
+                self.api.destroyFavorite()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == self.conf.keys['quit'] or ch == 27:

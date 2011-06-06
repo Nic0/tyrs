@@ -1,5 +1,5 @@
 #import twitter
-from twitter import Api
+from twitter import Api, TwitterError
 import urllib2
 try:
     import json
@@ -7,9 +7,12 @@ except ImportError:
     import simplejson as json
 
 class Tweets(Api):
-
+ 
     search_user = ''
     search_word = ''
+
+    def setUi(self, ui):
+        self.ui = ui
 
     def authentification(self, conf):
         if conf.service == 'identica':
@@ -34,6 +37,49 @@ class Tweets(Api):
 
     def postTweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet, reply_to)
+
+    def delete (self):
+        statusId = self.ui.getCurrentStatus().GetId()
+        # In case we want delete direct message, it will handle
+        # with DestroyDirectMessage(id)
+        try:
+            self.api.api.DestroyStatus(statusId)
+            self.ui.flash = ['Tweet destroyed successfully.', 'info']
+        except:
+            self.ui.flash = ['The tweet could not been destroyed.', 'warning']
+
+    def createFriendship (self, pseudo):
+        try:
+            self.api.CreateFriendship(pseudo)
+            self.ui.flash = ['You are now following %s' % pseudo, 'info']
+        except:
+            self.ui.flash = ['Failed to follow %s' % pseudo, 'warning']
+
+    def destroyFriendship (self, pseudo):
+        try:
+            self.api.DestroyFriendship(pseudo)
+            self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
+        except:
+            self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
+
+    def setFavorite (self):
+        status = self.ui.getCurrentStatus()
+        try:
+            self.api.CreateFavorite(status)
+            self.ui.flash = ['The tweet is now in your favorite list', 'info']
+        except:
+            self.ui.flash = ['Could not set the current tweet as favorite', 'warning']
+
+    def destroyFavorite (self):
+        status = self.ui.getCurrentStatus()
+        try:
+            self.api.DestroyFavorite(status)
+            self.ui.flash = ['The current favorite has been destroyed', 'info']
+        except:
+            self.ui.flash = ['Could not destroy the favorite tweet', 'warning']
+
+    def getFavorites (self):
+        self.ui.changeBuffer('favorite')
 
 class ApiPatch (Api):
     def PostRetweet(self, id):
