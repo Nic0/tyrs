@@ -12,10 +12,14 @@ class Tweets(Api):
     search_user = ''
     search_word = ''
 
+    def __init__ (self, container):
+        self.conf = container['conf']
+
     def setUi(self, ui):
         self.ui = ui
 
-    def authentification(self, conf):
+    def authentification(self):
+        conf = self.conf
         if conf.service == 'identica':
             url = conf.base_url
         else:

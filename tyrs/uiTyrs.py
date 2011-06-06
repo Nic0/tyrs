@@ -49,13 +49,13 @@ class uiTyrs:
     refresh_token    = False
     buffer           = 'home'
 
-    def __init__ (self, api, conf):
+    def __init__ (self, container):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
         @param conf: contain all configuration parameters parsed
         '''
-        self.api    = api
-        self.conf   = conf
+        self.api    = container['api']
+        self.conf   = container['conf']
         self.api.setUi(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)

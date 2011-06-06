@@ -5,18 +5,20 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.3.0
+   @version:    0.3.1-dev
    @date:       05/06/2011
    @licence:    GPLv3
 
 '''
 import sys
 import config
-import uiTyrs
-import tweets
+from uiTyrs import uiTyrs as ui
 import argparse
-import threading
 import keyBinding as keys
+from tweets import Tweets
+from container import Container
+from update import *
+import utils
 import curses.wrapper
 
 import locale
@@ -31,7 +33,9 @@ def arguments ():
     args = parser.parse_args()
     return args
 
+container = Container()
 conf = config.Config(arguments())
+container.add('conf', conf)
 
 def setTitle ():
     try:
@@ -41,40 +45,20 @@ def setTitle ():
 
 def main(scr):
 
-    setTitle()
-    api     = tweets.Tweets()
-    api.authentification(conf)
-    interface  = uiTyrs.uiTyrs(api, conf)
-
-    update = UpdateThread(interface, conf)
+    utils.setConsoleTitle()
+    api     = Tweets(container)
+    container.add('api', api)
+    api.authentification()
+    interface  = ui(container)
+    container.add('ui', interface)
+    update = UpdateThread(container)
     update.start()
-    keybinding = keys.KeyBinding(interface, conf, api)
+    keybinding = keys.KeyBinding(container)
     keybinding.handleKeyBinding()
     update.stop()
     interface.tearDown()
     print 'Waiting for thread stopping...'
     return 0
-
-class UpdateThread (threading.Thread):
-
-    def __init__ (self, interface, conf):
-        self.interface = interface
-        self.conf = conf
-        threading.Thread.__init__(self, target=self.run)
-        self._stopevent = threading.Event()
-
-
-    def run (self):
-        while not self._stopevent.isSet():
-            self._stopevent.wait(self.conf.params['refresh'] * 60.0)
-            if not self._stopevent.isSet():
-                self.interface.updateTimeline('home')
-                self.interface.updateTimeline('mentions')
-                self.interface.updateTimeline('direct')
-                self.interface.displayTimeline()
-
-    def stop (self):
-        self._stopevent.set()
 
 def start ():
     curses.wrapper(main)

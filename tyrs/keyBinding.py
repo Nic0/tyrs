@@ -7,10 +7,10 @@ import uiTyrs
 
 class KeyBinding:
 
-    def __init__ (self, ui, conf, api):
-        self.conf = conf
-        self.ui = ui
-        self.api = api
+    def __init__ (self, container):
+        self.conf = container['conf']
+        self.ui = container['ui']
+        self.api = container['api']
 
     def resizeEvent (self):
         self.ui.resize_event = False
