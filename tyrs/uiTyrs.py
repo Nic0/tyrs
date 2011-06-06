@@ -7,6 +7,7 @@
 
 import re
 import sys
+import tyrs
 import time
 import signal                   # resize event
 import curses
@@ -49,13 +50,13 @@ class uiTyrs:
     refresh_token    = False
     buffer           = 'home'
 
-    def __init__ (self, container):
+    def __init__ (self):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
         @param conf: contain all configuration parameters parsed
         '''
-        self.api    = container['api']
-        self.conf   = container['conf']
+        self.api    = tyrs.container['api']
+        self.conf   = tyrs.container['conf']
         self.api.setUi(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)

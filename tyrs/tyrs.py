@@ -48,26 +48,27 @@ def initTyrs ():
     initThread()
 
 def initConf ():
-    global container
     conf = config.Config(arguments())
     container.add('conf', conf)
 
 def initApi ():
-    api     = Tweets(container)
+    api = Tweets()
     container.add('api', api)
     api.authentification()
 
 def initUi ():
-    interface = ui(container)
+    interface = ui()
     container.add ('ui', interface)
 
 def initThread ():
-    update = UpdateThread(container)
+    update = UpdateThread()
     update.start()
-    keybinding = keys.KeyBinding(container)
-    keybinding.handleKeyBinding()
+    initKeys()
     update.stop()
     container['ui'].tearDown()
+
+def initKeys ():
+    keys.KeyBinding().handleKeyBinding()
 
 def start ():
     curses.wrapper(main)

@@ -1,16 +1,17 @@
 # -*- coding:utf-8 -*-
 
 import os
+import tyrs
 import curses
 import editBox
 import uiTyrs
 
 class KeyBinding:
 
-    def __init__ (self, container):
-        self.conf = container['conf']
-        self.ui = container['ui']
-        self.api = container['api']
+    def __init__ (self):
+        self.conf = tyrs.container['conf']
+        self.ui = tyrs.container['ui']
+        self.api = tyrs.container['api']
 
     def resizeEvent (self):
         self.ui.resize_event = False

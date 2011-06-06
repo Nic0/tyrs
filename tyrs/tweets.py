@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from twitter import Api, TwitterError
+import tyrs
 import urllib2
+from twitter import Api, TwitterError
+
 try:
     import json
 except ImportError:
@@ -12,8 +14,8 @@ class Tweets(Api):
     search_user = ''
     search_word = ''
 
-    def __init__ (self, container):
-        self.conf = container['conf']
+    def __init__ (self):
+        self.conf = tyrs.container['conf']
 
     def setUi(self, ui):
         self.ui = ui

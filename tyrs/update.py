@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 
+import tyrs
 import threading
 
 class UpdateThread (threading.Thread):
 
-    def __init__ (self, container):
-        self.ui = container['ui']
-        self.conf = container['conf']
+    def __init__ (self):
+        self.ui = tyrs.container['ui']
+        self.conf = tyrs.container['conf']
         threading.Thread.__init__(self, target=self.run)
         self._stopevent = threading.Event()
 
