@@ -79,7 +79,7 @@ class Tweets(Api):
     def retweet (self):
         status = self.ui.getCurrentStatus()
         try:
-            self.api.api.PostRetweet(status.GetId())
+            self.api.PostRetweet(status.GetId())
             self.ui.flash = ['Retweet has been sent successfully.', 'info']
         except:
             self.ui.flash = ["Could not send the retweet.", 'warning']
@@ -102,7 +102,7 @@ class Tweets(Api):
         # In case we want delete direct message, it will handle
         # with DestroyDirectMessage(id)
         try:
-            self.api.api.DestroyStatus(statusId)
+            self.api.DestroyStatus(statusId)
             self.ui.flash = ['Tweet destroyed successfully.', 'info']
         except:
             self.ui.flash = ['The tweet could not been destroyed.', 'warning']
