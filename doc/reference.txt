@@ -15,6 +15,20 @@ AUR helper such as 'Yaourt', and grab a copy from the user repository:
 [source,bash]
 yaourt -S tyrs
 
+Frugalware
+~~~~~~~~~~
+Tyrs is now available on link:http://frugalware.org/packages/119439[Frugalware], thanks to Devil505
+
+[source,bash]
+pacman -S tyrs
+
+OpenSuse
+~~~~~~~~
+
+I'm not very familiar with opensuse, but it seems available with:
+http://r.opensu.se/network:utilities.repo
+I will find out soon what it's realy is.
+
 From source
 ~~~~~~~~~~~
 
