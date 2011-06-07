@@ -24,7 +24,7 @@ from interface import Interface
 locale.setlocale(locale.LC_ALL, '')
 container =  Container()
 
-def arguments ():
+def arguments():
     '''
     Parse all arguments from the CLI
     '''
@@ -47,32 +47,32 @@ def main():
     print 'Waiting for thread stopping...'
     return 0
 
-def init_tyrs (scr):
+def init_tyrs(scr):
     init_api()
     init_interface()
     init_thread()
 
-def init_conf ():
+def init_conf():
     conf = config.Config(arguments())
     container.add('conf', conf)
 
-def init_api ():
+def init_api():
     api = tweets.Tweets()
     container.add('api', api)
     api.authentification()
 
-def init_interface ():
+def init_interface():
     user_interface = Interface()
     container.add ('interface', user_interface)
 
-def init_thread ():
+def init_thread():
     update = UpdateThread()
     update.start()
     init_keys()
     update.stop()
     container['interface'].tear_down()
 
-def init_keys ():
+def init_keys():
     Keys().handleKeyBinding()
 
 if __name__ == "__main__":
