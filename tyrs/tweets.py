@@ -21,10 +21,8 @@ class Tweets(Api):
         self.sear_user = ''
         self.search_word = ''
 
-
-
-    def set_ui(self, ui):
-        self.interface = ui
+    def set_ui(self):
+        self.interface = tyrs.container['interface']
 
     def authentification(self):
         self.api = ApiPatch(
