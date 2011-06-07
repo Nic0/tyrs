@@ -1,5 +1,9 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
+'''
+   @module   help 
+   @author   Nicolas Paris <nicolas.caen@gmail.com>
+   @license  GPLv3
+'''
 import tyrs
 import curses
 
@@ -12,50 +16,50 @@ class Help:
         self.interface = tyrs.container['interface']
         self.conf = tyrs.container['conf']
         self.max = self.interface.screen.getmaxyx()
-        self.displayHelpScreen()
+        self.display_help_screen()
 
-    def displayHelpScreen (self):
+    def display_help_screen (self):
         self.interface.refresh_token = True
         self.interface.screen.erase()
 
-        self.displayHeader()
+        self.display_header()
         # Navigation
-        self.displayDivision('Navigation')
-        self.displayHelpItem('up', 'Moves up')
-        self.displayHelpItem('down', 'Moves down')
-        self.displayHelpItem('back_on_top', 'Move back on top')
-        self.displayHelpItem('back_on_bottom', 'Move to the bottom of the screen')
+        self.display_division('Navigation')
+        self.display_help_item('up', 'Moves up')
+        self.display_help_item('down', 'Moves down')
+        self.display_help_item('back_on_top', 'Move back on top')
+        self.display_help_item('back_on_bottom', 'Move to the bottom of the screen')
         # Timelines
-        self.displayDivision('Timelines')
-        self.displayHelpItem('left', 'Moves left in timelines')
-        self.displayHelpItem('right', 'Moves right in timelines')
-        self.displayHelpItem('update', 'Refresh the current timeline')
-        self.displayHelpItem('clear', 'Clear, and leave the last tweet in your timeline')
-        self.displayHelpItem('home', 'Moves to the home timeline')
-        self.displayHelpItem('mentions', 'Moves to the mentions timeline')
-        self.displayHelpItem('getDM', 'Moves to the direct message timeline')
-        self.displayHelpItem('search', 'Ask for a term to search and move to his timeline')
-        self.displayHelpItem('search_user', 'Retrieve someone public timeline')
-        self.displayHelpItem('search_myself', 'Retrieve your public timeline')
+        self.display_division('Timelines')
+        self.display_help_item('left', 'Moves left in timelines')
+        self.display_help_item('right', 'Moves right in timelines')
+        self.display_help_item('update', 'Refresh the current timeline')
+        self.display_help_item('clear', 'Clear, and leave the last tweet in your timeline')
+        self.display_help_item('home', 'Moves to the home timeline')
+        self.display_help_item('mentions', 'Moves to the mentions timeline')
+        self.display_help_item('getDM', 'Moves to the direct message timeline')
+        self.display_help_item('search', 'Ask for a term to search and move to his timeline')
+        self.display_help_item('search_user', 'Retrieve someone public timeline')
+        self.display_help_item('search_myself', 'Retrieve your public timeline')
         # Tweets
-        self.displayDivision('Tweets')
-        self.displayHelpItem('tweet', 'Send a tweet')
-        self.displayHelpItem('retweet', 'Retweet the selected tweet')
-        self.displayHelpItem('retweet_and_edit', 'Retweet with response the selected tweet')
-        self.displayHelpItem('reply', 'Reply to the selected tweet')
-        self.displayHelpItem('sendDM', 'Send a direct message')
-        self.displayHelpItem('delete', 'Delete the selected tweet, must be your tweet')
+        self.display_division('Tweets')
+        self.display_help_item('tweet', 'Send a tweet')
+        self.display_help_item('retweet', 'Retweet the selected tweet')
+        self.display_help_item('retweet_and_edit', 'Retweet with response the selected tweet')
+        self.display_help_item('reply', 'Reply to the selected tweet')
+        self.display_help_item('sendDM', 'Send a direct message')
+        self.display_help_item('delete', 'Delete the selected tweet, must be your tweet')
         # Follow/Unfollow
-        self.displayDivision('Follow/Unfollow')
-        self.displayHelpItem('follow_selected', 'Follow the selected twitter')
-        self.displayHelpItem('unfollow_selected', 'Unfollow the selected twitter')
-        self.displayHelpItem('follow', 'Follow a twitter')
-        self.displayHelpItem('unfollow', 'Unfollow a twitter')
+        self.display_division('Follow/Unfollow')
+        self.display_help_item('follow_selected', 'Follow the selected twitter')
+        self.display_help_item('unfollow_selected', 'Unfollow the selected twitter')
+        self.display_help_item('follow', 'Follow a twitter')
+        self.display_help_item('unfollow', 'Unfollow a twitter')
         # Others
-        self.displayDivision('Others')
-        self.displayHelpItem('quit', 'Leave Tyrs')
-        self.displayHelpItem('openurl', 'Open an url with your browser')
-        self.displayHelpItem('redraw', 'Force to redraw the screen')
+        self.display_division('Others')
+        self.display_help_item('quit', 'Leave Tyrs')
+        self.display_help_item('openurl', 'Open an url with your browser')
+        self.display_help_item('redraw', 'Force to redraw the screen')
 
         self.interface.screen.refresh()
         self.interface.screen.getch()
@@ -63,26 +67,26 @@ class Help:
 
         self.interface.refresh_token = False
 
-    def displayDivision (self, title):
+    def display_division (self, title):
         self.increase(2)
-        cp = curses.color_pair(5)
+        color = curses.color_pair(5)
         title = '-- ' + title + ' --'
-        self.interface.screen.addstr(self.y, self.col[0], title, cp)
+        self.interface.screen.addstr(self.y, self.col[0], title, color)
         self.increase(1)
 
-    def displayHeader (self):
+    def display_header (self):
         scr = self.interface.screen
-        cp = curses.color_pair(5)
-        scr.addstr(self.y, self.col[0], 'Name', cp)
-        scr.addstr(self.y, self.col[1], 'Key', cp)
-        scr.addstr(self.y, self.col[2], 'Description', cp)
+        color = curses.color_pair(5)
+        scr.addstr(self.y, self.col[0], 'Name', color)
+        scr.addstr(self.y, self.col[1], 'Key', color)
+        scr.addstr(self.y, self.col[2], 'Description', color)
 
-    def displayHelpItem (self, key, description):
+    def display_help_item (self, key, description):
         scr = self.interface.screen
-        cp = self.interface.getColor('help')
-        scr.addstr(self.y, self.col[0], key, cp)
-        scr.addstr(self.y, self.col[1], chr(self.conf.keys[key]), cp)
-        scr.addstr(self.y, self.col[2], description, cp)
+        color = self.interface.get_color('help')
+        scr.addstr(self.y, self.col[0], key, color)
+        scr.addstr(self.y, self.col[1], chr(self.conf.keys[key]), color)
+        scr.addstr(self.y, self.col[2], description, color)
         self.increase(1)
 
     def increase (self, incr):
@@ -92,7 +96,7 @@ class Help:
             self.interface.screen.getch()
             self.y = 2
             self.interface.screen.erase()
-            self.displayHeader()
+            self.display_header()
             self.increase(2)
         else:
             self.y += incr

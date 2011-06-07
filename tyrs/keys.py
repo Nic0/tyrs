@@ -1,10 +1,9 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 '''
 @module     keys
 @author     Nicolas Paris <nicolas.caen@gmail.com
 @licence    GPLv3
 '''
-
 import tyrs
 import curses
 from help import Help
@@ -16,9 +15,9 @@ class Keys:
     here
     '''
     def __init__ (self):
-        self.conf = tyrs.container['conf']
-        self.interface = tyrs.container['interface']
-        self.api = tyrs.container['api']
+        self.conf       = tyrs.container['conf']
+        self.interface  = tyrs.container['interface']
+        self.api        = tyrs.container['api']
 
     def handleKeyBinding (self):
         '''Should have all keybinding handle here'''
@@ -27,7 +26,7 @@ class Keys:
             ch = self.interface.screen.getch()
 
             if self.interface.resize_event:
-                self.interface.resizeEvent()
+                self.interface.resize_event()
 
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
@@ -35,16 +34,16 @@ class Keys:
 
             # DOWN
             if ch == self.conf.keys['down'] or ch == curses.KEY_DOWN:
-                self.interface.moveDown()
+                self.interface.move_down()
             # UP
             elif ch == self.conf.keys['up'] or ch == curses.KEY_UP:
-                self.interface.moveUp()
+                self.interface.move_up()
             # LEFT
             elif ch == self.conf.keys['left'] or ch == curses.KEY_LEFT:
-                self.interface.navigateBuffer(-1)
+                self.interface.navigate_buffer(-1)
             # RIGHT
             elif ch == self.conf.keys['right'] or ch == curses.KEY_RIGHT:
-                self.interface.navigateBuffer(+1)
+                self.interface.navigate_buffer(+1)
             # TWEET
             elif ch == self.conf.keys['tweet']:
                 self.api.tweet(None)
@@ -53,28 +52,28 @@ class Keys:
                 self.api.retweet()
             # RETWEET AND EDIT
             elif ch == self.conf.keys['retweet_and_edit']:
-                self.api.retweetAndEdit()
+                self.api.retweet_and_edit()
             # DELETE TwEET
             elif ch == self.conf.keys['delete']:
                 self.api.delete()
             # MENTIONS
             elif ch == self.conf.keys['mentions']:
-                self.interface.changeBuffer('mentions')
+                self.interface.change_buffer('mentions')
             # HOME TIMELINE
             elif ch == self.conf.keys['home']:
-                self.interface.changeBuffer('home')
+                self.interface.change_buffer('home')
             # CLEAR
             elif ch == self.conf.keys['clear']:
-                self.interface.clearStatuses()
+                self.interface.clear_statuses()
             # UPDATE
             elif ch == self.conf.keys['update']:
-                self.interface.updateTimeline(self.interface.buffer)
+                self.interface.update_timeline(self.interface.buffer)
             # FOLLOW SELECTED
             elif ch == self.conf.keys['follow_selected']:
-                self.api.followSelected()
+                self.api.follow_selected()
             # UNFOLLOW SELECTED
             elif ch == self.conf.keys['unfollow_selected']:
-                self.api.unfollowSelected()
+                self.api.unfollow_selected()
             # FOLLOW
             elif ch == self.conf.keys['follow']:
                 self.api.follow()
@@ -86,46 +85,46 @@ class Keys:
                 self.interface.openurl()
             # BACK ON TOP
             elif ch == self.conf.keys['back_on_top']:
-                self.interface.changeBuffer(self.interface.buffer)
+                self.interface.change_buffer(self.interface.buffer)
             # BACK ON BOTTOM
             elif ch == self.conf.keys['back_on_bottom']:
-                self.interface.backOnBottom()
+                self.interface.back_on_bottom()
             # REPLY
             elif ch == self.conf.keys['reply']:
                 self.api.reply()
             # GET DIRECT MESSAGE
             elif ch == self.conf.keys['getDM']:
-                self.interface.changeBuffer('direct')
+                self.interface.change_buffer('direct')
             # SEND DIRECT MESSAGE
             elif ch == self.conf.keys['sendDM']:
-                self.api.sendDirectMessage()
+                self.api.send_direct_message()
             # SEARCH
             elif ch == self.conf.keys['search']:
                 self.api.search()
             # SEARCH USER
             elif ch == self.conf.keys['search_user']:
-                self.api.userTimeline()
+                self.api.user_timeline()
             # SEARCH MYSELF
             elif ch == self.conf.keys['search_myself']:
-                self.api.userTimeline(True)
+                self.api.user_timeline(True)
             # Redraw screen
             elif ch == self.conf.keys['redraw']:
-                self.interface.displayRedrawScreen()
+                self.interface.display_redraw_screen()
             # Help
             elif ch == ord('?'):
                 Help()
             # Create favorite
             elif ch == self.conf.keys['fav']:
-                self.api.setFavorite()
+                self.api.set_favorite()
             # Get favorite
             elif ch == self.conf.keys['get_fav']:
-                self.api.getFavorites()
+                self.api.get_favorites()
             # Destroy favorite
             elif ch == self.conf.keys['delete_fav']:
-                self.api.destroyFavorite()
+                self.api.destroy_favorite()
             # QUIT
             # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
             elif ch == self.conf.keys['quit'] or ch == 27:
                 break
 
-            self.interface.displayTimeline()
+            self.interface.display_timeline()

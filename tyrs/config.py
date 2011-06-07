@@ -1,12 +1,13 @@
-#! -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 '''
-   @package  tyrs
+   @module   config
    @author   Nicolas Paris <nicolas.caen@gmail.com>
    @license  GPLv3
 '''
 import os
 import sys
 import curses
+import curses.ascii
 import oauth2 as oauth
 import ConfigParser
 
@@ -108,23 +109,23 @@ class Config:
 
         # generate the config file
         if args.generate_config != None:
-            self.generateConfigFile(args)
+            self.generate_config_file(args)
 
-        self.setPath(args)
+        self.set_path(args)
         if not os.path.isfile(self.tokenFile):
-            self.newAccount()
+            self.new_account()
         else:
-            self.parseToken()
+            self.parse_token()
 
         self.conf = ConfigParser.RawConfigParser()
-        self.conf.read(self.configFile)
-        self.parseConfig()
+        self.conf.read(self.config_file)
+        self.parse_config()
 
-    def generateConfigFile (self, args):
+    def generate_config_file (self, args):
 
-        configFile = args.generate_config
+        config_file = args.generate_config
         conf = ConfigParser.RawConfigParser()
-        conf.read(configFile)
+        conf.read(config_file)
 
         # COLOR
         conf.add_section('colors')
@@ -147,31 +148,31 @@ class Config:
 
             conf.set('params', p, value)
 
-        with open(configFile, 'wb') as config:
+        with open(config_file, 'wb') as config:
             conf.write(config)
 
         sys.exit(0)
 
-    def setPath (self, args):
+    def set_path (self, args):
         # Default config path set
         if self.xdg_config != '':
-            self.tyrsPath = self.xdg_config + '/tyrs/'
+            self.tyrs_path = self.xdg_config + '/tyrs/'
         else:
-            self.tyrsPath = self.home + '/.config/tyrs/'
+            self.tyrs_path = self.home + '/.config/tyrs/'
         # Setup the token file
-        self.tokenFile = self.tyrsPath + 'tyrs.tok'
+        self.tokenFile = self.tyrs_path + 'tyrs.tok'
         if args.account != None:
             self.tokenFile += '.' + args.account
         # Setup the config file
-        self.configFile = self.tyrsPath + 'tyrs.cfg'
+        self.config_file = self.tyrs_path + 'tyrs.cfg'
         if args.config != None:
-            self.configFile += '.' + args.config
+            self.config_file += '.' + args.config
 
-    def newAccount (self):
+    def new_account (self):
 
         choice = self.askService()
         if choice == '2':
-            self.askRootUrl()
+            self.ask_root_url()
 
         self.authorization()
         self.createTokenFile()
@@ -180,7 +181,7 @@ class Config:
         print ''
         print 'There is no profile detected.'
         print ''
-        print 'It should be in %s' % self.configFile
+        print 'It should be in %s' % self.config_file
         print 'If you want to setup a new account, let\'s go through some basic steps'
         print 'If you want to skip this, just press return or ctrl-C.'
         print ''
@@ -201,7 +202,7 @@ class Config:
             sys.exit(1)
         return choice
 
-    def askRootUrl (self):
+    def ask_root_url (self):
         print ''
         print ''
         print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
@@ -212,7 +213,7 @@ class Config:
         else:
             self.base_url = url
 
-    def parseToken (self):
+    def parse_token (self):
         token = ConfigParser.RawConfigParser()
         token.read(self.tokenFile)
         if token.has_option('token', 'service'):
@@ -226,21 +227,21 @@ class Config:
         self.oauth_token = token.get('token', 'oauth_token')
         self.oauth_token_secret = token.get('token', 'oauth_token_secret')
 
-    def parseConfig (self):
+    def parse_config (self):
         ''' This parse the configuration file, and set
         some defaults values if the parameter is not given'''
-        self.parseColor()
-        self.parseKeys()
+        self.parse_color()
+        self.parse_keys()
         self.parseParams()
 
-    def parseColor (self):
+    def parse_color (self):
         for c in self.colors:
             self.colors[c]['b'] = False
             if self.conf.has_option('colors', c):
                 self.colors[c]['c'] = int(self.conf.get('colors', c))
         # Bold
         if self.conf.has_option('colors', 'bold'):
-            self.getBoldColors(self.conf.get('colors', 'bold'))
+            self.get_bold_colors(self.conf.get('colors', 'bold'))
         # Setup rgb
         for i in range(len(self.color_set)):
             if self.conf.has_option('colors', 'color_set'+str(i)):
@@ -249,12 +250,12 @@ class Config:
                 rgb = rgb.split(' ')
                 self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
 
-    def parseKeys (self):
+    def parse_keys (self):
         for key in self.keys:
             if self.conf.has_option('keys', key):
-                self.keys[key] = self.charValue(self.conf.get('keys', key))
+                self.keys[key] = self.char_value(self.conf.get('keys', key))
             else:
-                self.keys[key] = self.charValue(self.keys[key])
+                self.keys[key] = self.char_value(self.keys[key])
 
     def parseParams (self):
 
@@ -294,7 +295,7 @@ class Config:
             if int(self.conf.get('params', 'help')) == 0:
                 self.params['help'] = False
 
-    def charValue (self, ch):
+    def char_value (self, ch):
         if ch[0] == '^':
             i = 0
             while i <= 31:
@@ -303,7 +304,7 @@ class Config:
                 i +=1
         return ord(ch)
 
-    def getBoldColors (self, str):
+    def get_bold_colors (self, str):
         bolds = str.split(' ')
         for bold in bolds:
             try:
@@ -385,9 +386,9 @@ class Config:
 
     def createTokenFile(self):
 
-        if not os.path.isdir(self.tyrsPath):
+        if not os.path.isdir(self.tyrs_path):
             try:
-                os.mkdir(self.tyrsPath)
+                os.mkdir(self.tyrs_path)
             except:
                 print 'Error to create directory .config/tyrs'
 

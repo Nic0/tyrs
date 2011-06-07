@@ -1,5 +1,9 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
+'''
+@module    tweets
+@author    Nicolas Paris <nicolas.caen@gmail.com>
+@license   GPLv3
+'''
 import tyrs
 import editBox
 import urllib2
@@ -18,8 +22,8 @@ class Tweets(Api):
     def __init__ (self):
         self.conf = tyrs.container['conf']
 
-    def setUi(self, ui):
-        self.ui = ui
+    def set_ui(self, ui):
+        self.interface = ui
 
     def authentification(self):
         conf = self.conf
@@ -35,31 +39,31 @@ class Tweets(Api):
             conf.oauth_token_secret,
             base_url=url
         )
-        self.setMyUser()
+        self.set_myself()
 
-    def setMyUser(self):
-        self.me = self.api.VerifyCredentials()
+    def set_myself(self):
+        self.myself = self.api.VerifyCredentials()
 
     def tweet (self, data, reply_to_id=None, dm=False):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
-        box = editBox.EditBox(self.ui, params, data, self.conf)
+        box = editBox.EditBox(self.interface, params, data, self.conf)
         if box.confirm:
             try:
-                content = box.getContent()
+                content = box.get_content()
                 if not dm:
-                    self.postTweet(content, reply_to_id)
-                    self.ui.flash = ['Tweet has been sent successfully.', "info"]
+                    self.post_tweet(content, reply_to_id)
+                    self.interface.flash = ['Tweet has been sent successfully.', "info"]
                 else:
                     # note in the DM case, we have a screen_name, and not the id
                     self.api.PostDirectMessage(reply_to_id, content)
-                    self.ui.flash = ['The direct message has been sent.', 'info']
+                    self.interface.flash = ['The direct message has been sent.', 'info']
             except:
-               self.ui.flash = ["Couldn't send the tweet.", "warning"]
+               self.interface.flash = ["Couldn't send the tweet.", "warning"]
 
-    def sendDirectMessage (self):
+    def send_direct_message (self):
         ''' Two editing box, one for the name, and one for the content'''
         try:
-            status = self.ui.getCurrentStatus()
+            status = self.interface.get_current_status()
             try:
                 pseudo = status.user.screen_name
             except:
@@ -67,132 +71,132 @@ class Tweets(Api):
         except:
             pseudo = ''
 
-        pseudo = self.pseudoBox("Send a Direct Message to whom ?", pseudo)
+        pseudo = self.nick_box("Send a Direct Message to whom ?", pseudo)
         self.tweet(False, pseudo, True)
 
-    def updateHomeTimeline (self):
+    def update_home_timeline (self):
         return self.api.GetFriendsTimeline(retweets=True)
 
-    def postTweet (self, tweet, reply_to=None):
+    def post_tweet (self, tweet, reply_to=None):
         self.api.PostUpdate(tweet, reply_to)
 
     def retweet (self):
-        status = self.ui.getCurrentStatus()
+        status = self.interface.get_current_status()
         try:
             self.api.PostRetweet(status.GetId())
             self.ui.flash = ['Retweet has been sent successfully.', 'info']
         except:
-            self.ui.flash = ["Could not send the retweet.", 'warning']
+            self.interface.flash = ["Could not send the retweet.", 'warning']
 
-    def retweetAndEdit (self):
-        status = self.ui.getCurrentStatus()
+    def retweet_and_edit (self):
+        status = self.interface.get_current_status()
         txt = status.text
         name = status.user.screen_name
         data = 'RT @%s: %s' % (name, txt)
         self.tweet(data)
 
     def reply (self):
-        status = self.ui.getCurrentStatus()
+        status = self.interface.get_current_status()
         reply_to_id = status.GetId()
         data = '@'+status.user.screen_name
         self.tweet(data, reply_to_id)
 
     def delete (self):
-        statusId = self.ui.getCurrentStatus().GetId()
+        statusId = self.interface.get_current_status().GetId()
         # In case we want delete direct message, it will handle
         # with DestroyDirectMessage(id)
         try:
             self.api.DestroyStatus(statusId)
             self.ui.flash = ['Tweet destroyed successfully.', 'info']
         except:
-            self.ui.flash = ['The tweet could not been destroyed.', 'warning']
+            self.interface.flash = ['The tweet could not been destroyed.', 'warning']
 
-    def createFriendship (self, pseudo):
+    def create_friendship (self, pseudo):
         try:
             self.api.CreateFriendship(pseudo)
-            self.ui.flash = ['You are now following %s' % pseudo, 'info']
+            self.interface.flash = ['You are now following %s' % pseudo, 'info']
         except:
-            self.ui.flash = ['Failed to follow %s' % pseudo, 'warning']
+            self.interface.flash = ['Failed to follow %s' % pseudo, 'warning']
 
-    def destroyFriendship (self, pseudo):
+    def destroy_friendship (self, pseudo):
         try:
             self.api.DestroyFriendship(pseudo)
-            self.ui.flash = ['You have unfollowed %s' % pseudo, 'info']
+            self.interface.flash = ['You have unfollowed %s' % pseudo, 'info']
         except:
-            self.ui.flash = ['Failed to unfollow %s' % pseudo, 'warning']
+            self.interface.flash = ['Failed to unfollow %s' % pseudo, 'warning']
 
-    def setFavorite (self):
-        status = self.ui.getCurrentStatus()
+    def set_favorite (self):
+        status = self.interface.get_current_status()
         try:
             self.api.CreateFavorite(status)
-            self.ui.flash = ['The tweet is now in your favorite list', 'info']
+            self.interface.flash = ['The tweet is now in your favorite list', 'info']
         except:
-            self.ui.flash = ['Could not set the current tweet as favorite', 'warning']
+            self.interface.flash = ['Could not set the current tweet as favorite', 'warning']
 
-    def destroyFavorite (self):
-        status = self.ui.getCurrentStatus()
+    def destroy_favorite (self):
+        status = self.interface.get_current_status()
         try:
             self.api.DestroyFavorite(status)
-            self.ui.flash = ['The current favorite has been destroyed', 'info']
+            self.interface.flash = ['The current favorite has been destroyed', 'info']
         except:
-            self.ui.flash = ['Could not destroy the favorite tweet', 'warning']
+            self.interface.flash = ['Could not destroy the favorite tweet', 'warning']
 
-    def getFavorites (self):
-        self.ui.changeBuffer('favorite')
+    def get_favorites (self):
+        self.interface.change_buffer('favorite')
 
-    def userTimeline (self, myself=False):
+    def user_timeline (self, myself=False):
         if not myself:
-            nick = self.pseudoBox('Looking for someone?')
+            nick = self.nick_box('Looking for someone?')
         else:
             nick = self.me.screen_name
         if nick != False:
             if self.search_user != nick:
-                self.ui.emptyDict('user')
+                self.interface.emptyDict('user')
             self.search_user = nick
-            self.ui.changeBuffer('user')
+            self.interface.change_buffer('user')
 
     def search (self):
-        self.ui.buffer = 'search'
-        self.search_word = self.pseudoBox('What should I search?')
+        self.interface.buffer = 'search'
+        self.search_word = self.nick_box('What should I search?')
         try:
-            self.ui.statuses['search'] = self.api.GetSearch(self.search_word)
-            self.ui.changeBuffer('search')
-            if len(self.ui.statuses['search']) == 0:
-                self.ui.flash = ['The search does not return any result', 'info']
+            self.interface.statuses['search'] = self.api.GetSearch(self.search_word)
+            self.interface.change_buffer('search')
+            if len(self.interface.statuses['search']) == 0:
+                self.interface.flash = ['The search does not return any result', 'info']
         except:
-            self.ui.flash = ['Failed with the search', 'warning']
+            self.interface.flash = ['Failed with the search', 'warning']
 
-    def pseudoBox (self, header, pseudo=None):
+    def nick_box (self, header, pseudo=None):
         params = {'char': 40, 'width': 40, 'header': header}
-        box = editBox.EditBox(self.ui, params, pseudo, self.conf)
+        box = editBox.EditBox(self.interface, params, pseudo, self.conf)
         if box.confirm:
-            return self.cutAtTag(box.getContent())
+            return self.cat_attag(box.getContent())
         else:
             return False
 
-    def followSelected (self):
-        status = self.ui.getCurrentStatus()
-        if self.ui.isRetweet(status):
-            pseudo = self.ui.originOfRetweet(status)
+    def follow_selected (self):
+        status = self.interface.get_current_status()
+        if self.interface.is_retweet(status):
+            pseudo = self.interface.origin_of_retweet(status)
         else:
             pseudo = status.user.screen_name
         self.api.createFriendship(pseudo)
 
-    def unfollowSelected (self):
-        pseudo = self.ui.getCurrentStatus().user.screen_name
+    def unfollow_selected (self):
+        pseudo = self.interface.get_current_status().user.screen_name
         self.api.destroyFriendship(pseudo)
 
     def follow (self):
-        nick = self.pseudoBox('Follow Someone ?')
+        nick = self.nick_box('Follow Someone ?')
         if nick != False:
             self.api.createFriendship(nick)
 
     def unfollow (self):
-        nick = self.pseudoBox('Unfollow Someone ?')
+        nick = self.nick_box('Unfollow Someone ?')
         if nick != False:
             self.api.destroyFriendship(nick)       
 
-    def cutAtTag (self, name):
+    def cat_attag (self, name):
         if name[0] == '@':
             name = name[1:]
         return name

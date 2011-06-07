@@ -1,5 +1,9 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
+'''
+@module     container
+@author     Nicolas Paris <nicolas.caen@gmail.com>
+@licence    GPLv3
+'''
 class Container:
     '''
     Contain main classes that we need thought all the programm

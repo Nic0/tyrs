@@ -1,7 +1,11 @@
-#! -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+'''
+@module     editBox
+@author     Nicolas Paris <nicolas.caen@gmail.com>
+@licence    GPLv3
+'''
 import curses
 import curses.textpad
-import sys
 
 class EditBox:
     ''' Popup box with editing faculty.
@@ -19,13 +23,13 @@ class EditBox:
         self.ui = ui
         self.params = params
         self.data   = data
-        self.win = self.initWin(self.ui.screen)
+        self.win = self.init_win(self.ui.screen)
         self.win.keypad(1)
         curses.curs_set(1)
-        self.startEdit()
+        self.start_edit()
         self.win.erase()
 
-    def startEdit (self):
+    def start_edit (self):
 
         self.ui.refresh_token = True
         if self.data:
@@ -59,11 +63,11 @@ class EditBox:
 
     def refresh (self):
         self.win.erase()
-        self.win = self.initWin(self.ui.screen)
-        self.displayContent()
+        self.win = self.init_win(self.ui.screen)
+        self.display_content()
         self.win.refresh()
 
-    def displayContent (self):
+    def display_content (self):
         x = 2
         y = 2
         words = self.content.split(' ')
@@ -72,11 +76,11 @@ class EditBox:
             if x+len(w) > max[1] - 4:
                 y += 1
                 x = 2
-            self.win.addstr(y, x, w, self.ui.getColor('text'))
+            self.win.addstr(y, x, w, self.ui.get_color('text'))
             x += len(w)+1
 
 
-    def initWin (self, screen):
+    def init_win (self, screen):
         '''
         This try to find a good size for the tweet window,
         and place it in main screen
