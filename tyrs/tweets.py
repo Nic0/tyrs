@@ -84,7 +84,7 @@ class Tweets(Api):
         status = self.interface.get_current_status()
         try:
             self.api.PostRetweet(status.GetId())
-            self.ui.flash = ['Retweet has been sent successfully.', 'info']
+            self.interface.flash = ['Retweet has been sent successfully.', 'info']
         except:
             self.interface.flash = ["Could not send the retweet.", 'warning']
 
@@ -107,7 +107,7 @@ class Tweets(Api):
         # with DestroyDirectMessage(id)
         try:
             self.api.DestroyStatus(statusId)
-            self.ui.flash = ['Tweet destroyed successfully.', 'info']
+            self.interface.flash = ['Tweet destroyed successfully.', 'info']
         except:
             self.interface.flash = ['The tweet could not been destroyed.', 'warning']
 
@@ -148,7 +148,7 @@ class Tweets(Api):
         if not myself:
             nick = self.nick_box('Looking for someone?')
         else:
-            nick = self.me.screen_name
+            nick = self.myself.screen_name
         if nick != False:
             if self.search_user != nick:
                 self.interface.emptyDict('user')
@@ -180,21 +180,21 @@ class Tweets(Api):
             pseudo = self.interface.origin_of_retweet(status)
         else:
             pseudo = status.user.screen_name
-        self.api.createFriendship(pseudo)
+        self.create_friendship(pseudo)
 
     def unfollow_selected (self):
         pseudo = self.interface.get_current_status().user.screen_name
-        self.api.destroyFriendship(pseudo)
+        self.destroy_friendship(pseudo)
 
     def follow (self):
         nick = self.nick_box('Follow Someone ?')
         if nick != False:
-            self.api.createFriendship(nick)
+            self.create_friendship(nick)
 
     def unfollow (self):
         nick = self.nick_box('Unfollow Someone ?')
         if nick != False:
-            self.api.destroyFriendship(nick)       
+            self.destroy_friendship(nick)       
 
     def cat_attag (self, name):
         if name[0] == '@':

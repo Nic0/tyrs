@@ -108,14 +108,14 @@ class EditBox:
         win = screen.subwin(height, width, start_y, start_x)
 
         win.border(0)
-        counter = str(self.countChr())
+        counter = str(self.count_chr())
         header = ' %s %s ' % (self.params['header'], counter)
 
         #TODO this doen't take bold
         win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
         return win
 
-    def countChr (self):
+    def count_chr (self):
         i = 0
         token = False
         for ch in self.content:
@@ -127,6 +127,6 @@ class EditBox:
                 token = False
         return i
 
-    def getContent (self):
+    def get_content (self):
         return self.content
 
