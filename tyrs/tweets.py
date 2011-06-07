@@ -25,6 +25,7 @@ class Tweets(Api):
         self.interface = tyrs.container['interface']
 
     def authentification(self):
+        url = self.get_base_url()
         self.api = ApiPatch(
             self.conf.token[conf.service]['consumer_key'],
             self.conf.token[conf.service]['consumer_secret'],
@@ -35,10 +36,9 @@ class Tweets(Api):
         self.set_myself()
 
     def get_base_url(self):
+        url = None
         if self.conf.service == 'identica':
             url = self.conf.base_url
-        else:
-            url = None
 
         return url
 
