@@ -38,6 +38,9 @@ Dependencies
 Tyrs requires the following dependencies
 
 * Python 2
+* link:http://pypi.python.org/pypi/setuptools[python-setuptools] or link
+link:http://pypi.python.org/pypi/distribute[python-distribute] to use the
+setup.py install
 * link:http://code.google.com/p/python-twitter/[python-twitter]
 * link:https://github.com/simplegeo/python-oauth2[python-oauth2]
 

@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import sys
 from distutils.core import setup
-import setuptools
+try:
+    import setuptools
+except ImportError:
+    print 'The installation require setuptools, please install it
+    (python-setuptools or python-distribute).'
+    sys.exit(0)
 
 setup(name='tyrs',
       version='0.1',
