@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
-'''
-@module    tweets
-@author    Nicolas Paris <nicolas.caen@gmail.com>
-@license   GPLv3
-'''
+# Copyright © 2011 Nicolas Paris <nicolas.caen@gmail.com>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import tyrs
 import editBox
 import urllib2
@@ -171,7 +180,7 @@ class Tweets(Api):
         params = {'char': 40, 'width': 40, 'header': header}
         box = editBox.EditBox(self.interface, params, pseudo, self.conf)
         if box.confirm:
-            return self.cat_attag(box.getContent())
+            return self.cut_attag(box.getContent())
         else:
             return False
 
@@ -197,7 +206,7 @@ class Tweets(Api):
         if nick != False:
             self.destroy_friendship(nick)       
 
-    def cat_attag(self, name):
+    def cut_attag(self, name):
         if name[0] == '@':
             name = name[1:]
         return name
