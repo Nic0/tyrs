@@ -11,11 +11,11 @@ class Container:
     '''
     _container = {}
 
-    def __setitem__ (self, key, value):
+    def __setitem__(self, key, value):
         self._container[key] = value
 
-    def __getitem__ (self, key):
+    def __getitem__(self, key):
         return self._container[key]
 
-    def add (self, name, dependency):
+    def add(self, name, dependency):
         self[name] = dependency

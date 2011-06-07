@@ -67,21 +67,21 @@ class Help:
 
         self.interface.refresh_token = False
 
-    def display_division (self, title):
+    def display_division(self, title):
         self.increase(2)
         color = curses.color_pair(5)
         title = '-- ' + title + ' --'
         self.interface.screen.addstr(self.y, self.col[0], title, color)
         self.increase(1)
 
-    def display_header (self):
+    def display_header(self):
         scr = self.interface.screen
         color = curses.color_pair(5)
         scr.addstr(self.y, self.col[0], 'Name', color)
         scr.addstr(self.y, self.col[1], 'Key', color)
         scr.addstr(self.y, self.col[2], 'Description', color)
 
-    def display_help_item (self, key, description):
+    def display_help_item(self, key, description):
         scr = self.interface.screen
         color = self.interface.get_color('help')
         scr.addstr(self.y, self.col[0], key, color)
@@ -89,7 +89,7 @@ class Help:
         scr.addstr(self.y, self.col[2], description, color)
         self.increase(1)
 
-    def increase (self, incr):
+    def increase(self, incr):
         '''This make sure there some space left on the screen.'''
         if self.y + incr >= self.max[0]:
             self.interface.screen.refresh()

@@ -52,7 +52,7 @@ class Interface:
     refresh_token    = False
     buffer           = 'home'
 
-    def __init__ (self):
+    def __init__(self):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
         @param conf: contain all configuration parameters parsed
@@ -70,7 +70,7 @@ class Interface:
         self.update_timeline('home')
         self.display_timeline()
 
-    def init_screen (self):
+    def init_screen(self):
 
         screen = curses.initscr()
         curses.noecho()         # Dont print anything
@@ -85,7 +85,7 @@ class Interface:
         screen.refresh()
         self.screen = screen
 
-    def init_colors (self):
+    def init_colors(self):
         '''Setup all colors stuff, rgb as well.'''
         curses.start_color()
 
@@ -113,7 +113,7 @@ class Interface:
         curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 6 cyan
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
-    def init_dict (self):
+    def init_dict(self):
         self.timelines = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
         for b in self.timelines:
             self.statuses[b]   = []
@@ -121,20 +121,20 @@ class Interface:
             self.count[b]      = 0
             self.last_read[b]  = 0
 
-    def empty_dict (self, buffer):
+    def empty_dict(self, buffer):
         self.statuses[buffer]  = []
         self.unread[buffer]    = 0
         self.count[buffer]     = 0
         self.last_read[buffer] = 0
 
-    def resize_event (self):
+    def resize_event(self):
         self.resize_event = False
         curses.endwin()
         self.maxyx = self.screen.getmaxyx()
         curses.doupdate()
 
 
-    def update_timeline (self, buffer):
+    def update_timeline(self, buffer):
         '''
         Retrieves tweets, don't display them
         @param the buffer to retreive tweets
@@ -176,7 +176,7 @@ class Interface:
         self.count_statuses(buffer)
         self.count_unread(buffer)
 
-    def append_new_statuses (self, newStatuses, buffer):
+    def append_new_statuses(self, newStatuses, buffer):
         '''This take care to add in the corresponding list new statuses
            that been retrieved, this just make sure lists are up ta date,
            and does not display them
@@ -203,10 +203,10 @@ class Interface:
                     if buffer == self.buffer:
                         self.status['current'] += len(newStatuses[:i])
 
-    def count_statuses (self, buffer):
+    def count_statuses(self, buffer):
         self.count[buffer] = len(self.statuses[buffer])
 
-    def count_unread (self, buffer):
+    def count_unread(self, buffer):
         self.unread[buffer] = 0
         for i in range(len(self.statuses[buffer])):
             if self.statuses[buffer][i].id == self.last_read[buffer]:
@@ -214,20 +214,20 @@ class Interface:
             self.unread[buffer] += 1
         self.unread[self.buffer] = 0
 
-    def change_buffer (self, buffer):
+    def change_buffer(self, buffer):
         self.buffer = buffer
         self.status['current'] = 0
         self.status['first'] = 0
         self.count_unread(buffer)
         self.display_timeline()
     
-    def navigate_buffer (self, nav):
+    def navigate_buffer(self, nav):
         index = self.timelines.index(self.buffer)
         new_index = index + nav
         if new_index >= 0 and new_index < len(self.timelines):
             self.change_buffer(self.timelines[new_index])
 
-    def display_flash (self):
+    def display_flash(self):
         '''Should be the main entry to display Flash,
            it will take care of the warning/infor difference.
         '''
@@ -238,21 +238,21 @@ class Interface:
             self.display_info_msg(msg)
         self.flash = []
 
-    def display_update_msg (self):
+    def display_update_msg(self):
         self.display_info_msg(' Updating timeline... ')
         self.screen.refresh()
 
-    def display_warning_msg (self, msg):
+    def display_warning_msg(self, msg):
         self.screen.addstr(0, 3, msg, self.get_color('warning_msg'))
 
-    def display_info_msg (self, msg):
+    def display_info_msg(self, msg):
         self.screen.addstr(0, 3, msg, self.get_color('info_msg'))
 
-    def display_redraw_screen (self):
+    def display_redraw_screen(self):
         self.screen.erase()
         self.display_timeline ()
 
-    def display_timeline (self):
+    def display_timeline(self):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
@@ -287,7 +287,7 @@ class Interface:
 
             self.screen.refresh()
 
-    def display_activity (self):
+    def display_activity(self):
         '''Main entry to display the activities bar'''
         maxyx = self.screen.getmaxyx()
         max_x = maxyx[1]
@@ -296,7 +296,7 @@ class Interface:
             self.display_buffer_activities(b)
             self.display_counter_activities(b)
 
-    def display_buffer_activities (self, buff):
+    def display_buffer_activities(self, buff):
         display = { 'home': 'H', 'mentions': 'M',
                     'direct': 'D', 'search': 'S ',
                     'user': 'U ', 'favorite': 'F', }
@@ -305,7 +305,7 @@ class Interface:
         else:
             self.screen.addstr(display[buff], self.get_color('other_tab'))
 
-    def display_counter_activities (self, buff):
+    def display_counter_activities(self, buff):
         if buff in ['home', 'mentions', 'direct']:
             if self.unread[buff] == 0:
                 color = 'read'
@@ -314,7 +314,7 @@ class Interface:
 
             self.screen.addstr(':%s ' % str(self.unread[buff]), self.get_color(color))
 
-    def display_help_bar (self):
+    def display_help_bar(self):
         '''The help bar display at the bottom of the screen,
            for keysbinding reminder'''
         maxyx = self.screen.getmaxyx()
@@ -386,7 +386,7 @@ class Interface:
 
         return True
 
-    def get_text (self, status):
+    def get_text(self, status):
         text = status.text.encode(self.charset)
         text = text.replace('\n', ' ')
         if status.rt:
@@ -399,7 +399,7 @@ class Interface:
                     text = status.retweeted_status.text
         return text
 
-    def display_text (self, panel, status):
+    def display_text(self, panel, status):
         '''needed to cut words properly, as it would cut it in a midle of a
         world without. handle highlighting of '#' and '@' tags.
         '''
@@ -437,7 +437,7 @@ class Interface:
                 while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
                     curent_x -= 1
 
-    def get_size_status (self, status):
+    def get_size_status(self, status):
         '''Allow to know how height will be the tweet, it calculate it exactly
            as it will display it.
         '''
@@ -456,7 +456,7 @@ class Interface:
         size = {'length': length, 'height': height}
         return size
 
-    def get_time (self, status):
+    def get_time(self, status):
         '''Handle the time format given by the api with something more
         readeable
         @param  date: full iso time format
@@ -470,7 +470,7 @@ class Interface:
 
         return hour
 
-    def get_header (self, status):
+    def get_header(self, status):
         '''@return string'''
         charset = sys.stdout.encoding
         try:
@@ -490,11 +490,11 @@ class Interface:
 
         return header
 
-    def is_retweet (self, status):
+    def is_retweet(self, status):
         status.rt = self.regex_retweet.match(status.text)
         return status.rt
 
-    def origin_of_retweet (self, status):
+    def origin_of_retweet(self, status):
         '''When its a retweet, return the first person who tweet it,
            not the retweeter
         '''
@@ -504,7 +504,7 @@ class Interface:
         origin = str(origin)
         return origin
 
-    def tear_down (self, *dummy):
+    def tear_down(self, *dummy):
         '''Last function call when quiting, restore some defaults params'''
         self.screen.keypad(0)
         curses.echo()
@@ -512,26 +512,26 @@ class Interface:
         curses.curs_set(1)
         curses.endwin()
 
-    def sigwinch_handler (self, *dummy):
+    def sigwinch_handler(self, *dummy):
         '''Resize event callback'''
         self.resize_event = True
 
-    def clear_statuses (self):
+    def clear_statuses(self):
         self.statuses[self.buffer] = [self.statuses[self.buffer][0]]
         self.count_statuses(self.buffer)
         self.status['current'] = 0
 
-    def get_current_status (self):
+    def get_current_status(self):
         '''@return the status object itself'''
         return self.statuses[self.buffer][self.status['current']]
 
-    def get_urls (self):
+    def get_urls(self):
         '''
         @return array of urls find in the text
         '''
         return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.statuses[self.buffer][self.status['current']].text)
 
-    def get_color (self, color):
+    def get_color(self, color):
         '''Return the curses code, with bold if enable of the color
            given in argument of the function
            @return color_pair code
@@ -542,23 +542,23 @@ class Interface:
 
         return cp
 
-    def move_down (self):
+    def move_down(self):
         if self.status['current'] < self.count[self.buffer] - 1:
             if self.status['current'] >= self.status['last']:
                 self.status['first'] += 1
             self.status['current'] += 1
 
-    def move_up (self):
+    def move_up(self):
         if self.status['current'] > 0:
             # if we need to move up the list to display
             if self.status['current'] == self.status['first']:
                 self.status['first'] -= 1
             self.status['current'] -= 1
 
-    def back_on_bottom (self):
+    def back_on_bottom(self):
         self.ui.status['current'] = self.ui.status['last']
 
-    def openurl (self):
+    def openurl(self):
         urls = self.getUrls()
         for url in urls:
             #try:

@@ -29,7 +29,7 @@ class EditBox:
         self.start_edit()
         self.win.erase()
 
-    def start_edit (self):
+    def start_edit(self):
 
         self.ui.refresh_token = True
         if self.data:
@@ -61,13 +61,13 @@ class EditBox:
             self.refresh()
         self.ui.refresh_token = False
 
-    def refresh (self):
+    def refresh(self):
         self.win.erase()
         self.win = self.init_win(self.ui.screen)
         self.display_content()
         self.win.refresh()
 
-    def display_content (self):
+    def display_content(self):
         x = 2
         y = 2
         words = self.content.split(' ')
@@ -80,7 +80,7 @@ class EditBox:
             x += len(w)+1
 
 
-    def init_win (self, screen):
+    def init_win(self, screen):
         '''
         This try to find a good size for the tweet window,
         and place it in main screen
@@ -115,7 +115,7 @@ class EditBox:
         win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
         return win
 
-    def count_chr (self):
+    def count_chr(self):
         i = 0
         token = False
         for ch in self.content:
@@ -127,6 +127,6 @@ class EditBox:
                 token = False
         return i
 
-    def get_content (self):
+    def get_content(self):
         return self.content
 

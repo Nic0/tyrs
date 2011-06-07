@@ -105,7 +105,7 @@ class Config:
     except:
         browser    = ''
 
-    def __init__ (self, args):
+    def __init__(self, args):
 
         # generate the config file
         if args.generate_config != None:
@@ -121,7 +121,7 @@ class Config:
         self.conf.read(self.config_file)
         self.parse_config()
 
-    def generate_config_file (self, args):
+    def generate_config_file(self, args):
 
         config_file = args.generate_config
         conf = ConfigParser.RawConfigParser()
@@ -153,7 +153,7 @@ class Config:
 
         sys.exit(0)
 
-    def set_path (self, args):
+    def set_path(self, args):
         # Default config path set
         if self.xdg_config != '':
             self.tyrs_path = self.xdg_config + '/tyrs/'
@@ -168,7 +168,7 @@ class Config:
         if args.config != None:
             self.config_file += '.' + args.config
 
-    def new_account (self):
+    def new_account(self):
 
         choice = self.askService()
         if choice == '2':
@@ -177,7 +177,7 @@ class Config:
         self.authorization()
         self.createTokenFile()
 
-    def askService (self):
+    def askService(self):
         print ''
         print 'There is no profile detected.'
         print ''
@@ -202,7 +202,7 @@ class Config:
             sys.exit(1)
         return choice
 
-    def ask_root_url (self):
+    def ask_root_url(self):
         print ''
         print ''
         print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
@@ -213,7 +213,7 @@ class Config:
         else:
             self.base_url = url
 
-    def parse_token (self):
+    def parse_token(self):
         token = ConfigParser.RawConfigParser()
         token.read(self.tokenFile)
         if token.has_option('token', 'service'):
@@ -227,14 +227,14 @@ class Config:
         self.oauth_token = token.get('token', 'oauth_token')
         self.oauth_token_secret = token.get('token', 'oauth_token_secret')
 
-    def parse_config (self):
+    def parse_config(self):
         ''' This parse the configuration file, and set
         some defaults values if the parameter is not given'''
         self.parse_color()
         self.parse_keys()
         self.parseParams()
 
-    def parse_color (self):
+    def parse_color(self):
         for c in self.colors:
             self.colors[c]['b'] = False
             if self.conf.has_option('colors', c):
@@ -250,14 +250,14 @@ class Config:
                 rgb = rgb.split(' ')
                 self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
 
-    def parse_keys (self):
+    def parse_keys(self):
         for key in self.keys:
             if self.conf.has_option('keys', key):
                 self.keys[key] = self.char_value(self.conf.get('keys', key))
             else:
                 self.keys[key] = self.char_value(self.keys[key])
 
-    def parseParams (self):
+    def parseParams(self):
 
         # refresh (in minutes)
         if self.conf.has_option('params', 'refresh'):
@@ -295,7 +295,7 @@ class Config:
             if int(self.conf.get('params', 'help')) == 0:
                 self.params['help'] = False
 
-    def char_value (self, ch):
+    def char_value(self, ch):
         if ch[0] == '^':
             i = 0
             while i <= 31:
@@ -304,7 +304,7 @@ class Config:
                 i +=1
         return ord(ch)
 
-    def get_bold_colors (self, str):
+    def get_bold_colors(self, str):
         bolds = str.split(' ')
         for bold in bolds:
             try:
@@ -312,7 +312,7 @@ class Config:
             except:
                 print 'The param "%s" does not exist for bold colors' % bold
 
-    def authorization (self):
+    def authorization(self):
         ''' This function from python-twitter developers '''
         # Copyright 2007 The Python-Twitter Developers
         #

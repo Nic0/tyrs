@@ -14,12 +14,12 @@ class Keys:
     keybinding, every case match a key to a method call, there is no logical
     here
     '''
-    def __init__ (self):
+    def __init__(self):
         self.conf       = tyrs.container['conf']
         self.interface  = tyrs.container['interface']
         self.api        = tyrs.container['api']
 
-    def handleKeyBinding (self):
+    def handleKeyBinding(self):
         '''Should have all keybinding handle here'''
         while True:
 
