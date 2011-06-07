@@ -59,7 +59,7 @@ class Interface:
         '''
         self.api    = tyrs.container['api']
         self.conf   = tyrs.container['conf']
-        self.api.set_ui()
+        self.api.set_ui(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         # startup the ncurses mode

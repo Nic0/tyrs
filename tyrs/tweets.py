@@ -21,14 +21,14 @@ class Tweets(Api):
         self.sear_user = ''
         self.search_word = ''
 
-    def set_ui(self):
-        self.interface = tyrs.container['interface']
+    def set_ui(self, ui):
+        self.interface = ui
 
     def authentification(self):
         url = self.get_base_url()
         self.api = ApiPatch(
-            self.conf.token[conf.service]['consumer_key'],
-            self.conf.token[conf.service]['consumer_secret'],
+            self.conf.token[self.conf.service]['consumer_key'],
+            self.conf.token[self.conf.service]['consumer_secret'],
             self.conf.oauth_token,
             self.conf.oauth_token_secret,
             base_url=url
