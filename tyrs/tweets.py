@@ -21,10 +21,10 @@ class Tweets(Api):
         self.sear_user = ''
         self.search_word = ''
 
-    def set_ui(self, ui):
-        self.interface = ui
+    def set_ui(self, interface):
+        self.interface = interface
 
-    def authentification(self):
+    def authentication(self):
         url = self.get_base_url()
         self.api = ApiPatch(
             self.conf.token[self.conf.service]['consumer_key'],
@@ -79,7 +79,7 @@ class Tweets(Api):
         return self.api.GetFriendsTimeline(retweets=True)
 
     def post_tweet(self, tweet, reply_to=None):
-        self.api.PostUpdate(tweet, reply_to)
+        return self.api.PostUpdate(tweet, reply_to)
 
     def retweet(self):
         status = self.interface.get_current_status()

@@ -59,7 +59,7 @@ def init_conf():
 def init_api():
     api = tweets.Tweets()
     container.add('api', api)
-    api.authentification()
+    api.authentication()
 
 def init_interface():
     user_interface = Interface()
