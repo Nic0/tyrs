@@ -39,17 +39,17 @@ def arguments ():
     args = parser.parse_args()
     return args
 
-def main(scr):
+def main():
 
     utils.set_console_title()
-    init_tyrs()
+    init_conf()
+    curses.wrapper(init_tyrs)
     print 'Waiting for thread stopping...'
     return 0
 
-def init_tyrs ():
-    init_conf()
+def init_tyrs (scr):
     init_api()
-    init_inteface()
+    init_interface()
     init_thread()
 
 def init_conf ():
@@ -61,7 +61,7 @@ def init_api ():
     container.add('api', api)
     api.authentification()
 
-def init_inteface ():
+def init_interface ():
     user_interface = Interface()
     container.add ('interface', user_interface)
 
@@ -75,8 +75,5 @@ def init_thread ():
 def init_keys ():
     Keys().handleKeyBinding()
 
-def start ():
-    curses.wrapper(main)
-
 if __name__ == "__main__":
-    start()
+    main()
