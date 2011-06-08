@@ -193,7 +193,7 @@ class Tweets:
 
     def search(self):
         self.interface.buffer = 'search'
-        self.search_word = self.nick_box('What should I search?')
+        self.search_word = SearchEditor('What should I search?').content
         try:
             self.interface.statuses['search'] = self.api.GetSearch(self.search_word)
             self.interface.change_buffer('search')
