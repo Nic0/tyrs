@@ -10,4 +10,4 @@ __revision__ = '0.1'
 
 if __name__=="__main__":
     import tyrs.tyrs
-    tyrs.tyrs.start()
+    tyrs.tyrs.main()
