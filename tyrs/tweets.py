@@ -70,7 +70,7 @@ class Tweets(Api):
     def send_direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''
         try:
-            status = self.interface.get_current_status()
+            status = self.interface.current_status()
             try:
                 pseudo = status.user.screen_name
             except:
@@ -88,69 +88,66 @@ class Tweets(Api):
         self.flash('tweet')
         try:
             self.api.PostUpdate(tweet, reply_to)
-        except:
+        except TwitterError:
             self.error() 
 
     def retweet(self):
-        status = self.interface.get_current_status()
+        self.flash('retweet')
+        status = self.interface.current_status()
         try:
             self.api.PostRetweet(status.GetId())
-            self.interface.flash = ['Retweet has been sent successfully.', 'info']
-        except:
-            self.interface.flash = ["Could not send the retweet.", 'warning']
+        except TwitterError:
+            self.error()
 
     def retweet_and_edit(self):
-        status = self.interface.get_current_status()
-        txt = status.text
+        status = self.interface.current_status()
         name = status.user.screen_name
-        data = 'RT @%s: %s' % (name, txt)
+        data = 'RT @%s: %s' % (name, status.text)
         self.tweet(data)
 
     def reply(self):
-        status = self.interface.get_current_status()
+        status = self.interface.current_status()
         reply_to_id = status.GetId()
         data = '@'+status.user.screen_name
         self.tweet(data, reply_to_id)
 
-    def delete(self):
-        statusId = self.interface.get_current_status().GetId()
-        # In case we want delete direct message, it will handle
-        # with DestroyDirectMessage(id)
+    def destroy(self):
+        self.flash('destroy')
+        status = self.interface.current_status()
         try:
-            self.api.DestroyStatus(statusId)
-            self.interface.flash = ['Tweet destroyed successfully.', 'info']
-        except:
-            self.interface.flash = ['The tweet could not been destroyed.', 'warning']
+            self.api.DestroyStatus(status.id)
+        except TwitterError:
+            self.error()
 
     def create_friendship(self, nick):
-        #msg = self.interface.flash_message = FlashMessage('follow').set_nick(nick)
+        self.flash('follow', nick)
         try:
             self.api.CreateFriendship(nick)
-        except:
-            msg.warning()
+        except TwitterError:
+            self.error()
 
-    def destroy_friendship(self, pseudo):
+    def destroy_friendship(self, nick):
+        self.flash('unfollow', nick)
         try:
             self.api.DestroyFriendship(pseudo)
-            self.interface.flash = ['You have unfollowed %s' % pseudo, 'info']
-        except:
-            self.interface.flash = ['Failed to unfollow %s' % pseudo, 'warning']
+        except TwitterError:
+            self.error()
 
     def set_favorite(self):
-        status = self.interface.get_current_status()
+        self.flash('favorite')
+        status = self.interface.current_status()
         try:
             self.api.CreateFavorite(status)
-            self.interface.flash = ['The tweet is now in your favorite list', 'info']
-        except:
-            self.interface.flash = ['Could not set the current tweet as favorite', 'warning']
+        except TwitterError:
+            self.error() 
 
     def destroy_favorite(self):
-        status = self.interface.get_current_status()
+        self.flash('favorite_del')
+        status = self.interface.current_status()
         try:
             self.api.DestroyFavorite(status)
-            self.interface.flash = ['The current favorite has been destroyed', 'info']
-        except:
-            self.interface.flash = ['Could not destroy the favorite tweet', 'warning']
+        except TwitterError:
+            self.error()
 
     def get_favorites(self):
         self.interface.change_buffer('favorite')
@@ -186,7 +183,7 @@ class Tweets(Api):
             return False
 
     def follow_selected(self):
-        status = self.interface.get_current_status()
+        status = self.interface.current_status()
         if self.interface.is_retweet(status):
             pseudo = self.interface.origin_of_retweet(status)
         else:
@@ -194,8 +191,8 @@ class Tweets(Api):
         self.create_friendship(pseudo)
 
     def unfollow_selected(self):
-        pseudo = self.interface.get_current_status().user.screen_name
-        self.destroy_friendship(pseudo)
+        nick = self.interface.current_status().user.screen_name
+        self.destroy_friendship(nick)
 
     def follow(self):
         nick = self.nick_box('Follow Someone ?')

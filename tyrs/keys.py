@@ -64,7 +64,7 @@ class Keys:
                 self.api.retweet_and_edit()
             # DELETE TwEET
             elif ch == self.conf.keys['delete']:
-                self.api.delete()
+                self.api.destroy()
             # MENTIONS
             elif ch == self.conf.keys['mentions']:
                 self.interface.change_buffer('mentions')

@@ -524,7 +524,7 @@ class Interface:
         self.count_statuses(self.buffer)
         self.status['current'] = 0
 
-    def get_current_status(self):
+    def current_status(self):
         '''@return the status object itself'''
         return self.statuses[self.buffer][self.status['current']]
 
