@@ -47,7 +47,7 @@ class FlashMessage:
             ],
         'unfollow': [
             'You have unfollowed %s',
-            'You could not followed %s'
+            'You could not follow %s'
             ],
         }
 
