@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+# Copyright © 2011 Nicolas Paris <nicolas.caen@gmail.com>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# c: color value
+# b: bold
+colors = {
+    'highlight':      {'c': 1},
+    'header':         {'c': 6},
+    'hashtag':        {'c': 3},
+    'attag':          {'c': 2},
+    'text':           {'c': 7},
+    'warning_msg':    {'c': 1},
+    'info_msg':       {'c': 2},
+    'current_tweet':  {'c': 5},
+    'current_tab':    {'c': 6},
+    'other_tab':      {'c': 7},
+    'unread':         {'c': 1},
+    'read':           {'c': 7},
+    'help':           {'c': 6},
+}
+
+color_set = [False, False, False, False, False, False, False, False]
+
+key = {
+    'up':                'k',
+    'down':              'j',
+    'left':              'J',
+    'right':             'K',
+    'quit':              'q',
+    'tweet':             't',
+    'clear':             'c',
+    'retweet':           'r',
+    'retweet_and_edit':  'R',
+    'delete':            'C',
+    'update':            'u',
+    'follow_selected':   'f',
+    'unfollow_selected': 'l',
+    'follow':            'F',
+    'unfollow':          'L',
+    'openurl':           'o',
+    'home':              'h',
+    'mentions':          'm',
+    'reply':             'M',
+    'back_on_top':       'g',
+    'back_on_bottom':    'G',
+    'getDM':             'd',
+    'sendDM':            'D',
+    'search':            's',
+    'search_user':       'U',
+    'search_myself':     '^U',
+    'redraw':            '^L',
+    'fav':               'b',
+    'get_fav':           'B',
+    'delete_fav':        '^B',
+}
+
+params = {
+    'refresh':              10,
+    'tweet_border':         1,
+    'relative_time':        0,
+    'retweet_by':           1,
+    'openurl_command':      'firefox %s',
+    'transparency':         True,
+    'activities':           True,
+    'compress':             False,
+    'help':                 True,
+}
+
+token = {
+    'twitter': {
+        'consumer_key':     'Eq9KLjwH9sJNcpF4OOYNw',
+        'consumer_secret':  '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
+    },
+    'identica': {
+        'consumer_key':     '6b2cf8346a141d530739f72b977b7078',
+        'consumer_secret':  '31b342b348502345d4a343a331e00edb'
+    }
+}
