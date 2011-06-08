@@ -106,7 +106,7 @@ class Keys:
                 self.interface.change_buffer('direct')
             # SEND DIRECT MESSAGE
             elif ch == self.conf.keys['sendDM']:
-                self.api.send_direct_message()
+                self.api.direct_message()
             # SEARCH
             elif ch == self.conf.keys['search']:
                 self.api.search()

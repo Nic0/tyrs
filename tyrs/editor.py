@@ -18,16 +18,11 @@ import curses
 import curses.textpad
 
 class Editor:
-    ''' Popup box with editing faculty.
-    @param params {char, width, header}
-           with char, the approximative maximum charactere we want the edit box may contain
-    @param screen the main screen
-    '''
 
     confirm = False
     content = ''
 
-    def __init__(self, data):
+    def __init__(self, data=None):
         self.conf = tyrs.container['conf']
         self.ui = tyrs.container['interface'] 
         self.data   = data
@@ -58,7 +53,7 @@ class Editor:
                 break
 
             elif ch == 27:        # ESC: abord
-                self.content = ''
+                self.content = None
                 break
 
             elif ch == 127:       # DEL
@@ -137,7 +132,10 @@ class Editor:
         return i
 
 class TweetEditor(Editor):
-    params = {'char': 200, 'width': 80, 'header': "What's up ?"}
+    params = {'char': 200, 'width': 80, 'header': "What's up?"}
 
 class NickEditor(Editor):
-    pass
+    params = {'char': 40, 'width': 40, 'header': "Entry a name"}
+
+class SearchEditor(Editor):
+    params = {'char': 40, 'width': 40, 'header': "Search for something?"}

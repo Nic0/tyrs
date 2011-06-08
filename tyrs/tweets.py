@@ -14,8 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
-from editor import TweetEditor
 import urllib2
+from editor import *
 from utils import cut_attag
 from message import FlashMessage
 from twitter import Api, TwitterError
@@ -57,30 +57,10 @@ class Tweets:
     def set_myself(self):
         self.myself = self.api.VerifyCredentials()
 
-    def tweet(self, data, reply_to_id=None, dm=False):
+    def tweet(self, data=None):
         tweet = TweetEditor(data).content
-        if not dm:
-            self.post_tweet(tweet, reply_to_id)
-        else:
-            # note in the DM case, we have a screen_name, and not the id
-            self.api.PostDirectMessage(reply_to_id, tweet)
-
-    def send_direct_message(self):
-        ''' Two editing box, one for the name, and one for the content'''
-        try:
-            status = self.interface.current_status()
-            try:
-                nick = status.user.screen_name
-            except:
-                nick = status.sender_screen_name
-        except:
-            nick = ''
-
-        nick = self.nick_box("Send a Direct Message to whom ?", nick)
-        self.tweet(False, nick, True)
-
-    def update_home_timeline(self):
-        return self.api.GetFriendsTimeline(retweets=True)
+        if tweet:
+            self.post_tweet(tweet)
 
     def post_tweet(self, tweet, reply_to=None):
         self.flash('tweet')
@@ -99,8 +79,8 @@ class Tweets:
 
     def retweet_and_edit(self):
         status = self.interface.current_status()
-        name = status.user.screen_name
-        data = 'RT @%s: %s' % (name, status.text)
+        nick = status.user.screen_name
+        data = 'RT @%s: %s' % (nick, status.text)
         self.tweet(data)
 
     def reply(self):
@@ -117,6 +97,52 @@ class Tweets:
             self.api.DestroyStatus(status.id)
         except TwitterError:
             self.error()
+
+    def direct_message(self):
+        ''' Two editing box, one for the name, and one for the content'''
+        nick = self.nick_for_direct_message()
+        tweet = TweetEditor().content
+        if tweet:
+            self.send_direct_message(nick, tweet)
+
+    def nick_for_direct_message(self):
+        status = self.interface.current_status()
+        if hasattr(status, 'user'):
+            nick = status.user.screen_name
+        else:
+            nick = status.sender_screen_name
+        nick = NickEditor(nick)
+
+        return nick
+
+    def send_direct_message(self, nick, tweet)
+        self.flash('direct')
+        try:
+            return self.api.PostDirectMessage(nick, tweet)
+        except TwitterError:
+            self.error()
+
+    def follow(self):
+        nick = NickEditor().content
+        if nick:
+            self.create_friendship(nick)
+
+    def follow_selected(self):
+        status = self.interface.current_status()
+        if self.interface.is_retweet(status):
+            nick = self.interface.origin_of_retweet(status)
+        else:
+            nick = status.user.screen_name
+        self.create_friendship(nick)
+
+    def unfollow(self):
+        nick = NickEditor().content
+        if nick:
+            self.destroy_friendship(nick)       
+
+    def unfollow_selected(self):
+        nick = self.interface.current_status().user.screen_name
+        self.destroy_friendship(nick)
 
     def create_friendship(self, nick):
         self.flash('follow', nick)
@@ -151,6 +177,9 @@ class Tweets:
     def get_favorites(self):
         self.interface.change_buffer('favorite')
 
+    def update_home_timeline(self):
+        return self.api.GetFriendsTimeline(retweets=True)
+
     def user_timeline(self, myself=False):
         if not myself:
             nick = self.nick_box('Looking for someone?')
@@ -173,35 +202,6 @@ class Tweets:
         except:
             self.interface.flash = ['Failed with the search', 'warning']
 
-    def nick_box(self, header, nick=None):
-        params = {'char': 40, 'width': 40, 'header': header}
-        box = editBox.EditBox(self.interface, params, nick, self.conf)
-        if box.confirm:
-            return self.cut_attag(box.get_content())
-        else:
-            return False
-
-    def follow_selected(self):
-        status = self.interface.current_status()
-        if self.interface.is_retweet(status):
-            nick = self.interface.origin_of_retweet(status)
-        else:
-            nick = status.user.screen_name
-        self.create_friendship(nick)
-
-    def unfollow_selected(self):
-        nick = self.interface.current_status().user.screen_name
-        self.destroy_friendship(nick)
-
-    def follow(self):
-        nick = self.nick_box('Follow Someone ?')
-        if nick != False:
-            self.create_friendship(nick)
-
-    def unfollow(self):
-        nick = self.nick_box('Unfollow Someone ?')
-        if nick != False:
-            self.destroy_friendship(nick)       
 
     def flash(self, event, string=None):
         self.flash_message.event = event
