@@ -45,6 +45,7 @@ class TestTwitterApi(unittest.TestCase):
         tweet = 'test from unittest at ' + self.get_time()
         result = self.api.post_tweet(tweet)
         self.assertEqual(result.text, tweet)
+        self.assertIsInstance(result, Status)
     
     def test_post_empty_update(self):
         tweet = ''
