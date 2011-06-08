@@ -29,10 +29,11 @@ class Tweets:
  
     def __init__(self):
         self.conf = tyrs.container['conf']
-        self.sear_user = ''
-        self.search_word = ''
+        self.search_user = None
+        self.search_word = None
         self.flash_message = FlashMessage()
-
+        self.user_timeline = []
+    
     def set_ui(self, interface):
         self.interface = interface
 
@@ -180,20 +181,28 @@ class Tweets:
     def update_home_timeline(self):
         return self.api.GetFriendsTimeline(retweets=True)
 
-    def user_timeline(self, myself=False):
-        if not myself:
-            nick = self.nick_box('Looking for someone?')
-        else:
-            nick = self.myself.screen_name
-        if nick != False:
-            if self.search_user != nick:
-                self.interface.emptyDict('user')
-            self.search_user = nick
+    def find_public_timeline(self):
+        nick = NickEditor().content
+        if nick and nick != self.search_user:
+            self.change_search_user(nick)
+            self.load_user_public_timeline()
+
+    def change_search_user(self, nick):
+        self.search_user = nick
+        self.interface.empty_dict('user')
+
+    def my_public_timeline(self):
+        self.change_search_user(self.myself.screen_name)
+        self.load_user_public_timeline()
+
+    def load_user_public_timeline(self):
+        if self.search_user:
+            self.user_timeline = self.api.GetUserTimeline(self.search_user, include_rts=True)
             self.interface.change_buffer('user')
 
     def search(self):
         self.interface.buffer = 'search'
-        self.search_word = SearchEditor('What should I search?').content
+        self.search_word = SearchEditor().content
         try:
             self.interface.statuses['search'] = self.api.GetSearch(self.search_word)
             self.interface.change_buffer('search')
