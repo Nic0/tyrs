@@ -18,7 +18,7 @@ import urllib2
 from editor import *
 from utils import cut_attag
 from message import FlashMessage
-from twitter import Api, TwitterError
+from twitter import Api, TwitterError, Status
 
 try:
     import json
