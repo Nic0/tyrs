@@ -64,11 +64,9 @@ class Tweets(Api):
             content = box.get_content()
             if not dm:
                 self.post_tweet(content, reply_to_id)
-                self.interface.flash = ['Tweet has been sent successfully.', "info"]
             else:
                 # note in the DM case, we have a screen_name, and not the id
                 self.api.PostDirectMessage(reply_to_id, content)
-                self.interface.flash = ['The direct message has been sent.', 'info']
 
     def send_direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''

@@ -16,9 +16,10 @@
 import os
 import sys
 import curses
+import constant
+import ConfigParser
 import curses.ascii
 import oauth2 as oauth
-import ConfigParser
 
 try:
     from urlparse import parse_qsl
@@ -26,82 +27,6 @@ except:
     from cgi import parse_qsl
 
 class Config:
-
-    token = {
-        'twitter': {
-            'consumer_key':     'Eq9KLjwH9sJNcpF4OOYNw',
-            'consumer_secret':  '3JoHyvBp3L6hhJo4BJr6H5aFxLhSlR70ZYnM8jBCQ'
-        },
-        'identica': {
-            'consumer_key':     '6b2cf8346a141d530739f72b977b7078',
-            'consumer_secret':  '31b342b348502345d4a343a331e00edb'
-        }
-    }
-
-    # c: color value
-    # b: bold
-    colors = {
-        'highlight':      {'c': 1},
-        'header':         {'c': 6},
-        'hashtag':        {'c': 3},
-        'attag':          {'c': 2},
-        'text':           {'c': 7},
-        'warning_msg':    {'c': 1},
-        'info_msg':       {'c': 2},
-        'current_tweet':  {'c': 5},
-        'current_tab':    {'c': 6},
-        'other_tab':      {'c': 7},
-        'unread':         {'c': 1},
-        'read':           {'c': 7},
-        'help':           {'c': 6},
-    }
-
-    color_set = [False, False, False, False, False, False, False, False]
-
-    keys = {
-        'up':                'k',
-        'down':              'j',
-        'left':              'J',
-        'right':             'K',
-        'quit':              'q',
-        'tweet':             't',
-        'clear':             'c',
-        'retweet':           'r',
-        'retweet_and_edit':  'R',
-        'delete':            'C',
-        'update':            'u',
-        'follow_selected':   'f',
-        'unfollow_selected': 'l',
-        'follow':            'F',
-        'unfollow':          'L',
-        'openurl':           'o',
-        'home':              'h',
-        'mentions':          'm',
-        'reply':             'M',
-        'back_on_top':       'g',
-        'back_on_bottom':    'G',
-        'getDM':             'd',
-        'sendDM':            'D',
-        'search':            's',
-        'search_user':       'U',
-        'search_myself':     '^U',
-        'redraw':            '^L',
-        'fav':               'b',
-        'get_fav':           'B',
-        'delete_fav':        '^B',
-    }
-
-    params = {
-        'refresh':              10,
-        'tweet_border':         1,
-        'relative_time':        0,
-        'retweet_by':           1,
-        'openurl_command':      'firefox %s',
-        'transparency':         True,
-        'activities':           True,
-        'compress':             False,
-        'help':                 True,
-    }
 
     home       = os.environ['HOME']
     try:
@@ -115,6 +40,11 @@ class Config:
         browser    = ''
 
     def __init__(self, args):
+        self.token = constant.token
+        self.colors = constant.colors
+        self.color_set = constant.color_set
+        self.keys = constant.key
+        self.params = constant.params
 
         # generate the config file
         if args.generate_config != None:
