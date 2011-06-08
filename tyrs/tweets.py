@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
-import editBox
+from editor import TweetEditor
 import urllib2
 from utils import cut_attag
 from message import FlashMessage
@@ -25,7 +25,7 @@ try:
 except ImportError:
     import simplejson as json
 
-class Tweets(Api):
+class Tweets:
  
     def __init__(self):
         self.conf = tyrs.container['conf']
@@ -58,15 +58,12 @@ class Tweets(Api):
         self.myself = self.api.VerifyCredentials()
 
     def tweet(self, data, reply_to_id=None, dm=False):
-        params = {'char': 200, 'width': 80, 'header': "What's up ?"}
-        box = editBox.EditBox(self.interface, params, data, self.conf)
-        if box.confirm:
-            content = box.get_content()
-            if not dm:
-                self.post_tweet(content, reply_to_id)
-            else:
-                # note in the DM case, we have a screen_name, and not the id
-                self.api.PostDirectMessage(reply_to_id, content)
+        tweet = TweetEditor(data).content
+        if not dm:
+            self.post_tweet(tweet, reply_to_id)
+        else:
+            # note in the DM case, we have a screen_name, and not the id
+            self.api.PostDirectMessage(reply_to_id, tweet)
 
     def send_direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''
@@ -96,7 +93,7 @@ class Tweets(Api):
         self.flash('retweet')
         status = self.interface.current_status()
         try:
-            self.api.PostRetweet(status.GetId())
+            self.api.PostRetweet(status.id)
         except TwitterError:
             self.error()
 
@@ -108,9 +105,10 @@ class Tweets(Api):
 
     def reply(self):
         status = self.interface.current_status()
-        reply_to_id = status.GetId()
-        data = '@'+status.user.screen_name
-        self.tweet(data, reply_to_id)
+        data = '@' + status.user.screen_name + ' '
+        tweet = TweetEditor(data).content
+        if tweet:
+            self.post_tweet(data, status.id)
 
     def destroy(self):
         self.flash('destroy')
@@ -215,18 +213,8 @@ class Tweets(Api):
 
 class ApiPatch(Api):
     def PostRetweet(self, id):
-        '''This code come from issue #130 on python-twitter tracker
+        '''This code come from issue #130 on python-twitter tracker'''
 
-        Retweet a tweet with the Retweet API
-
-        The twitter.Api instance must be authenticated.
-
-        Args:
-        id: The numerical ID of the tweet you are retweeting
-
-        Returns:
-        A twitter.Status instance representing the retweet posted
-        '''
         if not self._oauth_consumer:
             raise TwitterError("The twitter.Api instance must be authenticated.")
         try:
@@ -238,4 +226,4 @@ class ApiPatch(Api):
         json_data = self._FetchUrl(url, post_data={'dummy': None})
         data = json.loads(json_data)
         self._CheckForTwitterError(data)
-#        return Status.NewFromJsonDict(data)
+        return Status.NewFromJsonDict(data)
