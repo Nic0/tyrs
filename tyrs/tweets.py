@@ -115,7 +115,7 @@ class Tweets:
 
         return nick
 
-    def send_direct_message(self, nick, tweet)
+    def send_direct_message(self, nick, tweet):
         self.flash('direct')
         try:
             return self.api.PostDirectMessage(nick, tweet)
