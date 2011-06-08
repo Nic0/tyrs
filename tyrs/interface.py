@@ -21,6 +21,7 @@ import time
 import signal                   # resize event
 import curses
 import curses.wrapper
+from message import FlashMessage
 
 class Interface:
     ''' All dispositions in the screen, and some logics for display tweet
@@ -67,6 +68,7 @@ class Interface:
         '''
         self.api    = tyrs.container['api']
         self.conf   = tyrs.container['conf']
+        self.flash_message = FlashMessage()
         self.api.set_ui(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
@@ -235,26 +237,18 @@ class Interface:
         if new_index >= 0 and new_index < len(self.timelines):
             self.change_buffer(self.timelines[new_index])
 
-    def display_flash(self):
-        '''Should be the main entry to display Flash,
-           it will take care of the warning/infor difference.
-        '''
-        msg = ' ' + self.flash[0] + ' '
-        if self.flash[1] == 'warning':
-            self.display_warning_msg(msg)
-        else:
-            self.display_info_msg(msg)
-        self.flash = []
+    def display_flash_message(self):
+        if self.flash_message.event:
+            msg = self.flash_message.get_msg()
+            level = self.flash_message.level
+            msg_color = { 0: 'info_msg', 1: 'warning_msg', }
+            self.screen.addstr(0, 3, msg, self.get_color(msg_color[level]))
+            self.flash_message.reset()
+            self.screen.refresh()
 
     def display_update_msg(self):
-        self.display_info_msg(' Updating timeline... ')
-        self.screen.refresh()
-
-    def display_warning_msg(self, msg):
-        self.screen.addstr(0, 3, msg, self.get_color('warning_msg'))
-
-    def display_info_msg(self, msg):
-        self.screen.addstr(0, 3, msg, self.get_color('info_msg'))
+        self.flash_message.event = 'update' 
+        self.display_flash_message()
 
     def display_redraw_screen(self):
         self.screen.erase()
@@ -280,8 +274,9 @@ class Interface:
                     br = self.display_status(self.statuses[self.buffer][i], i)
                     if not br:
                         break
-            if len(self.flash) != 0:
-                self.display_flash()
+            
+            self.display_flash_message()
+            
             if self.status['current'] > self.status['last']:
                 self.status['current'] = self.status['last']
                 self.display_timeline()

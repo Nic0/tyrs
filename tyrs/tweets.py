@@ -58,17 +58,14 @@ class Tweets(Api):
         params = {'char': 200, 'width': 80, 'header': "What's up ?"}
         box = editBox.EditBox(self.interface, params, data, self.conf)
         if box.confirm:
-            try:
-                content = box.get_content()
-                if not dm:
-                    self.post_tweet(content, reply_to_id)
-                    self.interface.flash = ['Tweet has been sent successfully.', "info"]
-                else:
-                    # note in the DM case, we have a screen_name, and not the id
-                    self.api.PostDirectMessage(reply_to_id, content)
-                    self.interface.flash = ['The direct message has been sent.', 'info']
-            except:
-               self.interface.flash = ["Couldn't send the tweet.", "warning"]
+            content = box.get_content()
+            if not dm:
+                self.post_tweet(content, reply_to_id)
+                self.interface.flash = ['Tweet has been sent successfully.', "info"]
+            else:
+                # note in the DM case, we have a screen_name, and not the id
+                self.api.PostDirectMessage(reply_to_id, content)
+                self.interface.flash = ['The direct message has been sent.', 'info']
 
     def send_direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''
@@ -88,7 +85,11 @@ class Tweets(Api):
         return self.api.GetFriendsTimeline(retweets=True)
 
     def post_tweet(self, tweet, reply_to=None):
-        return self.api.PostUpdate(tweet, reply_to)
+        self.flash('tweet')
+        try:
+            self.api.PostUpdate(tweet, reply_to)
+        except:
+            self.error() 
 
     def retweet(self):
         status = self.interface.get_current_status()
@@ -121,12 +122,12 @@ class Tweets(Api):
         except:
             self.interface.flash = ['The tweet could not been destroyed.', 'warning']
 
-    def create_friendship(self, pseudo):
+    def create_friendship(self, nick):
+        #msg = self.interface.flash_message = FlashMessage('follow').set_nick(nick)
         try:
-            self.api.CreateFriendship(pseudo)
-            self.interface.flash = ['You are now following %s' % pseudo, 'info']
+            self.api.CreateFriendship(nick)
         except:
-            self.interface.flash = ['Failed to follow %s' % pseudo, 'warning']
+            msg.warning()
 
     def destroy_friendship(self, pseudo):
         try:
@@ -180,7 +181,7 @@ class Tweets(Api):
         params = {'char': 40, 'width': 40, 'header': header}
         box = editBox.EditBox(self.interface, params, pseudo, self.conf)
         if box.confirm:
-            return self.cut_attag(box.getContent())
+            return self.cut_attag(box.get_content())
         else:
             return False
 
@@ -210,6 +211,14 @@ class Tweets(Api):
         if name[0] == '@':
             name = name[1:]
         return name
+
+    def flash(self, event, string=None):
+        self.interface.flash_message.event = event
+        if string:
+            self.interface.flash_message.string = string
+    
+    def error(self):
+        self.interface.flash_message.warning()
 
 class ApiPatch(Api):
     def PostRetweet(self, id):
