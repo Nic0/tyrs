@@ -19,3 +19,7 @@ def set_console_title():
     except:
         pass
 
+def cut_attag(self, name):
+    if name[0] == '@':
+        name = name[1:]
+    return name

@@ -68,7 +68,6 @@ class Interface:
         '''
         self.api    = tyrs.container['api']
         self.conf   = tyrs.container['conf']
-        self.flash_message = FlashMessage()
         self.api.set_ui(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
@@ -238,16 +237,16 @@ class Interface:
             self.change_buffer(self.timelines[new_index])
 
     def display_flash_message(self):
-        if self.flash_message.event:
-            msg = self.flash_message.get_msg()
-            level = self.flash_message.level
+        if self.api.flash_message.event:
+            msg = self.api.flash_message.get_msg()
+            level = self.api.flash_message.level
             msg_color = { 0: 'info_msg', 1: 'warning_msg', }
             self.screen.addstr(0, 3, msg, self.get_color(msg_color[level]))
-            self.flash_message.reset()
+            self.api.flash_message.reset()
             self.screen.refresh()
 
     def display_update_msg(self):
-        self.flash_message.event = 'update' 
+        self.api.flash_message.event = 'update' 
         self.display_flash_message()
 
     def display_redraw_screen(self):

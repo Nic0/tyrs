@@ -43,13 +43,13 @@ class TestTwitterApi(unittest.TestCase):
 
     def test_post_update(self):
         tweet = 'test from unittest at ' + self.get_time()
-        result = self.api.post_tweet(tweet, None)
+        result = self.api.post_tweet(tweet)
         self.assertEqual(result.text, tweet)
     
     def test_post_empty_update(self):
         tweet = ''
-        with self.assertRaises(TwitterError):
-            self.api.post_tweet(tweet, None)
+        result = self.api.post_tweet(tweet)
+        self.assertIsNone(result)
 
     def test_update_home_timeline(self):
         result = self.api.update_home_timeline()

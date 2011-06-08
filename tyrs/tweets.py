@@ -16,6 +16,8 @@
 import tyrs
 import editBox
 import urllib2
+from utils import cut_attag
+from message import FlashMessage
 from twitter import Api, TwitterError
 
 try:
@@ -29,6 +31,7 @@ class Tweets(Api):
         self.conf = tyrs.container['conf']
         self.sear_user = ''
         self.search_word = ''
+        self.flash_message = FlashMessage()
 
     def set_ui(self, interface):
         self.interface = interface
@@ -87,7 +90,7 @@ class Tweets(Api):
     def post_tweet(self, tweet, reply_to=None):
         self.flash('tweet')
         try:
-            self.api.PostUpdate(tweet, reply_to)
+            return self.api.PostUpdate(tweet, reply_to)
         except TwitterError:
             self.error() 
 
@@ -204,18 +207,13 @@ class Tweets(Api):
         if nick != False:
             self.destroy_friendship(nick)       
 
-    def cut_attag(self, name):
-        if name[0] == '@':
-            name = name[1:]
-        return name
-
     def flash(self, event, string=None):
-        self.interface.flash_message.event = event
+        self.flash_message.event = event
         if string:
-            self.interface.flash_message.string = string
+            self.flash_message.string = string
     
     def error(self):
-        self.interface.flash_message.warning()
+        self.flash_message.warning()
 
 class ApiPatch(Api):
     def PostRetweet(self, id):
