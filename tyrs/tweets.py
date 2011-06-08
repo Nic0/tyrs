@@ -72,14 +72,14 @@ class Tweets(Api):
         try:
             status = self.interface.current_status()
             try:
-                pseudo = status.user.screen_name
+                nick = status.user.screen_name
             except:
-                pseudo = status.sender_screen_name
+                nick = status.sender_screen_name
         except:
-            pseudo = ''
+            nick = ''
 
-        pseudo = self.nick_box("Send a Direct Message to whom ?", pseudo)
-        self.tweet(False, pseudo, True)
+        nick = self.nick_box("Send a Direct Message to whom ?", nick)
+        self.tweet(False, nick, True)
 
     def update_home_timeline(self):
         return self.api.GetFriendsTimeline(retweets=True)
@@ -129,7 +129,7 @@ class Tweets(Api):
     def destroy_friendship(self, nick):
         self.flash('unfollow', nick)
         try:
-            self.api.DestroyFriendship(pseudo)
+            self.api.DestroyFriendship(nick)
         except TwitterError:
             self.error()
 
@@ -174,9 +174,9 @@ class Tweets(Api):
         except:
             self.interface.flash = ['Failed with the search', 'warning']
 
-    def nick_box(self, header, pseudo=None):
+    def nick_box(self, header, nick=None):
         params = {'char': 40, 'width': 40, 'header': header}
-        box = editBox.EditBox(self.interface, params, pseudo, self.conf)
+        box = editBox.EditBox(self.interface, params, nick, self.conf)
         if box.confirm:
             return self.cut_attag(box.get_content())
         else:
@@ -185,10 +185,10 @@ class Tweets(Api):
     def follow_selected(self):
         status = self.interface.current_status()
         if self.interface.is_retweet(status):
-            pseudo = self.interface.origin_of_retweet(status)
+            nick = self.interface.origin_of_retweet(status)
         else:
-            pseudo = status.user.screen_name
-        self.create_friendship(pseudo)
+            nick = status.user.screen_name
+        self.create_friendship(nick)
 
     def unfollow_selected(self):
         nick = self.interface.current_status().user.screen_name
