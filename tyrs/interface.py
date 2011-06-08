@@ -137,7 +137,7 @@ class Interface:
         self.count[buffer]     = 0
         self.last_read[buffer] = 0
 
-    def resize_event(self):
+    def handle_resize_event(self):
         self.resize_event = False
         curses.endwin()
         self.maxyx = self.screen.getmaxyx()

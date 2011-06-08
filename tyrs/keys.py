@@ -35,7 +35,7 @@ class Keys:
             ch = self.interface.screen.getch()
 
             if self.interface.resize_event:
-                self.interface.resize_event()
+                self.interface.handle_resize_event()
 
             # Down and Up key must act as a menu, and should navigate
             # throught every tweets like an item.
