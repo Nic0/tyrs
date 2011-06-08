@@ -111,7 +111,7 @@ class Tweets:
             nick = status.user.screen_name
         else:
             nick = status.sender_screen_name
-        nick = NickEditor(nick)
+        nick = NickEditor(nick).content
 
         return nick
 

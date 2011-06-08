@@ -37,12 +37,16 @@ class FlashMessage:
             'Your favorite tweet has been destroyed',
             'Could not destroyed the favorite tweet',
             ],
+        'direct': [
+            'You direct message has been sent',
+            'Could not send the direct message',
+            ],
         'follow': [
             'You are now following %s',
             'You could not follow %s'
             ],
         'unfollow': [
-            'You are unfollowed %s',
+            'You have unfollowed %s',
             'You could not followed %s'
             ],
         }
