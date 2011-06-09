@@ -171,7 +171,7 @@ class Interface:
             elif buffer == 'user' and self.api.search_user != '':
                 self.append_new_statuses(
                     #self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
-                    self.api.user_timeline, buffer)
+                    self.api.statuses, buffer)
             # FAVORITES
             elif buffer == 'favorite':
                 self.append_new_statuses(self.api.api.GetFavorites(), buffer)

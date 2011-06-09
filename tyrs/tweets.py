@@ -32,7 +32,7 @@ class Tweets:
         self.search_user = None
         self.search_word = None
         self.flash_message = FlashMessage()
-        self.user_timeline = []
+        self.statuses = []
     
     def set_ui(self, interface):
         self.interface = interface
@@ -197,7 +197,7 @@ class Tweets:
 
     def load_user_public_timeline(self):
         if self.search_user:
-            self.user_timeline = self.api.GetUserTimeline(self.search_user, include_rts=True)
+            self.statuses = self.api.GetUserTimeline(self.search_user, include_rts=True)
             self.interface.change_buffer('user')
 
     def search(self):
