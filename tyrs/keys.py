@@ -76,7 +76,7 @@ class Keys(object):
                 self.interface.clear_statuses()
             # UPDATE
             elif ch == self.conf.keys['update']:
-                self.interface.update_timeline(self.interface.buffer)
+                self.api.update_timeline(self.interface.buffer)
             # FOLLOW SELECTED
             elif ch == self.conf.keys['follow_selected']:
                 self.api.follow_selected()
