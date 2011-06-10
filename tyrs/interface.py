@@ -331,7 +331,7 @@ class Interface:
                             chr(self.conf.keys['home']),
                             chr(self.conf.keys['mentions']),
                             chr(self.conf.keys['update']),
-                           ), max[1] -4, self.get_color('text')
+                           ), maxyx[1] -4, self.get_color('text')
         )
 
     def display_status (self, status, i):

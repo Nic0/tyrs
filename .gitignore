@@ -13,4 +13,5 @@ doc/javascripts
 doc/*.conf
 doc/images/*
 
+tags
 build
