@@ -50,23 +50,19 @@ class Interface(object):
         @param api: instance of Tweets, will handle retrieve, sending tweets
         @param conf: contain all configuration parameters parsed
         '''
-        self.api    = tyrs.container['api']
-        self.conf   = tyrs.container['conf']
+        self.api        = tyrs.container['api']
+        self.conf       = tyrs.container['conf']
+        self.timelines  = tyrs.container['timelines']
+        self.buffers    = tyrs.container['buffers']
         self.api.set_ui(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         # startup the ncurses mode
         self.init_screen()
-        self.init_timelines()
         # first update of home timeline
-        self.update_timeline('home')
+        self.api.update_timeline('home')
+        self.timelines['home'].reset()
         self.display_timeline()
-
-    def init_timelines(self):
-        self.buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
-        for buff in self.buffers:
-            self.timelines[buff] = Timeline()
-        tyrs.container.add('timelines', self.timelines)
 
     def init_screen(self):
 
@@ -117,51 +113,6 @@ class Interface(object):
         self.maxyx = self.screen.getmaxyx()
         curses.doupdate()
 
-
-    def update_timeline(self, timeline):
-        '''
-        Retrieves tweets, don't display them
-        @param the buffer to retreive tweets
-        '''
-        try:
-            if not self.refresh_token:
-                self.display_update_msg()
-            # HOME
-
-            if timeline == 'home':
-                self.timelines[timeline].append_new_statuses(
-                    self.api.update_home_timeline())
-            # MENTIONS
-            elif timeline == 'mentions':
-                self.timelines[timeline].append_new_statuses(
-                    self.api.api.GetMentions())
-            # SEARCH
-            elif timeline == 'search' and self.api.search_word != '':
-                self.timelines[timeline].append_new_statuses(
-                    self.api.api.GetSearch(self.api.search_word))
-            # DIRECT
-            elif timeline == 'direct':
-                self.timelines[timeline].append_new_statuses(
-                    self.api.api.GetDirectMessages())
-            # USER
-            elif timeline == 'user' and self.api.search_user != '':
-                self.timelines[timeline].append_new_statuses(
-                    #self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
-                    self.api.statuses)
-            # FAVORITES
-            elif timeline == 'favorite':
-                self.timelines[timeline].append_new_statuses(self.api.api.GetFavorites())
-
-            # TODO does it realy need to display the timeline here ?!
-            # DO NOT decomment it, unless the loop with the display_timeline and empty newstatuses
-            # call here for checking (needed for start, and changing buffer, retrieves tweets in
-            # this case
-#            self.display_timeline()
-        except:
-            self.flash = ["Couldn't retrieve tweets", 'warning']
-        self.timelines[timeline].count_statuses()
-        #self.count_unread(timeline)
-
     def change_buffer(self, buffer):
         self.buffer = buffer
         self.timelines[buffer].reset()
@@ -198,7 +149,8 @@ class Interface(object):
         statuses_count = len(timeline.statuses)
         # It might have no tweets yet, we try to retrieve some then
         if statuses_count  == 0:
-            self.update_timeline(self.buffer)
+            self.api.update_timeline(self.buffer)
+            self.timelines[self.buffer].reset()
 
         if not self.refresh_token:
             # The first status become the last_read for this buffer

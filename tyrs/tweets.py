@@ -29,6 +29,7 @@ class Tweets(object):
  
     def __init__(self):
         self.conf = tyrs.container['conf']
+        self.timelines = tyrs.container['timelines']
         self.search_user = None
         self.search_word = None
         self.flash_message = FlashMessage()
@@ -178,8 +179,34 @@ class Tweets(object):
     def get_favorites(self):
         self.interface.change_buffer('favorite')
 
-    def update_home_timeline(self):
-        return self.api.GetFriendsTimeline(retweets=True)
+    def update_timeline(self, timeline):
+        '''
+        Retrieves tweets, don't display them
+        @param the buffer to retreive tweets
+        '''
+        try:
+            if not self.interface.refresh_token:
+                self.interface.display_update_msg()
+
+            if timeline == 'home':
+                statuses = self.api.GetFriendsTimeline(retweets=True)
+            elif timeline == 'mentions':
+                statuses = self.api.GetMentions()
+            elif timeline == 'search' and self.search_word != '':
+                statuses = self.api.GetSearch(self.api.search_word)
+            elif timeline == 'direct':
+                statuses = self.api.GetDirectMessages()
+            elif timeline == 'user' and self.search_user != '':
+                statuses = self.statuses
+            elif timeline == 'favorite':
+                statuses = self.api.GetFavorites()
+
+            self.timelines[timeline].append_new_statuses(statuses)
+
+        except:
+            self.flash = ["Couldn't retrieve tweets", 'warning']
+        self.timelines[timeline].count_statuses()
+        self.timelines[timeline].count_unread()
 
     def find_public_timeline(self):
         nick = NickEditor().content

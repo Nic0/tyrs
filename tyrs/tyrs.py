@@ -30,6 +30,7 @@ import tweets
 import argparse
 import curses.wrapper
 from keys import Keys
+from timeline import Timeline
 from update import UpdateThread 
 from container import Container
 from interface import Interface
@@ -61,6 +62,7 @@ def main():
     return 0
 
 def init_tyrs(scr):
+    init_timelines()
     init_api()
     init_interface()
     init_thread()
@@ -77,6 +79,14 @@ def init_api():
 def init_interface():
     user_interface = Interface()
     container.add ('interface', user_interface)
+
+def init_timelines():
+    buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
+    timelines = {}
+    for buff in buffers:
+        timelines[buff] = Timeline()
+    container.add('timelines', timelines)
+    container.add('buffers', buffers)
 
 def init_thread():
     update = UpdateThread()
