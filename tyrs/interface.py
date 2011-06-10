@@ -20,45 +20,31 @@ import tyrs
 import time
 import signal                   # resize event
 import curses
-import curses.wrapper
+from timeline import Timeline
 from message import FlashMessage
 
 class Interface(object):
     ''' All dispositions in the screen, and some logics for display tweet
 
-    self.status:  It's use mainly for display purpose
-        current:    the current tweet highlight, from the statuses list
-        first:      first status displayed, from the status list, mean if we display the midle
-                    of the list, the first won't be 0
-        last:       the last tweet from statuses list
-    self.count            Keep the count of each statuses list
     self.api              The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
     self.conf             The configuration file parsed in config.py
     self.maxyx            Array contain the window size [y, x]
     self.screen           Main screen (curse)
-    self.last_read        keep the ID of the status for each lists of statuses
-    self.unread           keep the count of tweet that haven't been read in other buffer, usefull to see active buffer
-    self.statuses         4 lists for each buffer containing all status in each list, the name of each list
-                          is the name of the buffer
     self.current_y        Current line in the screen
     self.resize_event     boleen if the window is resize
     self.regexRetweet     regex for retweet
     self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     self.buffer           The current buffer we're looking at, (home, mentions, direct search)
-    self.timelines        List of available timelines
+    self.timelines        Containe all timelines with statuses, all Timeline
+                          objects
     '''
 
-    status           = {'current': 0, 'first': 0, 'last': 0}
-    statuses         = {}
-    count            = {}
-    unread           = {}
-    last_read        = {}
     resize_event     = False
     regex_retweet     = re.compile('^RT @\w+:')
     flash = []
     refresh_token    = False
     buffer           = 'home'
-
+    timelines        = {} 
     def __init__(self):
         '''
         @param api: instance of Tweets, will handle retrieve, sending tweets
@@ -71,11 +57,16 @@ class Interface(object):
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         # startup the ncurses mode
         self.init_screen()
-        # initialize statuses, count, unread...
-        self.init_dict()
+        self.init_timelines()
         # first update of home timeline
         self.update_timeline('home')
         self.display_timeline()
+
+    def init_timelines(self):
+        self.buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
+        for buff in self.buffers:
+            self.timelines[buff] = Timeline()
+        tyrs.container.add('timelines', self.timelines)
 
     def init_screen(self):
 
@@ -120,20 +111,6 @@ class Interface(object):
         curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 6 cyan
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
-    def init_dict(self):
-        self.timelines = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
-        for b in self.timelines:
-            self.statuses[b]   = []
-            self.unread[b]     = 0
-            self.count[b]      = 0
-            self.last_read[b]  = 0
-
-    def empty_dict(self, buffer):
-        self.statuses[buffer]  = []
-        self.unread[buffer]    = 0
-        self.count[buffer]     = 0
-        self.last_read[buffer] = 0
-
     def handle_resize_event(self):
         self.resize_event = False
         curses.endwin()
@@ -141,7 +118,7 @@ class Interface(object):
         curses.doupdate()
 
 
-    def update_timeline(self, buffer):
+    def update_timeline(self, timeline):
         '''
         Retrieves tweets, don't display them
         @param the buffer to retreive tweets
@@ -150,29 +127,30 @@ class Interface(object):
             if not self.refresh_token:
                 self.display_update_msg()
             # HOME
-            if buffer == 'home':
-                self.append_new_statuses(
-                    self.api.update_home_timeline(), buffer)
+
+            if timeline == 'home':
+                self.timelines[timeline].append_new_statuses(
+                    self.api.update_home_timeline())
             # MENTIONS
-            elif buffer == 'mentions':
-                self.append_new_statuses(
-                    self.api.api.GetMentions(), buffer)
+            elif timeline == 'mentions':
+                self.timelines[timeline].append_new_statuses(
+                    self.api.api.GetMentions())
             # SEARCH
-            elif buffer == 'search' and self.api.search_word != '':
-                self.append_new_statuses(
-                    self.api.api.GetSearch(self.api.search_word), buffer)
+            elif timeline == 'search' and self.api.search_word != '':
+                self.timelines[timeline].append_new_statuses(
+                    self.api.api.GetSearch(self.api.search_word))
             # DIRECT
-            elif buffer == 'direct':
-                self.append_new_statuses(
-                    self.api.api.GetDirectMessages(), buffer)
+            elif timeline == 'direct':
+                self.timelines[timeline].append_new_statuses(
+                    self.api.api.GetDirectMessages())
             # USER
-            elif buffer == 'user' and self.api.search_user != '':
-                self.append_new_statuses(
+            elif timeline == 'user' and self.api.search_user != '':
+                self.timelines[timeline].append_new_statuses(
                     #self.api.api.GetUserTimeline(self.api.search_user, include_rts=True), buffer)
-                    self.api.statuses, buffer)
+                    self.api.statuses)
             # FAVORITES
-            elif buffer == 'favorite':
-                self.append_new_statuses(self.api.api.GetFavorites(), buffer)
+            elif timeline == 'favorite':
+                self.timelines[timeline].append_new_statuses(self.api.api.GetFavorites())
 
             # TODO does it realy need to display the timeline here ?!
             # DO NOT decomment it, unless the loop with the display_timeline and empty newstatuses
@@ -181,59 +159,19 @@ class Interface(object):
 #            self.display_timeline()
         except:
             self.flash = ["Couldn't retrieve tweets", 'warning']
-        self.count_statuses(buffer)
-        self.count_unread(buffer)
-
-    def append_new_statuses(self, newStatuses, buffer):
-        '''This take care to add in the corresponding list new statuses
-           that been retrieved, this just make sure lists are up ta date,
-           and does not display them
-           @param newStatuses are a list of new statuses retreives to append
-           @param buffer used to know on wich list we appends tweets
-        '''
-        # Fresh new start.
-        if self.statuses[buffer] == []:
-            self.statuses[buffer] = newStatuses
-        # This mean there is no new status, we just leave then.
-        # TODO, this might meen we didn't fetch enought statuses
-        elif newStatuses[0].id == self.statuses[buffer][0].id:
-            pass
-        # We may just don't have tweets, in case for DM for example
-        elif len(newStatuses) == 0:
-            pass
-        # Finally, we append tweets
-        else:
-            for i in range(len(newStatuses)):
-                if newStatuses[i].id == self.statuses[buffer][0].id:
-                    self.statuses[buffer] = newStatuses[:i] + self.statuses[buffer]
-                    # we don't want to move our current position
-                    # if the update is in another buffer
-                    if buffer == self.buffer:
-                        self.status['current'] += len(newStatuses[:i])
-
-    def count_statuses(self, buffer):
-        self.count[buffer] = len(self.statuses[buffer])
-
-    def count_unread(self, buffer):
-        self.unread[buffer] = 0
-        for i in range(len(self.statuses[buffer])):
-            if self.statuses[buffer][i].id == self.last_read[buffer]:
-                break
-            self.unread[buffer] += 1
-        self.unread[self.buffer] = 0
+        self.timelines[timeline].count_statuses()
+        #self.count_unread(timeline)
 
     def change_buffer(self, buffer):
         self.buffer = buffer
-        self.status['current'] = 0
-        self.status['first'] = 0
-        self.count_unread(buffer)
+        self.timelines[buffer].reset()
         self.display_timeline()
     
     def navigate_buffer(self, nav):
-        index = self.timelines.index(self.buffer)
+        index = self.buffers.index(self.buffer)
         new_index = index + nav
-        if new_index >= 0 and new_index < len(self.timelines):
-            self.change_buffer(self.timelines[new_index])
+        if new_index >= 0 and new_index < len(self.buffers):
+            self.change_buffer(self.buffers[new_index])
 
     def display_flash_message(self):
         if self.api.flash_message.event:
@@ -256,46 +194,44 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
+        timeline = self.timelines[self.buffer]
+        statuses_count = len(timeline.statuses)
         # It might have no tweets yet, we try to retrieve some then
-        if len(self.statuses[self.buffer]) == 0:
+        if statuses_count  == 0:
             self.update_timeline(self.buffer)
 
         if not self.refresh_token:
             # The first status become the last_read for this buffer
-            if len(self.statuses[self.buffer]) > 0:
-                self.last_read[self.buffer] = self.statuses[self.buffer][0].id
+            if statuses_count > 0:
+                timeline.last_read = timeline.statuses[0].id
 
             self.current_y = 1
             self.init_screen()
-            for i in range(len(self.statuses[self.buffer])):
-                if i >= self.status['first']:
-                    br = self.display_status(self.statuses[self.buffer][i], i)
+            for i in range(len(timeline.statuses)):
+                if i >= timeline.first:
+                    br = self.display_status(timeline.statuses[i], i)
                     if not br:
                         break
             
             self.display_flash_message()
             
-            if self.status['current'] > self.status['last']:
-                self.status['current'] = self.status['last']
+            if timeline.current > timeline.last:
+                timeline.current = timeline.last
                 self.display_timeline()
 
-            # Activities bar
-            if self.conf.params['activities']:
-                self.display_activity()
-            # Help bar
-            if self.conf.params['help']:
-                self.display_help_bar()
-
+            self.display_activity()
+            self.display_help_bar()
             self.screen.refresh()
 
     def display_activity(self):
         '''Main entry to display the activities bar'''
-        maxyx = self.screen.getmaxyx()
-        max_x = maxyx[1]
-        self.screen.addstr(0, max_x - 23, ' ')
-        for b in self.timelines:
-            self.display_buffer_activities(b)
-            self.display_counter_activities(b)
+        if self.conf.params['activities']:
+            maxyx = self.screen.getmaxyx()
+            max_x = maxyx[1]
+            self.screen.addstr(0, max_x - 23, ' ')
+            for b in self.buffers:
+                self.display_buffer_activities(b)
+                self.display_counter_activities(b)
 
     def display_buffer_activities(self, buff):
         display = { 'home': 'H', 'mentions': 'M',
@@ -308,29 +244,31 @@ class Interface(object):
 
     def display_counter_activities(self, buff):
         if buff in ['home', 'mentions', 'direct']:
-            if self.unread[buff] == 0:
+            unread = self.timelines[buff].unread
+            if unread == 0:
                 color = 'read'
             else:
                 color = 'unread'
 
-            self.screen.addstr(':%s ' % str(self.unread[buff]), self.get_color(color))
+            self.screen.addstr(':%s ' % str(unread), self.get_color(color))
 
     def display_help_bar(self):
         '''The help bar display at the bottom of the screen,
            for keysbinding reminder'''
-        maxyx = self.screen.getmaxyx()
-        self.screen.addnstr(maxyx[0] -1, 2,
-            'help:? up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
-                           (chr(self.conf.keys['up']),
-                            chr(self.conf.keys['down']),
-                            chr(self.conf.keys['tweet']),
-                            chr(self.conf.keys['retweet']),
-                            chr(self.conf.keys['reply']),
-                            chr(self.conf.keys['home']),
-                            chr(self.conf.keys['mentions']),
-                            chr(self.conf.keys['update']),
-                           ), maxyx[1] -4, self.get_color('text')
-        )
+        if self.conf.params['help']:
+            maxyx = self.screen.getmaxyx()
+            self.screen.addnstr(maxyx[0] -1, 2,
+                'help:? up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
+                               (chr(self.conf.keys['up']),
+                                chr(self.conf.keys['down']),
+                                chr(self.conf.keys['tweet']),
+                                chr(self.conf.keys['retweet']),
+                                chr(self.conf.keys['reply']),
+                                chr(self.conf.keys['home']),
+                                chr(self.conf.keys['mentions']),
+                                chr(self.conf.keys['update']),
+                               ), maxyx[1] -4, self.get_color('text')
+            )
 
     def display_status (self, status, i):
         ''' Display a status (tweet) from top to bottom of the screen,
@@ -342,6 +280,7 @@ class Interface(object):
                 more, otherwise return False
         '''
 
+        timeline = self.timelines[self.buffer]
         # Check if we have a retweet
         self.is_retweet(status)
 
@@ -367,7 +306,7 @@ class Interface(object):
             panel.border(0)
 
         # Highlight the current status
-        if self.status['current'] == i:
+        if timeline.current == i:
             panel.addstr(0,3, header, self.get_color('current_tweet'))
         else:
             panel.addstr(0, 3, header, self.get_color('header'))
@@ -383,7 +322,7 @@ class Interface(object):
             c = 0
 
         self.current_y = start_y + height + c
-        self.status['last'] = i
+        timeline.last = i
 
         return True
 
@@ -518,19 +457,21 @@ class Interface(object):
         self.resize_event = True
 
     def clear_statuses(self):
-        self.statuses[self.buffer] = [self.statuses[self.buffer][0]]
-        self.count_statuses(self.buffer)
-        self.status['current'] = 0
+        timeline = self.timelines[self.buffer]
+        timeline.statuses = [timeline.statuses[0]]
+        timeline.count_statuses()
+        timeline.reset()
 
     def current_status(self):
         '''@return the status object itself'''
-        return self.statuses[self.buffer][self.status['current']]
+        timeline = self.timelines[self.buffer]
+        return timeline.statuses[timeline.current]
 
     def get_urls(self):
         '''
         @return array of urls find in the text
         '''
-        return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.statuses[self.buffer][self.status['current']].text)
+        return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.current_status().text)
 
     def get_color(self, color):
         '''Return the curses code, with bold if enable of the color
@@ -544,20 +485,23 @@ class Interface(object):
         return cp
 
     def move_down(self):
-        if self.status['current'] < self.count[self.buffer] - 1:
-            if self.status['current'] >= self.status['last']:
-                self.status['first'] += 1
-            self.status['current'] += 1
+        timeline = self.timelines[self.buffer]
+        if timeline.current < timeline.count - 1:
+            if timeline.current >= timeline.last:
+                timeline.first += 1
+            timeline.current += 1
 
     def move_up(self):
-        if self.status['current'] > 0:
+        timeline = self.timelines[self.buffer]
+        if timeline.current > 0:
             # if we need to move up the list to display
-            if self.status['current'] == self.status['first']:
-                self.status['first'] -= 1
-            self.status['current'] -= 1
+            if timeline.current == timeline.first:
+                timeline.first -= 1
+            timeline.current -= 1
 
     def back_on_bottom(self):
-        self.ui.status['current'] = self.ui.status['last']
+        timeline = self.timelines[self.buffer]
+        timeline.current = timeline.last
 
     def openurl(self):
         urls = self.get_urls()
