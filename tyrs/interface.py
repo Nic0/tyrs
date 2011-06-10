@@ -24,7 +24,7 @@ from timeline import Timeline
 from message import FlashMessage
 
 class Interface(object):
-    ''' All dispositions in the screen, and some logics for display tweet
+    ''' All dispositions in the screen
 
     self.api              The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
     self.conf             The configuration file parsed in config.py
@@ -41,20 +41,14 @@ class Interface(object):
 
     resize_event     = False
     regex_retweet     = re.compile('^RT @\w+:')
-    flash = []
     refresh_token    = False
     buffer           = 'home'
-    timelines        = {} 
     def __init__(self):
-        '''
-        @param api: instance of Tweets, will handle retrieve, sending tweets
-        @param conf: contain all configuration parameters parsed
-        '''
         self.api        = tyrs.container['api']
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
-        self.api.set_ui(self)
+        self.api.set_interface(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         # startup the ncurses mode
@@ -136,10 +130,6 @@ class Interface(object):
             self.screen.addstr(0, 3, msg, self.get_color(msg_color[level]))
             self.api.flash_message.reset()
             self.screen.refresh()
-
-    def display_update_msg(self):
-        self.api.flash_message.event = 'update' 
-        self.display_flash_message()
 
     def display_redraw_screen(self):
         self.screen.erase()

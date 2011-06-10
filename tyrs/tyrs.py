@@ -78,7 +78,7 @@ def init_api():
 
 def init_interface():
     user_interface = Interface()
-    container.add ('interface', user_interface)
+    container.add('interface', user_interface)
 
 def init_timelines():
     buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')

@@ -39,10 +39,7 @@ class Timeline(object):
             for i in range(len(retreive)):
                 if retreive[i].id == self.statuses[0].id:
                     self.statuses = retreive[:i] + self.statuses
-                    # we don't want to move our current position
-                    # if the update is in another buffer
-                    #if buffer == self.buffer:
-                        #self.status['current'] += len(retreive[:i])
+                    self.current += len(retreive[:i])
 
     def count_statuses(self):
         self.count = len(self.statuses)
@@ -55,6 +52,5 @@ class Timeline(object):
             self.unread += 1
 
     def reset(self):
-        self.current = 0
         self.first = 0
         self.unread = 0

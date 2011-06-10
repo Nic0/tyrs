@@ -35,7 +35,7 @@ class Tweets(object):
         self.flash_message = FlashMessage()
         self.statuses = []
     
-    def set_ui(self, interface):
+    def set_interface(self, interface):
         self.interface = interface
 
     def authentication(self):
