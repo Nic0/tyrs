@@ -184,27 +184,27 @@ class Tweets(object):
         Retrieves tweets, don't display them
         @param the buffer to retreive tweets
         '''
+        self.flash('update')
         try:
             if not self.interface.refresh_token:
-                self.interface.display_update_msg()
+                if timeline == 'home':
+                    statuses = self.api.GetFriendsTimeline(retweets=True)
+                elif timeline == 'mentions':
+                    statuses = self.api.GetMentions()
+                elif timeline == 'search' and self.search_word != '':
+                    statuses = self.api.GetSearch(self.api.search_word)
+                elif timeline == 'direct':
+                    statuses = self.api.GetDirectMessages()
+                elif timeline == 'user' and self.search_user != '':
+                    statuses = self.statuses
+                elif timeline == 'favorite':
+                    statuses = self.api.GetFavorites()
 
-            if timeline == 'home':
-                statuses = self.api.GetFriendsTimeline(retweets=True)
-            elif timeline == 'mentions':
-                statuses = self.api.GetMentions()
-            elif timeline == 'search' and self.search_word != '':
-                statuses = self.api.GetSearch(self.api.search_word)
-            elif timeline == 'direct':
-                statuses = self.api.GetDirectMessages()
-            elif timeline == 'user' and self.search_user != '':
-                statuses = self.statuses
-            elif timeline == 'favorite':
-                statuses = self.api.GetFavorites()
+                self.timelines[timeline].append_new_statuses(statuses)
 
-            self.timelines[timeline].append_new_statuses(statuses)
+        except TwitterError:
+            self.error()
 
-        except:
-            self.flash = ["Couldn't retrieve tweets", 'warning']
         self.timelines[timeline].count_statuses()
         self.timelines[timeline].count_unread()
 

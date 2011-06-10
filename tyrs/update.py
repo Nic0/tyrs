@@ -23,6 +23,7 @@ class UpdateThread(threading.Thread):
     def __init__(self):
         self.interface = tyrs.container['interface']
         self.conf = tyrs.container['conf']
+        self.api = tyrs.container['api']
         threading.Thread.__init__(self, target=self.run)
         self._stopevent = threading.Event()
 
@@ -30,9 +31,9 @@ class UpdateThread(threading.Thread):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params['refresh'] * 60.0)
             if not self._stopevent.isSet():
-                self.interface.update_timeline('home')
-                self.interface.update_timeline('mentions')
-                self.interface.update_timeline('direct')
+                self.api.update_timeline('home')
+                self.api.update_timeline('mentions')
+                self.api.update_timeline('direct')
                 self.interface.display_timeline()
 
     def stop(self):

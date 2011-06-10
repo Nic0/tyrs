@@ -16,7 +16,10 @@
 class FlashMessage(object):
 
     message = {
-        'update': ['Updating timeline...'],
+        'update': [
+            'Updating timeline...',
+            'Could not retreive tweets'
+            ],
         'tweet': [
             'Your tweet has been sent',
             'Could not send the tweet',
