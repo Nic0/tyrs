@@ -131,6 +131,10 @@ class Interface(object):
             self.api.flash_message.reset()
             self.screen.refresh()
 
+    def display_update_msg(self):
+        self.api.flash_message.event = 'update'
+        self.display_flash_message()
+    
     def display_redraw_screen(self):
         self.screen.erase()
         self.display_timeline ()
