@@ -17,7 +17,7 @@ import tyrs
 import curses
 import curses.textpad
 
-class Editor:
+class Editor(object):
 
     confirm = False
     content = ''

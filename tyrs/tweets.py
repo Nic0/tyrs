@@ -25,7 +25,7 @@ try:
 except ImportError:
     import simplejson as json
 
-class Tweets:
+class Tweets(object):
  
     def __init__(self):
         self.conf = tyrs.container['conf']

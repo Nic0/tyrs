@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Container:
+class Container(object):
     '''
     Contain main classes that we need thought all the programm
     such as conf, api and ui

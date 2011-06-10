@@ -17,7 +17,7 @@ import tyrs
 import curses
 from help import Help
 
-class Keys:
+class Keys(object):
     '''
     This class handle the main keysbinding, as the main method contain every
     keybinding, every case match a key to a method call, there is no logical

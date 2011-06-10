@@ -26,7 +26,7 @@ try:
 except:
     from cgi import parse_qsl
 
-class Config:
+class Config(object):
 
     home       = os.environ['HOME']
     try:

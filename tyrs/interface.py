@@ -23,7 +23,7 @@ import curses
 import curses.wrapper
 from message import FlashMessage
 
-class Interface:
+class Interface(object):
     ''' All dispositions in the screen, and some logics for display tweet
 
     self.status:  It's use mainly for display purpose
@@ -43,8 +43,6 @@ class Interface:
     self.current_y        Current line in the screen
     self.resize_event     boleen if the window is resize
     self.regexRetweet     regex for retweet
-    self.flash            [msg, type_msg]
-                          Use like "session-flash", to display some information/warning messages
     self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
     self.buffer           The current buffer we're looking at, (home, mentions, direct search)
     self.timelines        List of available timelines

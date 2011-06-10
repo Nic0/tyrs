@@ -16,7 +16,7 @@
 import tyrs
 import curses
 
-class Help:
+class Help(object):
 
     y = 2
     col = [2, 25, 30]
