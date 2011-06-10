@@ -80,16 +80,11 @@ class Interface(object):
         self.screen = screen
 
     def init_colors(self):
-        '''Setup all colors stuff, rgb as well.'''
         curses.start_color()
+        self.init_rgb_colors()
+        self.init_color_pairs()
 
-        if self.conf.params['transparency']:
-            curses.use_default_colors()
-            bgcolor = -1
-        else:
-            bgcolor = False
-
-        # Setup colors rgb
+    def init_rgb_colors(self):
         if curses.can_change_color():
             for i in range(len(self.conf.color_set)):
                 if not self.conf.color_set[i]:
@@ -97,7 +92,9 @@ class Interface(object):
                 else:
                     rgb = self.conf.color_set[i]
                     curses.init_color(i, rgb[0], rgb[1], rgb[2])
-
+    
+    def init_color_pairs(self):
+        bgcolor = self.init_background()
         curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 0 black
         curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 1 red
         curses.init_pair(2, curses.COLOR_GREEN, bgcolor)    # 2 green
@@ -106,6 +103,13 @@ class Interface(object):
         curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor)  # 5 magenta
         curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 6 cyan
         curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
+
+    def init_background(self):
+        bgcolor = False
+        if self.conf.params['transparency']:
+            curses.use_default_colors()
+            bgcolor = -1
+        return bgcolor
 
     def handle_resize_event(self):
         self.resize_event = False
