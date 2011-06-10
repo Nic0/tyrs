@@ -52,6 +52,10 @@ class FlashMessage(object):
             'You have unfollowed %s',
             'You could not follow %s'
             ],
+        'search': [
+            'Result for search with %s',
+            'Could not the search for %s',
+            ],
         }
 
     def __init__(self):

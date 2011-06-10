@@ -232,13 +232,12 @@ class Tweets(object):
     def search(self):
         self.interface.buffer = 'search'
         self.search_word = SearchEditor().content
+        self.flash('search', self.search_word)
         try:
-            self.interface.statuses['search'] = self.api.GetSearch(self.search_word)
+            self.timelines['search'].statuses = self.api.GetSearch(self.search_word)
             self.interface.change_buffer('search')
-            if len(self.interface.statuses['search']) == 0:
-                self.interface.flash = ['The search does not return any result', 'info']
         except:
-            self.interface.flash = ['Failed with the search', 'warning']
+            self.error()
 
 
     def flash(self, event, string=None):
