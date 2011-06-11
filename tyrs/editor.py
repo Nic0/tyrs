@@ -24,18 +24,57 @@ class Editor(object):
 
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
-        self.ui = tyrs.container['interface'] 
+        self.interface = tyrs.container['interface'] 
         self.data   = data
-        self.win = self.init_win(self.ui.screen)
-        self.win.keypad(1)
-        curses.curs_set(1)
+        self.init_win()
+
         self.start_edit()
         self.win.erase()
+        curses.curs_set(0)
+
+    def init_win(self):
+        curses.curs_set(1)
+        self.set_window_size()
+
+        win = self.interface.screen.subwin(
+                self.size['height'], self.size['width'],
+                self.size['start_y'], self.size['start_x'])
+
+        win.border(0)
+        counter = self.count_chr()
+        header = ' %s %s ' % (self.params['header'], str(counter))
+
+        #TODO this doen't take bold
+        win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
+        self.win = win
+        self.win.keypad(1)
+
+    def set_window_size(self):
+        maxyx = self.interface.screen.getmaxyx()
+
+        # Set width
+        if maxyx[1] > self.params['width']:
+            width = self.params['width']
+        else:
+            width = maxyx[1] - 4 # 4: leave 2pix on every side at least
+
+        # Set height
+        height = int(self.params['char'] / width) + 4
+
+        # Start of EditWin, display in the middle of the main screen
+        start_y = maxyx[0]/2 - int(height/2)
+        start_x = maxyx[1]/2 - int(width/2)
+        self.sizeyx = (height, width)
+
+        self.size = {
+                'height': height, 'width': width,
+                'start_y': start_y, 'start_x': start_x
+        }
 
 
     def start_edit(self):
 
-        self.ui.refresh_token = True
+        self.interface.refresh_token = True
         if self.data:
             self.content = self.data.encode('utf-8')
             self.refresh()
@@ -63,11 +102,11 @@ class Editor(object):
                 self.content += chr(ch)
 
             self.refresh()
-        self.ui.refresh_token = False
+        self.interface.refresh_token = False
 
     def refresh(self):
         self.win.erase()
-        self.win = self.init_win(self.ui.screen)
+        self.init_win()
         self.display_content()
         self.win.refresh()
 
@@ -80,44 +119,9 @@ class Editor(object):
             if x+len(w) > max[1] - 4:
                 y += 1
                 x = 2
-            self.win.addstr(y, x, w, self.ui.get_color('text'))
+            self.win.addstr(y, x, w, self.interface.get_color('text'))
             x += len(w)+1
 
-
-    def init_win(self, screen):
-        '''
-        This try to find a good size for the tweet window,
-        and place it in main screen
-        @return the EditBox
-        '''
-        maxyx = screen.getmaxyx()
-
-        # Set width
-        if maxyx[1] > self.params['width']:
-            width = self.params['width']
-        else:
-            width = maxyx[1] - 4 # 4: leave 2pix on every side at least
-
-        # Set height
-        height = int(self.params['char'] / width) + 4
-
-        # Start of EditWin, display in the middle of the main screen
-        start_y = maxyx[0]/2 - int(height/2)
-        start_x = maxyx[1]/2 - int(width/2)
-        self.sizeyx = (height, width)
-
-        # DEBUG
-        # print "height:%s width:%s, start_y:%s, start_x:%s" % (height, width, start_y, start_x)
-
-        win = screen.subwin(height, width, start_y, start_x)
-
-        win.border(0)
-        counter = str(self.count_chr())
-        header = ' %s %s ' % (self.params['header'], counter)
-
-        #TODO this doen't take bold
-        win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
-        return win
 
     def count_chr(self):
         i = 0

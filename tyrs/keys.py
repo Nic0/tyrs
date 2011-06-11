@@ -55,7 +55,7 @@ class Keys(object):
                 self.interface.navigate_buffer(+1)
             # TWEET
             elif ch == self.conf.keys['tweet']:
-                self.api.tweet(None)
+                self.api.tweet()
             # RETWEET
             elif ch == self.conf.keys['retweet']:
                 self.api.retweet()
@@ -136,4 +136,5 @@ class Keys(object):
             elif ch == self.conf.keys['quit'] or ch == 27:
                 break
 
+            self.interface.erase_flash_message()
             self.interface.display_timeline()

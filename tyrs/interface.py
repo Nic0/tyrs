@@ -134,7 +134,7 @@ class Interface(object):
             self.screen.refresh()
 
     def erase_flash_message(self):
-        self.screen.addstr(0,3, '                        ')
+        self.screen.addstr(0,3, '                               ')
 
     def display_update_msg(self):
         self.api.flash_message.event = 'update'
@@ -150,6 +150,11 @@ class Interface(object):
         '''
         timeline = self.timelines[self.buffer]
         statuses_count = len(timeline.statuses)
+
+        self.display_flash_message()
+        self.display_activity()
+        self.display_help_bar()
+
         # It might have no tweets yet, we try to retrieve some then
         if statuses_count  == 0:
             self.api.update_timeline(self.buffer)
@@ -171,9 +176,6 @@ class Interface(object):
                 timeline.current = timeline.last
                 self.display_timeline()
 
-            self.display_flash_message()
-            self.display_activity()
-            self.display_help_bar()
             self.screen.refresh()
 
     def display_activity(self):
