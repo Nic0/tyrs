@@ -9,15 +9,17 @@ Installation
 ArchLinux
 ~~~~~~~~~
 
-As Tyrs is available in AUR, this installation is the most straightforward. Just use an
-AUR helper such as 'Yaourt', and grab a copy from the user repository:
+As Tyrs is available in AUR, this installation is the most straightforward.
+Just use an AUR helper such as 'Yaourt', and grab a copy from the user
+repository:
 
 [source,bash]
 yaourt -S tyrs
 
 Frugalware
 ~~~~~~~~~~
-Tyrs is now available on link:http://frugalware.org/packages/119439[Frugalware], thanks to Devil505
+Tyrs is now available on
+link:http://frugalware.org/packages/119439[Frugalware], thanks to Devil505
 
 [source,bash]
 pacman -S tyrs
@@ -27,7 +29,7 @@ OpenSuse
 
 I'm not very familiar with opensuse, but it seems available with:
 http://r.opensu.se/network:utilities.repo
-I will find out soon what it's realy is.
+I will find out soon what it realy is.
 
 From source
 ~~~~~~~~~~~
@@ -38,35 +40,26 @@ Dependencies
 Tyrs requires the following dependencies
 
 * Python 2
-* link:http://pypi.python.org/pypi/setuptools[python-setuptools] or link
+* link:http://pypi.python.org/pypi/setuptools[python-setuptools] or
 link:http://pypi.python.org/pypi/distribute[python-distribute] to use the
 setup.py install
 * link:http://code.google.com/p/python-twitter/[python-twitter]
 * link:https://github.com/simplegeo/python-oauth2[python-oauth2]
 
-The installation will depend on your distribution, with debian or ubuntu it will be
+Dependencies should be install when you use the setup.py tool, but you may want
+install yourself, note that you need a recent python-twitter package to use the
+oauth system.
+
+The installation will depend on your distribution, with debian or ubuntu it
+will be
 [source,bash]
 apt-get install python-twitter python-oauth2
-
-.Issue with Ubuntu 11.04
-[IMPORTANT]
-================================
-An issue was found with Ubuntu 11.04 using the current python-twitter package,
-that hasn’t been fixed yet.  It can be worked around if you install the latest
-library available. To do so, open a console and:
-[source,bash]
-apt-get remove python-twitter
-wget http://python-twitter.googlecode.com/files/python-twitter-0.8.2.tar.gz
-tar xvf python-twitter-0.8.2.tar.gz && cd python-twitter-0.8.2
-python setup.py build
-sudo python setup.py install
-
-=================================
 
 Installation
 ^^^^^^^^^^^^
 
-Once you have the package and dependencies, there are two way to get Tyrs installed:
+Once you have the package and dependencies, there are two way to get Tyrs
+installed:
 
 * With _setup.py_, this allows a clean install, similar to the autotools for C
 programs (`configure', `make', `make install')
@@ -624,6 +617,8 @@ openurl_command  = firefox %s
 transparency     = 1
 activities       = 1
 help             = 1
+margin           = 1
+padding          = 2
 -------------------
 
 Listing
@@ -669,3 +664,27 @@ help::
 to 0 to disable it.
 * Values: 0 or 1
 * Default: 1
+
+[TIP]
+If you are not familiar with margin and padding, it's taken from the CSS vocabulary.
+
+margin::
+* Description: Space between the border of a tweet, and the edge of the terminal
+* Default: 1
+
+padding::
+* Description: Space between the border of a tweet, and the start on the text himself.
+* Default: 2
+
+[NOTE]
+=============================
+If you are using a small terminal, and don't want waste any spaces, you may try
+a configuration like:
+[source, conf]
+-----------------
+[params]
+tweet_border = 0
+compress = 1
+margin = 0
+padding = 0
+------------------
