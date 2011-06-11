@@ -196,6 +196,7 @@ class Interface(object):
             self.screen.addstr(display[buff], self.get_color('other_tab'))
 
     def display_counter_activities(self, buff):
+        self.timelines[self.buffer].reset()
         if buff in ['home', 'mentions', 'direct']:
             unread = self.timelines[buff].unread
             if unread == 0:
