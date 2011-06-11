@@ -20,7 +20,7 @@ class FlashMessage(object):
     message = {
         'update': [
             _('Updating timeline...'),
-            _('Could not retreive tweets')
+            _('Could not retrieve tweets')
             ],
         'tweet': [
             _('Your tweet has been sent'),
