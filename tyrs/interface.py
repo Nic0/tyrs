@@ -108,9 +108,8 @@ class Interface(object):
 
     def handle_resize_event(self):
         self.resize_event = False
-        curses.endwin()
         self.maxyx = self.screen.getmaxyx()
-        curses.doupdate()
+        self.display_redraw_screen()
 
     def change_buffer(self, buffer):
         self.screen.clear()
@@ -266,9 +265,11 @@ class Interface(object):
             panel.addstr(0, 3, header, self.get_color('header'))
 
         self.display_text(panel, status)
-
-        panel.refresh(0, 0, start_y, start_x,
-            start_y + height, start_x + length)
+        try:
+            panel.refresh(0, 0, start_y, start_x,
+                start_y + height, start_x + length)
+        except:
+            pass
         # An adjustment to compress a little the display
         if self.conf.params['compress']:
             c = -1
