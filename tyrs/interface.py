@@ -66,9 +66,6 @@ class Interface(object):
         self.init_colors()
         self.maxyx = screen.getmaxyx()
 
-        if self.conf.params['tweet_border'] == 1:
-            screen.border()
-
         screen.refresh()
         self.screen = screen
 
@@ -251,7 +248,7 @@ class Interface(object):
         if self.conf.params['compress']:
             start_x = 0
         else:
-            start_x = 2
+            start_x = 1
 
         # We leave if no more space left
         if start_y + height +1 > self.maxyx[0]:
@@ -367,7 +364,7 @@ class Interface(object):
         if self.conf.params['compress']:
             return self.maxyx[1]
         else:
-            return self.maxyx[1] - 4
+            return self.maxyx[1] - 2
 
     def get_time(self, status):
         '''Handle the time format given by the api with something more
@@ -385,12 +382,11 @@ class Interface(object):
 
     def get_header(self, status):
         '''@return string'''
-        charset = sys.stdout.encoding
         try:
-            pseudo  = status.user.screen_name.encode(charset)
+            pseudo  = status.user.screen_name.encode(self.charset)
         except:
             # Only for the Direct Message case
-            pseudo = status.sender_screen_name.encode(charset)
+            pseudo = status.sender_screen_name.encode(self.charset)
         time    = self.get_time(status)
         #name    = status.user.name.encode(charset)
 
