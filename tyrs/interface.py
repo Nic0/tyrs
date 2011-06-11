@@ -244,11 +244,7 @@ class Interface(object):
         length = size['length']
         height = size['height']
         start_y = self.current_y
-        if self.conf.params['compress']:
-            start_x = 0
-        else:
-            start_x = 1
-
+        start_x = self.conf.params['margin']
         # We leave if no more space left
         if start_y + height +1 > self.maxyx[0]:
             return False
@@ -300,13 +296,14 @@ class Interface(object):
         '''
         text = self.get_text(status)
         words = text.split(' ')
-        justified = self.justified()
-        curent_x = justified['start']
+        margin = self.conf.params['margin']
+        padding = self.conf.params['padding']
+        curent_x = padding
         line = 1
         for word in words:
-            if curent_x + len(word) > self.maxyx[1] - justified['end']*3:
+            if curent_x + len(word) > self.maxyx[1] - (margin + padding)*2:
                 line += 1
-                curent_x = justified['start']
+                curent_x = padding
 
             if word != '':
                 # The word is an HASHTAG ? '#'
@@ -333,28 +330,21 @@ class Interface(object):
                 while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
                     curent_x -= 1
 
-    def justified(self):
-        if self.conf.params['compress']:
-            justified = {'start':  0, 'end': 0}
-        else:
-            justified = {'start':  2, 'end': 2}
-        return justified
-
     def get_size_status(self, status):
         '''Allow to know how height will be the tweet, it calculate it exactly
            as it will display it.
         '''
         length = self.get_max_lenght()
-        justified = self.justified()
-
-        x = justified['start']
+        margin = self.conf.params['margin']
+        padding = self.conf.params['padding']
+        x = padding+margin
         y = 1
         txt = self.get_text(status)
         words = txt.split(' ')
         for w in words:
-            if x+len(w) > length - justified['end']:
+            if x+len(w) > length - (padding+margin)*2:
                 y += 1
-                x =  justified['start']
+                x = padding+margin
             x += len(w)+1
 
         height = y + 2
@@ -362,10 +352,8 @@ class Interface(object):
         return size
 
     def get_max_lenght(self):
-        if self.conf.params['compress']:
-            return self.maxyx[1]
-        else:
-            return self.maxyx[1] - 2
+        adjust = self.conf.params['margin'] + self.conf.params['padding']
+        return self.maxyx[1] - adjust
 
     def get_time(self, status):
         '''Handle the time format given by the api with something more

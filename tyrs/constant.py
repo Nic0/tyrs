@@ -71,6 +71,8 @@ params = {
     'tweet_border':         1,
     'relative_time':        0,
     'retweet_by':           1,
+    'margin':               1,
+    'padding':              2,
     'openurl_command':      'firefox %s',
     'transparency':         True,
     'activities':           True,

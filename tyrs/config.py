@@ -224,6 +224,13 @@ class Config(object):
             if int(self.conf.get('params', 'help')) == 0:
                 self.params['help'] = False
 
+        if self.conf.has_option('params', 'margin'):
+            self.params['margin'] = int(self.conf.get('params', 'margin'))
+
+        if self.conf.has_option('params', 'padding'):
+            self.params['padding'] = int(self.conf.get('params', 'padding'))
+
+
     def char_value(self, ch):
         if ch[0] == '^':
             i = 0
