@@ -118,6 +118,7 @@ class Interface(object):
         self.display_timeline()
     
     def navigate_buffer(self, nav):
+        '''Navigate with the arrow, mean nav should be -1 or +1'''
         index = self.buffers.index(self.buffer)
         new_index = index + nav
         if new_index >= 0 and new_index < len(self.buffers):
@@ -464,7 +465,7 @@ class Interface(object):
     def openurl(self):
         urls = self.get_urls()
         for url in urls:
-            #try:
-            os.system(self.conf.params['openurl_command'] % url)
-            #except:
-                #self.ui.Flash  = ["Couldn't open url", 'warning']
+            try:
+                os.system(self.conf.params['openurl_command'] % url)
+            except:
+                pass 
