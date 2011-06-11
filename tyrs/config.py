@@ -16,6 +16,7 @@
 import os
 import sys
 import curses
+import message
 import constant
 import ConfigParser
 import curses.ascii
@@ -28,24 +29,15 @@ except:
 
 class Config(object):
 
-    home       = os.environ['HOME']
-    try:
-        xdg_config = os.environ['XDG_CONFIG_HOME']
-    except:
-        xdg_config = home+'/.config'
-
-    try:
-        browser    = os.environ['BROWSER']
-    except:
-        browser    = ''
-
     def __init__(self, args):
         self.token = constant.token
         self.colors = constant.colors
         self.color_set = constant.color_set
         self.keys = constant.key
         self.params = constant.params
-
+        self.home = os.environ['HOME']
+        self.get_xdg_config()
+        self.get_browser()
         # generate the config file
         if args.generate_config != None:
             self.generate_config_file(args)
@@ -60,8 +52,19 @@ class Config(object):
         self.conf.read(self.config_file)
         self.parse_config()
 
-    def generate_config_file(self, args):
+    def get_xdg_config(self):
+        try:
+            self.xdg_config = os.environ['XDG_CONFIG_HOME']
+        except:
+            self.xdg_config = self.home+'/.config'
 
+    def get_browser(self):
+        try:
+            self.browser    = os.environ['BROWSER']
+        except:
+            self.browser    = ''
+
+    def generate_config_file(self, args):
         config_file = args.generate_config
         conf = ConfigParser.RawConfigParser()
         conf.read(config_file)
@@ -109,28 +112,15 @@ class Config(object):
 
     def new_account(self):
 
-        choice = self.askService()
+        choice = self.ask_service()
         if choice == '2':
             self.ask_root_url()
 
         self.authorization()
         self.createTokenFile()
 
-    def askService(self):
-        print ''
-        print 'There is no profile detected.'
-        print ''
-        print 'It should be in %s' % self.config_file
-        print 'If you want to setup a new account, let\'s go through some basic steps'
-        print 'If you want to skip this, just press return or ctrl-C.'
-        print ''
-
-        print ''
-        print 'Which service do you want to use?'
-        print ''
-        print '1. Twitter'
-        print '2. Identi.ca'
-        print ''
+    def ask_service(self):
+        message.print_ask_service(self.config_file)
         choice = raw_input('Your choice? > ')
 
         if choice == '1':
@@ -142,10 +132,7 @@ class Config(object):
         return choice
 
     def ask_root_url(self):
-        print ''
-        print ''
-        print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
-        print ''
+        message.print_ask_root_url()
         url = raw_input('Your choice? > ')
         if url == '':
             self.base_url = 'https://identi.ca/api'
@@ -167,21 +154,23 @@ class Config(object):
         self.oauth_token_secret = token.get('token', 'oauth_token_secret')
 
     def parse_config(self):
-        ''' This parse the configuration file, and set
-        some defaults values if the parameter is not given'''
         self.parse_color()
         self.parse_keys()
-        self.parseParams()
+        self.parse_params()
 
     def parse_color(self):
         for c in self.colors:
             self.colors[c]['b'] = False
             if self.conf.has_option('colors', c):
                 self.colors[c]['c'] = int(self.conf.get('colors', c))
-        # Bold
+        self.parse_bold()
+        self.parse_rgb()
+
+    def parse_bold(self):
         if self.conf.has_option('colors', 'bold'):
             self.get_bold_colors(self.conf.get('colors', 'bold'))
-        # Setup rgb
+
+    def parse_rgb(self):
         for i in range(len(self.color_set)):
             if self.conf.has_option('colors', 'color_set'+str(i)):
                 self.color_set[i] = []
@@ -196,7 +185,7 @@ class Config(object):
             else:
                 self.keys[key] = self.char_value(self.keys[key])
 
-    def parseParams(self):
+    def parse_params(self):
 
         # refresh (in minutes)
         if self.conf.has_option('params', 'refresh'):

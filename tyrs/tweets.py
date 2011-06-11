@@ -209,6 +209,7 @@ class Tweets(object):
 
         self.timelines[timeline].count_statuses()
         self.timelines[timeline].count_unread()
+        self.interface.erase_flash_message()
 
     def find_public_timeline(self):
         nick = NickEditor().content

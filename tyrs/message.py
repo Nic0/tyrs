@@ -78,3 +78,25 @@ class FlashMessage(object):
             msg = self.message[self.event][self.level] % self.string
         
         return ' ' +msg+ ' '
+
+def print_ask_service(config_file):
+    print ''
+    print 'There is no profile detected.'
+    print ''
+    print 'It should be in %s' % config_file
+    print 'If you want to setup a new account, let\'s go through some basic steps'
+    print 'If you want to skip this, just press return or ctrl-C.'
+    print ''
+
+    print ''
+    print 'Which service do you want to use?'
+    print ''
+    print '1. Twitter'
+    print '2. Identi.ca'
+    print ''
+
+def print_ask_root_url():
+    print ''
+    print ''
+    print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
+    print ''

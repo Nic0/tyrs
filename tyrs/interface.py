@@ -39,24 +39,21 @@ class Interface(object):
                           objects
     '''
 
-    resize_event     = False
-    regex_retweet     = re.compile('^RT @\w+:')
-    refresh_token    = False
-    buffer           = 'home'
     def __init__(self):
         self.api        = tyrs.container['api']
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
+        self.resize_event     = False
+        self.regex_retweet     = re.compile('^RT @\w+:')
+        self.refresh_token    = False
+        self.buffer           = 'home'
+        self.charset = sys.stdout.encoding
         self.api.set_interface(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
-        # startup the ncurses mode
         self.init_screen()
-        # first update of home timeline
-        self.api.update_timeline('home')
-        self.timelines['home'].reset()
-        self.display_timeline()
+        self.first_update()
 
     def init_screen(self):
 
@@ -68,7 +65,9 @@ class Interface(object):
         curses.meta(1)          # allow 8bits inputs
         self.init_colors()
         self.maxyx = screen.getmaxyx()
-        screen.border()
+
+        if self.conf.params['tweet_border'] == 1:
+            screen.border()
 
         screen.refresh()
         self.screen = screen
@@ -105,6 +104,11 @@ class Interface(object):
             bgcolor = -1
         return bgcolor
 
+    def first_update(self):
+        self.api.update_timeline('home')
+        self.timelines['home'].reset()
+        self.display_timeline()
+
     def handle_resize_event(self):
         self.resize_event = False
         curses.endwin()
@@ -112,6 +116,7 @@ class Interface(object):
         curses.doupdate()
 
     def change_buffer(self, buffer):
+        self.screen.clear()
         self.buffer = buffer
         self.timelines[buffer].reset()
         self.display_timeline()
@@ -130,6 +135,9 @@ class Interface(object):
             self.screen.addstr(0, 3, msg, self.get_color(msg_color[level]))
             self.api.flash_message.reset()
             self.screen.refresh()
+
+    def erase_flash_message(self):
+        self.screen.addstr(0,3, '                        ')
 
     def display_update_msg(self):
         self.api.flash_message.event = 'update'
@@ -156,19 +164,17 @@ class Interface(object):
                 timeline.last_read = timeline.statuses[0].id
 
             self.current_y = 1
-            self.init_screen()
             for i in range(len(timeline.statuses)):
                 if i >= timeline.first:
                     br = self.display_status(timeline.statuses[i], i)
                     if not br:
                         break
             
-            self.display_flash_message()
-            
             if timeline.current > timeline.last:
                 timeline.current = timeline.last
                 self.display_timeline()
 
+            self.display_flash_message()
             self.display_activity()
             self.display_help_bar()
             self.screen.refresh()
@@ -231,12 +237,10 @@ class Interface(object):
         '''
 
         timeline = self.timelines[self.buffer]
-        # Check if we have a retweet
         self.is_retweet(status)
 
         # The content of the tweets is handle
         # text is needed for the height of a panel
-        self.charset = sys.stdout.encoding
         header  = self.get_header(status)
 
         # We get size and where to display the tweet
@@ -244,7 +248,10 @@ class Interface(object):
         length = size['length']
         height = size['height']
         start_y = self.current_y
-        start_x = 2
+        if self.conf.params['compress']:
+            start_x = 0
+        else:
+            start_x = 2
 
         # We leave if no more space left
         if start_y + height +1 > self.maxyx[0]:
@@ -295,12 +302,13 @@ class Interface(object):
         '''
         text = self.get_text(status)
         words = text.split(' ')
-        curent_x = 2
+        justified = self.justified()
+        curent_x = justified['start']
         line = 1
         for word in words:
-            if curent_x + len(word) > self.maxyx[1] -6:
+            if curent_x + len(word) > self.maxyx[1] - justified['end']*3:
                 line += 1
-                curent_x = 2
+                curent_x = justified['start']
 
             if word != '':
                 # The word is an HASHTAG ? '#'
@@ -327,24 +335,39 @@ class Interface(object):
                 while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
                     curent_x -= 1
 
+    def justified(self):
+        if self.conf.params['compress']:
+            justified = {'start':  0, 'end': 0}
+        else:
+            justified = {'start':  2, 'end': 2}
+        return justified
+
     def get_size_status(self, status):
         '''Allow to know how height will be the tweet, it calculate it exactly
            as it will display it.
         '''
-        length = self.maxyx[1] - 4
-        x = 2
+        length = self.get_max_lenght()
+        justified = self.justified()
+
+        x = justified['start']
         y = 1
         txt = self.get_text(status)
         words = txt.split(' ')
         for w in words:
-            if x+len(w) > length - 2:
+            if x+len(w) > length - justified['end']:
                 y += 1
-                x =  2
+                x =  justified['start']
             x += len(w)+1
 
         height = y + 2
         size = {'length': length, 'height': height}
         return size
+
+    def get_max_lenght(self):
+        if self.conf.params['compress']:
+            return self.maxyx[1]
+        else:
+            return self.maxyx[1] - 4
 
     def get_time(self, status):
         '''Handle the time format given by the api with something more
