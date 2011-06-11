@@ -13,48 +13,50 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from gettext import gettext as _
+
 class FlashMessage(object):
 
     message = {
         'update': [
-            'Updating timeline...',
-            'Could not retreive tweets'
+            _('Updating timeline...'),
+            _('Could not retreive tweets')
             ],
         'tweet': [
-            'Your tweet has been sent',
-            'Could not send the tweet',
+            _('Your tweet has been sent'),
+            _('Could not send the tweet'),
             ],
         'retweet': [
-            'Your retweet has been sent',
-            'Could not send the retweet',
+            _('Your retweet has been sent'),
+            _('Could not send the retweet'),
             ],
         'destroy': [
-            'You have destroyed the tweet',
-            'Could not destroyed the tweet',
+            _('You have destroyed the tweet'),
+            _('Could not destroyed the tweet'),
             ],
         'favorite': [
-            'The tweet is now in you favorite list',
-            'Could not added the tweet in your favorite list',
+            _('The tweet is now in you favorite list'),
+            _('Could not added the tweet in your favorite list'),
             ],
         'favorite_del': [
-            'Your favorite tweet has been destroyed',
-            'Could not destroyed the favorite tweet',
+            _('Your favorite tweet has been destroyed'),
+            _('Could not destroyed the favorite tweet'),
             ],
         'direct': [
-            'You direct message has been sent',
-            'Could not send the direct message',
+            _('You direct message has been sent'),
+            _('Could not send the direct message'),
             ],
         'follow': [
-            'You are now following %s',
-            'You could not follow %s'
+            _('You are now following %s'),
+            _('You could not follow %s')
             ],
         'unfollow': [
-            'You have unfollowed %s',
-            'You could not follow %s'
+            _('You have unfollowed %s'),
+            _('You could not follow %s')
             ],
         'search': [
-            'Result for search with %s',
-            'Could not the search for %s',
+            _('Result for search with %s'),
+            _('Could not the search for %s'),
             ],
         }
 
@@ -81,15 +83,15 @@ class FlashMessage(object):
 
 def print_ask_service(config_file):
     print ''
-    print 'There is no profile detected.'
+    print _('There is no profile detected.')
     print ''
-    print 'It should be in %s' % config_file
-    print 'If you want to setup a new account, let\'s go through some basic steps'
-    print 'If you want to skip this, just press return or ctrl-C.'
+    print _('It should be in %s') % config_file
+    print _('If you want to setup a new account, let\'s go through some basic steps')
+    print _('If you want to skip this, just press return or ctrl-C.')
     print ''
 
     print ''
-    print 'Which service do you want to use?'
+    print _('Which service do you want to use?')
     print ''
     print '1. Twitter'
     print '2. Identi.ca'
@@ -98,5 +100,5 @@ def print_ask_service(config_file):
 def print_ask_root_url():
     print ''
     print ''
-    print 'Which root url do you want? (leave blank for default value, https://identi.ca/api)'
+    print _('Which root url do you want? (leave blank for default value, https://identi.ca/api)')
     print ''
