@@ -31,9 +31,12 @@ class UpdateThread(threading.Thread):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params['refresh'] * 60.0)
             if not self._stopevent.isSet():
-                self.api.update_timeline('home')
-                self.api.update_timeline('mentions')
-                self.api.update_timeline('direct')
+                try:
+                    self.api.update_timeline('home')
+                    self.api.update_timeline('mentions')
+                    self.api.update_timeline('direct')
+                except URLError:
+                    pass
                 self.interface.display_timeline()
 
     def stop(self):
