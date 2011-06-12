@@ -6,8 +6,11 @@
 
 """
 """
+import tyrs.tyrs
+import gettext
+
 __revision__ = '0.1'
 
 if __name__=="__main__":
-    import tyrs.tyrs
+    gettext.install('tyrs', unicode=1)
     tyrs.tyrs.main()
