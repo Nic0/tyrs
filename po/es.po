@@ -1,0 +1,323 @@
+# Internationalisation for Tyrs.
+# Copyright (C) 2011 
+# This file is distributed under the same license as the Tyrs package.
+# Nicolas Paris <nicolas.caen@gmail.com> 2011
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-12 16:10+0200\n"
+"PO-Revision-Date: 2011-06-12 10:13-0430\n"
+"Last-Translator: Diego Jose <diegoxter1006@gmail.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tyrs/message.py:20
+msgid "Updating timeline..."
+msgstr "Actualizando timeline..."
+
+#: tyrs/message.py:21
+msgid "Could not retrieve tweets"
+msgstr "No se recibirieron los tweets"
+
+#: tyrs/message.py:24
+msgid "Your tweet has been sent"
+msgstr "Tu tweet fue enviado"
+
+#: tyrs/message.py:25
+msgid "Could not send the tweet"
+msgstr "No se pudo enviar el tweet"
+
+#: tyrs/message.py:28
+msgid "Your retweet has been sent"
+msgstr "Tu retweet fue enviado"
+
+#: tyrs/message.py:29
+msgid "Could not send the retweet"
+msgstr "No se pudo enviar el retweet"
+
+#: tyrs/message.py:32
+msgid "You have destroyed the tweet"
+msgstr "Borraste el tweet"
+
+#: tyrs/message.py:33
+msgid "Could not destroyed the tweet"
+msgstr "No se pudo borrar el tweet"
+
+#: tyrs/message.py:36
+msgid "The tweet is now in your favorite list"
+msgstr "El tweet fue agregado a tus favoritos"
+
+#: tyrs/message.py:37
+msgid "Could not add the tweet in your favorite list"
+msgstr "No se pudo agregar el tweet a tus favoritos"
+
+#: tyrs/message.py:40
+msgid "Your favorite tweet has been destroyed"
+msgstr "El tweet fue removido de tus favoritos"
+
+#: tyrs/message.py:41
+msgid "Could not destroy the favorite tweet"
+msgstr "No se pudo quitar el tweet de tus favoritos"
+
+#: tyrs/message.py:44
+msgid "You direct message has been sent"
+msgstr "El mensaje directo fue enviado"
+
+#: tyrs/message.py:45
+msgid "Could not send the direct message"
+msgstr "No se pudo enviar el mensaje directo"
+
+#: tyrs/message.py:48
+#, python-format
+msgid "You are now following %s"
+msgstr "Ahora sigues a %s"
+
+#: tyrs/message.py:49 tyrs/message.py:53
+#, python-format
+msgid "You could not follow %s"
+msgstr "No se ha podido seguir a %s"
+
+#: tyrs/message.py:52
+#, python-format
+msgid "You have unfollowed %s"
+msgstr "Dejaste de seguir a %s"
+
+#: tyrs/message.py:56
+#, python-format
+msgid "Result for search with %s"
+msgstr "Resultados de la búsqueda de %s"
+
+#: tyrs/message.py:57
+#, python-format
+msgid "Could not the search for %s"
+msgstr "No se pudo buscar %s"
+
+#: tyrs/message.py:84
+msgid "There is no profile detected."
+msgstr "No se detectó perfil."
+
+#: tyrs/message.py:86
+#, python-format
+msgid "It should be in %s"
+msgstr "Debería estar en %s"
+
+#: tyrs/message.py:87
+msgid "If you want to setup a new account, let's go through some basic steps"
+msgstr "Si quieres configurar una cuenta nueva, comenzemos por algunos pasos básicos"
+
+#: tyrs/message.py:88
+msgid "If you want to skip this, just press return or ctrl-C."
+msgstr "Si quieres saltarte este paso, presiona return o ctrl-C."
+
+#: tyrs/message.py:92
+msgid "Which service do you want to use?"
+msgstr "¿Cual servicio deseas usar?"
+
+#: tyrs/message.py:101
+msgid ""
+"Which root url do you want? (leave blank for default value, https://identi."
+"ca/api)"
+msgstr ""
+"¿Cuál url quieres usar? (deja en blanco para usar el valor por defecto "
+"https://identi.identi.ca/api)"
+
+#: tyrs/config.py:124 tyrs/config.py:136
+msgid "Your choice? > "
+msgstr "¿Tu elección?"
+
+#: tyrs/config.py:248
+#, python-format
+msgid "The param \"%s\" does not exist for bold colors"
+msgstr "El parámetro \"%s\" no se permite en negrita"
+
+#: tyrs/config.py:285
+msgid "Requesting temp token from "
+msgstr "Obteniendo una permiso temporal desde "
+
+#: tyrs/config.py:290
+msgid "Invalid respond from "
+msgstr "Respuesta inválida desde "
+
+#: tyrs/config.py:290
+#, python-format
+msgid " requesting temp token: %s"
+msgstr " obteniendo permiso temporal: %s"
+
+#: tyrs/config.py:295
+msgid "Please visit this  page and retrieve the pincode to be used"
+msgstr "Por favor, visita esta página y copia/pega el código que se usará"
+
+#: tyrs/config.py:296
+msgid "in the next step to obtaining an Authentication Token:"
+msgstr "siguiente paso para obtener el Permiso de Autentificación:"
+
+#: tyrs/config.py:307
+msgid "Generating and signing request for an access token"
+msgstr "Generando y firmando el pedido para un permiso de acceso"
+
+#: tyrs/config.py:315
+#, python-format
+msgid "The request for a Token did not succeed: %s"
+msgstr "El pedido del Permiso falló: %s"
+
+#: tyrs/config.py:328
+msgid "Error to create directory .config/tyrs"
+msgstr "Error al crear el directorio .config/tyrs"
+
+#: tyrs/config.py:340
+msgid "your account has been saved"
+msgstr "tu cuenta ha sido guardada"
+
+#: tyrs/editor.py:139
+msgid "What's up?"
+msgstr "¿Qué está pasando?"
+
+#: tyrs/editor.py:142
+msgid "Entry a name"
+msgstr "Inserta un nombre"
+
+#: tyrs/editor.py:145
+msgid "Search for something?"
+msgstr "¿Qué quieres buscar?"
+
+#: tyrs/help.py:36
+msgid "Navigation"
+msgstr "Navegación"
+
+#: tyrs/help.py:37
+msgid "Moves up"
+msgstr "Moverte hacia arriba"
+
+#: tyrs/help.py:38
+msgid "Moves down"
+msgstr "Moverte hacia abajo"
+
+#: tyrs/help.py:39
+msgid "Move back on top"
+msgstr "Ir hacia el tope"
+
+#: tyrs/help.py:40
+msgid "Move to the bottom of the screen"
+msgstr "Ir hacia el fondo de la pantalla"
+
+#: tyrs/help.py:42
+msgid "Timelines"
+msgstr "Timelines"
+
+#: tyrs/help.py:43
+msgid "Moves left in timelines"
+msgstr "Moverse hacia la izquierda entre timelines"
+
+#: tyrs/help.py:44
+msgid "Moves right in timelines"
+msgstr "Moverse hacia la derecha entre timelines"
+
+#: tyrs/help.py:45
+msgid "Refresh the current timeline"
+msgstr "Refrescar el timeline actual"
+
+#: tyrs/help.py:46
+msgid "Clear, and leave the last tweet in your timeline"
+msgstr "Limpiar y dejar solo el último tweet en tu timeline"
+
+#: tyrs/help.py:47
+msgid "Moves to the home timeline"
+msgstr "Moverse hacia el timeline de inicio"
+
+#: tyrs/help.py:48
+msgid "Moves to the mentions timeline"
+msgstr "Moverse a las menciones"
+
+#: tyrs/help.py:49
+msgid "Moves to the direct message timeline"
+msgstr "Moverse a los mensajes directos"
+
+#: tyrs/help.py:50
+msgid "Ask for a term to search and move to his timeline"
+msgstr "Preguntar un término para busvar y moverse hacia el timeline de búsqueda-"
+
+#: tyrs/help.py:51
+msgid "Retrieve someone public timeline"
+msgstr "Revisar el timeline de alguien"
+
+#: tyrs/help.py:52
+msgid "Retrieve your public timeline"
+msgstr "Revisa tu propio timeline"
+
+#: tyrs/help.py:54
+msgid "Tweets"
+msgstr "Tweets"
+
+#: tyrs/help.py:55
+msgid "Send a tweet"
+msgstr "Enviar un tweet"
+
+#: tyrs/help.py:56
+msgid "Retweet the selected tweet"
+msgstr "Hacer retweet al tweet seleccionado"
+
+#: tyrs/help.py:57
+msgid "Retweet with response the selected tweet"
+msgstr "Hacer retweet manual al tweet seleccionado"
+
+#: tyrs/help.py:58
+msgid "Reply to the selected tweet"
+msgstr "Responder al tweet seleccionado"
+
+#: tyrs/help.py:59
+msgid "Send a direct message"
+msgstr "Envia un mensaje directo"
+
+#: tyrs/help.py:60
+msgid "Delete the selected tweet, must be your tweet"
+msgstr "Borrar el tweet seleccionado (debe ser tuyo)"
+
+#: tyrs/help.py:63
+msgid "Follow the selected twitter"
+msgstr "Seguir al twittero seleccionado"
+
+#: tyrs/help.py:64
+msgid "Unfollow the selected twitter"
+msgstr "Dejar de seguir al twittero seleccionado"
+
+#: tyrs/help.py:65
+msgid "Follow a twitter"
+msgstr "Seguir a un twittero"
+
+#: tyrs/help.py:66
+msgid "Unfollow a twitter"
+msgstr "Dejar de seguir a un twittero"
+
+#: tyrs/help.py:68
+msgid "Others"
+msgstr "Otros"
+
+#: tyrs/help.py:69
+msgid "Leave Tyrs"
+msgstr "Salir de Tyrs"
+
+#: tyrs/help.py:70
+msgid "Open an url with your browser"
+msgstr "Abrir una url en el navegador"
+
+#: tyrs/help.py:71
+msgid "Force to redraw the screen"
+msgstr "Forzar el redibujamiento de la pantalla"
+
+#: tyrs/help.py:89
+msgid "Name"
+msgstr "Nombre"
+
+#: tyrs/help.py:90
+msgid "Key"
+msgstr "Tecla"
+
+#: tyrs/help.py:91
+msgid "Description"
+msgstr "Descripción"
