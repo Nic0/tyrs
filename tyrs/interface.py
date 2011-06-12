@@ -109,7 +109,7 @@ class Interface(object):
     def handle_resize_event(self):
         self.resize_event = False
         curses.endwin()
-        self.maxyx = self.screen.getmaxyx()
+        self.set_max_window_size()
         self.display_redraw_screen()
         curses.doupdate()
 
@@ -144,7 +144,11 @@ class Interface(object):
     
     def display_redraw_screen(self):
         self.screen.erase()
+        self.set_max_window_size()
         self.display_timeline()
+
+    def set_max_window_size(self):
+        self.maxyx = self.screen.getmaxyx()
 
     def display_timeline(self):
         '''Main entry to display a timeline, as it does not take arguments,
