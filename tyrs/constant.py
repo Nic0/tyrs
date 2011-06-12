@@ -20,14 +20,14 @@ colors = {
     'header':         {'c': 6},
     'hashtag':        {'c': 3},
     'attag':          {'c': 2},
-    'text':           {'c': 7},
+    'text':           {'c': 0},
     'warning_msg':    {'c': 1},
     'info_msg':       {'c': 2},
     'current_tweet':  {'c': 5},
     'current_tab':    {'c': 6},
-    'other_tab':      {'c': 7},
+    'other_tab':      {'c': 0},
     'unread':         {'c': 1},
-    'read':           {'c': 7},
+    'read':           {'c': 0},
     'help':           {'c': 6},
 }
 
