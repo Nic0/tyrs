@@ -3,6 +3,7 @@
 
 import sys
 from distutils.core import setup
+from DistUtilsExtra.command import *
 try:
     import setuptools
 except ImportError:
@@ -27,4 +28,8 @@ setup(name='tyrs',
       ],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
+
+      cmdclass = { "build" :  build_extra.build_extra,
+                   "build_i18n" :  build_i18n.build_i18n,
+                 }
     )
