@@ -125,197 +125,197 @@ msgid ""
 "ca/api)"
 msgstr "Quel url racine voulez vous utiliser ? (laisser blanc pour la valeur par défaut, https://identi.ca/api)"
 
-#: config.py:125 config.py:137
+#: ../tyrs/config.py:125 ../tyrs/config.py:137
 msgid "Your choice? > "
 msgstr "Votre choix ? >"
 
-#: config.py:249
+#: ../tyrs/config.py:249
 #, python-format
 msgid "The param \"%s\" does not exist for bold colors"
 msgstr "Le paramètre \"%s\" n'existe pas pour les couleurs"
 
-#: config.py:286
+#: ../tyrs/config.py:286
 msgid "Requesting temp token from "
 msgstr "Demande de jeton temporaire depuis "
 
-#: config.py:291
+#: ../tyrs/config.py:291
 msgid "Invalid respond from "
 msgstr "Réponse invalide de "
 
-#: config.py:291
+#: ../tyrs/config.py:291
 #, python-format
 msgid " requesting temp token: %s"
 msgstr " demande de jeton temporaire: %s"
 
-#: config.py:296
+#: ../tyrs/config.py:296
 msgid "Please visit this  page and retrieve the pincode to be used"
 msgstr "Visitez s'il vous plaît la page, et entrez le code pin en retour"
 
-#: config.py:297
+#: ../tyrs/config.py:297
 msgid "in the next step to obtaining an Authentication Token:"
 msgstr "dans l'étape suivante pour obtenir le jeton d'autentification :"
 
-#: config.py:308
+#: ../tyrs/config.py:308
 msgid "Generating and signing request for an access token"
 msgstr "Génération et signement de la demande pour un jeton d'accès"
 
-#: config.py:316
+#: ../tyrs/config.py:316
 #, python-format
 msgid "The request for a Token did not succeed: %s"
 msgstr "La demande de jeton n'a pas aboutis: %s"
 
-#: config.py:329
+#: ../tyrs/config.py:329
 msgid "Error to create directory .config/tyrs"
 msgstr "Erreur lors de la création de répertoire .config/tyrs"
 
-#: config.py:341
+#: ../tyrs/config.py:341
 msgid "your account has been saved"
 msgstr "Votre compte à été sauvegardé"
 
-#: editor.py:140
+#: ../tyrs/editor.py:140
 msgid "What's up?"
 msgstr "Quoi de neuf ?"
 
-#: editor.py:143
+#: ../tyrs/editor.py:143
 msgid "Entry a name"
 msgstr "Entrez un nom"
 
-#: editor.py:146
+#: ../tyrs/editor.py:146
 msgid "Search for something?"
 msgstr "Cherchez quelque chose ?"
 
-#: help.py:37
+#: ../tyrs/help.py:37
 msgid "Navigation"
 msgstr "Navigation"
 
-#: help.py:38
+#: ../tyrs/help.py:38
 msgid "Moves up"
 msgstr "Déplacement vers le haut"
 
-#: help.py:39
+#: ../tyrs/help.py:39
 msgid "Moves down"
 msgstr "Déplacement vers le bas"
 
-#: help.py:40
+#: ../tyrs/help.py:40
 msgid "Move back on top"
 msgstr "Retour en haut"
 
-#: help.py:41
+#: ../tyrs/help.py:41
 msgid "Move to the bottom of the screen"
 msgstr "Déplacement vers le bas de l'écran"
 
-#: help.py:43
+#: ../tyrs/help.py:43
 msgid "Timelines"
 msgstr "Timelines"
 
-#: help.py:44
+#: ../tyrs/help.py:44
 msgid "Moves left in timelines"
 msgstr "Déplacement à gauche dans les timelines"
 
-#: help.py:45
+#: ../tyrs/help.py:45
 msgid "Moves right in timelines"
 msgstr "Déplacement à droite dans les timelines"
 
-#: help.py:46
+#: ../tyrs/help.py:46
 msgid "Refresh the current timeline"
 msgstr "Rafraîchir la timeline en cours"
 
-#: help.py:47
+#: ../tyrs/help.py:47
 msgid "Clear, and leave the last tweet in your timeline"
 msgstr "Effacer, et ne laisser que le dernier tweet dans votre timeline"
 
-#: help.py:48
+#: ../tyrs/help.py:48
 msgid "Moves to the home timeline"
 msgstr "Déplacement vers la timeline home"
 
-#: help.py:49
+#: ../tyrs/help.py:49
 msgid "Moves to the mentions timeline"
 msgstr "Déplacement vers la timeline des mentions"
 
-#: help.py:50
+#: ../tyrs/help.py:50
 msgid "Moves to the direct message timeline"
 msgstr "Déplacement vers la timeline des messages directs"
 
-#: help.py:51
+#: ../tyrs/help.py:51
 msgid "Ask for a term to search and move to his timeline"
 msgstr "Demande pour une recherche, et déplacement vers sa timeline"
 
-#: help.py:52
+#: ../tyrs/help.py:52
 msgid "Retrieve someone public timeline"
 msgstr "Charger la timeline publique de quelqu'un"
 
-#: help.py:53
+#: ../tyrs/help.py:53
 msgid "Retrieve your public timeline"
 msgstr "Charger votre propre timeline publique"
 
-#: help.py:55
+#: ../tyrs/help.py:55
 msgid "Tweets"
 msgstr "Tweets"
 
-#: help.py:56
+#: ../tyrs/help.py:56
 msgid "Send a tweet"
 msgstr "Envoyer un tweet"
 
-#: help.py:57
+#: ../tyrs/help.py:57
 msgid "Retweet the selected tweet"
 msgstr "Retweeter le tweet selectionné"
 
-#: help.py:58
+#: ../tyrs/help.py:58
 msgid "Retweet with response the selected tweet"
 msgstr "Retweeter en répondant au tweet selectionné"
 
-#: help.py:59
+#: ../tyrs/help.py:59
 msgid "Reply to the selected tweet"
 msgstr "Répond au tweet selectionné"
 
-#: help.py:60
+#: ../tyrs/help.py:60
 msgid "Send a direct message"
 msgstr "Envoyer un message direct"
 
-#: help.py:61
+#: ../tyrs/help.py:61
 msgid "Delete the selected tweet, must be your tweet"
 msgstr "Effacer le tweet selectionné, il doit être le votre"
 
-#: help.py:64
+#: ../tyrs/help.py:64
 msgid "Follow the selected twitter"
 msgstr "Suivre le twitter selectionné"
 
-#: help.py:65
+#: ../tyrs/help.py:65
 msgid "Unfollow the selected twitter"
 msgstr "Laisser le twitter selectionné"
 
-#: help.py:66
+#: ../tyrs/help.py:66
 msgid "Follow a twitter"
 msgstr "Suivre un twitter"
 
-#: help.py:67
+#: ../tyrs/help.py:67
 msgid "Unfollow a twitter"
 msgstr "Laisser un twitter"
 
-#: help.py:69
+#: ../tyrs/help.py:69
 msgid "Others"
 msgstr "Autres"
 
-#: help.py:70
+#: ../tyrs/help.py:70
 msgid "Leave Tyrs"
 msgstr "Quitter Tyrs"
 
-#: help.py:71
+#: ../tyrs/help.py:71
 msgid "Open an url with your browser"
 msgstr "Ouvrir une url dans votre navigateur"
 
-#: help.py:72
+#: ../tyrs/help.py:72
 msgid "Force to redraw the screen"
 msgstr "Forcer l'écran à se rafraîchir"
 
-#: help.py:90
+#: ../tyrs/help.py:90
 msgid "Name"
 msgstr "Nom"
 
-#: help.py:91
+#: ../tyrs/help.py:91
 msgid "Key"
 msgstr "Touche"
 
-#: help.py:92
+#: ../tyrs/help.py:92
 msgid "Description"
 msgstr "Description"
