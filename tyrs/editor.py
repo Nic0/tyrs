@@ -95,7 +95,7 @@ class Editor(object):
                 self.content = None
                 break
 
-            elif ch == 127:       # DEL
+            elif ch == 127 or ch == curses.KEY_BACKSPACE:       # DEL
                 if len(self.content) > 0:
                     self.content = self.content[:-1]
             else:
