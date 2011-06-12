@@ -35,7 +35,7 @@ msgstr "Impossible d'envoyer le tweet"
 
 #: tyrs/message.py:30
 msgid "Your retweet has been sent"
-msgstr "Votre tweet à été envoyé"
+msgstr "Votre retweet à été envoyé"
 
 #: tyrs/message.py:31
 msgid "Could not send the retweet"
