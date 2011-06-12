@@ -219,7 +219,7 @@ class Tweets(object):
 
     def change_search_user(self, nick):
         self.search_user = nick
-        self.interface.empty_dict('user')
+        self.timelines['user'].empty()
 
     def my_public_timeline(self):
         self.change_search_user(self.myself.screen_name)

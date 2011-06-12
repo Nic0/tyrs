@@ -54,3 +54,6 @@ class Timeline(object):
     def reset(self):
         self.first = 0
         self.unread = 0
+
+    def empty(self):
+        self.__init__()
