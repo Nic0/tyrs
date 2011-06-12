@@ -46,11 +46,11 @@ msgid "You have destroyed the tweet"
 msgstr "Vous avez effacer le tweet"
 
 #: tyrs/message.py:35
-msgid "Could not destroyed the tweet"
+msgid "Could not destroy the tweet"
 msgstr "Impossible d'effacer le tweet"
 
 #: tyrs/message.py:38
-msgid "The tweet is now in you favorite list"
+msgid "The tweet is now in your favorite list"
 msgstr "Le tweet est maintenant dans vos favories"
 
 #: tyrs/message.py:39
@@ -62,7 +62,7 @@ msgid "Your favorite tweet has been destroyed"
 msgstr "Votre tweet favorie à été effacé"
 
 #: tyrs/message.py:43
-msgid "Could not destroyed the favorite tweet"
+msgid "Could not destroy the favorite tweet"
 msgstr "Impossible d'effacer le favorie"
 
 #: tyrs/message.py:46
@@ -95,8 +95,8 @@ msgstr "Résultat de recherche pour %s"
 
 #: tyrs/message.py:59
 #, python-format
-msgid "Could not the search for %s"
-msgstr "Impossible de rechercher pour %s"
+msgid "Could not search for %s"
+msgstr "Recherche impossible  pour %s"
 
 #: tyrs/message.py:86
 msgid "There is no profile detected."

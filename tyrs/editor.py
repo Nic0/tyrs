@@ -45,7 +45,7 @@ class Editor(object):
         header = ' %s %s ' % (self.params['header'], str(counter))
 
         #TODO this doen't take bold
-        win.addstr(0, 3, header, curses.color_pair(self.conf.colors['header']['c']))
+        win.addstr(0, 3, header.encode(self.interface.charset), curses.color_pair(self.conf.colors['header']['c']))
         self.win = win
         self.win.keypad(1)
 

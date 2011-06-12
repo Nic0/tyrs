@@ -129,7 +129,7 @@ class Interface(object):
             msg = self.api.flash_message.get_msg()
             level = self.api.flash_message.level
             msg_color = { 0: 'info_msg', 1: 'warning_msg', }
-            self.screen.addstr(0, 3, msg, self.get_color(msg_color[level]))
+            self.screen.addstr(0, 3, msg.encode(self.charset), self.get_color(msg_color[level]))
             self.api.flash_message.reset()
             self.screen.refresh()
 
