@@ -16,6 +16,7 @@
 import tyrs
 import curses
 import curses.textpad
+from gettext import gettext as _
 
 class Editor(object):
 
@@ -136,10 +137,10 @@ class Editor(object):
         return i
 
 class TweetEditor(Editor):
-    params = {'char': 200, 'width': 80, 'header': "What's up?"}
+    params = {'char': 200, 'width': 80, 'header': _("What's up?")}
 
 class NickEditor(Editor):
-    params = {'char': 40, 'width': 40, 'header': "Entry a name"}
+    params = {'char': 40, 'width': 40, 'header': _("Entry a name")}
 
 class SearchEditor(Editor):
-    params = {'char': 40, 'width': 40, 'header': "Search for something?"}
+    params = {'char': 40, 'width': 40, 'header': _("Search for something?")}

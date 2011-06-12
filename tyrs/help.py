@@ -15,6 +15,7 @@
 
 import tyrs
 import curses
+from gettext import gettext as _
 
 class Help(object):
 
@@ -33,42 +34,42 @@ class Help(object):
 
         self.display_header()
         # Navigation
-        self.display_division('Navigation')
-        self.display_help_item('up', 'Moves up')
-        self.display_help_item('down', 'Moves down')
-        self.display_help_item('back_on_top', 'Move back on top')
-        self.display_help_item('back_on_bottom', 'Move to the bottom of the screen')
+        self.display_division(_('Navigation'))
+        self.display_help_item('up', _('Moves up'))
+        self.display_help_item('down', _('Moves down'))
+        self.display_help_item('back_on_top', _('Move back on top'))
+        self.display_help_item('back_on_bottom', _('Move to the bottom of the screen'))
         # Timelines
-        self.display_division('Timelines')
-        self.display_help_item('left', 'Moves left in timelines')
-        self.display_help_item('right', 'Moves right in timelines')
-        self.display_help_item('update', 'Refresh the current timeline')
-        self.display_help_item('clear', 'Clear, and leave the last tweet in your timeline')
-        self.display_help_item('home', 'Moves to the home timeline')
-        self.display_help_item('mentions', 'Moves to the mentions timeline')
-        self.display_help_item('getDM', 'Moves to the direct message timeline')
-        self.display_help_item('search', 'Ask for a term to search and move to his timeline')
-        self.display_help_item('search_user', 'Retrieve someone public timeline')
-        self.display_help_item('search_myself', 'Retrieve your public timeline')
+        self.display_division(_('Timelines'))
+        self.display_help_item('left', _('Moves left in timelines'))
+        self.display_help_item('right', _('Moves right in timelines'))
+        self.display_help_item('update', _('Refresh the current timeline'))
+        self.display_help_item('clear', _('Clear, and leave the last tweet in your timeline'))
+        self.display_help_item('home', _('Moves to the home timeline'))
+        self.display_help_item('mentions', _('Moves to the mentions timeline'))
+        self.display_help_item('getDM', _('Moves to the direct message timeline'))
+        self.display_help_item('search', _('Ask for a term to search and move to his timeline'))
+        self.display_help_item('search_user', _('Retrieve someone public timeline'))
+        self.display_help_item('search_myself', _('Retrieve your public timeline'))
         # Tweets
-        self.display_division('Tweets')
-        self.display_help_item('tweet', 'Send a tweet')
-        self.display_help_item('retweet', 'Retweet the selected tweet')
-        self.display_help_item('retweet_and_edit', 'Retweet with response the selected tweet')
-        self.display_help_item('reply', 'Reply to the selected tweet')
-        self.display_help_item('sendDM', 'Send a direct message')
-        self.display_help_item('delete', 'Delete the selected tweet, must be your tweet')
+        self.display_division(_('Tweets'))
+        self.display_help_item('tweet', _('Send a tweet'))
+        self.display_help_item('retweet', _('Retweet the selected tweet'))
+        self.display_help_item('retweet_and_edit', _('Retweet with response the selected tweet'))
+        self.display_help_item('reply', _('Reply to the selected tweet'))
+        self.display_help_item('sendDM', _('Send a direct message'))
+        self.display_help_item('delete', _('Delete the selected tweet, must be your tweet'))
         # Follow/Unfollow
         self.display_division('Follow/Unfollow')
-        self.display_help_item('follow_selected', 'Follow the selected twitter')
-        self.display_help_item('unfollow_selected', 'Unfollow the selected twitter')
-        self.display_help_item('follow', 'Follow a twitter')
-        self.display_help_item('unfollow', 'Unfollow a twitter')
+        self.display_help_item('follow_selected', _('Follow the selected twitter'))
+        self.display_help_item('unfollow_selected', _('Unfollow the selected twitter'))
+        self.display_help_item('follow', _('Follow a twitter'))
+        self.display_help_item('unfollow', _('Unfollow a twitter'))
         # Others
-        self.display_division('Others')
-        self.display_help_item('quit', 'Leave Tyrs')
-        self.display_help_item('openurl', 'Open an url with your browser')
-        self.display_help_item('redraw', 'Force to redraw the screen')
+        self.display_division(_('Others'))
+        self.display_help_item('quit', _('Leave Tyrs'))
+        self.display_help_item('openurl', _('Open an url with your browser'))
+        self.display_help_item('redraw', _('Force to redraw the screen'))
 
         self.interface.screen.refresh()
         self.interface.screen.getch()
@@ -86,9 +87,9 @@ class Help(object):
     def display_header(self):
         scr = self.interface.screen
         color = curses.color_pair(5)
-        scr.addstr(self.y, self.col[0], 'Name', color)
-        scr.addstr(self.y, self.col[1], 'Key', color)
-        scr.addstr(self.y, self.col[2], 'Description', color)
+        scr.addstr(self.y, self.col[0], _('Name'), color)
+        scr.addstr(self.y, self.col[1], _('Key'), color)
+        scr.addstr(self.y, self.col[2], _('Description'), color)
 
     def display_help_item(self, key, description):
         scr = self.interface.screen
