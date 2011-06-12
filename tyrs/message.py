@@ -33,12 +33,12 @@ class FlashMessage(object):
             _('Could not destroyed the tweet'),
             ],
         'favorite': [
-            _('The tweet is now in you favorite list'),
-            _('Could not added the tweet in your favorite list'),
+            _('The tweet is now in your favorite list'),
+            _('Could not add the tweet in your favorite list'),
             ],
         'favorite_del': [
             _('Your favorite tweet has been destroyed'),
-            _('Could not destroyed the favorite tweet'),
+            _('Could not destroy the favorite tweet'),
             ],
         'direct': [
             _('You direct message has been sent'),
@@ -54,7 +54,7 @@ class FlashMessage(object):
             ],
         'search': [
             _('Result for search with %s'),
-            _('Could not the search for %s'),
+            _('Could not search for %s'),
             ],
         }
 
