@@ -12,7 +12,5 @@ import gettext
 __revision__ = '0.1'
 
 if __name__=="__main__":
-    gettext.bindtextdomain('tyrs', '../i18n/fr/')
-    gettext.textdomain('tyrs')
-    gettext.install('tyrs', unicode=1)
+    gettext.install('tyrs', unicode=True)
     tyrs.tyrs.main()
