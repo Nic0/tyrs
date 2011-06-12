@@ -24,7 +24,6 @@ setup(name='tyrs',
       install_requires=['python-twitter>=0.8.2' 'argsparse'],
       data_files= [
           ('/usr/man/man1', ['doc/tyrs.1.gz']),
-          ('/usr/share/locale/fr/LC_MESSAGES', ['i18n/fr/tyrs.mo'])
       ],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
