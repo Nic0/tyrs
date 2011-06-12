@@ -21,7 +21,6 @@ import constant
 import ConfigParser
 import curses.ascii
 import oauth2 as oauth
-from gettext import gettext as _
 
 try:
     from urlparse import parse_qsl

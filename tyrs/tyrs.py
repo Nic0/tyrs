@@ -28,6 +28,7 @@ import config
 import locale
 import tweets
 import argparse
+import gettext
 import curses.wrapper
 from keys import Keys
 from timeline import Timeline
@@ -99,4 +100,5 @@ def init_keys():
     Keys().handleKeyBinding()
 
 if __name__ == "__main__":
+    gettext.install('tyrs', unicode=1)
     main()

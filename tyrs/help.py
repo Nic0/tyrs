@@ -15,7 +15,6 @@
 
 import tyrs
 import curses
-from gettext import gettext as _
 
 class Help(object):
 

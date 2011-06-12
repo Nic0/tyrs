@@ -22,7 +22,6 @@ import signal                   # resize event
 import curses
 from timeline import Timeline
 from message import FlashMessage
-from gettext import gettext as _
 
 class Interface(object):
     ''' All dispositions in the screen

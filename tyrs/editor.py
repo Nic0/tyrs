@@ -16,7 +16,6 @@
 import tyrs
 import curses
 import curses.textpad
-from gettext import gettext as _
 
 class Editor(object):
 
