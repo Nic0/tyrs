@@ -178,7 +178,7 @@ class Interface(object):
             
             if timeline.current > timeline.last:
                 timeline.current = timeline.last
-                self.display_timeline()
+                self.display_redraw_screen()
 
             self.screen.refresh()
 
