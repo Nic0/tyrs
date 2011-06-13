@@ -88,7 +88,7 @@ Functions
 * *r*: Retweet the current tweet
 * *f*, *F*: Follow someone (f, follow the current, F be prompted for who you want follow)
 * *l*, *L*: Unfollow (leave) someone
-* *q*: Quit (also ESC is possible)
+* *q*: Quit
 * *c*: Clear the timeline
 * *u*: Update the timeline
 

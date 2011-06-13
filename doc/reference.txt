@@ -477,7 +477,6 @@ back_to_bottom::
 
 quit::
 * Description: Leave Tyrs, and return to a normal life.
-* Alternative: ESC (escape)
 * Default: *q*
 
 tweet::
