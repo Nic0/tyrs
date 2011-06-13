@@ -3,8 +3,8 @@
 
 import sys
 from distutils.core import setup
-from DistUtilsExtra.command import *
 try:
+    from DistUtilsExtra.command import *
     import setuptools
 except ImportError:
     print 'The installation require setuptools, please install it \
