@@ -57,3 +57,7 @@ class Timeline(object):
 
     def empty(self):
         self.__init__()
+
+    def all_read(self):
+        if self.count > 0:
+            self.last_read = self.statuses[0].id

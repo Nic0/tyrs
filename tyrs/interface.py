@@ -167,9 +167,7 @@ class Interface(object):
             self.timelines[self.buffer].reset()
 
         if not self.refresh_token:
-            # The first status become the last_read for this buffer
-            if statuses_count > 0:
-                timeline.last_read = timeline.statuses[0].id
+            timeline.all_read()
 
             self.current_y = 1
             for i in range(len(timeline.statuses)):
@@ -204,7 +202,7 @@ class Interface(object):
             self.screen.addstr(display[buff], self.get_color('other_tab'))
 
     def display_counter_activities(self, buff):
-        self.timelines[self.buffer].reset()
+        self.timelines[self.buffer].all_read()
         if buff in ['home', 'mentions', 'direct']:
             unread = self.timelines[buff].unread
             if unread == 0:
