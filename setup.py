@@ -16,7 +16,7 @@ except ImportError:
     sys.exit(0)
 
 setup(name='tyrs',
-      version='0.1',
+      version='0.3.1',
       description='Twitter and Identica client using curses',
       long_description=
       '''TODO''',

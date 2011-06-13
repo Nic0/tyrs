@@ -286,7 +286,7 @@ class Interface(object):
         return True
 
     def get_text(self, status):
-        text = status.text.encode(self.charset)
+        text = status.text
         text = text.replace('\n', ' ')
         if status.rt:
             text = text.split(':')[1:]
@@ -309,6 +309,7 @@ class Interface(object):
         curent_x = padding
         line = 1
         for word in words:
+            word = word.encode(self.charset)
             if curent_x + len(word) > self.maxyx[1] - (margin + padding)*2:
                 line += 1
                 curent_x = padding
