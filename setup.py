@@ -3,8 +3,12 @@
 
 import sys
 from distutils.core import setup
-try:
+try:    
     from DistUtilsExtra.command import *
+except ImportError:
+    print 'The installation require python-distutils-extra (apt-get install \
+    python-distutils-extra'
+try:
     import setuptools
 except ImportError:
     print 'The installation require setuptools, please install it \
