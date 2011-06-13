@@ -5,6 +5,8 @@
 *\#*\#
 tyrsrc
 
+*.pot
+
 doc/html
 doc/latex
 doc/*.html
