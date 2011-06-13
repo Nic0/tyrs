@@ -132,8 +132,7 @@ class Keys(object):
             elif ch == self.conf.keys['delete_fav']:
                 self.api.destroy_favorite()
             # QUIT
-            # 27 corresponding to the ESC, couldn't find a KEY_* corresponding
-            elif ch == self.conf.keys['quit'] or ch == 27:
+            elif ch == self.conf.keys['quit']:
                 break
 
             self.interface.erase_flash_message()
