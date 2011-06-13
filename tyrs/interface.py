@@ -154,7 +154,7 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         statuses_count = len(timeline.statuses)
 
         self.display_flash_message()
@@ -164,7 +164,7 @@ class Interface(object):
         # It might have no tweets yet, we try to retrieve some then
         if statuses_count  == 0:
             self.api.update_timeline(self.buffer)
-            self.timelines[self.buffer].reset()
+            timeline.reset()
 
         if not self.refresh_token:
             timeline.all_read()
@@ -176,11 +176,19 @@ class Interface(object):
                     if not br:
                         break
             
-            if timeline.current > timeline.last:
-                timeline.current = timeline.last
-                self.display_redraw_screen()
-
             self.screen.refresh()
+            self.check_current_not_on_screen()
+
+    def select_current_timeline(self):
+        return self.timelines[self.buffer]
+
+    def check_current_not_on_screen(self):
+        '''TODO this hack should be solved when we realy display tweets'''
+        timeline = self.select_current_timeline()
+        if timeline.current > timeline.last:
+            timeline.current = timeline.last
+            self.display_redraw_screen()
+            self.display_timeline()
 
     def display_activity(self):
         '''Main entry to display the activities bar'''
@@ -202,7 +210,7 @@ class Interface(object):
             self.screen.addstr(display[buff], self.get_color('other_tab'))
 
     def display_counter_activities(self, buff):
-        self.timelines[self.buffer].all_read()
+        self.select_current_timeline().all_read()
         if buff in ['home', 'mentions', 'direct']:
             unread = self.timelines[buff].unread
             if unread == 0:
@@ -240,7 +248,7 @@ class Interface(object):
                 more, otherwise return False
         '''
 
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         self.is_retweet(status)
 
         # The content of the tweets is handle
@@ -424,14 +432,14 @@ class Interface(object):
         self.resize_event = True
 
     def clear_statuses(self):
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         timeline.statuses = [timeline.statuses[0]]
         timeline.count_statuses()
         timeline.reset()
 
     def current_status(self):
         '''@return the status object itself'''
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         return timeline.statuses[timeline.current]
 
     def get_urls(self):
@@ -452,14 +460,14 @@ class Interface(object):
         return cp
 
     def move_down(self):
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         if timeline.current < timeline.count - 1:
             if timeline.current >= timeline.last:
                 timeline.first += 1
             timeline.current += 1
 
     def move_up(self):
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         if timeline.current > 0:
             # if we need to move up the list to display
             if timeline.current == timeline.first:
@@ -467,7 +475,7 @@ class Interface(object):
             timeline.current -= 1
 
     def back_on_bottom(self):
-        timeline = self.timelines[self.buffer]
+        timeline = self.select_current_timeline()
         timeline.current = timeline.last
 
     def openurl(self):
