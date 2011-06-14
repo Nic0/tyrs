@@ -27,4 +27,4 @@ def cut_attag(name):
     return name
 
 def encode(string):
-    return string.encode(sys.stdout.charset)
+    return string.encode(sys.stdout.encoding)
