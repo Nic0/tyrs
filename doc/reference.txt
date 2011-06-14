@@ -16,6 +16,16 @@ repository:
 [source,bash]
 yaourt -S tyrs
 
+Ubuntu
+~~~~~~
+
+[source,bash]
+apt-get install python-setuptools python-distutils-extra
+wget http://src.nicosphere.net/tyrs/tyrs-0.3.1.tar.gz
+tar xvf tyrs-0.3.1.tar.gz && cd tyrs
+python setup.py build
+sudo easy_install dist/tyrs-0.3.1-py2.7.egg
+
 Frugalware
 ~~~~~~~~~~
 Tyrs is now available on
@@ -43,17 +53,14 @@ Tyrs requires the following dependencies
 * link:http://pypi.python.org/pypi/setuptools[python-setuptools] or
 link:http://pypi.python.org/pypi/distribute[python-distribute] to use the
 setup.py install
+
+Those dependencies are installed automaticly with the setup.py script.
 * link:http://code.google.com/p/python-twitter/[python-twitter]
 * link:https://github.com/simplegeo/python-oauth2[python-oauth2]
 
 Dependencies should be install when you use the setup.py tool, but you may want
 install yourself, note that you need a recent python-twitter package to use the
 oauth system.
-
-The installation will depend on your distribution, with debian or ubuntu it
-will be
-[source,bash]
-apt-get install python-twitter python-oauth2
 
 Installation
 ^^^^^^^^^^^^
@@ -63,15 +70,12 @@ installed:
 
 * With _setup.py_, this allows a clean install, similar to the autotools for C
 programs (`configure', `make', `make install')
-* Just calling the main file as a python script will work fine as well
-
-I'll decribe both ways, but I recommend you use the first solution.
 
 First, get the latest tarball (curently, the latest one is the {revision}) +
 http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
 
 [source,bash]
-tar xvf tyrs-0.1.3.tar.gz
+tar xvf tyrs-0.3.1.tar.gz
 cd tyrs
 
 .With setup.py
@@ -86,17 +90,6 @@ all, just run Tyrs with a simple:
 
 [source,bash]
 tyrs
-
-.Without setup.py
-
-You just need to to call it as a python script, the script is 'tyrs/tyrs.py'
-so you need:
-
-[source,bash]
-python tyrs/tyrs.py
-
-You may need to call Python2
-python2 tyrs/tyrs.py
 
 Github
 ~~~~~~
@@ -171,15 +164,13 @@ param2 = 42
 [section2]
 other_param = otherValue
 ...
-
+-----------------
 A quick way to get started with configuration is to generate a config file 
 from the command line. with the '-g' option (or '--generate-config'), this 
 parameter takes one argument: the filename.
 
 [source,bash]
 tyrs -g ~/.config/tyrs/tyrs.cfg
-
-------------
 
 So far, there are only three sections for configuration:
 
@@ -687,3 +678,4 @@ compress = 1
 margin = 0
 padding = 0
 ------------------
+=============================

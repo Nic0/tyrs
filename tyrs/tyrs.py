@@ -18,11 +18,12 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.3.1-dev
-   @date:       05/06/2011
+   @version:    0.3.1
+   @date:       14/06/2011
    @licence:    GPLv3
 
 '''
+
 import utils
 import config
 import locale
