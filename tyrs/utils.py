@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+
 def set_console_title():
     try:
         sys.stdout.write("\x1b]2;Tyrs\x07")
@@ -23,3 +25,6 @@ def cut_attag(name):
     if name[0] == '@':
         name = name[1:]
     return name
+
+def encode(string):
+    return string.encode(sys.stdout.charset)

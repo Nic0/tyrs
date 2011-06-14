@@ -21,6 +21,7 @@ import constant
 import ConfigParser
 import curses.ascii
 import oauth2 as oauth
+from utils import encode
 
 try:
     from urlparse import parse_qsl
@@ -121,7 +122,7 @@ class Config(object):
 
     def ask_service(self):
         message.print_ask_service(self.config_file)
-        choice = raw_input(_('Your choice? > '))
+        choice = raw_input(encode(_('Your choice? > ')))
 
         if choice == '1':
             self.service = 'twitter'
@@ -133,7 +134,7 @@ class Config(object):
 
     def ask_root_url(self):
         message.print_ask_root_url()
-        url = raw_input(_('Your choice? > '))
+        url = raw_input(encode(_('Your choice? > ')))
         if url == '':
             self.base_url = 'https://identi.ca/api'
         else:
@@ -245,7 +246,7 @@ class Config(object):
             try:
                 self.colors[bold]['b'] = True
             except:
-                print _('The param "%s" does not exist for bold colors') % bold
+                print encode(_('The param "%s" does not exist for bold colors')) % bold
 
     def authorization(self):
         ''' This function from python-twitter developers '''
@@ -282,18 +283,19 @@ class Config(object):
         oauth_consumer             = oauth.Consumer(key=consumer_key, secret=consumer_secret)
         oauth_client               = oauth.Client(oauth_consumer)
 
-        print _('Requesting temp token from ') + self.service.capitalize()
+        print encode(_('Requesting temp token from ')) + self.service.capitalize()
 
         resp, content = oauth_client.request(REQUEST_TOKEN_URL, 'GET')
 
         if resp['status'] != '200':
-            print _('Invalid respond from ') +self.service.capitalize() + _(' requesting temp token: %s') % resp['status']
+            print encode(_('Invalid respond from ')) +self.service.capitalize()
+            + encode(_(' requesting temp token: %s')) % resp['status']
         else:
             request_token = dict(parse_qsl(content))
 
             print ''
-            print _('Please visit this  page and retrieve the pincode to be used')
-            print _('in the next step to obtaining an Authentication Token:')
+            print encode(_('Please visit this  page and retrieve the pincode to be used'))
+            print encode(_('in the next step to obtaining an Authentication Token:'))
             print ''
             print '%s?oauth_token=%s' % (AUTHORIZATION_URL, request_token['oauth_token'])
             print ''
@@ -304,7 +306,7 @@ class Config(object):
             token.set_verifier(pincode)
 
             print ''
-            print _('Generating and signing request for an access token')
+            print encode(_('Generating and signing request for an access token'))
             print ''
 
             oauth_client  = oauth.Client(oauth_consumer, token)
@@ -312,7 +314,7 @@ class Config(object):
             access_token  = dict(parse_qsl(content))
 
             if resp['status'] != '200':
-                print _('The request for a Token did not succeed: %s') % resp['status']
+                print encode(_('The request for a Token did not succeed: %s')) % resp['status']
                 print access_token
                 sys.exit()
             else:
@@ -325,7 +327,7 @@ class Config(object):
             try:
                 os.mkdir(self.tyrs_path)
             except:
-                print _('Error to create directory .config/tyrs')
+                print encode(_('Error to create directory .config/tyrs'))
 
         conf = ConfigParser.RawConfigParser()
         conf.add_section('token')
@@ -337,4 +339,4 @@ class Config(object):
         with open(self.tokenFile, 'wb') as tokens:
             conf.write(tokens)
 
-        print _('your account has been saved')
+        print encode(_('your account has been saved'))

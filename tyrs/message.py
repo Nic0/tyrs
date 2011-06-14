@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from utils import encode
+
 class FlashMessage(object):
 
     message = {
@@ -81,15 +83,15 @@ class FlashMessage(object):
 
 def print_ask_service(config_file):
     print ''
-    print _('There is no profile detected.')
+    print encode(_('There is no profile detected.'))
     print ''
-    print _('It should be in %s') % config_file
-    print _('If you want to setup a new account, let\'s go through some basic steps')
-    print _('If you want to skip this, just press return or ctrl-C.')
+    print encode(_('It should be in %s')) % config_file
+    print encode(_('If you want to setup a new account, let\'s go through some basic steps'))
+    print encode(_('If you want to skip this, just press return or ctrl-C.'))
     print ''
 
     print ''
-    print _('Which service do you want to use?')
+    print encode(_('Which service do you want to use?'))
     print ''
     print '1. Twitter'
     print '2. Identi.ca'
@@ -98,5 +100,5 @@ def print_ask_service(config_file):
 def print_ask_root_url():
     print ''
     print ''
-    print _('Which root url do you want? (leave blank for default value, https://identi.ca/api)')
+    print encode(_('Which root url do you want? (leave blank for default value, https://identi.ca/api)'))
     print ''
