@@ -59,7 +59,7 @@ class Interface(object):
 
         screen = curses.initscr()
         curses.noecho()         # Dont print anything
-        curses.cbreak()
+        #curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
         curses.curs_set(0)      # Dont display cursor
         curses.meta(1)          # allow 8bits inputs
