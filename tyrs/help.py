@@ -80,22 +80,25 @@ class Help(object):
         self.increase(2)
         color = curses.color_pair(5)
         title = '-- ' + title + ' --'
-        self.interface.screen.addstr(self.y, self.col[0], title, color)
+        self.interface.screen.addstr(self.y, self.col[0],
+                title.encode(self.interface.charset), color)
         self.increase(1)
 
     def display_header(self):
         scr = self.interface.screen
         color = curses.color_pair(5)
-        scr.addstr(self.y, self.col[0], _('Name'), color)
-        scr.addstr(self.y, self.col[1], _('Key'), color)
-        scr.addstr(self.y, self.col[2], _('Description'), color)
+        scr.addstr(self.y, self.col[0],
+                _('Name').encode(self.interface.charset), color)
+        scr.addstr(self.y, self.col[1], _('Key').encode(self.interface.charset), color)
+        scr.addstr(self.y, self.col[2],
+                _('Description').encode(self.interface.charset), color)
 
     def display_help_item(self, key, description):
         scr = self.interface.screen
         color = self.interface.get_color('help')
         scr.addstr(self.y, self.col[0], key, color)
         scr.addstr(self.y, self.col[1], chr(self.conf.keys[key]), color)
-        scr.addstr(self.y, self.col[2], description, color)
+        scr.addstr(self.y, self.col[2], description.encode(self.interface.charset), color)
         self.increase(1)
 
     def increase(self, incr):
