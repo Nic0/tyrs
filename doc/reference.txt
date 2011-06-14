@@ -21,10 +21,10 @@ Ubuntu
 
 [source,bash]
 apt-get install python-setuptools python-distutils-extra
-wget http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
-tar xvf tyrs-{revision}.tar.gz && cd tyrs
+wget http://src.nicosphere.net/tyrs/tyrs-0.3.1.tar.gz
+tar xvf tyrs-0.3.1.tar.gz && cd tyrs
 python setup.py build
-sudo easy_install dist/tyrs-{revision}-py2.7.egg
+sudo easy_install dist/tyrs-0.3.1-py2.7.egg
 
 Frugalware
 ~~~~~~~~~~
@@ -164,15 +164,13 @@ param2 = 42
 [section2]
 other_param = otherValue
 ...
-
+-----------------
 A quick way to get started with configuration is to generate a config file 
 from the command line. with the '-g' option (or '--generate-config'), this 
 parameter takes one argument: the filename.
 
 [source,bash]
 tyrs -g ~/.config/tyrs/tyrs.cfg
-
-------------
 
 So far, there are only three sections for configuration:
 
