@@ -1,5 +1,11 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.3.1 -- 2011-06-14
+
+	* Almost all code changes, review, improved, moved...
+	* Internationalisation with french and spanish translation (thanks to
+	diegoxter)
+
 * Version 0.3.0 -- 2011-06-05
 
 	* Identi.ca support
