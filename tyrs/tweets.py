@@ -90,7 +90,7 @@ class Tweets(object):
         data = '@' + status.user.screen_name + ' '
         tweet = TweetEditor(data).content
         if tweet:
-            self.post_tweet(data, status.id)
+            self.post_tweet(tweet, status.id)
 
     def destroy(self):
         self.flash('destroy')
