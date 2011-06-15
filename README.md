@@ -7,6 +7,7 @@ Tyrs is a twitter and identi.ca client using curses that is easily configurable.
 - [Quick Start](http://tyrs.nicosphere.net/quick_start.html)
 - [Screenshot](http://tyrs.nicosphere.net/screenshot.html)
 - [Reference guide](http://tyrs.nicosphere.net/reference.html)
+- [Pypi download page](http://pypi.python.org/pypi/tyrs)
 
 Functionality
 --------------
@@ -29,7 +30,13 @@ Functionality
 Installation
 ------------
 
-tyrs requires python-twitter and python-oauth2
+* Current release with `easy_install` (for python2.7, but will be for other one
+  soon)
+    
+    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.2-py2.7.egg
+
+tyrs requires python-twitter, python-oauth2, python-argparse
+python-setuptools
 
     git clone git://github.com/Nic0/tyrs.git
     cd tyrs
