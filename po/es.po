@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-12 16:10+0200\n"
+"POT-Creation-Date: 2011-06-15 18:30-0430\n"
 "PO-Revision-Date: 2011-06-12 10:13-0430\n"
 "Last-Translator: Diego Jose <diegoxter1006@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -17,160 +17,165 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tyrs/message.py:20
+#: tyrs/message.py:22
 msgid "Updating timeline..."
 msgstr "Actualizando timeline..."
 
-#: tyrs/message.py:21
-msgid "Could not retrieve tweets"
+#: tyrs/message.py:23
+msgid "Couldn't retrieve tweets"
 msgstr "No se recibirieron los tweets"
 
-#: tyrs/message.py:24
-msgid "Your tweet has been sent"
+#: tyrs/message.py:26
+msgid "Your tweet was sent"
 msgstr "Tu tweet fue enviado"
 
-#: tyrs/message.py:25
-msgid "Could not send the tweet"
+#: tyrs/message.py:27
+msgid "Couldn't send tweet"
 msgstr "No se pudo enviar el tweet"
 
-#: tyrs/message.py:28
-msgid "Your retweet has been sent"
+#: tyrs/message.py:30
+msgid "Your retweet was sent"
 msgstr "Tu retweet fue enviado"
 
-#: tyrs/message.py:29
-msgid "Could not send the retweet"
+#: tyrs/message.py:31
+msgid "Couldn't send retweet"
 msgstr "No se pudo enviar el retweet"
 
-#: tyrs/message.py:32
-msgid "You have destroyed the tweet"
+#: tyrs/message.py:34
+msgid "You have deleted the tweet"
 msgstr "Borraste el tweet"
 
-#: tyrs/message.py:33
-msgid "Could not destroyed the tweet"
+#: tyrs/message.py:35
+msgid "Couldn't delete tweet"
 msgstr "No se pudo borrar el tweet"
 
-#: tyrs/message.py:36
-msgid "The tweet is now in your favorite list"
+#: tyrs/message.py:38
+msgid "The tweet was added to favorites list"
 msgstr "El tweet fue agregado a tus favoritos"
 
-#: tyrs/message.py:37
-msgid "Could not add the tweet in your favorite list"
+#: tyrs/message.py:39
+msgid "Couldn't add tweet to favorites list"
 msgstr "No se pudo agregar el tweet a tus favoritos"
 
-#: tyrs/message.py:40
-msgid "Your favorite tweet has been destroyed"
+#: tyrs/message.py:42
+msgid "Tweet was removed from favorites list"
 msgstr "El tweet fue removido de tus favoritos"
 
-#: tyrs/message.py:41
-msgid "Could not destroy the favorite tweet"
+#: tyrs/message.py:43
+msgid "Couldn't delete tweet on favorites list"
 msgstr "No se pudo quitar el tweet de tus favoritos"
 
-#: tyrs/message.py:44
-msgid "You direct message has been sent"
+#: tyrs/message.py:46
+msgid "Direct message was sent"
 msgstr "El mensaje directo fue enviado"
 
-#: tyrs/message.py:45
-msgid "Could not send the direct message"
+#: tyrs/message.py:47
+msgid "Couldn't send direct message"
 msgstr "No se pudo enviar el mensaje directo"
 
-#: tyrs/message.py:48
+#: tyrs/message.py:50
 #, python-format
 msgid "You are now following %s"
 msgstr "Ahora sigues a %s"
 
-#: tyrs/message.py:49 tyrs/message.py:53
+#: tyrs/message.py:51
 #, python-format
-msgid "You could not follow %s"
+msgid "Couldn't follow %s"
 msgstr "No se ha podido seguir a %s"
 
-#: tyrs/message.py:52
+#: tyrs/message.py:54
 #, python-format
-msgid "You have unfollowed %s"
-msgstr "Dejaste de seguir a %s"
+msgid "You are not following %s anymore"
+msgstr "Ya no sigues a %s"
 
-#: tyrs/message.py:56
+#: tyrs/message.py:55
 #, python-format
-msgid "Result for search with %s"
-msgstr "Resultados de la búsqueda de %s"
+msgid "Couldn't stop following %s"
+msgstr "No se pudo dar unfollow a %s"
 
-#: tyrs/message.py:57
+#: tyrs/message.py:58
 #, python-format
-msgid "Could not the search for %s"
-msgstr "No se pudo buscar %s"
+msgid "Search results for %s"
+msgstr "Resultados de la búsqueda '%s'"
 
-#: tyrs/message.py:84
-msgid "There is no profile detected."
-msgstr "No se detectó perfil."
+#: tyrs/message.py:59
+#, python-format
+msgid "Couldn't search for %s"
+msgstr "No se pudo buscar '%s'"
 
 #: tyrs/message.py:86
-#, python-format
-msgid "It should be in %s"
-msgstr "Debería estar en %s"
-
-#: tyrs/message.py:87
-msgid "If you want to setup a new account, let's go through some basic steps"
-msgstr "Si quieres configurar una cuenta nueva, comenzemos por algunos pasos básicos"
+msgid "Couldn't find any profile."
+msgstr "No se detectó ningún perfil"
 
 #: tyrs/message.py:88
+#, python-format
+msgid "It should reside in: %s"
+msgstr "Debería estar en %s"
+
+#: tyrs/message.py:89
+msgid "If you want to setup a new account, then follow these steps"
+msgstr "Si quieres configurar una cuenta nueva, comenzemos configurando lo básico"
+
+#: tyrs/message.py:90
 msgid "If you want to skip this, just press return or ctrl-C."
-msgstr "Si quieres saltarte esto, presiona return o ctrl-C."
+msgstr "Si no quieres hacer esto, presiona return o ctrl-C."
 
-#: tyrs/message.py:92
+#: tyrs/message.py:94
 msgid "Which service do you want to use?"
-msgstr "¿Cual servicio deseas usar?"
+msgstr "¿Cual servicio deseas usar? "
 
-#: tyrs/message.py:101
+#: tyrs/message.py:103
 msgid ""
-"Which root url do you want? (leave blank for default value, https://identi."
-"ca/api)"
-msgstr ""
+"Which root url do you want? (leave blank for default, https://identi.ca/api)"
+msgstr  ""
 "¿Cuál url quieres usar? (deja en blanco para usar el valor por defecto "
 "https://identi.identi.ca/api)"
 
-#: tyrs/config.py:124 tyrs/config.py:136
+
+#: tyrs/config.py:125 tyrs/config.py:137
 msgid "Your choice? > "
 msgstr "¿Tu elección?"
 
-#: tyrs/config.py:248
+#: tyrs/config.py:249
 #, python-format
 msgid "The param \"%s\" does not exist for bold colors"
 msgstr "El parámetro \"%s\" no se permite en negrita"
 
-#: tyrs/config.py:285
+#: tyrs/config.py:286
 msgid "Requesting temp token from "
 msgstr "Obteniendo una permiso temporal desde "
 
-#: tyrs/config.py:290
+#: tyrs/config.py:291
 msgid "Invalid respond from "
 msgstr "Respuesta inválida desde "
 
-#: tyrs/config.py:290
+#: tyrs/config.py:292
 #, python-format
 msgid " requesting temp token: %s"
 msgstr " obteniendo permiso temporal: %s"
 
-#: tyrs/config.py:295
-msgid "Please visit this  page and retrieve the pincode to be used"
-msgstr "Por favor, visita esta página y copia el código que se usará"
+#: tyrs/config.py:297
+msgid "Please visit the following page to retrieve pin code needed"
+msgstr "Por favor, visita esta página para obtener el código necesario"
 
-#: tyrs/config.py:296
-msgid "in the next step to obtaining an Authentication Token:"
-msgstr "siguiente paso para obtener el Permiso de Autentificación:"
+#: tyrs/config.py:298
+msgid "to obtain an Authentication Token:"
+msgstr "para obtener el Permiso de Autentificación:"
 
-#: tyrs/config.py:307
+#: tyrs/config.py:309
 msgid "Generating and signing request for an access token"
 msgstr "Generando y firmando el pedido para un permiso de acceso"
 
-#: tyrs/config.py:315
+#: tyrs/config.py:317
 #, python-format
-msgid "The request for a Token did not succeed: %s"
-msgstr "El pedido del Permiso falló: %s"
+msgid "Request for access token failed: %s"
+msgstr "El pedido falló: %s"
 
-#: tyrs/config.py:328
-msgid "Error to create directory .config/tyrs"
+#: tyrs/config.py:330
+msgid "Error creating directory .config/tyrs"
 msgstr "Error al crear el directorio .config/tyrs"
 
-#: tyrs/config.py:340
+#: tyrs/config.py:342
 msgid "your account has been saved"
 msgstr "tu cuenta ha sido guardada"
 
@@ -191,19 +196,19 @@ msgid "Navigation"
 msgstr "Navegación"
 
 #: tyrs/help.py:37
-msgid "Moves up"
+msgid "Go up one tweet"
 msgstr "Moverte hacia arriba"
 
 #: tyrs/help.py:38
-msgid "Moves down"
+msgid "Go down one tweet"
 msgstr "Moverte hacia abajo"
 
 #: tyrs/help.py:39
-msgid "Move back on top"
+msgid "Go to top of screen"
 msgstr "Ir hacia el tope"
 
 #: tyrs/help.py:40
-msgid "Move to the bottom of the screen"
+msgid "Go to bottom of screen"
 msgstr "Ir hacia el fondo de la pantalla"
 
 #: tyrs/help.py:42
@@ -211,43 +216,43 @@ msgid "Timelines"
 msgstr "Timelines"
 
 #: tyrs/help.py:43
-msgid "Moves left in timelines"
+msgid "Go left on the timeline's bar"
 msgstr "Moverse hacia la izquierda entre timelines"
 
 #: tyrs/help.py:44
-msgid "Moves right in timelines"
+msgid "Go right on the timeline's bar"
 msgstr "Moverse hacia la derecha entre timelines"
 
 #: tyrs/help.py:45
-msgid "Refresh the current timeline"
+msgid "Refresh current timeline"
 msgstr "Refrescar el timeline actual"
 
 #: tyrs/help.py:46
-msgid "Clear, and leave the last tweet in your timeline"
-msgstr "Limpiar y dejar solo el último tweet en tu timeline"
+msgid "Clear all but last tweet in timeline"
+msgstr "Limpiar el timeline excepto el último tweet"
 
 #: tyrs/help.py:47
-msgid "Moves to the home timeline"
+msgid "Go to home timeline"
 msgstr "Moverse hacia el timeline de inicio"
 
 #: tyrs/help.py:48
-msgid "Moves to the mentions timeline"
-msgstr "Moverse a las menciones"
+msgid "Go to mentions timeline"
+msgstr "Ver las menciones"
 
 #: tyrs/help.py:49
-msgid "Moves to the direct message timeline"
-msgstr "Moverse a los mensajes directos"
+msgid "Go to direct message timeline"
+msgstr "Ver los mensajes directos"
 
 #: tyrs/help.py:50
-msgid "Ask for a term to search and move to his timeline"
-msgstr "Buscar un término o un username."
+msgid "Search for term and show resulting timeline"
+msgstr "Buscar un término o un username"
 
 #: tyrs/help.py:51
-msgid "Retrieve someone public timeline"
+msgid "Show somebody's public timeline"
 msgstr "Revisar el timeline de alguien"
 
 #: tyrs/help.py:52
-msgid "Retrieve your public timeline"
+msgid "Show your public timeline"
 msgstr "Revisa tu propio timeline"
 
 #: tyrs/help.py:54
@@ -259,31 +264,31 @@ msgid "Send a tweet"
 msgstr "Enviar un tweet"
 
 #: tyrs/help.py:56
-msgid "Retweet the selected tweet"
+msgid "Retweet selected tweet"
 msgstr "Hacer retweet al tweet seleccionado"
 
 #: tyrs/help.py:57
-msgid "Retweet with response the selected tweet"
+msgid "Retweet selected tweet, but edit first"
 msgstr "Hacer retweet manual al tweet seleccionado"
 
 #: tyrs/help.py:58
-msgid "Reply to the selected tweet"
+msgid "Reply to selected tweet"
 msgstr "Responder al tweet seleccionado"
 
 #: tyrs/help.py:59
-msgid "Send a direct message"
+msgid "Send direct message"
 msgstr "Envia un mensaje directo"
 
 #: tyrs/help.py:60
-msgid "Delete the selected tweet, must be your tweet"
+msgid "Delete selected tweet (must be yours)"
 msgstr "Borrar el tweet seleccionado (debe ser tuyo)"
 
 #: tyrs/help.py:63
-msgid "Follow the selected twitter"
+msgid "Follow selected twitter"
 msgstr "Seguir al twittero seleccionado"
 
 #: tyrs/help.py:64
-msgid "Unfollow the selected twitter"
+msgid "Unfollow selected twitter"
 msgstr "Dejar de seguir al twittero seleccionado"
 
 #: tyrs/help.py:65
@@ -303,21 +308,21 @@ msgid "Leave Tyrs"
 msgstr "Salir de Tyrs"
 
 #: tyrs/help.py:70
-msgid "Open an url with your browser"
-msgstr "Abrir una url en el navegador"
+msgid "Open URL in browser"
+msgstr "Abrir url en el navegador"
 
 #: tyrs/help.py:71
-msgid "Force to redraw the screen"
-msgstr "Forzar el redibujado de la pantalla"
+msgid "Redraw the screen"
+msgstr "Redibujar la pantalla"
 
-#: tyrs/help.py:89
+#: tyrs/help.py:91
 msgid "Name"
 msgstr "Nombre"
 
-#: tyrs/help.py:90
+#: tyrs/help.py:92
 msgid "Key"
 msgstr "Tecla"
 
-#: tyrs/help.py:91
+#: tyrs/help.py:94
 msgid "Description"
 msgstr "Descripción"
