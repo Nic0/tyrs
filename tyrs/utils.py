@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 import sys
+from htmlentitydefs import entitydefs
 
 def set_console_title():
     try:
@@ -28,3 +30,14 @@ def cut_attag(name):
 
 def encode(string):
     return string.encode(sys.stdout.encoding)
+
+def html_unescape(str):
+    """ Unescapes HTML entities """
+    def entity_replacer(m):
+        entity = m.group(1)
+        if entity in entitydefs:
+            return entitydefs[entity]
+        else:
+            return m.group(0)
+
+    return re.sub(r'&([^;]+);', entity_replacer, str)

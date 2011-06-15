@@ -21,6 +21,7 @@ import time
 import signal                   # resize event
 import curses
 from timeline import Timeline
+from utils import html_unescape
 from message import FlashMessage
 
 class Interface(object):
@@ -296,6 +297,7 @@ class Interface(object):
     def get_text(self, status):
         text = status.text
         text = text.replace('\n', ' ')
+        text = html_unescape(text)
         if status.rt:
             text = text.split(':')[1:]
             text = ':'.join(text)
