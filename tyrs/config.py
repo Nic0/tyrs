@@ -294,13 +294,13 @@ class Config(object):
             request_token = dict(parse_qsl(content))
 
             print ''
-            print encode(_('Please visit this  page and retrieve the pincode to be used'))
-            print encode(_('in the next step to obtaining an Authentication Token:'))
+            print encode(_('Please visit the following page to retrieve pin code needed'))
+            print encode(_('to obtain an Authentication Token:'))
             print ''
             print '%s?oauth_token=%s' % (AUTHORIZATION_URL, request_token['oauth_token'])
             print ''
 
-            pincode = raw_input('Pincode? ')
+            pincode = raw_input('Pin code? ')
 
             token = oauth.Token(request_token['oauth_token'], request_token['oauth_token_secret'])
             token.set_verifier(pincode)
@@ -314,7 +314,7 @@ class Config(object):
             access_token  = dict(parse_qsl(content))
 
             if resp['status'] != '200':
-                print encode(_('The request for a Token did not succeed: %s')) % resp['status']
+                print encode(_('Request for access token failed: %s')) % resp['status']
                 print access_token
                 sys.exit()
             else:
@@ -327,7 +327,7 @@ class Config(object):
             try:
                 os.mkdir(self.tyrs_path)
             except:
-                print encode(_('Error to create directory .config/tyrs'))
+                print encode(_('Error creating directory .config/tyrs'))
 
         conf = ConfigParser.RawConfigParser()
         conf.add_section('token')
