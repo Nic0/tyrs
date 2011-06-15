@@ -113,7 +113,7 @@ msgstr "Si quieres configurar una cuenta nueva, comenzemos por algunos pasos bá
 
 #: tyrs/message.py:88
 msgid "If you want to skip this, just press return or ctrl-C."
-msgstr "Si quieres saltarte este paso, presiona return o ctrl-C."
+msgstr "Si quieres saltarte esto, presiona return o ctrl-C."
 
 #: tyrs/message.py:92
 msgid "Which service do you want to use?"
@@ -151,7 +151,7 @@ msgstr " obteniendo permiso temporal: %s"
 
 #: tyrs/config.py:295
 msgid "Please visit this  page and retrieve the pincode to be used"
-msgstr "Por favor, visita esta página y copia/pega el código que se usará"
+msgstr "Por favor, visita esta página y copia el código que se usará"
 
 #: tyrs/config.py:296
 msgid "in the next step to obtaining an Authentication Token:"
@@ -240,7 +240,7 @@ msgstr "Moverse a los mensajes directos"
 
 #: tyrs/help.py:50
 msgid "Ask for a term to search and move to his timeline"
-msgstr "Preguntar un término para busvar y moverse hacia el timeline de búsqueda-"
+msgstr "Buscar un término o un username."
 
 #: tyrs/help.py:51
 msgid "Retrieve someone public timeline"
@@ -308,7 +308,7 @@ msgstr "Abrir una url en el navegador"
 
 #: tyrs/help.py:71
 msgid "Force to redraw the screen"
-msgstr "Forzar el redibujamiento de la pantalla"
+msgstr "Forzar el redibujado de la pantalla"
 
 #: tyrs/help.py:89
 msgid "Name"
