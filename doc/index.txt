@@ -11,6 +11,8 @@ version of Tyrs]. +
 Get the latest development version on link:http://github.com/Nic0/tyrs[github]. +
 This is free (as in freedom) software, released under the GNU General Public
 Licence v3.
+Download latest version, or easy to install egg in the
+link:http://pypi.python.org/pypi/tyrs[python website].
 
 If it's your first visit, you might like to check out some
 link:screenshot.html[screenshots], or get started with the
