@@ -20,43 +20,43 @@ class FlashMessage(object):
     message = {
         'update': [
             _('Updating timeline...'),
-            _('Could not retrieve tweets')
+            _('Couldn\'t retrieve tweets')
             ],
         'tweet': [
-            _('Your tweet has been sent'),
-            _('Could not send the tweet'),
+            _('Your tweet was sent'),
+            _('Couldn\'t send tweet'),
             ],
         'retweet': [
-            _('Your retweet has been sent'),
-            _('Could not send the retweet'),
+            _('Your retweet was sent'),
+            _('Couldn\'t send retweet'),
             ],
         'destroy': [
-            _('You have destroyed the tweet'),
-            _('Could not destroyed the tweet'),
+            _('You have deleted the tweet'),
+            _('Couldn\'t delete tweet'),
             ],
         'favorite': [
-            _('The tweet is now in your favorite list'),
-            _('Could not add the tweet in your favorite list'),
+            _('The tweet was added to favorites list'),
+            _('Couldn\'t add tweet to favorites list'),
             ],
         'favorite_del': [
-            _('Your favorite tweet has been destroyed'),
-            _('Could not destroy the favorite tweet'),
+            _('Tweet was removed from favorites list'),
+            _('Couldn\'t delete tweet on favorites list'),
             ],
         'direct': [
-            _('You direct message has been sent'),
-            _('Could not send the direct message'),
+            _('Direct message was sent'),
+            _('Couldn\'t send direct message'),
             ],
         'follow': [
             _('You are now following %s'),
-            _('You could not follow %s')
+            _('Couldn\'t follow %s')
             ],
         'unfollow': [
-            _('You have unfollowed %s'),
-            _('You could not follow %s')
+            _('You are not following %s anymore'),
+            _('Couldn\'t stop following %s')
             ],
         'search': [
-            _('Result for search with %s'),
-            _('Could not search for %s'),
+            _('Search results for %s'),
+            _('Couldn\'t search for %s'),
             ],
         }
 
@@ -83,10 +83,10 @@ class FlashMessage(object):
 
 def print_ask_service(config_file):
     print ''
-    print encode(_('There is no profile detected.'))
+    print encode(_('Couldn\'t find any profile.'))
     print ''
-    print encode(_('It should be in %s')) % config_file
-    print encode(_('If you want to setup a new account, let\'s go through some basic steps'))
+    print encode(_('It should reside in: %s')) % config_file
+    print encode(_('If you want to setup a new account, then follow these steps'))
     print encode(_('If you want to skip this, just press return or ctrl-C.'))
     print ''
 
@@ -100,5 +100,5 @@ def print_ask_service(config_file):
 def print_ask_root_url():
     print ''
     print ''
-    print encode(_('Which root url do you want? (leave blank for default value, https://identi.ca/api)'))
+    print encode(_('Which root url do you want? (leave blank for default, https://identi.ca/api)'))
     print ''
