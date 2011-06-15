@@ -155,20 +155,18 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
-        timeline = self.select_current_timeline()
-        statuses_count = len(timeline.statuses)
-
-        self.display_flash_message()
-        self.display_activity()
-        self.display_help_bar()
-
-        # It might have no tweets yet, we try to retrieve some then
-        if statuses_count  == 0:
-            self.api.update_timeline(self.buffer)
-            timeline.reset()
-
         if not self.refresh_token:
-            timeline.all_read()
+            timeline = self.select_current_timeline()
+            statuses_count = len(timeline.statuses)
+
+            self.display_flash_message()
+            self.display_activity()
+            self.display_help_bar()
+
+            # It might have no tweets yet, we try to retrieve some then
+            if statuses_count  == 0:
+                self.api.update_timeline(self.buffer)
+                timeline.reset()
 
             self.current_y = 1
             for i in range(len(timeline.statuses)):

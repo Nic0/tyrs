@@ -25,6 +25,7 @@ class Editor(object):
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
         self.interface = tyrs.container['interface'] 
+        self.interface.refresh_token = True
         self.data   = data
         self.init_win()
 
@@ -74,7 +75,6 @@ class Editor(object):
 
     def start_edit(self):
 
-        self.interface.refresh_token = True
         if self.data:
             self.content = self.data.encode('utf-8')
             self.refresh()
