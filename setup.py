@@ -4,11 +4,11 @@
 import os
 import sys
 from distutils.core import setup
-try:    
-    from DistUtilsExtra.command import *
-except ImportError:
-    print 'The installation require python-distutils-extra (apt-get install \
-    python-distutils-extra'
+#try:    
+    #from DistUtilsExtra.command import *
+#except ImportError:
+    #print 'The installation require python-distutils-extra (apt-get install \
+    #python-distutils-extra'
 try:
     import setuptools
 except ImportError:
@@ -22,22 +22,17 @@ def read(fname):
 setup(name='tyrs',
       version='0.3.2',
       description='Twitter and Identica client using curses',
-      long_description=read('README.md'),
-
       author='Nicolas Paris',
       author_email='nicolas.caen@gmail.com',
       license='GPLv3',
-      url='http://tyrs.nicosphere.net',
+      long_description=read('README.md'),
       install_requires=['python-twitter>=0.8.2' 'argsparse'],
-      #data_files= [
-          #('/usr/man/man1', ['doc/tyrs.1.gz']),
-      #],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
 
-      cmdclass = { "build" :  build_extra.build_extra,
-                   "build_i18n" :  build_i18n.build_i18n,
-                 },
+      #cmdclass = { "build" :  build_extra.build_extra,
+                   #"build_i18n" :  build_i18n.build_i18n,
+                 #},
       classifiers = [
           'Development Status :: 4 - Beta',
           'Environment :: Console :: Curses',
