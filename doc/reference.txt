@@ -6,6 +6,23 @@ Tyrs Reference Guide
 Installation
 ------------
 
+Easy way
+~~~~~~~~
+
+Tyrs is now available from pypi.python.org site, allow you to use easy_install,
+and quickly get it started.  If your using python2.7, all you need to do is:
+
+[source,bash]
+sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.2-py2.7.egg
+
+Or you may visite the http://pypi.python.org/pypi/tyrs and get the last tarball
+to use something like:
+
+[source, bash]
+tar xvf tyrs-0.3.2.tar.gz && cd tyrs
+python setup.py build
+python setup.py install
+
 ArchLinux
 ~~~~~~~~~
 
@@ -25,6 +42,8 @@ wget http://src.nicosphere.net/tyrs/tyrs-0.3.1.tar.gz
 tar xvf tyrs-0.3.1.tar.gz && cd tyrs
 python setup.py build
 sudo easy_install dist/tyrs-0.3.1-py2.7.egg
+
+An alternative could be as it explain above in the `easy way`.
 
 Frugalware
 ~~~~~~~~~~
