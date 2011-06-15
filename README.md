@@ -35,8 +35,9 @@ Installation
     
     sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.2-py2.7.egg
 
-tyrs requires python-twitter, python-oauth2, python-argparse
-python-setuptools
+Dependecies that should be install automaticly:
+* python-twitter, python-oauth2, python-argparse
+Requires: python-setuptools
 
     git clone git://github.com/Nic0/tyrs.git
     cd tyrs

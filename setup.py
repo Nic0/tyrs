@@ -4,11 +4,7 @@
 import os
 import sys
 from distutils.core import setup
-#try:    
-    #from DistUtilsExtra.command import *
-#except ImportError:
-    #print 'The installation require python-distutils-extra (apt-get install \
-    #python-distutils-extra'
+
 try:
     import setuptools
 except ImportError:
@@ -29,10 +25,6 @@ setup(name='tyrs',
       install_requires=['python-twitter>=0.8.2' 'argsparse'],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
-
-      #cmdclass = { "build" :  build_extra.build_extra,
-                   #"build_i18n" :  build_i18n.build_i18n,
-                 #},
       classifiers = [
           'Development Status :: 4 - Beta',
           'Environment :: Console :: Curses',
