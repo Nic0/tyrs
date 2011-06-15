@@ -16,3 +16,5 @@ doc/images/*
 tags
 build
 start
+dist
+tyrs.egg-info
