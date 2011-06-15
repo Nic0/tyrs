@@ -1,5 +1,10 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.3.2 -- 2011-06-15
+
+	* Encoding issues with translation
+	* Wrong data with mentions tweets
+
 * Version 0.3.1 -- 2011-06-14
 
 	* Almost all code changes, review, improved, moved...
