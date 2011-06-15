@@ -295,9 +295,7 @@ class Interface(object):
         return True
 
     def get_text(self, status):
-        text = status.text
-        text = text.replace('\n', ' ')
-        text = html_unescape(text)
+        text = html_unescape(status.text.replace('\n', ' '))
         if status.rt:
             text = text.split(':')[1:]
             text = ':'.join(text)
