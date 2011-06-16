@@ -22,7 +22,7 @@ setup(name='tyrs',
       author_email='nicolas.caen@gmail.com',
       license='GPLv3',
       long_description=read('README'),
-      install_requires=['python-twitter>=0.8.2' 'argsparse'],
+      install_requires=['python-twitter>=0.8.2' 'argparse'],
       packages=['tyrs'],
       scripts=['scripts/tyrs'],
       classifiers = [
