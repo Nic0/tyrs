@@ -21,8 +21,8 @@ import time
 import signal                   # resize event
 import curses
 from timeline import Timeline
-from utils import html_unescape
 from message import FlashMessage
+from utils import html_unescape, encode
 
 class Interface(object):
     ''' All dispositions in the screen
@@ -397,11 +397,11 @@ class Interface(object):
         if status.rt and self.conf.params['retweet_by'] == 1:
             rtby = pseudo
             origin = self.origin_of_retweet(status)
-            header = ' %s (%s) RT by %s ' % (origin, time, rtby)
+            header = ' %s (%s) ' % (origin, time) + u"\u2672" + ' %s ' % rtby
         else:
             header = " %s (%s) " % (pseudo, time)
 
-        return header
+        return encode(header)
 
     def is_retweet(self, status):
         status.rt = self.regex_retweet.match(status.text)

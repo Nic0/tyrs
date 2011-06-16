@@ -36,14 +36,33 @@ yaourt -S tyrs
 Ubuntu
 ~~~~~~
 
-[source,bash]
 apt-get install python-setuptools python-distutils-extra
-wget http://src.nicosphere.net/tyrs/tyrs-0.3.1.tar.gz
-tar xvf tyrs-0.3.1.tar.gz && cd tyrs
+wget http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
+tar xvf tyrs-{revision}.tar.gz && cd tyrs
 python setup.py build
-sudo easy_install dist/tyrs-0.3.1-py2.7.egg
+sudo easy_install dist/tyrs-{revision}-py2.7.egg
 
 An alternative could be as it explain above in the `easy way`.
+
+Debian
+~~~~~~
+
+It seems that Tyrs works only with python2.7, so far, you need use wheezy instead of squeezy. If the .egg from pypi does not works, here how to install manually.
+
+downoad and untar latest Tyrs version.
+Ssl have some problem with the 0.7.0 version of python-httplib2, so you may install the 0.6.0 version like:
+[source,bash]
+easy_install-2.7 http://httplib2.googlecode.com/files/httplib2-0.6.0.zip
+
+After we generate the .egg with:
+[source,bash]
+python2.7 setup.py bdist_egg
+
+And install it:
+easy_install-2.7 dist/tyrs-{revision}-py2.7.egg
+
+
+
 
 Frugalware
 ~~~~~~~~~~

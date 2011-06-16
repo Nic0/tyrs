@@ -81,11 +81,11 @@ class FlashMessage(object):
         
         return ' ' +msg+ ' '
 
-def print_ask_service(config_file):
+def print_ask_service(token_file):
     print ''
     print encode(_('Couldn\'t find any profile.'))
     print ''
-    print encode(_('It should reside in: %s')) % config_file
+    print encode(_('It should reside in: %s')) % token_file
     print encode(_('If you want to setup a new account, then follow these steps'))
     print encode(_('If you want to skip this, just press return or ctrl-C.'))
     print ''
