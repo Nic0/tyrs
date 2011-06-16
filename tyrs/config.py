@@ -44,7 +44,7 @@ class Config(object):
             self.generate_config_file(args)
 
         self.set_path(args)
-        if not os.path.isfile(self.tokenFile):
+        if not os.path.isfile(self.token_file):
             self.new_account()
         else:
             self.parse_token()
@@ -103,9 +103,9 @@ class Config(object):
         else:
             self.tyrs_path = self.home + '/.config/tyrs/'
         # Setup the token file
-        self.tokenFile = self.tyrs_path + 'tyrs.tok'
+        self.token_file = self.tyrs_path + 'tyrs.tok'
         if args.account != None:
-            self.tokenFile += '.' + args.account
+            self.token_file += '.' + args.account
         # Setup the config file
         self.config_file = self.tyrs_path + 'tyrs.cfg'
         if args.config != None:
@@ -121,7 +121,7 @@ class Config(object):
         self.createTokenFile()
 
     def ask_service(self):
-        message.print_ask_service(self.config_file)
+        message.print_ask_service(self.token_file)
         choice = raw_input(encode(_('Your choice? > ')))
 
         if choice == '1':
@@ -142,7 +142,7 @@ class Config(object):
 
     def parse_token(self):
         token = ConfigParser.RawConfigParser()
-        token.read(self.tokenFile)
+        token.read(self.token_file)
         if token.has_option('token', 'service'):
             self.service = token.get('token', 'service')
         else:
@@ -336,7 +336,7 @@ class Config(object):
         conf.set('token', 'oauth_token', self.oauth_token)
         conf.set('token', 'oauth_token_secret', self.oauth_token_secret)
 
-        with open(self.tokenFile, 'wb') as tokens:
+        with open(self.token_file, 'wb') as tokens:
             conf.write(tokens)
 
         print encode(_('your account has been saved'))

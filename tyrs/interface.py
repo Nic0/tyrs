@@ -21,8 +21,8 @@ import time
 import signal                   # resize event
 import curses
 from timeline import Timeline
-from utils import html_unescape, encode
 from message import FlashMessage
+from utils import html_unescape, encode
 
 class Interface(object):
     ''' All dispositions in the screen
