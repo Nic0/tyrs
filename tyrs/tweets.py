@@ -233,12 +233,15 @@ class Tweets(object):
             self.interface.change_buffer('user')
 
     def get_thread(self):
-        status = self.interface.current_status()
-        self.timelines['thread'].empty()
-        self.statuses = [status]
-        self.build_thread(status)
-        self.timelines['thread'].append_new_statuses(self.statuses)
-        self.interface.change_buffer('thread')
+        try:
+            status = self.interface.current_status()
+            self.timelines['thread'].empty()
+            self.statuses = [status]
+            self.build_thread(status)
+            self.timelines['thread'].append_new_statuses(self.statuses)
+            self.interface.change_buffer('thread')
+        except IndexError:
+            pass
 
     def build_thread(self, status):
         if status.in_reply_to_status_id != None:
