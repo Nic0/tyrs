@@ -385,27 +385,38 @@ class Interface(object):
         return hour
 
     def get_header(self, status):
-        '''@return string'''
-        try:
-            pseudo  = status.user.screen_name.encode(self.charset)
-        except:
-            # Only for the Direct Message case
-            pseudo = status.sender_screen_name.encode(self.charset)
-        time    = self.get_time(status)
-        #name    = status.user.name.encode(charset)
+        nick = self.get_nick(status)
+        time = self.get_time(status)
 
         if status.rt and self.conf.params['retweet_by'] == 1:
-            rtby = pseudo
             origin = self.origin_of_retweet(status)
-            header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % rtby
+            header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % nick
         else:
-            header = " %s - %s " % (time, pseudo)
+            header = " %s - %s " % (time, nick)
+
+        if self.is_reply(status):
+            header += u'\u2709 '
 
         return encode(header)
+
+    def get_nick(self, status):
+        if hasattr(status, 'user'):
+            nick = status.user.screen_name
+        else:
+            nick = status.sender_screen_name
+
+        return encode(nick)
 
     def is_retweet(self, status):
         status.rt = self.regex_retweet.match(status.text)
         return status.rt
+
+    def is_reply(self, status):
+        if hasattr(status, 'in_reply_to_screen_name'):
+            reply = status.in_reply_to_screen_name
+            if reply:
+                return True
+        return False
 
     def origin_of_retweet(self, status):
         '''When its a retweet, return the first person who tweet it,
