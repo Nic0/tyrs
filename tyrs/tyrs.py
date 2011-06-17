@@ -83,7 +83,11 @@ def init_interface():
     container.add('interface', user_interface)
 
 def init_timelines():
-    buffers = ('home', 'mentions', 'direct', 'search', 'user', 'favorite')
+    buffers = (
+        'home', 'mentions', 'direct',
+        'search', 'user', 'favorite',
+        'thread'
+    )
     timelines = {}
     for buff in buffers:
         timelines[buff] = Timeline()

@@ -64,6 +64,7 @@ key = {
     'fav':               'b',
     'get_fav':           'B',
     'delete_fav':        '^B',
+    'thread':            'T',
 }
 
 params = {

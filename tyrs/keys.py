@@ -131,6 +131,9 @@ class Keys(object):
             # Destroy favorite
             elif ch == self.conf.keys['delete_fav']:
                 self.api.destroy_favorite()
+            # Thread
+            elif ch == self.conf.keys['thread']:
+                self.api.get_thread()
             # QUIT
             elif ch == self.conf.keys['quit']:
                 break

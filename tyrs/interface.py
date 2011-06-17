@@ -201,8 +201,9 @@ class Interface(object):
 
     def display_buffer_activities(self, buff):
         display = { 'home': 'H', 'mentions': 'M',
-                    'direct': 'D', 'search': 'S ',
-                    'user': 'U ', 'favorite': 'F', }
+                    'direct': 'D', 'search': 'S',
+                    'user': 'U', 'favorite': 'F',
+                    'thread': 'T'}
         if self.buffer == buff:
             self.screen.addstr(display[buff], self.get_color('current_tab'))
         else:

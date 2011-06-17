@@ -200,7 +200,8 @@ class Tweets(object):
                         statuses = self.statuses
                     elif timeline == 'favorite':
                         statuses = self.api.GetFavorites()
-
+                    elif timeline == 'thread':
+                        statuses = self.get_thead()
                     self.timelines[timeline].append_new_statuses(statuses)
 
             except TwitterError:
@@ -230,6 +231,23 @@ class Tweets(object):
         if self.search_user:
             self.statuses = self.api.GetUserTimeline(self.search_user, include_rts=True)
             self.interface.change_buffer('user')
+
+    def get_thread(self):
+        status = self.interface.current_status()
+        self.timelines['thread'].empty()
+        self.statuses = [status]
+        self.build_thread(status)
+        self.timelines['thread'].append_new_statuses(self.statuses)
+        self.interface.change_buffer('thread')
+
+    def build_thread(self, status):
+        if status.in_reply_to_status_id != None:
+            try:
+                reply_to = self.api.GetStatus(status.in_reply_to_status_id)
+                self.statuses.append(reply_to)
+                self.build_thread(reply_to)
+            except TwitterError:
+                pass
 
     def search(self):
         self.interface.buffer = 'search'
