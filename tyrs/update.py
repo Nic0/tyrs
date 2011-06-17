@@ -35,6 +35,7 @@ class UpdateThread(threading.Thread):
                     self.api.update_timeline('home')
                     self.api.update_timeline('mentions')
                     self.api.update_timeline('direct')
+
                 except URLError:
                     pass
                 self.interface.display_timeline()

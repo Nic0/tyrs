@@ -103,7 +103,7 @@ class Interface(object):
         return bgcolor
 
     def first_update(self):
-        updates = ['home', 'direct', 'mentions', 'favorite']
+        updates = ['home', 'direct', 'mentions', 'user_retweet', 'favorite']
         for buff in updates:
             self.api.update_timeline(buff)
             self.timelines[buff].reset()
@@ -203,10 +203,10 @@ class Interface(object):
                 self.display_counter_activities(b)
 
     def display_buffer_activities(self, buff):
-        display = { 'home': 'H', 'mentions': 'M',
-                    'direct': 'D', 'search': 'S',
-                    'user': 'U', 'favorite': 'F',
-                    'thread': 'T'}
+        display = { 
+                'home': 'H', 'mentions': 'M', 'direct': 'D', 
+                'search': 'S', 'user': 'U', 'favorite': 'F',
+                'thread': 'T', 'user_retweet': 'R'}
         if self.buffer == buff:
             self.screen.addstr(display[buff], self.get_color('current_tab'))
         else:

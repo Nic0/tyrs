@@ -192,6 +192,8 @@ class Tweets(object):
                         statuses = self.api.GetFriendsTimeline(retweets=True)
                     elif timeline == 'mentions':
                         statuses = self.api.GetMentions()
+                    elif timeline == 'user_retweet':
+                        statuses = self.api.GetUserRetweets()
                     elif timeline == 'search' and self.search_word != '':
                         statuses = self.api.GetSearch(self.search_word)
                     elif timeline == 'direct':
