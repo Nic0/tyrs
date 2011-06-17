@@ -241,7 +241,7 @@ class Tweets(object):
             self.timelines['thread'].append_new_statuses(self.statuses)
             self.interface.change_buffer('thread')
         except IndexError:
-            pass
+            return []
 
     def build_thread(self, status):
         if status.in_reply_to_status_id != None:
