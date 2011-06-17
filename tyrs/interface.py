@@ -397,9 +397,9 @@ class Interface(object):
         if status.rt and self.conf.params['retweet_by'] == 1:
             rtby = pseudo
             origin = self.origin_of_retweet(status)
-            header = '-%s- %s ' % (time, origin) + u"\u267b" + ' %s ' % rtby
+            header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % rtby
         else:
-            header = "-%s- %s " % (time, pseudo)
+            header = " %s - %s " % (time, pseudo)
 
         return encode(header)
 
