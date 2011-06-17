@@ -201,7 +201,7 @@ class Tweets(object):
                     elif timeline == 'favorite':
                         statuses = self.api.GetFavorites()
                     elif timeline == 'thread':
-                        statuses = self.get_thead()
+                        statuses = self.get_thread()
                     self.timelines[timeline].append_new_statuses(statuses)
 
             except TwitterError:
