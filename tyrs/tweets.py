@@ -255,11 +255,11 @@ class Tweets(object):
                 pass
 
     def search(self):
-        self.interface.buffer = 'search'
         self.search_word = SearchEditor().content
         self.flash('search', self.search_word)
+        self.timelines['search'].empty()
         try:
-            self.timelines['search'].statuses = self.api.GetSearch(self.search_word)
+            self.timelines['search'].append_new_statuses(self.api.GetSearch(self.search_word))
             self.interface.change_buffer('search')
         except:
             self.error()
