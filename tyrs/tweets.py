@@ -246,7 +246,7 @@ class Tweets(object):
             return []
 
     def build_thread(self, status):
-        if status.in_reply_to_status_id != None:
+        if status.in_reply_to_status_id:
             try:
                 reply_to = self.api.GetStatus(status.in_reply_to_status_id)
                 self.statuses.append(reply_to)

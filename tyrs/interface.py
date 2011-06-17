@@ -163,7 +163,7 @@ class Interface(object):
             statuses_count = len(timeline.statuses)
 
             self.display_flash_message()
-            self.display_activity()
+            self.display_activities()
             self.display_help_bar()
 
             # It might have no tweets yet, we try to retrieve some then
@@ -192,7 +192,7 @@ class Interface(object):
             self.display_redraw_screen()
             self.display_timeline()
 
-    def display_activity(self):
+    def display_activities(self):
         '''Main entry to display the activities bar'''
         if self.conf.params['activities']:
             maxyx = self.screen.getmaxyx()
