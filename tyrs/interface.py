@@ -107,6 +107,7 @@ class Interface(object):
         for buff in updates:
             self.api.update_timeline(buff)
             self.timelines[buff].reset()
+            self.timelines[buff].all_read()
         self.display_timeline()
 
     def handle_resize_event(self):
