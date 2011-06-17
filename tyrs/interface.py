@@ -103,8 +103,10 @@ class Interface(object):
         return bgcolor
 
     def first_update(self):
-        self.api.update_timeline('home')
-        self.timelines['home'].reset()
+        updates = ['home', 'direct', 'mentions', 'favorite']
+        for buff in updates:
+            self.api.update_timeline(buff)
+            self.timelines[buff].reset()
         self.display_timeline()
 
     def handle_resize_event(self):
