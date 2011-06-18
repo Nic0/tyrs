@@ -64,7 +64,7 @@ class Interface(object):
         screen.keypad(1)        # Use of arrow keys
         try:
             curses.curs_set(0)      # Dont display cursor
-        except:
+        except curses.error:
             pass
         curses.meta(1)          # allow 8bits inputs
         self.init_colors()
@@ -292,7 +292,7 @@ class Interface(object):
         try:
             panel.refresh(0, 0, start_y, start_x,
                 start_y + height, start_x + length)
-        except:
+        except curses.error:
             pass
         # An adjustment to compress a little the display
         if self.conf.params['compress']:
@@ -350,7 +350,7 @@ class Interface(object):
                 else:
                     try:
                         panel.addstr(line, curent_x, word, self.get_color('text'))
-                    except:
+                    except curses.error:
                         pass
                 curent_x += len(word) + 1
 
