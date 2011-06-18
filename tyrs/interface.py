@@ -61,7 +61,7 @@ class Interface(object):
         self.screen = curses.initscr()
         curses.noecho()         # Dont print anything
         #curses.cbreak()
-        self.screen.timeout(0)
+        self.screen.timeout(500)
         self.screen.keypad(1)        # Use of arrow keys
         try:
             curses.curs_set(0)      # Dont display cursor

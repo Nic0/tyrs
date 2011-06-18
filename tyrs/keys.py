@@ -34,6 +34,8 @@ class Keys(object):
 
             if self.interface.resize_event:
                 self.interface.handle_resize_event()
+                self.interface.erase_flash_message()
+                self.interface.display_timeline()
 
             ch = self.interface.screen.getch()
 
@@ -133,6 +135,8 @@ class Keys(object):
             # QUIT
             elif ch == self.conf.keys['quit']:
                 break
+            else:
+                continue
 
             self.interface.erase_flash_message()
             self.interface.display_timeline()
