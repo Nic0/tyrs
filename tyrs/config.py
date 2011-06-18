@@ -256,10 +256,11 @@ class Config(object):
     def get_bold_colors(self, str):
         bolds = str.split(' ')
         for bold in bolds:
-            try:
-                self.colors[bold]['b'] = True
-            except:
-                print encode(_('The param "%s" does not exist for bold colors')) % bold
+            if bold is not '':
+                try:
+                    self.colors[bold]['b'] = True
+                except:
+                    print encode(_('The param "%s" does not exist for bold colors')) % bold
 
     def authorization(self):
         ''' This function from python-twitter developers '''
