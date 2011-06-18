@@ -71,12 +71,12 @@ class Config(object):
         default_dir = '/tyrs'
         default_file = '/tyrs/tyrs.cfg'
         if not os.path.isfile(self.xdg_config + default_file):
-            if not os.path.dir(self.xdg_config + default_dir):
+            if not os.path.exists(self.xdg_config + default_dir):
                 try:
-                    os.mkdir(self.xdg_config+'/tyrs')
+                    os.makedirs(self.xdg_config + default_dir)
                 except:
                     print encode(_('Couldn\'t create the directory in %s/tyrs')) % self.xdg_config
-            self.generate_config_file(self.xdg_config + default)
+            self.generate_config_file(self.xdg_config + default_file)
 
 
     def generate_config_file(self, config_file):
