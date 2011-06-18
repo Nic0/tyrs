@@ -259,7 +259,7 @@ class Config(object):
             if bold is not '':
                 try:
                     self.colors[bold]['b'] = True
-                except:
+                except IndexError:
                     print encode(_('The param "%s" does not exist for bold colors')) % bold
 
     def authorization(self):

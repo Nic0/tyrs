@@ -62,7 +62,10 @@ class Interface(object):
         curses.noecho()         # Dont print anything
         #curses.cbreak()
         screen.keypad(1)        # Use of arrow keys
-        curses.curs_set(0)      # Dont display cursor
+        try:
+            curses.curs_set(0)      # Dont display cursor
+        except:
+            pass
         curses.meta(1)          # allow 8bits inputs
         self.init_colors()
         self.maxyx = screen.getmaxyx()
