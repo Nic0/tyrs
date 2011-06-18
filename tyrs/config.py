@@ -41,9 +41,11 @@ class Config(object):
         self.get_browser()
         # generate the config file
         if args.generate_config != None:
-            self.generate_config_file(args)
+            self.generate_config_file(args.generate_config)
+            sys.exit(0)
 
         self.set_path(args)
+        self.check_for_default_config() 
         if not os.path.isfile(self.token_file):
             self.new_account()
         else:
@@ -65,8 +67,19 @@ class Config(object):
         except:
             self.browser    = ''
 
-    def generate_config_file(self, args):
-        config_file = args.generate_config
+    def check_for_default_config(self):
+        default_dir = '/tyrs'
+        default_file = '/tyrs/tyrs.cfg'
+        if not os.path.isfile(self.xdg_config + default_file):
+            if not os.path.dir(self.xdg_config + default_dir):
+                try:
+                    os.mkdir(self.xdg_config+'/tyrs')
+                except:
+                    print encode(_('Couldn\'t create the directory in %s/tyrs')) % self.xdg_config
+            self.generate_config_file(self.xdg_config + default)
+
+
+    def generate_config_file(self, config_file):
         conf = ConfigParser.RawConfigParser()
         conf.read(config_file)
 
@@ -94,7 +107,7 @@ class Config(object):
         with open(config_file, 'wb') as config:
             conf.write(config)
 
-        sys.exit(0)
+        print encode(_('Genereting configuration file in %s')) % config_file 
 
     def set_path(self, args):
         # Default config path set
