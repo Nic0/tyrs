@@ -63,6 +63,8 @@ class Tweets(object):
         tweet = TweetEditor(data).content
         if tweet:
             self.post_tweet(tweet)
+        else:
+            self.flash('empty')
 
     def post_tweet(self, tweet, reply_to=None):
         self.flash('tweet')

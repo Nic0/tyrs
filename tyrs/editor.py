@@ -19,22 +19,21 @@ import curses.textpad
 
 class Editor(object):
 
-    confirm = False
-    content = ''
-
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
         self.interface = tyrs.container['interface'] 
         self.interface.refresh_token = True
+        self.content = ''
         self.data   = data
         self.init_win()
 
         self.start_edit()
         self.win.erase()
-        curses.curs_set(0)
+        self.change_cursor(0)
+        self.interface.refresh_token = False
 
     def init_win(self):
-        curses.curs_set(1)
+        self.change_cursor(1)
         self.set_window_size()
 
         win = self.interface.screen.subwin(
@@ -45,7 +44,6 @@ class Editor(object):
         counter = self.count_chr()
         header = ' %s %s ' % (self.params['header'], str(counter))
 
-        #TODO this doen't take bold
         win.addstr(0, 3, header.encode(self.interface.charset), curses.color_pair(self.conf.colors['header']['c']))
         self.win = win
         self.win.keypad(1)
@@ -88,7 +86,6 @@ class Editor(object):
                 continue
 
             elif ch == 10:          # ENTER: send the tweet
-                self.confirm = True
                 break
 
             elif ch == 27:        # ESC: abord
@@ -102,7 +99,6 @@ class Editor(object):
                 self.content += chr(ch)
 
             self.refresh()
-        self.interface.refresh_token = False
 
     def refresh(self):
         self.win.erase()
@@ -134,6 +130,12 @@ class Editor(object):
             else:
                 token = False
         return i
+
+    def change_cursor(self, opt):
+        try:
+            curses.curs_set(opt)
+        except curses.error:
+            pass
 
 class TweetEditor(Editor):
     params = {'char': 200, 'width': 80, 'header': _("What's up?")}

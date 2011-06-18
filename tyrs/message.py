@@ -58,6 +58,9 @@ class FlashMessage(object):
             _('Search results for %s'),
             _('Couldn\'t search for %s'),
             ],
+        'empty': [
+            '',''
+        ]
         }
 
     def __init__(self):
