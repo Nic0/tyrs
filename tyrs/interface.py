@@ -58,20 +58,20 @@ class Interface(object):
 
     def init_screen(self):
 
-        screen = curses.initscr()
+        self.screen = curses.initscr()
         curses.noecho()         # Dont print anything
         #curses.cbreak()
-        screen.keypad(1)        # Use of arrow keys
+        self.screen.timeout(0)
+        self.screen.keypad(1)        # Use of arrow keys
         try:
             curses.curs_set(0)      # Dont display cursor
         except curses.error:
             pass
         curses.meta(1)          # allow 8bits inputs
         self.init_colors()
-        self.maxyx = screen.getmaxyx()
+        self.maxyx = self.screen.getmaxyx()
 
-        screen.refresh()
-        self.screen = screen
+        self.screen.refresh()
 
     def init_colors(self):
         curses.start_color()
@@ -164,6 +164,7 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
+        self.set_max_window_size()
         try:
             if not self.refresh_token:
                 timeline = self.select_current_timeline()
