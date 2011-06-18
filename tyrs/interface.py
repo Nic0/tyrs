@@ -143,7 +143,10 @@ class Interface(object):
             self.screen.refresh()
 
     def erase_flash_message(self):
-        self.screen.addstr(0,3, '                               ')
+        try:
+            self.screen.addstr(0,3, '                               ')
+        except curses.error:
+            pass
 
     def display_update_msg(self):
         self.api.flash_message.event = 'update'
@@ -161,28 +164,31 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
-        if not self.refresh_token:
-            timeline = self.select_current_timeline()
-            statuses_count = len(timeline.statuses)
+        try:
+            if not self.refresh_token:
+                timeline = self.select_current_timeline()
+                statuses_count = len(timeline.statuses)
 
-            self.display_flash_message()
-            self.display_activities()
-            self.display_help_bar()
+                self.display_flash_message()
+                self.display_activities()
+                self.display_help_bar()
 
-            # It might have no tweets yet, we try to retrieve some then
-            if statuses_count  == 0:
-                self.api.update_timeline(self.buffer)
-                timeline.reset()
+                # It might have no tweets yet, we try to retrieve some then
+                if statuses_count  == 0:
+                    self.api.update_timeline(self.buffer)
+                    timeline.reset()
 
-            self.current_y = 1
-            for i in range(len(timeline.statuses)):
-                if i >= timeline.first:
-                    br = self.display_status(timeline.statuses[i], i)
-                    if not br:
-                        break
-            
-            self.screen.refresh()
-            self.check_current_not_on_screen()
+                self.current_y = 1
+                for i in range(len(timeline.statuses)):
+                    if i >= timeline.first:
+                        br = self.display_status(timeline.statuses[i], i)
+                        if not br:
+                            break
+                
+                self.screen.refresh()
+                self.check_current_not_on_screen()
+        except curses.error:
+            pass
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
