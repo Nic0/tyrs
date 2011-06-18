@@ -3,7 +3,6 @@
 *.swo
 *~
 *\#*\#
-tyrsrc
 
 doc/html
 doc/latex
@@ -18,3 +17,4 @@ build
 start
 dist
 tyrs.egg-info
+build.sh

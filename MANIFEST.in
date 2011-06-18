@@ -1,0 +1,2 @@
+recursive-include po *.po *.in
+recursive-include doc *.txt LICENCE

@@ -1,5 +1,5 @@
-tyrs/message.py
-tyrs/config.py
-tyrs/editor.py
-tyrs/help.py
-tyrs/interface.py
+src/message.py
+src/config.py
+src/editor.py
+src/help.py
+src/interface.py
