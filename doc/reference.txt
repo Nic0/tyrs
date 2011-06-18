@@ -158,10 +158,21 @@ Please check the configuration section for a list of keybindings.
 Activities bar
 ~~~~~~~~~~~~~~
 
-The activities bar, is the bar containing information about your messages
-(the 'H:0 M:0 D:0' at the top), this
-displays new tweets in other buffers. For example, if
-you have new mentions in your timeline, the 'M' counter will increase.
+The activities bar, is the bar containing information about your messages (the
+'H:0 M:0 D:0 SUFTR' at the top), this displays new tweets in other buffers. For
+example, if you have new mentions in your timeline, the 'M' counter will
+increase.
+
+The meaning of each timelines is:
+
+* H: Home
+* M: Mentions
+* D: Direct messages
+* S: Search results
+* U: Users public timeline
+* F: Favorite tweets
+* T: Theads
+* R: own retweets
 
 A few  things to note:
 
@@ -169,6 +180,14 @@ A few  things to note:
 is no need to increase it.
 * On startup, other buffers are delayed initially, so they won't display new
 counts until after the first update.
+
+Icons
+~~~~~
+
+* ♻ Recycling icon, is a symbol to reconize retweets, the nick right after this
+symbol is the personne who retweet it.
+* ✉ Envelope icon, notify that the tweet is a response to another one, you may
+read the whole thread, with the thread shortcut 'T'.
 
 Console arguments
 -----------------
@@ -454,7 +473,8 @@ search_myself     = ^U
 delete            = C
 fav               = b
 get_fav           = B
-delete_fav        = '^B'
+delete_fav        = ^B
+thread            = T
 ---------------
 
 Control keys support
@@ -619,6 +639,11 @@ get_fav::
 delete_fav::
 * Description: Destroy the selected favorite.
 * Default: *^B* (ctrl-b)
+
+thread::
+* Description: Allow to read a thread of mentions/responses from a tweet, that
+contain an envelope icon
+* Default: *T*
 
 [TIP]
 A good way to remember the favorites shortcut, think of them as your *b*est tweets.
