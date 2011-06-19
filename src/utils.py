@@ -41,3 +41,15 @@ def html_unescape(str):
             return m.group(0)
 
     return re.sub(r'&([^;]+);', entity_replacer, str)
+
+
+def get_source(source):
+    if source == 'web':
+        return source
+    source = source.split('>')
+    source = source[1:]
+    source = ' '.join(source)
+    source = source.split('<')[:1]
+    source = source[:1]
+    source = ' '.join(source)
+    return source

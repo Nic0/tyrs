@@ -15,8 +15,11 @@
 
 import unittest
 import sys
-sys.path.append('../tyrs')
-import tyrs.utils as utils
+sys.path.append('../src')
+import gettext
+gettext.install('tyrs', unicode=1)
+#import src.utils as utils
+import utils
 
 class TestUtils(unittest.TestCase):
 
@@ -30,6 +33,11 @@ class TestUtils(unittest.TestCase):
         nick = '@mynick'
         result = utils.cut_attag(nick)
         self.assertEqual(result, 'mynick')
+
+    def test_get_source(self):
+        source = '<a href="http://tyrs.nicosphere.net/" rel="nofollow">tyrs</a>'
+        result = utils.get_source(source)
+        self.assertEqual(result, 'tyrs')
 
 if __name__ == '__main__':
     unittest.main ()

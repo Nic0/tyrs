@@ -79,6 +79,7 @@ params = {
     'activities':           True,
     'compress':             False,
     'help':                 True,
+    'source':               False,
 }
 
 token = {

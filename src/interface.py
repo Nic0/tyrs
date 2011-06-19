@@ -22,7 +22,7 @@ import signal                   # resize event
 import curses
 from timeline import Timeline
 from message import FlashMessage
-from utils import html_unescape, encode
+from utils import html_unescape, encode, get_source
 
 class Interface(object):
     ''' All dispositions in the screen
@@ -329,7 +329,7 @@ class Interface(object):
         curent_x = padding
         line = 1
         for word in words:
-            word = word.encode(self.charset)
+            word = encode(word)
             if curent_x + len(word) > self.maxyx[1] - (margin + padding)*2:
                 line += 1
                 curent_x = padding
@@ -401,6 +401,7 @@ class Interface(object):
     def get_header(self, status):
         nick = self.get_nick(status)
         time = self.get_time(status)
+        source = self.get_source(status)
 
         if status.rt and self.conf.params['retweet_by'] == 1:
             origin = self.origin_of_retweet(status)
@@ -411,7 +412,17 @@ class Interface(object):
         if self.is_reply(status):
             header += u'\u2709 '
 
+        if self.conf.params['source']:
+            header += ' (%s)' % source
+
         return encode(header)
+
+    def get_source(self, status):
+        if hasattr(status, 'source'):
+            source = get_source(status.source)
+        else:
+            source = ''
+        return source
 
     def get_nick(self, status):
         if hasattr(status, 'user'):

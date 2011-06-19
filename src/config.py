@@ -243,6 +243,9 @@ class Config(object):
         if self.conf.has_option('params', 'padding'):
             self.params['padding'] = int(self.conf.get('params', 'padding'))
 
+        if self.conf.has_option('params', 'source'):
+            if int(self.conf.get('params', 'source')) == 1:
+                self.params['source'] = True
 
     def char_value(self, ch):
         if ch[0] == '^':
