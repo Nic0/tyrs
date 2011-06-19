@@ -72,6 +72,13 @@ link:http://frugalware.org/packages/119439[Frugalware], thanks to Devil505
 [source,bash]
 pacman -S tyrs
 
+Gentoo
+~~~~~~
+
+You may install Tyrs on gentoo with the following
+link:https://github.com/linkdd/linkdd-overlay/blob/master/net-misc/tyrs/tyrs-9999.ebuild[ebuild on github],
+thanks to linkdd.
+
 OpenSuse
 ~~~~~~~~
 
