@@ -77,7 +77,8 @@ Gentoo
 
 You may install Tyrs on gentoo with the following
 link:https://github.com/linkdd/linkdd-overlay/blob/master/net-misc/tyrs/tyrs-9999.ebuild[ebuild on github],
-thanks to linkdd.
+you may check the link:https://github.com/linkdd/linkdd-overlay/blob/master/README[README]
+for more informations, and how to add the overlay with 'layman'. Thanks to linkdd.
 
 OpenSuse
 ~~~~~~~~
