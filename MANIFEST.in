@@ -1,2 +1,2 @@
 recursive-include po *.po *.in
-recursive-include doc *.txt LICENCE
+recursive-include doc *.txt LICENCE tyrs.1.gz
