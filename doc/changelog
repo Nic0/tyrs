@@ -1,5 +1,15 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.3.3 -- 2011-06-19
+
+	* Changes for pypi site
+	* Better resize event handle
+	* Default config file generate if there is none
+	* Own retweet timeline
+	* Thread function and timeline
+	* utf symbols add
+	* bugs fixes
+
 * Version 0.3.2 -- 2011-06-15
 
 	* Encoding issues with translation
