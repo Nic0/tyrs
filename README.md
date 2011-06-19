@@ -33,7 +33,7 @@ Installation
 * Current release with `easy_install` (for python2.7, but will be for other one
   soon)
     
-    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.2-py2.7.egg
+    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
 
 Dependecies that should be install automaticly:
 * python-twitter, python-oauth2, python-argparse
