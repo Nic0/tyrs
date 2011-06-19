@@ -132,6 +132,8 @@ class Keys(object):
             # Thread
             elif ch == self.conf.keys['thread']:
                 self.api.get_thread()
+            elif ch == ord('i'):
+                self.interface.current_user_info()
             # QUIT
             elif ch == self.conf.keys['quit']:
                 break

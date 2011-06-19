@@ -16,10 +16,11 @@
 import re
 import os
 import sys
-import tyrs
 import time
+import tyrs
 import signal                   # resize event
 import curses
+from user import User
 from timeline import Timeline
 from message import FlashMessage
 from utils import html_unescape, encode, get_source
@@ -45,12 +46,13 @@ class Interface(object):
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
+        tyrs.container.add('interface', self)
+        self.api.set_interface()
         self.resize_event     = False
         self.regex_retweet     = re.compile('^RT @\w+:')
         self.refresh_token    = False
         self.buffer           = 'home'
         self.charset = sys.stdout.encoding
-        self.api.set_interface(self)
         # resize event
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.init_screen()
@@ -519,3 +521,6 @@ class Interface(object):
                 os.system(self.conf.params['openurl_command'] % url)
             except:
                 pass 
+
+    def current_user_info(self):
+        User(self.current_status().user)

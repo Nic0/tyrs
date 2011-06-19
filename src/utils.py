@@ -29,7 +29,10 @@ def cut_attag(name):
     return name
 
 def encode(string):
-    return string.encode(sys.stdout.encoding)
+    try:
+        return string.encode(sys.stdout.encoding)
+    except AttributeError:
+        return string
 
 def html_unescape(str):
     """ Unescapes HTML entities """
