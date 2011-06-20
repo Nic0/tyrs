@@ -34,7 +34,9 @@ Installation
   soon)
     
     sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
+
 or
+
     sudo pip install tyrs
 
 Dependecies that should be install automaticly:
