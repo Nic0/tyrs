@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
+import os
 import sys
 from htmlentitydefs import entitydefs
 
@@ -56,3 +57,7 @@ def get_source(source):
     source = source[:1]
     source = ' '.join(source)
     return source
+
+def open_image(status):
+    image = user.profile_image_url
+    os.system('feh %s&' % image)

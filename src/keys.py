@@ -16,6 +16,7 @@
 import tyrs
 import curses
 from help import Help
+from utils import open_image
 
 class Keys(object):
     '''
@@ -132,6 +133,10 @@ class Keys(object):
             # Thread
             elif ch == self.conf.keys['thread']:
                 self.api.get_thread()
+            # Open image
+            elif ch == self.conf.keys['open_image']:
+                open_image(self.interface.current_status().user)
+            # User info
             elif ch == ord('i'):
                 self.interface.current_user_info()
             # QUIT

@@ -23,11 +23,15 @@ class Timeline(object):
         self.current = 0
         self.first = 0
         self.last = 0
+        self.page = 1
 
     def append_new_statuses(self, retreive):
+        if not retreive:
+            pass
         # Fresh new start.
         if self.statuses == []:
             self.statuses = retreive
+            self.update_counter()
         # This mean there is no new status, we just leave then.
         elif retreive[0].id == self.statuses[0].id:
             pass
@@ -40,16 +44,35 @@ class Timeline(object):
                 if retreive[i].id == self.statuses[0].id:
                     self.statuses = retreive[:i] + self.statuses
                     self.current += len(retreive[:i])
+            self.update_counter()
+
+    def update_counter(self):
+        self.count_statuses()
+        self.count_unread()
+
+    def append_old_statuses(self, statuses):
+        if statuses == []:
+            pass
+        else:
+            self.statuses += statuses
+            self.count_statuses()
+            self.count_unread()
 
     def count_statuses(self):
-        self.count = len(self.statuses)
-
+        try:
+            self.count = len(self.statuses)
+        except TypeError:
+            self.count = 0
+            
     def count_unread(self):
-        self.unread = 0
-        for i in range(len(self.statuses)):
-            if self.statuses[i].id == self.last_read:
-                break
-            self.unread += 1
+        try:
+            self.unread = 0
+            for i in range(len(self.statuses)):
+                if self.statuses[i].id == self.last_read:
+                    break
+                self.unread += 1
+        except TypeError:
+            self.unread = 0
 
     def reset(self):
         self.first = 0

@@ -23,6 +23,10 @@ tar xvf tyrs-0.3.2.tar.gz && cd tyrs
 python setup.py build
 python setup.py install
 
+You may use python-pip tool to install easely tyrs:
+[source,bash]
+sudo pip install tyrs
+
 ArchLinux
 ~~~~~~~~~
 

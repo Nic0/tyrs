@@ -50,6 +50,7 @@ key = {
     'follow':            'F',
     'unfollow':          'L',
     'openurl':           'o',
+    'open_image':        '^I',
     'home':              'h',
     'mentions':          'm',
     'reply':             'M',

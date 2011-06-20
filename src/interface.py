@@ -403,7 +403,6 @@ class Interface(object):
     def get_header(self, status):
         nick = self.get_nick(status)
         time = self.get_time(status)
-        source = self.get_source(status)
 
         if status.rt and self.conf.params['retweet_by'] == 1:
             origin = self.origin_of_retweet(status)
@@ -414,7 +413,8 @@ class Interface(object):
         if self.is_reply(status):
             header += u'\u2709 '
 
-        if self.conf.params['source']:
+        source = self.get_source(status)
+        if self.conf.params['source'] and source:
             header += ' (%s)' % source
 
         return encode(header)
@@ -501,6 +501,16 @@ class Interface(object):
             if timeline.current >= timeline.last:
                 timeline.first += 1
             timeline.current += 1
+        else:
+            self.lazzy_load()
+
+    def lazzy_load(self):
+        timeline = self.select_current_timeline()
+        timeline.page += 1
+        statuses = self.api.retreive_statuses(self.buffer, timeline.page)
+        timeline.append_old_statuses(statuses)
+        timeline.first += 1
+        timeline.current += 1
 
     def move_up(self):
         timeline = self.select_current_timeline()

@@ -33,7 +33,6 @@ class Tweets(object):
         self.search_user = None
         self.search_word = None
         self.flash_message = FlashMessage()
-        self.statuses = []
     
     def set_interface(self):
         self.interface = tyrs.container['interface']
@@ -187,25 +186,9 @@ class Tweets(object):
         @param the buffer to retreive tweets
         '''
         if not self.interface.refresh_token:
-            self.interface.display_update_msg()
             try:
                 if not self.interface.refresh_token:
-                    if timeline == 'home':
-                        statuses = self.api.GetFriendsTimeline(retweets=True)
-                    elif timeline == 'mentions':
-                        statuses = self.api.GetMentions()
-                    elif timeline == 'user_retweet':
-                        statuses = self.api.GetUserRetweets()
-                    elif timeline == 'search' and self.search_word != '':
-                        statuses = self.api.GetSearch(self.search_word)
-                    elif timeline == 'direct':
-                        statuses = self.api.GetDirectMessages()
-                    elif timeline == 'user' and self.search_user != '':
-                        statuses = self.statuses
-                    elif timeline == 'favorite':
-                        statuses = self.api.GetFavorites()
-                    elif timeline == 'thread':
-                        statuses = self.get_thread()
+                    statuses = self.retreive_statuses(timeline)
                     self.timelines[timeline].append_new_statuses(statuses)
 
             except TwitterError:
@@ -213,15 +196,34 @@ class Tweets(object):
                 self.flash_message.level = 1
                 self.interface.display_flash_message()
 
-            self.timelines[timeline].count_statuses()
-            self.timelines[timeline].count_unread()
-            self.interface.erase_flash_message()
+    def retreive_statuses(self, timeline, page=None):
+        self.interface.display_update_msg()
+        if timeline == 'home':
+            statuses = self.api.GetFriendsTimeline(retweets=True, page=page)
+        elif timeline == 'mentions':
+            statuses = self.api.GetMentions(page=page)
+        elif timeline == 'user_retweet':
+            statuses = self.api.GetUserRetweets()
+        elif timeline == 'search' and self.search_word != '':
+            statuses = self.api.GetSearch(self.search_word, page=page)
+        elif timeline == 'direct':
+            statuses = self.api.GetDirectMessages(page=page)
+        elif timeline == 'user' and self.search_user != '':
+            statuses = self.load_user_public_timeline(page=page)
+        elif timeline == 'favorite':
+            statuses = self.api.GetFavorites(page=page)
+        elif timeline == 'thread':
+            statuses = self.get_thread()
+        self.interface.erase_flash_message()
+
+        return statuses
 
     def find_public_timeline(self):
         nick = NickEditor().content
         if nick and nick != self.search_user:
             self.change_search_user(nick)
             self.load_user_public_timeline()
+            self.interface.change_buffer('user')
 
     def change_search_user(self, nick):
         self.search_user = nick
@@ -231,10 +233,12 @@ class Tweets(object):
         self.change_search_user(self.myself.screen_name)
         self.load_user_public_timeline()
 
-    def load_user_public_timeline(self):
+    def load_user_public_timeline(self, page=None):
         if self.search_user:
-            self.statuses = self.api.GetUserTimeline(self.search_user, include_rts=True)
-            self.interface.change_buffer('user')
+            return self.api.GetUserTimeline(self.search_user,
+                    include_rts=True, page=page)
+        else:
+            return []
 
     def get_thread(self):
         try:
