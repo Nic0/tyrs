@@ -58,6 +58,6 @@ def get_source(source):
     source = ' '.join(source)
     return source
 
-def open_image(status):
+def open_image(user):
     image = user.profile_image_url
     os.system('feh %s&' % image)
