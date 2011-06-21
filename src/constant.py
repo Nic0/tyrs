@@ -81,6 +81,7 @@ params = {
     'compress':             False,
     'help':                 True,
     'source':               False,
+    'old_skool_border':     False,
 }
 
 token = {

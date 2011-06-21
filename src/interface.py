@@ -283,7 +283,10 @@ class Interface(object):
         panel = curses.newpad(height, length)
 
         if self.conf.params['tweet_border'] == 1:
-            panel.border(0)
+            if self.conf.params['old_skool_border']:
+                panel.border('|','|','-','-','+','+','+','+')
+            else:
+                panel.border(0)
 
         # Highlight the current status
         if timeline.current == i:

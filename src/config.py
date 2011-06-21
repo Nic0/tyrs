@@ -247,6 +247,10 @@ class Config(object):
             if int(self.conf.get('params', 'source')) == 1:
                 self.params['source'] = True
 
+        if self.conf.has_option('params', 'old_skool_border'):
+            if int(self.conf.get('params', 'old_skool_border')) == 1:
+                self.params['old_skool_border'] = True
+
     def char_value(self, ch):
         if ch[0] == '^':
             i = 0

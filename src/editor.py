@@ -40,7 +40,10 @@ class Editor(object):
                 self.size['height'], self.size['width'],
                 self.size['start_y'], self.size['start_x'])
 
-        win.border(0)
+        if self.conf.params['old_skool_border']:
+            win.border('|','|','-','-','+','+','+','+')
+        else:
+            win.border(0)
         counter = self.count_chr()
         header = ' %s %s ' % (self.params['header'], str(counter))
 
