@@ -93,7 +93,7 @@ class Keys(object):
                 self.interface.openurl()
             # BACK ON TOP
             elif ch == self.conf.keys['back_on_top']:
-                self.interface.change_buffer(self.interface.buffer)
+                self.interface.back_on_top()
             # BACK ON BOTTOM
             elif ch == self.conf.keys['back_on_bottom']:
                 self.interface.back_on_bottom()

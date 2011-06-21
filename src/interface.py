@@ -524,6 +524,11 @@ class Interface(object):
         timeline = self.select_current_timeline()
         timeline.current = timeline.last
 
+    def back_on_top(self):
+        timeline = self.select_current_timeline()
+        timeline.current = 0
+        timeline.reset()
+
     def openurl(self):
         urls = self.get_urls()
         for url in urls:
