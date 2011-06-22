@@ -64,7 +64,10 @@ class Editor(object):
         height = int(self.params['char'] / width) + 4
 
         # Start of EditWin, display in the middle of the main screen
-        start_y = maxyx[0]/2 - int(height/2)
+        if self.conf.params['box_position'] != 1:
+            start_y = maxyx[0]/2 - int(height/2)
+        else:
+            start_y = maxyx[0] - height
         start_x = maxyx[1]/2 - int(width/2)
         self.sizeyx = (height, width)
 

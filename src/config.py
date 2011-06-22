@@ -205,6 +205,9 @@ class Config(object):
         if self.conf.has_option('params', 'refresh'):
             self.params['refresh']     = int(self.conf.get('params', 'refresh'))
 
+        if self.conf.has_option('params', 'box_position'):
+            self.params['refresh']     = int(self.conf.get('params', 'box_position'))
+
         # tweet_border
         if self.conf.has_option('params', 'tweet_border'):
             self.params['tweet_border'] = int(self.conf.get('params', 'tweet_border'))

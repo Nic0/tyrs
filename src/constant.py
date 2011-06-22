@@ -83,6 +83,7 @@ params = {
     'help':                 True,
     'source':               False,
     'old_skool_border':     False,
+    'box_position':         1,
 }
 
 token = {
