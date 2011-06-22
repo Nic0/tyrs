@@ -24,13 +24,14 @@ get Tyrs up and running.
 Features
 --------
 
-A list of some interesting features:
+A list of some of the key features:
 
 * Supports Identi.ca and Twitter services
 * OAuth authentication.
 * UTF-8 support.
 * Tweets, Retweets, Follow, Unfollow.
 * Mentions, Replies
+* Threaded view of replies
 * Search
 * Direct messages
 * Transarency and colors.

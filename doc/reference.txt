@@ -9,21 +9,21 @@ Installation
 Easy way
 ~~~~~~~~
 
-Tyrs is now available from pypi.python.org site, allow you to use easy_install,
-and quickly get it started.  If your using python2.7, all you need to do is:
+Tyrs is now available from pypi.python.org site, allowing you to use the 
+easy_install method, and quickly get it started.  If your using python2.7, all you need to do is:
 
 [source,bash]
 sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
 
-Or you may visite the http://pypi.python.org/pypi/tyrs and get the last tarball
-to use something like:
+Or you may visit the http://pypi.python.org/pypi/tyrs and get the latest tarball
+and proceed like so:
 
 [source, bash]
 tar xvf tyrs-0.3.2.tar.gz && cd tyrs
 python setup.py build
 python setup.py install
 
-You may use python-pip tool to install easely tyrs:
+You may also use python-pip tool to easily install tyrs:
 [source,bash]
 sudo pip install tyrs
 
@@ -46,15 +46,17 @@ tar xvf tyrs-{revision}.tar.gz && cd tyrs
 python setup.py build
 sudo easy_install dist/tyrs-{revision}-py2.7.egg
 
-An alternative could be as it explain above in the `easy way`.
+Ubuntu users may also use the `easy way` approach above.
 
 Debian
 ~~~~~~
 
-It seems that Tyrs works only with python2.7, so far, you need use wheezy instead of squeezy. If the .egg from pypi does not works, here how to install manually.
+It seems that Tyrs works only with python2.7. You will need to use wheezy
+instead of squeezy. If the .egg from pypi does not work, here is how to install manually.
 
-downoad and untar latest Tyrs version.
-Ssl have some problem with the 0.7.0 version of python-httplib2, so you may install the 0.6.0 version like:
+Download and untar the latest Tyrs version.
+There are some issues with SSL and the 0.7.0 version of python-httplib2, so you
+may need to install the 0.6.0 version like:
 [source,bash]
 easy_install-2.7 http://httplib2.googlecode.com/files/httplib2-0.6.0.zip
 
@@ -89,7 +91,6 @@ OpenSuse
 
 I'm not very familiar with opensuse, but it seems available with:
 http://r.opensu.se/network:utilities.repo
-I will find out soon what it realy is.
 
 From source
 ~~~~~~~~~~~
@@ -104,18 +105,18 @@ Tyrs requires the following dependencies
 link:http://pypi.python.org/pypi/distribute[python-distribute] to use the
 setup.py install
 
-Those dependencies are installed automaticly with the setup.py script.
+Those dependencies are installed automatically with the setup.py script.
 * link:http://code.google.com/p/python-twitter/[python-twitter]
 * link:https://github.com/simplegeo/python-oauth2[python-oauth2]
 
-Dependencies should be install when you use the setup.py tool, but you may want
-install yourself, note that you need a recent python-twitter package to use the
+Dependencies should be installed when you use the setup.py tool, but you may want
+to install them yourself. Note that you need a recent python-twitter package to use the
 oauth system.
 
 Installation
 ^^^^^^^^^^^^
 
-Once you have the package and dependencies, there are two way to get Tyrs
+Once you have the package and dependencies, there are two ways to get Tyrs
 installed:
 
 * With _setup.py_, this allows a clean install, similar to the autotools for C
@@ -197,7 +198,7 @@ Icons
 ~~~~~
 
 * ♻ Recycling icon, is a symbol to reconize retweets, the nick right after this
-symbol is the personne who retweet it.
+symbol is the person who retweeted it.
 * ✉ Envelope icon, notify that the tweet is a response to another one, you may
 read the whole thread, with the thread shortcut 'T'.
 
@@ -653,8 +654,8 @@ delete_fav::
 * Default: *^B* (ctrl-b)
 
 thread::
-* Description: Allow to read a thread of mentions/responses from a tweet, that
-contain an envelope icon
+* Description: Prints the thread of mentions/responses for a tweet (with
+an envelope icon)
 * Default: *T*
 
 [TIP]
