@@ -21,6 +21,7 @@ Functionality
 - Send tweets, retweets
 - Follow/Unfollow
 - Display mention tweets, reply to tweets
+- Display thread view of replies
 - Direct messages in/out
 - Favorites
 - User timelines
@@ -30,8 +31,7 @@ Functionality
 Installation
 ------------
 
-* Current release with `easy_install` (for python2.7, but will be for other one
-  soon)
+* Current release with `easy_install` (for python2.7, but other release coming soon):
     
     sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
 
@@ -39,7 +39,7 @@ or with python-pip tools:
 
     sudo pip install tyrs
 
-Dependecies that should be install automaticly:
+Dependecies that should be install automatically:
 * python-twitter, python-oauth2, python-argparse
 Requires: python-setuptools
 

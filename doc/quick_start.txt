@@ -15,9 +15,8 @@ For more information, you could read these documents:
 First authentication
 --------------------
 
-You may be aware Twitter uses an authentication method called OAuth, and the
-first step is to authenticate with Twitter. It's very easy. Identi.ca uses the
-same method of authentication.
+Both Twitter and Identi.ca use OAuth for authentication. The first step, with
+both services, is to authenticate.
 
 When you start the application, and it doesn't find a profile file, it will
 print:
@@ -27,7 +26,9 @@ print:
 There is no profile detected.
 
 The default location for a config file is $XDG_CONFIG_HOME/tyrs/tyrs.cfg which would usually be something like: /home/nicolas/.config/tyrs/tyrs.cfg
-If you want to setup a new account, let's go through some basic steps
+
+If you want to setup a new account, you are required to complete some basic
+steps.
 If you want to skip this, just press return or ctrl-C.
 
 Which service do you want to use?
@@ -54,7 +55,7 @@ For Identi.ca, one more question will be asked:
     Which root url do you want? (leave blank for default value, https://identi.ca/api)
 
 If you are using identi.ca, leave the default value, and just press return. You
-only need to change if you have your own StatusNet server running.
+only need to change this if you have your own StatusNet server running.
 ====================
 
 [TIP]
@@ -86,8 +87,9 @@ Functions
 
 * *t*: Open a box to edit a tweet
 * *r*: Retweet the current tweet
-* *f*, *F*: Follow someone (f, follow the current, F be prompted for who you want follow)
-* *l*, *L*: Unfollow (leave) someone
+* *T*: View thread reply (message will have an envelope next to it)
+* *f*: *F*: Follow someone (f, follow the current, F be prompted for who you want follow)
+* *l*: *L*: Unfollow (leave) someone
 * *q*: Quit
 * *c*: Clear the timeline
 * *u*: Update the timeline
