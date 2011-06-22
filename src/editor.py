@@ -16,6 +16,7 @@
 import tyrs
 import curses
 import curses.textpad
+from utils import encode
 
 class Editor(object):
 
@@ -23,34 +24,42 @@ class Editor(object):
         self.conf = tyrs.container['conf']
         self.interface = tyrs.container['interface'] 
         self.interface.refresh_token = True
-        self.content = ''
-        self.data   = data
+        self.init_content(data)
         self.init_win()
-
         self.start_edit()
-        self.win.erase()
-        self.change_cursor(0)
-        self.interface.refresh_token = False
+        self.tear_down()
+
+    def init_content(self, data):
+        self.content = ''
+        if data:
+            self.content = encode(data)
+
 
     def init_win(self):
         self.change_cursor(1)
         self.set_window_size()
 
-        win = self.interface.screen.subwin(
+        self.win = self.interface.screen.subwin(
                 self.size['height'], self.size['width'],
                 self.size['start_y'], self.size['start_x'])
 
+        self.win.keypad(1)
+        self.init_border()
+        self.display_header()
+        self.win.move(2,2)
+        self.maxyx = self.win.getmaxyx()
+        self.display_content()
+
+    def init_border(self):
         if self.conf.params['old_skool_border']:
-            win.border('|','|','-','-','+','+','+','+')
+            self.win.border('|','|','-','-','+','+','+','+')
         else:
-            win.border(0)
+            self.win.border(0)
+
+    def display_header(self):
         counter = self.count_chr()
         header = ' %s %s ' % (self.params['header'], str(counter))
-
-        win.addstr(0, 3, header.encode(self.interface.charset), curses.color_pair(self.conf.colors['header']['c']))
-        win.move(2,2)
-        self.win = win
-        self.win.keypad(1)
+        self.win.addstr(0, 3, encode(header), curses.color_pair(self.conf.colors['header']['c']))
 
     def set_window_size(self):
         maxyx = self.interface.screen.getmaxyx()
@@ -80,12 +89,6 @@ class Editor(object):
 
     def start_edit(self):
 
-        if self.data:
-            self.content = self.data.encode('utf-8')
-            self.refresh()
-
-        self.maxyx = self.win.getmaxyx()
-
         while True:
             ch = self.win.getch()
             if ch == curses.KEY_UP or ch == curses.KEY_DOWN \
@@ -110,7 +113,6 @@ class Editor(object):
     def refresh(self):
         self.win.erase()
         self.init_win()
-        self.display_content()
         self.win.refresh()
 
     def display_content(self):
@@ -124,7 +126,6 @@ class Editor(object):
                 x = 2
             self.win.addstr(y, x, w, self.interface.get_color('text'))
             x += len(w)+1
-
 
     def count_chr(self):
         i = 0
@@ -143,6 +144,11 @@ class Editor(object):
             curses.curs_set(opt)
         except curses.error:
             pass
+
+    def tear_down(self):
+        self.win.erase()
+        self.change_cursor(0)
+        self.interface.refresh_token = False
 
 class TweetEditor(Editor):
     params = {'char': 200, 'width': 80, 'header': _("What's up?")}
