@@ -224,6 +224,10 @@ class Config(object):
         elif self.browser != '':
             self.params['openurl_command'] = self.browser + ' %s'
 
+        if self.conf.has_option('params', 'open_image_command'):
+            self.params['open_image_command'] = self.conf.get('params',
+                'open_image_command')
+
         # Transparency
         if self.conf.has_option('params', 'transparency'):
             if int(self.conf.get('params', 'transparency')) == 0:

@@ -76,6 +76,7 @@ params = {
     'margin':               1,
     'padding':              2,
     'openurl_command':      'firefox %s',
+    'open_image_command':   'feh %s',
     'transparency':         True,
     'activities':           True,
     'compress':             False,

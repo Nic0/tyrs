@@ -16,6 +16,7 @@
 import re
 import os
 import sys
+import tyrs
 from htmlentitydefs import entitydefs
 
 def set_console_title():
@@ -60,4 +61,5 @@ def get_source(source):
 
 def open_image(user):
     image = user.profile_image_url
-    os.system('feh %s&' % image)
+    command = tyrs.container['conf'].params['open_image_command']
+    os.system(command % image)
