@@ -48,6 +48,7 @@ class Editor(object):
         header = ' %s %s ' % (self.params['header'], str(counter))
 
         win.addstr(0, 3, header.encode(self.interface.charset), curses.color_pair(self.conf.colors['header']['c']))
+        win.move(2,2)
         self.win = win
         self.win.keypad(1)
 
