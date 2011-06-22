@@ -331,8 +331,14 @@ class Interface(object):
         words = text.split(' ')
         margin = self.conf.params['margin']
         padding = self.conf.params['padding']
+        myself = self.api.myself.screen_name
         curent_x = padding
         line = 1
+
+        hashtag = encode('#')
+        attag = encode('@')
+
+
         for word in words:
             word = encode(word)
             if curent_x + len(word) > self.maxyx[1] - (margin + padding)*2:
@@ -341,13 +347,12 @@ class Interface(object):
 
             if word != '':
                 # The word is an HASHTAG ? '#'
-                if word[0] == '#':
+                if word[0] == hashtag:
                     panel.addstr(line, curent_x, word, self.get_color('hashtag'))
                 # Or is it an 'AT TAG' ? '@'
-                elif word[0] == '@':
-                    name = self.api.myself.screen_name
+                elif word[0] == attag:
                     # The AT TAG is,  @myself
-                    if word == '@'+name or word == '@'+name+':':
+                    if word == attag + myself or word == attag + myself+ encode(':'):
                         panel.addstr(line, curent_x, word, self.get_color('highlight'))
                     # @anyone
                     else:

@@ -4,7 +4,7 @@ Tyrs: easily configured ncurses microblogging  client
 * *Current version* {revision}, Release the {date}
 * *Devel version* {devel}
 
-image:images/tyrs.png["Tyrs screenshot", width=128, link="images/tyrs.png"]
+image:images/tyrs0.3.3.png["Tyrs screenshot", width=128, link="images/tyrs0.3.3.png"]
 
 Download link:http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz[the last
 version of Tyrs]. +

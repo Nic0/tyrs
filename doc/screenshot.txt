@@ -8,14 +8,18 @@ configuration file.  I will add some more screenshots to this section soon.
 Default Values Screenshot
 -------------------------
 
-image:images/tyrs.png[]
+image:images/tyrs0.3.3.png[]
 
+Borderless
+----------
+
+image:images/tyrs0.3.3-borderless.png[]
 
 Blue Theme
 ----------
 
+(old version of tyrs)
 image:images/darkblue.png[]
-
 .Blue Theme Configuration
 [source,conf]
 -------------------------
