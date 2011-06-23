@@ -15,6 +15,7 @@
 
 import tyrs
 import threading
+from urllib2 import URLError
 
 class UpdateThread(threading.Thread):
     '''
