@@ -25,7 +25,9 @@ class Help(object):
         self.interface = tyrs.container['interface']
         self.conf = tyrs.container['conf']
         self.max = self.interface.screen.getmaxyx()
+        self.interface.screen.timeout(-1)
         self.display_help_screen()
+        self.interface.screen.timeout(500)
 
     def display_help_screen (self):
         self.interface.refresh_token = True
