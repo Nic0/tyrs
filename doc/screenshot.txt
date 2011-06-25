@@ -10,6 +10,17 @@ Default Values Screenshot
 
 image:images/tyrs0.3.3.png[]
 
+Contributions
+-------------
+
+* Jasonwryan
+
+Thanks to link:http://jasonwryan.com/[jasonwryan] for sending me this really
+nice looking screenshot, using Tyrs 0.3.3. His screenshot is under creative
+commons licence (CC-BY 2.0).
+
+image:images/jasonwryan-tyrs-0.3.3.png[]
+
 Borderless
 ----------
 
