@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from filter import FilterStatus
+
 class Timeline(object):
 
     def __init__(self):
@@ -24,10 +26,12 @@ class Timeline(object):
         self.first = 0
         self.last = 0
         self.page = 1
+        self.filter = FilterStatus()
 
     def append_new_statuses(self, retreive):
         if not retreive:
             pass
+        retreive = self.filter_statuses(retreive)
         # Fresh new start.
         if self.statuses == []:
             self.statuses = retreive
@@ -45,6 +49,17 @@ class Timeline(object):
                     self.statuses = retreive[:i] + self.statuses
                     self.current += len(retreive[:i])
             self.update_counter()
+
+    def filter_statuses(self, statuses):
+        filters = []
+        for i, status in enumerate(statuses):
+            if self.filter.filter_status(status):
+                filters.append(i)
+        filters.reverse()
+        for f in filters:
+            del statuses[f]
+
+        return statuses
 
     def update_counter(self):
         self.count_statuses()

@@ -86,6 +86,13 @@ params = {
     'box_position':         1,
 }
 
+filter = {
+    'activate':         False,
+    'myself':           False,
+    'behavior':         'all',
+    'except':           [],
+}
+
 token = {
     'twitter': {
         'consumer_key':     'Eq9KLjwH9sJNcpF4OOYNw',

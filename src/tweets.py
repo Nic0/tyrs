@@ -57,6 +57,7 @@ class Tweets(object):
 
     def set_myself(self):
         self.myself = self.api.VerifyCredentials()
+        self.conf.my_nick = self.myself.screen_name
 
     def tweet(self, data=None):
         tweet = TweetEditor(data).content

@@ -31,11 +31,7 @@ except:
 class Config(object):
 
     def __init__(self, args):
-        self.token = constant.token
-        self.colors = constant.colors
-        self.color_set = constant.color_set
-        self.keys = constant.key
-        self.params = constant.params
+        self.init_config()
         self.home = os.environ['HOME']
         self.get_xdg_config()
         self.get_browser()
@@ -54,6 +50,14 @@ class Config(object):
         self.conf = ConfigParser.RawConfigParser()
         self.conf.read(self.config_file)
         self.parse_config()
+
+    def init_config(self):
+        self.token = constant.token
+        self.colors = constant.colors
+        self.color_set = constant.color_set
+        self.keys = constant.key
+        self.params = constant.params
+        self.filter = constant.filter
 
     def get_xdg_config(self):
         try:
@@ -171,6 +175,7 @@ class Config(object):
         self.parse_color()
         self.parse_keys()
         self.parse_params()
+        self.parse_filter()
 
     def parse_color(self):
         for c in self.colors:
@@ -257,6 +262,22 @@ class Config(object):
         if self.conf.has_option('params', 'old_skool_border'):
             if int(self.conf.get('params', 'old_skool_border')) == 1:
                 self.params['old_skool_border'] = True
+    
+    def parse_filter(self):
+
+        if self.conf.has_option('filter', 'activate'):
+            if int(self.conf.get('filter', 'activate')) == 1:
+                self.filter['activate'] = True
+        
+        if self.conf.has_option('filter', 'myself'):
+            if int(self.conf.get('filter', 'myself')) == 1:
+                self.filter['myself'] = True
+
+        if self.conf.has_option('filter', 'behavior'):
+            self.filter['behavior'] = self.conf.get('filter', 'behavior')
+
+        if self.conf.has_option('filter', 'except'):
+            self.filter['except'] = self.conf.get('filter', 'except').split(' ')
 
     def char_value(self, ch):
         if ch[0] == '^':
