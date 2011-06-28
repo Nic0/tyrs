@@ -22,25 +22,46 @@ class FilterStatus(object):
         self.conf = tyrs.container['conf']
 
     def filter_status(self, status):
-        if self.conf.filter['activate']:
-            if self.filter_without_url(status):
-                if self.filter_without_myself(status):
-                    return True
-                    #if self.filter_exception(status):
-                        #return True
-        return False
+        self.setup_exception()
+        try:
+            if self.conf.filter['activate']:
+                self.status = status
+                if self.filter_without_url():
+                    if self.filter_without_myself():
+                        if self.filter_exception():
+                            return True
+            return False
+        except:
+            return False
 
-    def filter_without_url(self, status):
-        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', status.text)
+    def filter_without_url(self):
+        urls = re.findall(
+                  'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                  self.status.text
+               )
         if len(urls) == 0:
             return True
         return False
 
-    def filter_without_myself(self, status):
+    def filter_without_myself(self):
         if self.conf.filter['myself']:
-            if self.conf.my_nick in status.text:
+            return True
+        if self.conf.my_nick in self.status.text:
+            return False
+        else:
+            return True
+
+
+    def filter_exception(self):
+        nick = self.status.user.screen_name
+        if self.conf.filter['behavior'] == 'all':
+            if not nick in self.exception:
+                return True
+        else:
+            if nick in self.exception:
                 return True
         return False
 
-    def filter_exception(self, status):
-        pass
+    def setup_exception(self):
+        self.exception = self.conf.filter['except']
+        self.exception.append(self.conf.my_nick)
