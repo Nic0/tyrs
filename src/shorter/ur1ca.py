@@ -13,28 +13,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import urllib2
-try:
-    import json
-except:
-    import simplejson as json
 
+import re
+import urllib
+import traceback
 from urlshorter import UrlShorter
 
-APIKEY = 'apiKey=R_f806c2011339080ea0b623959bb8ecff'
-VERION = 'version=2.0.1'
-LOGIN  = 'login=tyrs'
-
-class BitLyUrlShorter(UrlShorter):
-
+class Ur1caUrlShorter(UrlShorter):
     def __init__(self):
-        self.base = 'http://api.bit.ly/shorten?%s&%s&%s&longUrl=%s'
+        self.base = "http://ur1.ca"
+        self.pt = re.compile('<p class="success">Your ur1 is: <a href="(.*?)">')
 
-    def do_shorter(self, url):
-        long_url = self._quote_url(url)
-        request = self.base % (VERION, LOGIN, APIKEY, long_url)
+    def do_shorter(self, longurl):
+        values = {'submit' : 'Make it an ur1!', 'longurl' : longurl}
+        
         #try:
-        response = json.loads(urllib2.urlopen(request).read())
-        return response['results'][url]['shortUrl']
+        data = urllib.urlencode(values)
+        resp = self._get_request(self.base, data)
+        short = self.pt.findall(resp)
+        
+        if len(short) > 0:
+            return short[0]
+        else:
+            #raise Exception
+            pass
         #except Exception, error:
-            #print error
+            #pass

@@ -17,7 +17,8 @@ import tyrs
 import curses
 import curses.ascii
 from utils import encode, get_urls
-from shorter.bitly import BitLyShorterUrl
+from shorter.ur1ca import Ur1caUrlShorter
+from shorter.bitly import BitLyUrlShorter
 
 class Editor(object):
 
@@ -155,7 +156,8 @@ class Editor(object):
 
 class TweetEditor(Editor):
     params = {'char': 200, 'width': 80, 'header': _("What's up?")}
-    shorter = BitLyShorterUrl() 
+    #shorter = BitLyUrlShorter() 
+    shorter = Ur1caUrlShorter()
 
     def shorter_url(self):
         long_urls = get_urls(self.content)

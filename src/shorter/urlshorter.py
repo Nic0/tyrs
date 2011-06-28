@@ -14,27 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import urllib2
-try:
-    import json
-except:
-    import simplejson as json
 
-from urlshorter import UrlShorter
+class UrlShorter(object):
 
-APIKEY = 'apiKey=R_f806c2011339080ea0b623959bb8ecff'
-VERION = 'version=2.0.1'
-LOGIN  = 'login=tyrs'
+    def _quote_url(self, url):
+        long_url = urllib2.quote(url)
+        long_url = long_url.replace('/', '%2F')
+        return long_url
 
-class BitLyUrlShorter(UrlShorter):
-
-    def __init__(self):
-        self.base = 'http://api.bit.ly/shorten?%s&%s&%s&longUrl=%s'
-
-    def do_shorter(self, url):
-        long_url = self._quote_url(url)
-        request = self.base % (VERION, LOGIN, APIKEY, long_url)
-        #try:
-        response = json.loads(urllib2.urlopen(request).read())
-        return response['results'][url]['shortUrl']
-        #except Exception, error:
-            #print error
+    def _get_request(self, url, data=None):
+        return urllib2.urlopen(url, data).read()
