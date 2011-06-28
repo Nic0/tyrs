@@ -202,6 +202,14 @@ symbol is the person who retweeted it.
 * ✉ Envelope icon, notify that the tweet is a response to another one, you may
 read the whole thread, with the thread shortcut 'T'.
 
+Url Shorter
+~~~~~~~~~~~
+
+You can shorter an URL automatically when you are editing a tweet. You have
+first to write the url, and then press 'ctrl-u' to shorter it. The default
+behavior is to use the ur1.ca service, wich is an open-source project, but you
+may change this, read the params section for full details.
+
 Console arguments
 -----------------
 
@@ -242,14 +250,18 @@ parameter takes one argument: the filename.
 [source,bash]
 tyrs -g ~/.config/tyrs/tyrs.cfg
 
-So far, there are only three sections for configuration:
+There are four sections for configuration:
 
 * *colors*: Customization of colors.
 * *keybinding*: Customization of key shortcuts.
 * *params*: Other parameters.
+* *filter*: Filter tweets without URL.
 
-NOTE: All sections and parameters are lower case. For params composed with two
+[NOTE]
+* All sections and parameters are lower case. For params composed with two
 words, they are separate with an underscore `'_'' (no camelCase).
+* A default configuration file is generated if you don't have one yet on
+the first start.
 
 Configuration file
 ~~~~~~~~~~~~~~~~~~
@@ -680,11 +692,15 @@ tweet_border     = 1
 relative_time    = 0
 retweet_by       = 1
 openurl_command  = firefox %s
+open_image_command = feh %s
 transparency     = 1
 activities       = 1
 help             = 1
 margin           = 1
 padding          = 2
+compress         = 0
+source           = 0
+url_shorter      = ur1ca
 -------------------
 
 Listing
@@ -720,6 +736,12 @@ the %s is *required* to pass the corresponding url that will be opened.
 * Values: any web browser
 * Default: firefox %s
 
+open_image_command::
+* Description: Lets you choose your favorite image manager, note, the %s is
+*required*.
+* Values: any command that open an image.
+* Default: feh %s
+
 activities::
 * Description: Disable the activities bar if set to 0.
 * Values: 0 or 1
@@ -742,6 +764,22 @@ padding::
 * Description: Space between the border of a tweet, and the start on the text himself.
 * Default: 2
 
+compress::
+* Description: desable the blank line between tweets, make sense specialy
+without tweet border.
+* Values 0, 1
+* Default: 0
+
+source::
+* Description: append to the header of a tweet, the source. (eg. Tyrs, Hotot...)
+* Values 0, 1
+* Default: 0
+
+url_shorter::
+* Description: Change the url shorter service.
+* Values: ur1ca, bitly
+* Default: ur1ca
+
 [NOTE]
 =============================
 If you are using a small terminal, and don't want waste any spaces, you may try
@@ -755,3 +793,55 @@ margin = 0
 padding = 0
 ------------------
 =============================
+
+Filter
+~~~~~~
+
+This option allow you to have more control on tweets displayed in your
+timeline. It filter tweets who are without url, to leave only tweets with, few
+options allow you to adjust filter as you wish.
+
+
+Overview
+^^^^^^^^
+
+[source,conf]
+-------------------
+[filter]
+activate    = 1
+behavior    = all
+myself      = 0
+except      = nick1 nick2
+-------------------
+
+Listing
+^^^^^^^
+
+activate::
+* Description: Activate the filter system if set to 1
+* Values: 0, 1
+* Default: 0
+
+behavior::
+* Description: This option set the behavior of the filter and except, if set to
+all, it means that all tweet that doesn't contain URL will be filtered except
+the list passed in the except params, if set to none, it will leave any
+tweets, but you can add some except that will be filtered.
+* Values: all, none
+* Default: all
+
+myself::
+* Description: If a tweet that doesn't contain url, but with your nickname in
+it, you may want read it, and desable filter on those one. Default value
+allow to read them, set to 1 if you want filtered them.
+* Values: 0, 1
+* Default: 0
+
+except::
+* Description: It depends on the value of behavior, if you have set it to a
+restrictive value (all), except allow you to leave some exceptions and read
+tweets without url from a list of person. If you set it to none, you will be
+able to read every tweets without url, but will only be filtered names that
+you add on this list. Useful to just filter few nicks
+* Values: List of nicks
+* Default: Empty list.
