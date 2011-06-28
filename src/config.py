@@ -283,7 +283,7 @@ class Config(object):
         if ch[0] == '^':
             i = 0
             while i <= 31:
-                if curses.ascii.unctrl(i) == ch:
+                if curses.ascii.unctrl(i) == ch.upper():
                     return i
                 i +=1
         return ord(ch)
