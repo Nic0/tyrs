@@ -40,6 +40,7 @@ A list of some of the key features:
 * Customization of colors.
 * Easily configurable, readable configuration.
 * Opens URL with just single key.
+* ur1.ca and bit.ly support for url shorter.
 
 [IMPORTANT]
 This project is relatively new, having started in May 2011, and curently in
