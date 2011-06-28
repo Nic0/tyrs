@@ -167,6 +167,7 @@ class Interface(object):
            make sure to set self.buffer before
         '''
         self.set_max_window_size()
+        self.set_date()
         try:
             if not self.refresh_token:
                 timeline = self.select_current_timeline()
@@ -192,6 +193,9 @@ class Interface(object):
                 self.check_current_not_on_screen()
         except curses.error:
             pass
+
+    def set_date(self):
+        self.date = time.strftime("%d %b", time.gmtime())
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
@@ -401,12 +405,14 @@ class Interface(object):
         @return string: readeable time
         '''
         if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
-            hour =  status.GetRelativeCreatedAt()
+            result =  status.GetRelativeCreatedAt()
         else:
             hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
-            hour = time.strftime('%H:%M', hour)
+            result = time.strftime('%H:%M', hour)
+            if time.strftime('%d %b', hour) != self.date:
+                result += time.strftime(' - %d %b', hour)
 
-        return hour
+        return result
 
     def get_header(self, status):
         nick = self.get_nick(status)
