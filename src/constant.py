@@ -69,7 +69,7 @@ key = {
 }
 
 params = {
-    'refresh':              10,
+    'refresh':              3,
     'tweet_border':         1,
     'relative_time':        0,
     'retweet_by':           1,

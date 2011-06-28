@@ -675,7 +675,7 @@ Overview
 [source,conf]
 -------------------
 [params]
-refresh          = 10
+refresh          = 3
 tweet_border     = 1
 relative_time    = 0
 retweet_by       = 1
@@ -694,7 +694,7 @@ refresh::
 * Description: Define the frequency that the timeline will be refreshed.
 * Values: Any positive value.
 * Unit: Minutes
-* Default: 10
+* Default: 3
 
 tweet_border::
 * Description: Display a border around each tweet
