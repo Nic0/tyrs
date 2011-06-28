@@ -15,6 +15,7 @@
 
 import re
 import tyrs
+from utils import get_urls
 
 class FilterStatus(object):
 
@@ -35,10 +36,7 @@ class FilterStatus(object):
             return False
 
     def filter_without_url(self):
-        urls = re.findall(
-                  'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                  self.status.text
-               )
+        urls = get_urls(self.status.text)
         if len(urls) == 0:
             return True
         return False

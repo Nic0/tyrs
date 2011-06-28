@@ -15,8 +15,9 @@
 
 import tyrs
 import curses
-import curses.textpad
-from utils import encode
+import curses.ascii
+from utils import encode, get_urls
+from shorter.bitly import BitLyShorterUrl
 
 class Editor(object):
 
@@ -105,6 +106,8 @@ class Editor(object):
             elif ch == 127 or ch == curses.KEY_BACKSPACE:       # DEL
                 if len(self.content) > 0:
                     self.content = self.content[:-1]
+            elif curses.ascii.unctrl(ch) == '^U':
+                self.shorter_url()
             else:
                 self.content += chr(ch)
 
@@ -152,6 +155,14 @@ class Editor(object):
 
 class TweetEditor(Editor):
     params = {'char': 200, 'width': 80, 'header': _("What's up?")}
+    shorter = BitLyShorterUrl() 
+
+    def shorter_url(self):
+        long_urls = get_urls(self.content)
+        for long_url in long_urls:
+            short_url = self.shorter.do_shorter(long_url)
+            self.content = self.content.replace(long_url, short_url)
+
 
 class NickEditor(Editor):
     params = {'char': 40, 'width': 40, 'header': _("Entry a name")}

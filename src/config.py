@@ -189,6 +189,15 @@ class Config(object):
         if self.conf.has_option('colors', 'bold'):
             self.get_bold_colors(self.conf.get('colors', 'bold'))
 
+    def get_bold_colors(self, str):
+        bolds = str.split(' ')
+        for bold in bolds:
+            if bold is not '':
+                try:
+                    self.colors[bold]['b'] = True
+                except IndexError:
+                    print encode(_('The param "%s" does not exist for bold colors')) % bold
+
     def parse_rgb(self):
         for i in range(len(self.color_set)):
             if self.conf.has_option('colors', 'color_set'+str(i)):
@@ -203,6 +212,15 @@ class Config(object):
                 self.keys[key] = self.char_value(self.conf.get('keys', key))
             else:
                 self.keys[key] = self.char_value(self.keys[key])
+
+    def char_value(self, ch):
+        if ch[0] == '^':
+            i = 0
+            while i <= 31:
+                if curses.ascii.unctrl(i) == ch.upper():
+                    return i
+                i +=1
+        return ord(ch)
 
     def parse_params(self):
 
@@ -279,23 +297,6 @@ class Config(object):
         if self.conf.has_option('filter', 'except'):
             self.filter['except'] = self.conf.get('filter', 'except').split(' ')
 
-    def char_value(self, ch):
-        if ch[0] == '^':
-            i = 0
-            while i <= 31:
-                if curses.ascii.unctrl(i) == ch.upper():
-                    return i
-                i +=1
-        return ord(ch)
-
-    def get_bold_colors(self, str):
-        bolds = str.split(' ')
-        for bold in bolds:
-            if bold is not '':
-                try:
-                    self.colors[bold]['b'] = True
-                except IndexError:
-                    print encode(_('The param "%s" does not exist for bold colors')) % bold
 
     def authorization(self):
         ''' This function from python-twitter developers '''

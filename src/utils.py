@@ -63,3 +63,7 @@ def open_image(user):
     image = user.profile_image_url
     command = tyrs.container['conf'].params['open_image_command']
     os.system(command % image)
+
+
+def get_urls(text):
+    return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)

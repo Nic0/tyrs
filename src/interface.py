@@ -23,7 +23,7 @@ import curses
 from user import User
 from timeline import Timeline
 from message import FlashMessage
-from utils import html_unescape, encode, get_source
+from utils import html_unescape, encode, get_source, get_urls
 
 class Interface(object):
     ''' All dispositions in the screen
@@ -492,12 +492,6 @@ class Interface(object):
         timeline = self.select_current_timeline()
         return timeline.statuses[timeline.current]
 
-    def get_urls(self):
-        '''
-        @return array of urls find in the text
-        '''
-        return re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.current_status().text)
-
     def get_color(self, color):
         '''Return the curses code, with bold if enable of the color
            given in argument of the function
@@ -544,7 +538,7 @@ class Interface(object):
         timeline.reset()
 
     def openurl(self):
-        urls = self.get_urls()
+        urls = get_urls(self.current_status().text)
         for url in urls:
             try:
                 os.system(self.conf.params['openurl_command'] % url)
