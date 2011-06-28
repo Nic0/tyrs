@@ -14,10 +14,8 @@ Functionality
 
 - **Oauth authentication**
 - Identi.ca and Twitter support
-- utf-8 support
-- 256 Colors
-- Transparency
-- Display home timeline with colorful tweets
+- utf-8 support, 256 Colors, transparency
+- Display timelines with colorful tweets
 - Send tweets, retweets
 - Follow/Unfollow
 - Display mention tweets, reply to tweets
@@ -26,6 +24,7 @@ Functionality
 - Favorites
 - User timelines
 - Search
+- ur1.ca and bit.ly support
 - Configuration file allows for lots of customization
 
 Installation
