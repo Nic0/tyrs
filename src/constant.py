@@ -84,6 +84,7 @@ params = {
     'source':               False,
     'old_skool_border':     False,
     'box_position':         1,
+    'url_shorter':          'ur1ca',
 }
 
 filter = {

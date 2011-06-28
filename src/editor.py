@@ -156,14 +156,20 @@ class Editor(object):
 
 class TweetEditor(Editor):
     params = {'char': 200, 'width': 80, 'header': _("What's up?")}
-    #shorter = BitLyUrlShorter() 
-    shorter = Ur1caUrlShorter()
 
     def shorter_url(self):
+        self._set_service()
         long_urls = get_urls(self.content)
         for long_url in long_urls:
             short_url = self.shorter.do_shorter(long_url)
             self.content = self.content.replace(long_url, short_url)
+
+    def _set_service(self):
+        service = self.conf.params['url_shorter']
+        if service == 'bitly':
+            self.shorter = BitLyUrlShorter() 
+        if service == 'ur1ca':
+            self.shorter = Ur1caUrlShorter()
 
 
 class NickEditor(Editor):

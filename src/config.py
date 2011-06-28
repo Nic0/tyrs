@@ -280,6 +280,9 @@ class Config(object):
         if self.conf.has_option('params', 'old_skool_border'):
             if int(self.conf.get('params', 'old_skool_border')) == 1:
                 self.params['old_skool_border'] = True
+
+        if self.conf.has_option('params', 'url_shorter'):
+            self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
     
     def parse_filter(self):
 
