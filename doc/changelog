@@ -1,5 +1,18 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.4.0 --
+
+	* Url shortening service enable, with ur1.ca and bit.ly
+	* Date appends to tweets when older than the current day
+	* Lowercase enable in config for control-sequence - thanks quite
+	* Default value for refresh set to 3 minutes
+	* New filter system, allow to filter tweets without urls, and lots
+	  customisazion on it
+	* Input box moves to the bottom
+	* Open user avatar with feh (customizable)
+	* lazzy loading of tweets when scroll down, cycle to infinyte
+	* Lots of documentation update and review, thank jasonwryan
+
 * Version 0.3.3 -- 2011-06-19
 
 	* Changes for pypi site
