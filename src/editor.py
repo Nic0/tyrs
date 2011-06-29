@@ -162,7 +162,10 @@ class TweetEditor(Editor):
         long_urls = get_urls(self.content)
         for long_url in long_urls:
             short_url = self.shorter.do_shorter(long_url)
-            self.content = self.content.replace(long_url, short_url)
+            try:
+                self.content = self.content.replace(long_url, short_url)
+            except UnicodeDecodeError:
+                pass
 
     def _set_service(self):
         service = self.conf.params['url_shorter']
