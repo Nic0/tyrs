@@ -10,7 +10,7 @@ import gettext
 gettext.install('tyrs', unicode=1)
 from src.tyrs import main
 
-__revision__ = '0.3.2'
+__revision__ = '0.4.0'
 
 if __name__=="__main__":
     main()
