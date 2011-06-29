@@ -258,10 +258,12 @@ There are four sections for configuration:
 * *filter*: Filter tweets without URL.
 
 [NOTE]
+======================
 * All sections and parameters are lower case. For params composed with two
 words, they are separate with an underscore `'_'' (no camelCase).
 * A default configuration file is generated if you don't have one yet on
 the first start.
+======================
 
 Configuration file
 ~~~~~~~~~~~~~~~~~~
