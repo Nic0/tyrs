@@ -272,7 +272,10 @@ class Interface(object):
 
         # The content of the tweets is handle
         # text is needed for the height of a panel
-        header  = self.get_header(status)
+        try:
+            header  = self.get_header(status)
+        except UnicodeDecodeError:
+            header = 'encode error'
 
         # We get size and where to display the tweet
         size = self.get_size_status(status)
