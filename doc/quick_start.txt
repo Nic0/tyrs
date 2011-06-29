@@ -29,7 +29,7 @@ The default location for a config file is $XDG_CONFIG_HOME/tyrs/tyrs.cfg which w
 
 If you want to setup a new account, you are required to complete some basic
 steps.
-If you want to skip this, just press return or ctrl-C.
+If you want to skip this, just press return or Ctrl-c.
 
 Which service do you want to use?
 
@@ -70,7 +70,7 @@ tyrs -a foo
 Usage
 -----
 
-Tyrs is mostly used with the keybord, and comes with default key shortcuts (you
+Tyrs is mostly used with the keyboard, and comes with default key shortcuts (you
 may customize these). 
 Below is a list of the most common ones. You may check
 link:/reference.html[the full reference guide] for more details.
@@ -130,6 +130,6 @@ Related Sites
 -------------
 
 * Check the development on link:https://github.com/Nic0/tyrs[Github]
-* Found a bug ? or wan't to propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
+* Found a bug ? or want to propose an idea, check the link:https://github.com/Nic0/tyrs/issues[BugTracker]
 * Ask any questions, or just follow latest news on the
 link:http://groups.google.com/group/tyrs[mailing list].

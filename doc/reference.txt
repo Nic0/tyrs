@@ -184,7 +184,7 @@ The meaning of each timelines is:
 * S: Search results
 * U: Users public timeline
 * F: Favorite tweets
-* T: Theads
+* T: Threads
 * R: own retweets
 
 A few  things to note:
@@ -197,7 +197,7 @@ counts until after the first update.
 Icons
 ~~~~~
 
-* ♻ Recycling icon, is a symbol to reconize retweets, the nick right after this
+* ♻ Recycling icon, is a symbol to recognize retweets, the nick right after this
 symbol is the person who retweeted it.
 * ✉ Envelope icon, notify that the tweet is a response to another one, you may
 read the whole thread, with the thread shortcut 'T'.
@@ -206,7 +206,7 @@ Url Shorter
 ~~~~~~~~~~~
 
 You can shorter an URL automatically when you are editing a tweet. You have
-first to write the url, and then press 'ctrl-u' to shorter it. The default
+first to write the url, and then press 'Ctrl-u' to shorter it. The default
 behavior is to use the ur1.ca service, wich is an open-source project, but you
 may change this, read the params section for full details.
 
@@ -505,8 +505,8 @@ thread            = T
 Control keys support
 ^^^^^^^^^^^^^^^^^^^^^
 
-You may activate control keys (ctrl+something) in the configuration file, for
-example, remap your reply with a ctrl-R:
+You may activate control keys (Ctrl+something) in the configuration file, for
+example, remap your reply with a Ctrl-r:
 
 [source,conf]
 ---------------
@@ -515,7 +515,7 @@ reply  = ^R
 ---------------
 
 CAUTION: The letter followed by '^' *must* be upper case,
-You can’t have a ctrl-r and ctrl-R, only '^R' will work.
+You can’t have a Ctrl-r and Ctrl-R, only '^R' will work.
 
 Listing
 ^^^^^^^
@@ -737,9 +737,9 @@ the %s is *required* to pass the corresponding url that will be opened.
 * Default: firefox %s
 
 open_image_command::
-* Description: Lets you choose your favorite image manager, note, the %s is
+* Description: Lets you choose your favorite image viewer. Note, the %s is
 *required*.
-* Values: any command that open an image.
+* Values: any command that opens an image.
 * Default: feh %s
 
 activities::
@@ -765,18 +765,17 @@ padding::
 * Default: 2
 
 compress::
-* Description: desable the blank line between tweets, make sense specialy
-without tweet border.
+* Description: disable the blank line between tweets.
 * Values 0, 1
 * Default: 0
 
 source::
-* Description: append to the header of a tweet, the source. (eg. Tyrs, Hotot...)
+* Description: append tweeter's client to the header of a tweet eg,. Tyrs,TTYtter etc
 * Values 0, 1
 * Default: 0
 
 url_shorter::
-* Description: Change the url shorter service.
+* Description: Change the URL shortening service.
 * Values: ur1ca, bitly
 * Default: ur1ca
 
@@ -797,9 +796,9 @@ padding = 0
 Filter
 ~~~~~~
 
-This option allow you to have more control on tweets displayed in your
-timeline. It filter tweets who are without url, to leave only tweets with, few
-options allow you to adjust filter as you wish.
+This option allows you to have more control over tweets displayed in your
+timeline. It filters tweets without a URL, leaving only those with links. There
+are a few options to allow you to adjust the filter as you wish.
 
 
 Overview
@@ -823,25 +822,25 @@ activate::
 * Default: 0
 
 behavior::
-* Description: This option set the behavior of the filter and except, if set to
-all, it means that all tweet that doesn't contain URL will be filtered except
-the list passed in the except params, if set to none, it will leave any
-tweets, but you can add some except that will be filtered.
+* Description: This option sets the behavior of the filter and exception. If set to
+all, all tweets that don't contain a URL will be filtered except
+the list passed in the except params. If set to none, it will print all
+tweets, but you can still add some exceptions that will be filtered.
 * Values: all, none
 * Default: all
 
 myself::
-* Description: If a tweet that doesn't contain url, but with your nickname in
-it, you may want read it, and desable filter on those one. Default value
-allow to read them, set to 1 if you want filtered them.
+* Description: If a tweet doesn't contain a URL, but has your nick in
+it, you may want read it. This option disables the filter on those tweets. Default value
+allow to read them, set to 1 if you want to filter them.
 * Values: 0, 1
 * Default: 0
 
 except::
-* Description: It depends on the value of behavior, if you have set it to a
-restrictive value (all), except allow you to leave some exceptions and read
-tweets without url from a list of person. If you set it to none, you will be
-able to read every tweets without url, but will only be filtered names that
-you add on this list. Useful to just filter few nicks
+* Description: It depends on the value of 'behavior.' If you have set it to a
+restrictive value (all), except allows you to set some exceptions and read
+tweets without URL from a list of nicks. If you set it to none, Tyrs will print
+all tweets without a URL, but will only filter names that
+you add to this list. Useful to just filter few nicks.
 * Values: List of nicks
 * Default: Empty list.
