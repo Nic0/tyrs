@@ -34,7 +34,7 @@ A list of some of the key features:
 * Threaded view of replies
 * Search
 * Direct messages
-* Transarency and colors.
+* Transparency and colors.
 * Based on ncurses.
 * Customization of keys binding.
 * Customization of colors.
@@ -43,7 +43,7 @@ A list of some of the key features:
 * ur1.ca and bit.ly support for url shorter.
 
 [IMPORTANT]
-This project is relatively new, having started in May 2011, and curently in
+This project is relatively new, having started in May 2011, and currently in
 heavy development.  There is lots of planned functionality still to be coded.
 
 Helpfull links
