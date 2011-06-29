@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 01:23+0200\n"
+"POT-Creation-Date: 2011-06-29 07:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,211 +129,211 @@ msgid ""
 "Which root url do you want? (leave blank for default, https://identi.ca/api)"
 msgstr ""
 
-#: ../src/config.py:78
+#: ../src/config.py:82
 #, python-format
 msgid "Couldn't create the directory in %s/tyrs"
 msgstr ""
 
-#: ../src/config.py:110
+#: ../src/config.py:114
 #, python-format
 msgid "Genereting configuration file in %s"
 msgstr ""
 
-#: ../src/config.py:138 ../src/config.py:150
+#: ../src/config.py:142 ../src/config.py:154
 msgid "Your choice? > "
 msgstr ""
 
-#: ../src/config.py:263
+#: ../src/config.py:199
 #, python-format
 msgid "The param \"%s\" does not exist for bold colors"
 msgstr ""
 
-#: ../src/config.py:300
+#: ../src/config.py:339
 msgid "Requesting temp token from "
 msgstr ""
 
-#: ../src/config.py:305
+#: ../src/config.py:344
 msgid "Invalid respond from "
 msgstr ""
 
-#: ../src/config.py:306
+#: ../src/config.py:345
 #, python-format
 msgid " requesting temp token: %s"
 msgstr ""
 
-#: ../src/config.py:311
+#: ../src/config.py:350
 msgid "Please visit the following page to retrieve pin code needed"
 msgstr ""
 
-#: ../src/config.py:312
+#: ../src/config.py:351
 msgid "to obtain an Authentication Token:"
 msgstr ""
 
-#: ../src/config.py:323
+#: ../src/config.py:362
 msgid "Generating and signing request for an access token"
 msgstr ""
 
-#: ../src/config.py:331
+#: ../src/config.py:370
 #, python-format
 msgid "Request for access token failed: %s"
 msgstr ""
 
-#: ../src/config.py:344
+#: ../src/config.py:383
 msgid "Error creating directory .config/tyrs"
 msgstr ""
 
-#: ../src/config.py:356
+#: ../src/config.py:395
 msgid "your account has been saved"
 msgstr ""
 
-#: ../src/editor.py:141
+#: ../src/editor.py:158
 msgid "What's up?"
 msgstr ""
 
-#: ../src/editor.py:144
+#: ../src/editor.py:176
 msgid "Entry a name"
 msgstr ""
 
-#: ../src/editor.py:147
+#: ../src/editor.py:179
 msgid "Search for something?"
 msgstr ""
 
 #. Navigation
-#: ../src/help.py:36
+#: ../src/help.py:38
 msgid "Navigation"
 msgstr ""
 
-#: ../src/help.py:37
+#: ../src/help.py:39
 msgid "Go up one tweet"
 msgstr ""
 
-#: ../src/help.py:38
+#: ../src/help.py:40
 msgid "Go down one tweet"
 msgstr ""
 
-#: ../src/help.py:39
+#: ../src/help.py:41
 msgid "Go to top of screen"
 msgstr ""
 
-#: ../src/help.py:40
+#: ../src/help.py:42
 msgid "Go to bottom of screen"
 msgstr ""
 
 #. Timelines
-#: ../src/help.py:42
+#: ../src/help.py:44
 msgid "Timelines"
 msgstr ""
 
-#: ../src/help.py:43
+#: ../src/help.py:45
 msgid "Go left on the timeline's bar"
 msgstr ""
 
-#: ../src/help.py:44
+#: ../src/help.py:46
 msgid "Go right on the timeline's bar"
 msgstr ""
 
-#: ../src/help.py:45
+#: ../src/help.py:47
 msgid "Refresh current timeline"
 msgstr ""
 
-#: ../src/help.py:46
+#: ../src/help.py:48
 msgid "Clear all but last tweet in timeline"
 msgstr ""
 
-#: ../src/help.py:47
+#: ../src/help.py:49
 msgid "Go to home timeline"
 msgstr ""
 
-#: ../src/help.py:48
+#: ../src/help.py:50
 msgid "Go to mentions timeline"
 msgstr ""
 
-#: ../src/help.py:49
+#: ../src/help.py:51
 msgid "Go to direct message timeline"
 msgstr ""
 
-#: ../src/help.py:50
+#: ../src/help.py:52
 msgid "Search for term and show resulting timeline"
 msgstr ""
 
-#: ../src/help.py:51
+#: ../src/help.py:53
 msgid "Show somebody's public timeline"
 msgstr ""
 
-#: ../src/help.py:52
+#: ../src/help.py:54
 msgid "Show your public timeline"
 msgstr ""
 
 #. Tweets
-#: ../src/help.py:54
+#: ../src/help.py:56
 msgid "Tweets"
 msgstr ""
 
-#: ../src/help.py:55
+#: ../src/help.py:57
 msgid "Send a tweet"
 msgstr ""
 
-#: ../src/help.py:56
+#: ../src/help.py:58
 msgid "Retweet selected tweet"
 msgstr ""
 
-#: ../src/help.py:57
+#: ../src/help.py:59
 msgid "Retweet selected tweet, but edit first"
 msgstr ""
 
-#: ../src/help.py:58
+#: ../src/help.py:60
 msgid "Reply to selected tweet"
 msgstr ""
 
-#: ../src/help.py:59
+#: ../src/help.py:61
 msgid "Send direct message"
 msgstr ""
 
-#: ../src/help.py:60
+#: ../src/help.py:62
 msgid "Delete selected tweet (must be yours)"
 msgstr ""
 
-#: ../src/help.py:63
+#: ../src/help.py:65
 msgid "Follow selected twitter"
 msgstr ""
 
-#: ../src/help.py:64
+#: ../src/help.py:66
 msgid "Unfollow selected twitter"
 msgstr ""
 
-#: ../src/help.py:65
+#: ../src/help.py:67
 msgid "Follow a twitter"
 msgstr ""
 
-#: ../src/help.py:66
+#: ../src/help.py:68
 msgid "Unfollow a twitter"
 msgstr ""
 
 #. Others
-#: ../src/help.py:68
+#: ../src/help.py:70
 msgid "Others"
 msgstr ""
 
-#: ../src/help.py:69
+#: ../src/help.py:71
 msgid "Leave Tyrs"
 msgstr ""
 
-#: ../src/help.py:70
+#: ../src/help.py:72
 msgid "Open URL in browser"
 msgstr ""
 
-#: ../src/help.py:71
+#: ../src/help.py:73
 msgid "Redraw the screen"
 msgstr ""
 
-#: ../src/help.py:91
+#: ../src/help.py:93
 msgid "Name"
 msgstr ""
 
-#: ../src/help.py:92
+#: ../src/help.py:94
 msgid "Key"
 msgstr ""
 
-#: ../src/help.py:94
+#: ../src/help.py:96
 msgid "Description"
 msgstr ""

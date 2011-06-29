@@ -28,7 +28,7 @@ setup(name='tyrs',
       license='GPLv3',
       long_description=read('README.md'),
       install_requires=['python-twitter>=0.8.2', 'argparse', 'httplib2==0.6.0'],
-      packages=['src'],
+      packages=['src', 'src.shorter'],
       scripts=['tyrs'],
       platforms=['linux'],
       classifiers = [
