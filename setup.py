@@ -15,7 +15,8 @@ try:
     from DistUtilsExtra.command import *
 except ImportError:
     print 'The installation require python-distutils-extra (apt-get install python-distutils-extra)' 
-    print 'Or pip install http://launchpad.net/python-distutils-extra/trunk/2.28/+download/python-distutils-extra-2.28.tar.gz'
+    print 'Or'
+    print 'pip install http://launchpad.net/python-distutils-extra/trunk/2.28/+download/python-distutils-extra-2.28.tar.gz'
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
