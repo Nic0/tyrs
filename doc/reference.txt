@@ -619,6 +619,10 @@ unfollow::
 You may enter the name to follow with or without the '@', so it's quicker to do
 without.
 
+open profile::
+* Description: print the profile of the currently selected tweeter.
+* Default: *i*
+
 openurl::
 * Description: will open the link in the selected tweet.
 * Default: *o*
@@ -650,6 +654,10 @@ search_myself::
 delete::
 * Description: Destroy the selected tweet.
 * Default: *C*
+
+open avatar image::
+* Description: open the avatar of the current selected tweeter in your image viewer.
+* Default: *^I* (ctrl-i)
 
 redraw::
 * Description: Force Tyrs to be redrawn.
