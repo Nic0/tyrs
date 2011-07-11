@@ -33,8 +33,5 @@ class BitLyUrlShorter(UrlShorter):
     def do_shorter(self, url):
         long_url = self._quote_url(url)
         request = self.base % (VERION, LOGIN, APIKEY, long_url)
-        #try:
         response = json.loads(urllib2.urlopen(request).read())
         return response['results'][url]['shortUrl']
-        #except Exception, error:
-            #print error
