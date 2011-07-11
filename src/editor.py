@@ -17,8 +17,12 @@ import tyrs
 import curses
 import curses.ascii
 from utils import encode, get_urls
-from shorter.ur1ca import Ur1caUrlShorter
-from shorter.bitly import BitLyUrlShorter
+try:
+    from shorter.ur1ca import Ur1caUrlShorter
+    from shorter.bitly import BitLyUrlShorter
+    from shorter.msudpl import MsudplUrlShorter
+except ImportError:
+    pass
 
 class Editor(object):
 
@@ -171,7 +175,9 @@ class TweetEditor(Editor):
         service = self.conf.params['url_shorter']
         if service == 'bitly':
             self.shorter = BitLyUrlShorter() 
-        if service == 'ur1ca':
+        elif service == 'msudpl':
+            self.shorter = MsudplUrlShorter()
+        else service == 'ur1ca':
             self.shorter = Ur1caUrlShorter()
 
 
