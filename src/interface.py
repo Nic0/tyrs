@@ -47,6 +47,7 @@ class Interface(object):
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
         tyrs.container.add('interface', self)
+        self.last_read_home = self.conf.load_last_read()
         self.api.set_interface()
         self.resize_event     = False
         self.regex_retweet     = re.compile('^RT @\w+:')
@@ -185,14 +186,23 @@ class Interface(object):
                 self.current_y = 1
                 for i in range(len(timeline.statuses)):
                     if i >= timeline.first:
+                        self.check_for_last_read(timeline.statuses[i].id)
                         br = self.display_status(timeline.statuses[i], i)
                         if not br:
                             break
-                
+                timeline.unread = 0 
+                if self.buffer == 'home':
+                    self.conf.save_last_read(timeline.last_read)
                 self.screen.refresh()
                 self.check_current_not_on_screen()
         except curses.error:
             pass
+
+    def check_for_last_read(self, id):
+        if self.buffer == 'home':
+            if self.last_read_home == str(id):
+                self.screen.hline(self.current_y, 0, '-', self.maxyx[1]-1)
+                self.current_y += 2
 
     def set_date(self):
         self.date = time.strftime("%d %b", time.gmtime())

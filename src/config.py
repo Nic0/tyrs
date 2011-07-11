@@ -393,3 +393,21 @@ class Config(object):
             conf.write(tokens)
 
         print encode(_('your account has been saved'))
+
+    def load_last_read(self):
+
+        try:
+            conf = ConfigParser.RawConfigParser()
+            conf.read(self.token_file)
+            return conf.get('token', 'last_read')
+        except:
+            return False
+
+    def save_last_read(self, last_read):
+
+        conf = ConfigParser.RawConfigParser()
+        conf.read(self.token_file)
+        conf.set('token', 'last_read', last_read)
+
+        with open(self.token_file, 'wb') as tokens:
+            conf.write(tokens)
