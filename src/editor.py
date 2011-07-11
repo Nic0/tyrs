@@ -25,6 +25,11 @@ try:
 except ImportError:
     pass
 
+try:
+    from shorter.googl import GooglUrlShorter
+except ImportError:
+    pass
+
 class Editor(object):
 
     def __init__(self, data=None):
@@ -176,6 +181,8 @@ class TweetEditor(Editor):
         service = self.conf.params['url_shorter']
         if service == 'bitly':
             self.shorter = BitLyUrlShorter() 
+        elif service == 'googl':
+            self.shorter = GooglUrlShorter()
         elif service == 'msudpl':
             self.shorter = MsudplUrlShorter()
         elif service == 'custom':
