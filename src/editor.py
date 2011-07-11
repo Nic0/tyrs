@@ -21,6 +21,7 @@ try:
     from shorter.ur1ca import Ur1caUrlShorter
     from shorter.bitly import BitLyUrlShorter
     from shorter.msudpl import MsudplUrlShorter
+    from shorter.custom import CustomUrlShorter
 except ImportError:
     pass
 
@@ -177,6 +178,8 @@ class TweetEditor(Editor):
             self.shorter = BitLyUrlShorter() 
         elif service == 'msudpl':
             self.shorter = MsudplUrlShorter()
+        elif service == 'custom':
+            self.shorter = CustomUrlShorter()
         else:
             self.shorter = Ur1caUrlShorter()
 
