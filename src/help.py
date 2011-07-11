@@ -66,6 +66,13 @@ class Help(object):
         self.display_help_item('unfollow_selected', _('Unfollow selected twitter'))
         self.display_help_item('follow', _('Follow a twitter'))
         self.display_help_item('unfollow', _('Unfollow a twitter'))
+
+        # Favorite
+        self.display_division('Favorite')
+        self.display_help_item('fav', _('Bookmark selected tweet'))
+        self.display_help_item('get_fav', _('Go to favorite timeline'))
+        self.display_help_item('delete_fav', _('Delete an favorite tweet'))
+
         # Others
         self.display_division(_('Others'))
         self.display_help_item('quit', _('Leave Tyrs'))
