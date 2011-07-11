@@ -70,7 +70,7 @@ class Help(object):
         # Favorite
         self.display_division('Favorite')
         self.display_help_item('fav', _('Bookmark selected tweet'))
-        self.display_help_item('get_fav', _('Get an favorite tweet'))
+        self.display_help_item('get_fav', _('Go to favorite timeline'))
         self.display_help_item('delete_fav', _('Delete an favorite tweet'))
 
         # Others
