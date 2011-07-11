@@ -353,6 +353,18 @@ msgstr "Ouvrir une url dans votre navigateur"
 msgid "Redraw the screen"
 msgstr "Forcer l'écran à se rafraîchir"
 
+#: src/help.py:72
+msgid "Bookmark selected tweet"
+msgstr "Ajouter le tweet séléctionné à vos favoris"
+
+#: src/help.py:73
+msgid "Go to favorite timeline"
+msgstr "Timeline des tweets favoris"
+
+#: src/help.py:74
+msgid "Delete an favorite tweet"
+msgstr "Supprime le tweet séléctionné de vos favoris"
+
 #: src/help.py:91
 msgid "Name"
 msgstr "Nom"
@@ -364,3 +376,4 @@ msgstr "Touche"
 #: src/help.py:94
 msgid "Description"
 msgstr "Description"
+
