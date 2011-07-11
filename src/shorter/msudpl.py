@@ -23,12 +23,12 @@ class MsudplUrlShorter(UrlShorter):
         self.base = "http://msud.pl"
         self.pt   = re.compile('<p> Whouah ! This a very beautiful url :) <a href="(.*?)">')
 
-     def do_shorter(self, longurl):
-         values = {'submit' : 'Generate my sexy url', 'sexy_url': longurl}
+    def do_shorter(self, longurl):
+        values = {'submit' : 'Generate my sexy url', 'sexy_url': longurl}
 
-         data = urllib.urlencode(values)
-         resp = self._get_request(self.base, data)
-         short = self.pt.findall(resp)
+        data = urllib.urlencode(values)
+        resp = self._get_request(self.base, data)
+        short = self.pt.findall(resp)
 
-         if len(short) > 0:
-             return self.base + '/' + short[0]
+        if len(short) > 0:
+            return self.base + '/' + short[0]
