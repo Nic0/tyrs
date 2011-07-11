@@ -177,7 +177,7 @@ class TweetEditor(Editor):
             self.shorter = BitLyUrlShorter() 
         elif service == 'msudpl':
             self.shorter = MsudplUrlShorter()
-        else service:
+        else:
             self.shorter = Ur1caUrlShorter()
 
 
