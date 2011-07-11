@@ -33,22 +33,23 @@ class Timeline(object):
             pass
         retreive = self.filter_statuses(retreive)
         # Fresh new start.
-        if self.statuses == []:
-            self.statuses = retreive
-            self.update_counter()
-        # This mean there is no new status, we just leave then.
-        elif retreive[0].id == self.statuses[0].id:
-            pass
-        # We may just don't have tweets, in case for DM for example
-        elif len(retreive) == 0:
-            pass
-        # Finally, we append tweets
-        else:
-            for i in range(len(retreive)):
-                if retreive[i].id == self.statuses[0].id:
-                    self.statuses = retreive[:i] + self.statuses
-                    self.current += len(retreive[:i])
-            self.update_counter()
+        if retreive:
+            if self.statuses == []:
+                self.statuses = retreive
+                self.update_counter()
+            # This mean there is no new status, we just leave then.
+            elif retreive[0].id == self.statuses[0].id:
+                pass
+            # We may just don't have tweets, in case for DM for example
+            elif len(retreive) == 0:
+                pass
+            # Finally, we append tweets
+            else:
+                for i in range(len(retreive)):
+                    if retreive[i].id == self.statuses[0].id:
+                        self.statuses = retreive[:i] + self.statuses
+                        self.current += len(retreive[:i])
+                self.update_counter()
 
     def filter_statuses(self, statuses):
         filters = []
