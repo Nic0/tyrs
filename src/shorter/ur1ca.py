@@ -16,7 +16,6 @@
 
 import re
 import urllib
-import traceback
 from urlshorter import UrlShorter
 
 class Ur1caUrlShorter(UrlShorter):
@@ -26,16 +25,10 @@ class Ur1caUrlShorter(UrlShorter):
 
     def do_shorter(self, longurl):
         values = {'submit' : 'Make it an ur1!', 'longurl' : longurl}
-        
-        #try:
+
         data = urllib.urlencode(values)
         resp = self._get_request(self.base, data)
         short = self.pt.findall(resp)
-        
+
         if len(short) > 0:
             return short[0]
-        else:
-            #raise Exception
-            pass
-        #except Exception, error:
-            #pass
