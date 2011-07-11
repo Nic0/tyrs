@@ -12,6 +12,8 @@ doc/javascripts
 doc/*.conf
 doc/images/*
 
+po/*.pot
+
 tags
 build
 start
