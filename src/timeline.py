@@ -29,8 +29,6 @@ class Timeline(object):
         self.filter = FilterStatus()
 
     def append_new_statuses(self, retreive):
-        if not retreive:
-            pass
         retreive = self.filter_statuses(retreive)
         # Fresh new start.
         if retreive:
