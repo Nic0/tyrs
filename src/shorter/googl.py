@@ -29,15 +29,16 @@ FLOW = OAuth2WebServerFlow(
     scope='https://www.googleapis.com/auth/urlshortener',
     user_agent='urlshortener-tyrs/1.0')
 
+googl_token_file = os.environ['HOME'] + '/.config/tyrs/googl.tok'
+
 class GooglUrlShorter(UrlShorter):
 
     def do_shorter(self, longurl):
 
-        home = os.environ['HOME']
-        storage = Storage(home + '/.config/tyrs/googl.tok')
+        storage = Storage(googl_token_file)
         credentials = storage.get()
         if credentials is None or credentials.invalid:
-            credentials = run(FLOW, storage)
+            return 'need to register to use goog.gl'
 
         http = httplib2.Http()
         http = credentials.authorize(http)
@@ -55,3 +56,11 @@ class GooglUrlShorter(UrlShorter):
 
         except AccessTokenRefreshError:
             pass
+
+    def register_token(self):
+        storage = Storage(googl_token_file)
+        credentials = storage.get()
+        if credentials is None or credentials.invalid:
+            print 'There is no token file found for goo.gl'
+            print 'A file will be generated for you'
+            credentials = run(FLOW, storage)

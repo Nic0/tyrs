@@ -22,11 +22,15 @@ import ConfigParser
 import curses.ascii
 import oauth2 as oauth
 from utils import encode
-
 try:
     from urlparse import parse_qsl
-except:
+except ImportError:
     from cgi import parse_qsl
+
+try:
+    from shorter.googl import GooglUrlShorter
+except ImportError:
+    pass
 
 class Config(object):
 
@@ -282,7 +286,13 @@ class Config(object):
                 self.params['old_skool_border'] = True
 
         if self.conf.has_option('params', 'url_shorter'):
-            self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
+            shortener = self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
+            if shortener == 'googl': 
+                self.check_google_tokens()
+
+    def check_google_tokens(self):
+        GooglUrlShorter().register_token()
+        
     
     def parse_filter(self):
 
