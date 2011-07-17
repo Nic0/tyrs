@@ -32,7 +32,7 @@ def cut_attag(name):
 
 def encode(string):
     try:
-        return string.encode(sys.stdout.encoding)
+        return string.encode(sys.stdout.encoding, 'replace')
     except AttributeError:
         return string
 
