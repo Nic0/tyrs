@@ -14,10 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 import httplib2
 from urlshorter import UrlShorter
 
-from apiclient.discovery import build
+try:
+    from apiclient.discovery import build
+except ImportError:
+    print 'please install google-api-python-client and python-gflags'
+    sys.exit(1)
+
 from oauth2client.file import Storage
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.client import OAuth2WebServerFlow
