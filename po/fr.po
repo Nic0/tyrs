@@ -365,6 +365,14 @@ msgstr "Timeline des tweets favoris"
 msgid "Delete an favorite tweet"
 msgstr "Supprime le tweet séléctionné de vos favoris"
 
+#: src/help.py:80
+msgid "Open image in browser"
+msgstr "Ouvrir l'image dans votre navigateur"
+
+#: src/help.py:82
+msgid "Open thread seltected"
+msgstr "Ouvre les réponses du tweet selectionné"
+
 #: src/help.py:91
 msgid "Name"
 msgstr "Nom"
