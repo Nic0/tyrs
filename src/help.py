@@ -77,7 +77,9 @@ class Help(object):
         self.display_division(_('Others'))
         self.display_help_item('quit', _('Leave Tyrs'))
         self.display_help_item('openurl', _('Open URL in browser'))
+        self.display_help_item('open_image', _('Open image in browser'))
         self.display_help_item('redraw', _('Redraw the screen'))
+        self.display_help_item('thread', _('Open thread seltected'))
 
         self.interface.screen.refresh()
         self.interface.screen.getch()
