@@ -280,6 +280,12 @@ class Config(object):
             if int(self.conf.get('params', 'old_skool_border')) == 1:
                 self.params['old_skool_border'] = True
 
+        if self.conf.has_option('params', 'consumer_key'):
+            self.token['identica']['consumer_key'] = self.conf.get('params', 'consumer_key')
+
+        if self.conf.has_option('params', 'consumer_secret'):
+            self.token['identica']['consumer_key'] = self.conf.get('params', 'consumer_secret')
+
         if self.conf.has_option('params', 'url_shorter'):
             shortener = self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
             if shortener == 'googl': 
