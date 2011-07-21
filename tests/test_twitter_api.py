@@ -15,23 +15,22 @@
 
 import unittest
 import sys
-sys.path.append('../tyrs')
 from time import gmtime, strftime
-import tyrs.tyrs as tyrs
-import tyrs.tweets as tweets
+import gettext
+gettext.install('tyrs', unicode=1)
+
+sys.path.append('../src/')
+import tyrs
+import tweets
 from twitter import TwitterError, Status, User
 
 class TestTwitterApi(unittest.TestCase):
 
     def setUp(self):
-        self.username = 'twitturse'
         self.authenticate()
 
     def authenticate(self):
-        try:
-            tyrs.init_conf()
-        except TypeError:
-            pass
+        tyrs.init_conf()
         self.api = tweets.Tweets()
         self.api.authentication()
 
@@ -39,7 +38,7 @@ class TestTwitterApi(unittest.TestCase):
         myself = self.api.myself
         username = myself.screen_name
         self.assertIsInstance(myself, User)
-        self.assertEqual(username, self.username)
+        self.assertEqual(username, 'twitturse')
 
     def test_post_update(self):
         tweet = 'test from unittest at ' + self.get_time()
