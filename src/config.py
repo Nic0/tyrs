@@ -351,7 +351,7 @@ class Config(object):
 
         if resp['status'] != '200':
             print encode(_('Invalid respond from ')) +self.service.capitalize()
-            + encode(_(' requesting temp token: %s')) % resp['status']
+            + encode(_(' requesting temp token: %s')) % str(resp['status'])
         else:
             request_token = dict(parse_qsl(content))
 
