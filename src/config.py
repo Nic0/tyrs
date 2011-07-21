@@ -27,11 +27,6 @@ try:
 except ImportError:
     from cgi import parse_qsl
 
-try:
-    from shorter.googl import GooglUrlShorter
-except ImportError:
-    pass
-
 class Config(object):
 
     def __init__(self, args):
@@ -291,6 +286,10 @@ class Config(object):
                 self.check_google_tokens()
 
     def check_google_tokens(self):
+        try:
+            from shorter.googl import GooglUrlShorter
+        except ImportError:
+            pass
         GooglUrlShorter().register_token()
         
     
