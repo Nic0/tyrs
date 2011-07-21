@@ -29,7 +29,7 @@ class Editor(object):
 
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
-        if self.conf.params['shorter'] == 'googl':
+        if self.conf.params['url_shorter'] == 'googl':
             try:
                 from shorter.googl import GooglUrlShorter
             except ImportError:
