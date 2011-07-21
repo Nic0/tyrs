@@ -332,6 +332,8 @@ class Config(object):
         else:
             base_url = self.base_url
 
+        print 'base_url:{}'.format(base_url)
+
 
         REQUEST_TOKEN_URL          = base_url + '/oauth/request_token'
         if self.service == 'identica':
@@ -350,8 +352,7 @@ class Config(object):
         resp, content = oauth_client.request(REQUEST_TOKEN_URL, 'GET')
 
         if resp['status'] != '200':
-            print encode(_('Invalid respond from ')) +self.service.capitalize()
-            + encode(_(' requesting temp token: %s')) % str(resp['status'])
+            print encode(_('Invalid respond from ')) +self.service.capitalize() + encode(_(' requesting temp token: %s')) % str(resp['status'])
         else:
             request_token = dict(parse_qsl(content))
 
@@ -376,6 +377,7 @@ class Config(object):
             access_token  = dict(parse_qsl(content))
 
             if resp['status'] != '200':
+                print 'response:{}'.format(resp['status'])
                 print encode(_('Request for access token failed: %s')) % resp['status']
                 print access_token
                 sys.exit()
