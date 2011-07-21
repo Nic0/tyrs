@@ -21,7 +21,8 @@ from urlshorter import UrlShorter
 class MsudplUrlShorter(UrlShorter):
     def __init__(self):
         self.base = "http://msud.pl"
-        self.pt   = re.compile('<p> Whouah ! This a very beautiful url :) <a href="(.*?)">')
+        self.pt   = re.compile('<p>Whouah ! This a very beautiful url :\) <a href="(.*?)">')
+        self.pt_yet_in_base   = re.compile('and whouah! It\'s very beautiful <a href="(.*?)">')
 
     def do_shorter(self, longurl):
         values = {'submit' : 'Generate my sexy url', 'sexy_url': longurl}
@@ -29,6 +30,8 @@ class MsudplUrlShorter(UrlShorter):
         data = urllib.urlencode(values)
         resp = self._get_request(self.base, data)
         short = self.pt.findall(resp)
+        if len(short) == 0:
+            short = self.pt_yet_in_base.findall(resp)
 
         if len(short) > 0:
             return self.base + '/' + short[0]
