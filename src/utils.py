@@ -49,14 +49,13 @@ def html_unescape(str):
 
 
 def get_source(source):
-    if source == 'web':
-        return source
-    source = source.split('>')
-    source = source[1:]
-    source = ' '.join(source)
-    source = source.split('<')[:1]
-    source = source[:1]
-    source = ' '.join(source)
+    if source != 'web':
+        source = source.split('>')
+        source = source[1:]
+        source = ' '.join(source)
+        source = source.split('<')[:1]
+        source = source[:1]
+        source = ' '.join(source)
     return source
 
 def open_image(user):
