@@ -25,16 +25,15 @@ try:
 except ImportError:
     pass
 
+try:
+    from shorter.googl import GooglUrlShorter
+except ImportError:
+    pass
+
 class Editor(object):
 
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
-        if self.conf.params['url_shorter'] == 'googl':
-            try:
-                from shorter.googl import GooglUrlShorter
-            except ImportError:
-                pass
-
         self.interface = tyrs.container['interface'] 
         self.interface.refresh_token = True
         self.init_content(data)
