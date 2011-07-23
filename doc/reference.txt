@@ -328,6 +328,7 @@ warning_msg    = 1
 info_msg       = 2
 unread         = 1
 read           = 7
+help           = 6
 ----------------
 
 Bold font
@@ -415,8 +416,13 @@ unread::
 * Description: Color in the activities bar when you have unread tweets.
 * Default: 1 (red)
 
+help::
+* Description: Color of the main help screen.
+* Default: 6
+
 bold::
 * Description: Activate bold, see above for more information.
+
 
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -502,6 +508,7 @@ fav               = b
 get_fav           = B
 delete_fav        = ^B
 thread            = T
+open_image        = ^I
 ---------------
 
 Control keys support
@@ -679,6 +686,10 @@ thread::
 * Description: Prints the thread of mentions/responses for a tweet (with
 an envelope icon)
 * Default: *T*
+
+open_image::
+* Description: Retreive the avatar of the current twitter.
+* Default: *^I*
 
 [TIP]
 A good way to remember the favorites shortcut, think of them as your *b*est tweets.
