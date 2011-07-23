@@ -41,13 +41,13 @@ class Config(object):
 
         self.set_path(args)
         self.check_for_default_config() 
+        self.conf = ConfigParser.RawConfigParser()
+        self.conf.read(self.config_file)
         if not os.path.isfile(self.token_file):
             self.new_account()
         else:
             self.parse_token()
 
-        self.conf = ConfigParser.RawConfigParser()
-        self.conf.read(self.config_file)
         self.parse_config()
 
     def init_config(self):
@@ -284,7 +284,7 @@ class Config(object):
             self.token['identica']['consumer_key'] = self.conf.get('params', 'consumer_key')
 
         if self.conf.has_option('params', 'consumer_secret'):
-            self.token['identica']['consumer_key'] = self.conf.get('params', 'consumer_secret')
+            self.token['identica']['consumer_secret'] = self.conf.get('params', 'consumer_secret')
 
         if self.conf.has_option('params', 'url_shorter'):
             shortener = self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
@@ -343,6 +343,8 @@ class Config(object):
 
         REQUEST_TOKEN_URL          = base_url + '/oauth/request_token'
         if self.service == 'identica':
+            if base_url != 'https://identi.ca/api':
+                self.parse_config()
             REQUEST_TOKEN_URL += '?oauth_callback=oob'
 
         ACCESS_TOKEN_URL           = base_url + '/oauth/access_token'
@@ -390,6 +392,7 @@ class Config(object):
             else:
                 self.oauth_token = access_token['oauth_token']
                 self.oauth_token_secret = access_token['oauth_token_secret']
+
 
     def createTokenFile(self):
 
