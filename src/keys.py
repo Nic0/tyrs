@@ -115,6 +115,8 @@ class Keys(object):
             # SEARCH MYSELF
             elif ch == self.conf.keys['search_myself']:
                 self.api.my_public_timeline()
+            elif ch == self.conf.keys['search_current_user']:
+                self.api.find_current_public_timeline()
             # Redraw screen
             elif ch == self.conf.keys['redraw']:
                 self.interface.display_redraw_screen()

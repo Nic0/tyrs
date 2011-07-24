@@ -60,6 +60,7 @@ key = {
     'sendDM':            'D',
     'search':            's',
     'search_user':       'U',
+    'search_current_user': '^F',
     'search_myself':     '^U',
     'redraw':            '^L',
     'fav':               'b',

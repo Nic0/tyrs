@@ -229,6 +229,10 @@ class Tweets(object):
             self.load_user_public_timeline()
             self.interface.change_buffer('user')
 
+    def find_current_public_timeline(self):
+        self.search_user = self.interface.current_status().user.screen_name 
+        self.interface.change_buffer('user')
+
     def change_search_user(self, nick):
         self.search_user = nick
         self.timelines['user'].empty()
