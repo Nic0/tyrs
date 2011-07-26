@@ -68,7 +68,6 @@ def init_tyrs(scr):
     init_api()
     init_interface()
     init_thread()
-    init_keys()
 
 def init_conf():
     conf = config.Config(arguments())
@@ -98,8 +97,9 @@ def init_timelines():
 def init_thread():
     update = UpdateThread()
     update.start()
-    #update.stop()
-    #container['interface'].tear_down()
+    init_keys()
+    update.stop()
+    container['interface'].tear_down()
 
 def init_keys():
     Keys().handleKeyBinding()
