@@ -295,7 +295,8 @@ class Config(object):
         try:
             from shorter.googl import GooglUrlShorter
         except ImportError:
-            pass
+            print 'please install google-api-python-client and python-gflags'
+            sys.exit(1)
         GooglUrlShorter().register_token()
         
     

@@ -18,11 +18,7 @@ import sys
 import httplib2
 from urlshorter import UrlShorter
 
-try:
-    from apiclient.discovery import build
-except ImportError:
-    print 'please install google-api-python-client and python-gflags'
-    sys.exit(1)
+from apiclient.discovery import build
 
 from oauth2client.file import Storage
 from oauth2client.client import AccessTokenRefreshError
