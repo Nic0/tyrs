@@ -68,10 +68,12 @@ def init_tyrs(scr):
     init_api()
     init_interface()
     init_thread()
+    init_keys()
 
 def init_conf():
     conf = config.Config(arguments())
     container.add('conf', conf)
+
 
 def init_api():
     api = tweets.Tweets()
@@ -96,9 +98,8 @@ def init_timelines():
 def init_thread():
     update = UpdateThread()
     update.start()
-    init_keys()
-    update.stop()
-    container['interface'].tear_down()
+    #update.stop()
+    #container['interface'].tear_down()
 
 def init_keys():
     Keys().handleKeyBinding()

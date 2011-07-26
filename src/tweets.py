@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
+import logging
 from urllib2 import URLError
 from editor import *
 from utils import cut_attag
@@ -70,16 +71,16 @@ class Tweets(object):
         self.flash('tweet')
         try:
             return self.api.PostUpdate(tweet, reply_to)
-        except TwitterError:
-            self.error() 
+        except TwitterError, e:
+            self.error(e) 
 
     def retweet(self):
         self.flash('retweet')
         status = self.interface.current_status()
         try:
             self.api.PostRetweet(status.id)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def retweet_and_edit(self):
         status = self.interface.current_status()
@@ -99,8 +100,8 @@ class Tweets(object):
         status = self.interface.current_status()
         try:
             self.api.DestroyStatus(status.id)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''
@@ -123,8 +124,8 @@ class Tweets(object):
         self.flash('direct')
         try:
             return self.api.PostDirectMessage(nick, tweet)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def follow(self):
         nick = NickEditor().content
@@ -152,31 +153,31 @@ class Tweets(object):
         self.flash('follow', nick)
         try:
             self.api.CreateFriendship(nick)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def destroy_friendship(self, nick):
         self.flash('unfollow', nick)
         try:
             self.api.DestroyFriendship(nick)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def set_favorite(self):
         self.flash('favorite')
         status = self.interface.current_status()
         try:
             self.api.CreateFavorite(status)
-        except TwitterError:
-            self.error() 
+        except TwitterError, e:
+            self.error(e) 
 
     def destroy_favorite(self):
         self.flash('favorite_del')
         status = self.interface.current_status()
         try:
             self.api.DestroyFavorite(status)
-        except TwitterError:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
     def get_favorites(self):
         self.interface.change_buffer('favorite')
@@ -187,16 +188,16 @@ class Tweets(object):
         @param the buffer to retreive tweets
         '''
 
+        logging.debug('updating "{}" timeline'.format(timeline))
         try:
             statuses = self.retreive_statuses(timeline)
             self.timelines[timeline].append_new_statuses(statuses)
 
         except TwitterError, e:
-            self.update_error()
-        except URLError, e:
-            self.update_error()
+            self.update_error(e)
 
-    def update_error(self):
+    def update_error(self, err):
+        logging.error('Updating issue: {}'.format(err))
         self.flash_message.event = 'update'
         self.flash_message.level = 1
         self.interface.display_flash_message()
@@ -277,8 +278,8 @@ class Tweets(object):
         try:
             self.timelines['search'].append_new_statuses(self.api.GetSearch(self.search_word))
             self.interface.change_buffer('search')
-        except:
-            self.error()
+        except TwitterError, e:
+            self.error(e)
 
 
     def flash(self, event, string=None):
@@ -286,7 +287,8 @@ class Tweets(object):
         if string:
             self.flash_message.string = string
     
-    def error(self):
+    def error(self, err=None):
+        logging.warning('Error catch: {}'.format(err))
         self.flash_message.warning()
 
 class ApiPatch(Api):

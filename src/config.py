@@ -16,6 +16,7 @@
 import os
 import sys
 import curses
+import logging
 import message
 import constant
 import ConfigParser
@@ -175,6 +176,7 @@ class Config(object):
         self.parse_keys()
         self.parse_params()
         self.parse_filter()
+        self.init_logger()
 
     def parse_color(self):
         for c in self.colors:
@@ -286,6 +288,9 @@ class Config(object):
         if self.conf.has_option('params', 'consumer_secret'):
             self.token['identica']['consumer_secret'] = self.conf.get('params', 'consumer_secret')
 
+        if self.conf.has_option('params', 'logging_level'):
+            self.params['logging_level'] = self.conf.get('params', 'logging_level')
+
         if self.conf.has_option('params', 'url_shorter'):
             shortener = self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
             if shortener == 'googl': 
@@ -316,6 +321,28 @@ class Config(object):
         if self.conf.has_option('filter', 'except'):
             self.filter['except'] = self.conf.get('filter', 'except').split(' ')
 
+    def init_logger(self):
+        log_file = self.xdg_config + '/tyrs/tyrs.log'
+        lvl = self.init_logger_level()
+
+        logging.basicConfig(
+            filename=log_file,
+            level=lvl,
+            format='%(asctime)s %(levelname)s - %(message)s',
+            datefmt='%d/%m/%Y %H:%M:%S',
+            )
+        logging.info('Tyrs starting...')
+
+    def init_logger_level(self):
+        lvl = int(self.params['logging_level'])
+        if lvl == 1:
+            return logging.DEBUG
+        elif lvl == 2:
+            return logging.INFO
+        elif lvl == 3:
+            return logging.WARNING
+        elif lvl == 4:
+            return logging.ERROR
 
     def authorization(self):
         ''' This function from python-twitter developers '''

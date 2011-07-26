@@ -86,6 +86,7 @@ params = {
     'old_skool_border':     False,
     'box_position':         1,
     'url_shorter':          'ur1ca',
+    'logging_level':        3,
 }
 
 filter = {
