@@ -7,6 +7,7 @@ Date Format : YYYY-MM-DD
 	* New curstomer_key and customer_secret params for own StatusNet instance.
 	* Doc and help screen updated
 	* Draw a line to mark your last tweets read in previous session
+	* Updating issues when networks down fixed #83
 
 * Version 0.4.0 -- 2011-06-30
 
