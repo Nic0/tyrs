@@ -4,6 +4,8 @@ Date Format : YYYY-MM-DD
 
 	* Goo.gl shortener service added.
 	* Musd.pl shortener service added. (Hobbestigrou contribution)
+	* Logging system added, with customizable verbosity, stored in
+	~/.config/tyrs/tyrs.log
 	* New curstomer_key and customer_secret params for own StatusNet instance.
 	* Doc and help screen updated
 	* Draw a line to mark your last tweets read in previous session

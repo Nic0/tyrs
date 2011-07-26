@@ -217,6 +217,14 @@ Several shortener service are available:
 * goo.gl
 * msud.pl
 
+Log file
+~~~~~~~~
+
+A log file is stored in the '~/.config/tyrs/tyrs.log' for debugging purpose,
+the verbosity may be increase by changing the logging_level params to 1 in the
+configuration file. It might be useful to understing if somethings wrong or for
+bugs repports
+
 Console arguments
 -----------------
 
@@ -735,6 +743,7 @@ padding          = 2
 compress         = 0
 source           = 0
 url_shorter      = ur1ca
+logging_level    = 3
 -------------------
 
 Listing
@@ -812,6 +821,11 @@ url_shorter::
 * Description: Change the URL shortening service.
 * Values: ur1ca, bitly, googl, msudpl
 * Default: ur1ca
+
+logging_level::
+** Description: Increase informations stored in the log file, 1 is the most verbose, 5 is the less.
+* Values: 1 to 5
+* Default: 3
 
 [NOTE]
 =============================
