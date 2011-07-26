@@ -15,7 +15,6 @@
 
 import tyrs
 import threading
-from urllib2 import URLError
 
 class UpdateThread(threading.Thread):
     '''
@@ -32,13 +31,9 @@ class UpdateThread(threading.Thread):
         while not self._stopevent.isSet():
             self._stopevent.wait(self.conf.params['refresh'] * 60.0)
             if not self._stopevent.isSet():
-                try:
-                    self.api.update_timeline('home')
-                    self.api.update_timeline('mentions')
-                    self.api.update_timeline('direct')
-
-                except URLError:
-                    pass
+                self.api.update_timeline('home')
+                self.api.update_timeline('mentions')
+                self.api.update_timeline('direct')
                 self.interface.display_timeline()
 
     def stop(self):

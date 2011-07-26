@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
-import urllib2
+from urllib2 import URLError
 from editor import *
 from utils import cut_attag
 from message import FlashMessage
@@ -186,39 +186,40 @@ class Tweets(object):
         Retrieves tweets, don't display them
         @param the buffer to retreive tweets
         '''
-        if not self.interface.refresh_token:
-            try:
-                if not self.interface.refresh_token:
-                    statuses = self.retreive_statuses(timeline)
-                    self.timelines[timeline].append_new_statuses(statuses)
 
-            except TwitterError:
-                self.flash_message.event = 'update'
-                self.flash_message.level = 1
-                self.interface.display_flash_message()
+        try:
+            statuses = self.retreive_statuses(timeline)
+            self.timelines[timeline].append_new_statuses(statuses)
+
+        except TwitterError, e:
+            self.update_error()
+        except URLError, e:
+            self.update_error()
+
+    def update_error(self):
+        self.flash_message.event = 'update'
+        self.flash_message.level = 1
+        self.interface.display_flash_message()
 
     def retreive_statuses(self, timeline, page=None):
         self.interface.display_update_msg()
-        try:
-            if timeline == 'home':
-                statuses = self.api.GetFriendsTimeline(retweets=True, page=page)
-            elif timeline == 'mentions':
-                statuses = self.api.GetMentions(page=page)
-            elif timeline == 'user_retweet':
-                statuses = self.api.GetUserRetweets()
-            elif timeline == 'search' and self.search_word != '':
-                statuses = self.api.GetSearch(self.search_word, page=page)
-            elif timeline == 'direct':
-                statuses = self.api.GetDirectMessages(page=page)
-            elif timeline == 'user' and self.search_user != '':
-                statuses = self.load_user_public_timeline(page=page)
-            elif timeline == 'favorite':
-                statuses = self.api.GetFavorites(page=page)
-            elif timeline == 'thread':
-                statuses = self.get_thread()
-            self.interface.erase_flash_message()
-        except:
-            statuses = []
+        if timeline == 'home':
+            statuses = self.api.GetFriendsTimeline(retweets=True, page=page)
+        elif timeline == 'mentions':
+            statuses = self.api.GetMentions(page=page)
+        elif timeline == 'user_retweet':
+            statuses = self.api.GetUserRetweets()
+        elif timeline == 'search' and self.search_word != '':
+            statuses = self.api.GetSearch(self.search_word, page=page)
+        elif timeline == 'direct':
+            statuses = self.api.GetDirectMessages(page=page)
+        elif timeline == 'user' and self.search_user != '':
+            statuses = self.load_user_public_timeline(page=page)
+        elif timeline == 'favorite':
+            statuses = self.api.GetFavorites(page=page)
+        elif timeline == 'thread':
+            statuses = self.get_thread()
+        self.interface.erase_flash_message()
 
         return statuses
 
