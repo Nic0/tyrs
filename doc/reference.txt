@@ -509,6 +509,7 @@ sendDM            = D
 search            = s
 redraw            = ^L
 search_user       = U
+search_current_user = ^F
 search_myself     = ^U
 delete            = C
 fav               = b
@@ -660,6 +661,11 @@ search_user::
 * Description: Retrieve the specified user's timeline (usually useful to review
 someone's tweets before deciding to follow them or not).
 * Default: *U*
+
+search_user::
+* Description: Retrieve the current twitter's timeline (usually useful to review
+someone's tweets before deciding to follow them or not).
+* Default: *^F*
 
 search_myself::
 * Description: Retrieve your own timeline (useful to delete a tweet).
