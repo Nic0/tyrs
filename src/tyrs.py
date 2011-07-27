@@ -18,8 +18,8 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.4.0
-   @date:       30/06/2011
+   @version:    0.4.1
+   @date:       27/07/2011
    @licence:    GPLv3
 
 '''
