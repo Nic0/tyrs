@@ -188,7 +188,11 @@ class Tweets(object):
         @param the buffer to retreive tweets
         '''
 
-        logging.debug('updating "{}" timeline'.format(timeline))
+        try:
+            logging.debug('updating "{}" timeline'.format(timeline))
+        except ValueError:
+            logging.error('ValueError to format timeline')
+
         try:
             statuses = self.retreive_statuses(timeline)
             self.timelines[timeline].append_new_statuses(statuses)
