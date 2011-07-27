@@ -366,7 +366,7 @@ class Config(object):
         else:
             base_url = self.base_url
 
-        print 'base_url:{}'.format(base_url)
+        print 'base_url:{0}'.format(base_url)
 
 
         REQUEST_TOKEN_URL          = base_url + '/oauth/request_token'
@@ -413,7 +413,7 @@ class Config(object):
             access_token  = dict(parse_qsl(content))
 
             if resp['status'] != '200':
-                print 'response:{}'.format(resp['status'])
+                print 'response:{0}'.format(resp['status'])
                 print encode(_('Request for access token failed: %s')) % resp['status']
                 print access_token
                 sys.exit()

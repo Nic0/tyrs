@@ -30,7 +30,7 @@ class TestShortener(unittest.TestCase):
         url_re = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         shortener = MsudplUrlShorter()
         number = random.randint(10000, 100000)
-        result = shortener.do_shorter('http://www.nicosphere{}.net'.format(number))
+        result = shortener.do_shorter('http://www.nicosphere{0}.net'.format(number))
         self.assertRegexpMatches(result, url_re)
 
 if __name__ == '__main__':

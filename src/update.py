@@ -40,7 +40,7 @@ class UpdateThread(threading.Thread):
                     self.api.update_timeline('direct')
                     self.interface.display_timeline()
                 except URLError, e:
-                    logging.error('Thread issue with URLError {}'.format(e))
+                    logging.error('Thread issue with URLError {0}'.format(e))
                     logging.info('Tread stoped')
                     self.stop()
                     update = UpdateThread()

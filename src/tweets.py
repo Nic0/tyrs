@@ -189,7 +189,7 @@ class Tweets(object):
         '''
 
         try:
-            logging.debug('updating "{}" timeline'.format(timeline))
+            logging.debug('updating "{0}" timeline'.format(timeline))
         except ValueError:
             logging.error('ValueError to format timeline')
 
@@ -201,7 +201,7 @@ class Tweets(object):
             self.update_error(e)
 
     def update_error(self, err):
-        logging.error('Updating issue: {}'.format(err))
+        logging.error('Updating issue: {0}'.format(err))
         self.flash_message.event = 'update'
         self.flash_message.level = 1
         self.interface.display_flash_message()
@@ -292,7 +292,7 @@ class Tweets(object):
             self.flash_message.string = string
     
     def error(self, err=None):
-        logging.warning('Error catch: {}'.format(err))
+        logging.warning('Error catch: {0}'.format(err))
         self.flash_message.warning()
 
 class ApiPatch(Api):
