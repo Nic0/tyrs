@@ -428,13 +428,13 @@ class Interface(object):
         return result
 
     def get_header(self, status):
-        nick = self.get_nick(status)
-        time = self.get_time(status)
-        source = ''
+        source = self.get_source(status)
         retweeted = ''
         reply = ''
         retweet_count = ''
         retweeter = ''
+        nick = self.get_nick(status)
+        time = self.get_time(status)
         if self.is_reply(status):
             reply = u' \u2709'
         if status.rt:
@@ -442,14 +442,11 @@ class Interface(object):
             retweeter = nick
             nick = self.origin_of_retweet(status)
 
-        if self.conf.params['source'] and source:
-            source = self.get_source(status)
         if self.get_retweet_count(status):
             retweet_count = ' rt:' + str(self.get_retweet_count(status))
 
-        #origin = self.origin_of_retweet(status)
-
-        header = u' {time} - {nick}{retweeted}{retweeter}{source}{reply}{retweet_count}'.format(
+        header_template = self.conf.params['header_template'] 
+        header = unicode(header_template).format(
             time = time,
             nick = nick,
             reply = reply,

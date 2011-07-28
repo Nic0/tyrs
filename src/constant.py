@@ -82,11 +82,11 @@ params = {
     'activities':           True,
     'compress':             False,
     'help':                 True,
-    'source':               False,
     'old_skool_border':     False,
     'box_position':         1,
     'url_shorter':          'ur1ca',
     'logging_level':        3,
+    'header_template':      ' {time} - {nick}{retweeted}{retweeter}{reply}{retweet_count}',
 }
 
 filter = {

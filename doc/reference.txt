@@ -744,6 +744,7 @@ compress         = 0
 source           = 0
 url_shorter      = ur1ca
 logging_level    = 3
+header_template  = (see listing)
 -------------------
 
 Listing
@@ -804,16 +805,12 @@ margin::
 * Default: 1
 
 padding::
-* Description: Space between the border of a tweet, and the start on the text himself.
+* Description: Space between the border of a tweet, and the start on the text
+himself.
 * Default: 2
 
 compress::
 * Description: disable the blank line between tweets.
-* Values 0, 1
-* Default: 0
-
-source::
-* Description: append tweeter's client to the header of a tweet eg,. Tyrs,TTYtter etc
 * Values 0, 1
 * Default: 0
 
@@ -823,9 +820,24 @@ url_shorter::
 * Default: ur1ca
 
 logging_level::
-** Description: Increase informations stored in the log file, 1 is the most verbose, 5 is the less.
+** Description: Increase informations stored in the log file, 1 is the most
+verbose, 5 is the less.
 * Values: 1 to 5
 * Default: 3
+
+header_template::
+** Description: Let you chose the how the header of each tweet will be
+displayed, following a template code.
+* Values: string containing specials parameters with {}
+* Default:  {time} - {nick}{retweeted}{retweeter}{reply}{retweet_count}
+With:
+* time: hour, or 'time ago'
+* nick: the twitter nick
+* retweeted: the retweet icon, if needed.
+* retweeter: the person who retweet.
+* source: append tweeter's client to the header of a tweet (eg,. Tyrs, TTytter etc)
+* reply: envelope icon, if the tweet is a reply to another one.
+* retweet_count: the count of retweet for this tweet.
 
 [NOTE]
 =============================
