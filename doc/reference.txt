@@ -829,8 +829,15 @@ header_template::
 ** Description: Let you chose the how the header of each tweet will be
 displayed, following a template code.
 * Values: string containing specials parameters with {}
-* Default:  {time} - {nick}{retweeted}{retweeter}{reply}{retweet_count}
+* Default:  
+
+[source, conf]
+-----------------
+{time} - {nick}{retweeted}{retweeter}{reply}{retweet_count}
+-----------------
+
 With:
+
 * time: hour, or 'time ago'
 * nick: the twitter nick
 * retweeted: the retweet icon, if needed.
