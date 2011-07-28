@@ -30,31 +30,18 @@ class Timeline(object):
 
     def append_new_statuses(self, retreive):
         retreive = self.filter_statuses(retreive)
-        # Fresh new start.
+
         if retreive:
             if self.statuses == []:
                 self.statuses = retreive
-                self.update_counter()
-
-            # This mean there is no new status, we just leave then.
-            #elif retreive[0].id == self.statuses[0].id:
-                #pass
-            # We may just don't have tweets, in case for DM for example
-            elif len(retreive) == 0:
-                pass
             else:
-                last_new_id = retreive[-1].id
                 for i, status in enumerate(self.statuses):
-                    if last_new_id == status.id:
+                    if retreive[-1].id == status.id:
                         try:
-                            self.statuses = retreive + self.statuses[:i +1]
+                            self.statuses = retreive + self.statuses[:i]
                         except IndexError:
                             self.statuses = retreive
-                    #for i in range(len(retreive)):
-                        #if retreive[i].id == self.statuses[0].id:
-                            #self.statuses = retreive[:i] + self.statuses
-                            #self.current += len(retreive[:i])
-                self.update_counter()
+            self.update_counter()
 
     def filter_statuses(self, statuses):
         filters = []
