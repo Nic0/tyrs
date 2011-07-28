@@ -430,19 +430,50 @@ class Interface(object):
     def get_header(self, status):
         nick = self.get_nick(status)
         time = self.get_time(status)
-
-        if status.rt and self.conf.params['retweet_by'] == 1:
-            origin = self.origin_of_retweet(status)
-            header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % nick
-        else:
-            header = " %s - %s " % (time, nick)
-
+        source = ''
+        retweeted = ''
+        reply = ''
+        retweet_count = ''
+        retweeter = ''
         if self.is_reply(status):
-            header += u'\u2709 '
+            reply = u' \u2709'
+        if status.rt:
+            retweeted = u" \u262b "
+            retweeter = nick
+            nick = self.origin_of_retweet(status)
 
-        source = self.get_source(status)
         if self.conf.params['source'] and source:
-            header += ' (%s)' % source
+            source = self.get_source(status)
+        if self.get_retweet_count(status):
+            retweet_count = ' rt:' + str(self.get_retweet_count(status))
+
+        #origin = self.origin_of_retweet(status)
+
+        header = u' {time} - {nick}{retweeted}{retweeter}{source}{reply}{retweet_count}'.format(
+            time = time,
+            nick = nick,
+            reply = reply,
+            retweeted = retweeted,
+            source = source,
+            retweet_count = retweet_count,
+            retweeter = retweeter
+            )
+
+        #if status.rt and self.conf.params['retweet_by'] == 1:
+            #origin = self.origin_of_retweet(status)
+            #header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % nick
+        #else:
+            #header = " %s - %s " % (time, nick)
+
+        #if self.is_reply(status):
+            #header += reply
+
+        #source = self.get_source(status)
+        #if self.conf.params['source'] and source:
+            #header += ' (%s)' % source
+
+        #if self.get_retweet_count(status):
+            #header += ' rt:{0}'.format(self.get_retweet_count(status))
 
         return encode(header)
 
@@ -460,6 +491,10 @@ class Interface(object):
             nick = status.sender_screen_name
 
         return encode(nick)
+
+    def get_retweet_count(self, status):
+        if hasattr(status, 'retweet_count'):
+            return status.retweet_count
 
     def is_retweet(self, status):
         status.rt = self.regex_retweet.match(status.text)
