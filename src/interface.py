@@ -202,7 +202,7 @@ class Interface(object):
         if self.buffer == 'home':
             if self.last_read_home == str(id):
                 self.screen.hline(self.current_y, 0, '-', self.maxyx[1]-1)
-                self.current_y += 2
+                self.current_y += 1
 
     def set_date(self):
         self.date = time.strftime("%d %b", time.gmtime())
@@ -428,13 +428,14 @@ class Interface(object):
         return result
 
     def get_header(self, status):
-        source = self.get_source(status)
         retweeted = ''
         reply = ''
         retweet_count = ''
         retweeter = ''
+        source = self.get_source(status)
         nick = self.get_nick(status)
         time = self.get_time(status)
+
         if self.is_reply(status):
             reply = u' \u2709'
         if status.rt:
@@ -455,22 +456,6 @@ class Interface(object):
             retweet_count = retweet_count,
             retweeter = retweeter
             )
-
-        #if status.rt and self.conf.params['retweet_by'] == 1:
-            #origin = self.origin_of_retweet(status)
-            #header = ' %s - %s ' % (time, origin) + u"\u267b" + ' %s ' % nick
-        #else:
-            #header = " %s - %s " % (time, nick)
-
-        #if self.is_reply(status):
-            #header += reply
-
-        #source = self.get_source(status)
-        #if self.conf.params['source'] and source:
-            #header += ' (%s)' % source
-
-        #if self.get_retweet_count(status):
-            #header += ' rt:{0}'.format(self.get_retweet_count(status))
 
         return encode(header)
 
