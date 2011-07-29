@@ -70,9 +70,9 @@ key = {
 }
 
 params = {
-    'refresh':              3,
+    'refresh':              2,
     'tweet_border':         1,
-    'relative_time':        0,
+    'relative_time':        1,
     'retweet_by':           1,
     'margin':               1,
     'padding':              2,
@@ -86,7 +86,7 @@ params = {
     'box_position':         1,
     'url_shorter':          'ur1ca',
     'logging_level':        3,
-    'header_template':      ' {time} - {nick}{retweeted}{retweeter}{reply}{retweet_count}',
+    'header_template':      ' {nick}{retweeted}{retweeter} - {time}{reply}{retweet_count}',
 }
 
 filter = {
