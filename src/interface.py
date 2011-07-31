@@ -137,7 +137,7 @@ class Interface(object):
             self.change_buffer(self.buffers[new_index])
 
     def display_flash_message(self):
-        if self.api.flash_message.event:
+        if self.api.flash_message.event and not self.refresh_token:
             msg = self.api.flash_message.get_msg()
             level = self.api.flash_message.level
             msg_color = { 0: 'info_msg', 1: 'warning_msg', }
@@ -167,10 +167,11 @@ class Interface(object):
         '''Main entry to display a timeline, as it does not take arguments,
            make sure to set self.buffer before
         '''
-        self.set_max_window_size()
-        self.set_date()
         try:
             if not self.refresh_token:
+                self.set_max_window_size()
+                self.set_date()
+
                 timeline = self.select_current_timeline()
                 statuses_count = len(timeline.statuses)
 
@@ -196,6 +197,7 @@ class Interface(object):
                 self.screen.refresh()
                 self.check_current_not_on_screen()
         except curses.error:
+            logging.error('Curses error for display_timeline')
             pass
 
     def check_for_last_read(self, id):
