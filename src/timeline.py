@@ -32,13 +32,13 @@ class Timeline(object):
         retreive = self.filter_statuses(retreive)
 
         if retreive:
-            if self.statuses == []:
+            if len(self.statuses) == 0:
                 self.statuses = retreive
             else:
                 for i, status in enumerate(self.statuses):
                     if retreive[-1].id == status.id:
                         try:
-                            self.statuses = retreive + self.statuses[:i]
+                            self.statuses = retreive + self.statuses[i+1:]
                         except IndexError:
                             self.statuses = retreive
             self.update_counter()
