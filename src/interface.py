@@ -20,9 +20,8 @@ import time
 import tyrs
 import signal                   # resize event
 import curses
+import logging
 from user import User
-from timeline import Timeline
-from message import FlashMessage
 from utils import html_unescape, encode, get_source, get_urls
 
 class Interface(object):
@@ -462,19 +461,20 @@ class Interface(object):
         return encode(header)
 
     def get_source(self, status):
+        source = ''
         if hasattr(status, 'source'):
             source = get_source(status.source)
-        else:
-            source = ''
+
         return source
 
     def get_nick(self, status):
         if hasattr(status, 'user'):
             nick = status.user.screen_name
         else:
+            #Used for direct messages
             nick = status.sender_screen_name
 
-        return encode(nick)
+        return nick
 
     def get_retweet_count(self, status):
         if hasattr(status, 'retweet_count'):
