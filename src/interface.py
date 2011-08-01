@@ -441,7 +441,7 @@ class Interface(object):
         if self.is_reply(status):
             reply = u' \u2709'
         if status.rt:
-            retweeted = u" \u262b "
+            retweeted = u" \u267b "
             retweeter = nick
             nick = self.origin_of_retweet(status)
 
