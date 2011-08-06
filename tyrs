@@ -9,8 +9,10 @@
 import gettext
 gettext.install('tyrs', unicode=1)
 from src.tyrs import main
+#import cProfile
 
 __revision__ = '0.4.1'
 
 if __name__=="__main__":
+    #cProfile.run('main()')
     main()

@@ -32,7 +32,7 @@ Installation
 
 * Current release with `easy_install` (for python2.7, but other release coming soon):
     
-    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
+    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.4.1-py2.7.egg
 
 or with python-pip tools:
 
