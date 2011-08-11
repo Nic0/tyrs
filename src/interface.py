@@ -445,7 +445,7 @@ class Interface(object):
             nick = self.origin_of_retweet(status)
 
         if self.get_retweet_count(status):
-            retweet_count = ' rt:' + str(self.get_retweet_count(status))
+            retweet_count = str(self.get_retweet_count(status))
 
         header_template = self.conf.params['header_template'] 
         header = unicode(header_template).format(
