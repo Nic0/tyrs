@@ -260,9 +260,9 @@ class Config(object):
             if int(self.conf.get('params', 'transparency')) == 0:
                 self.params['transparency'] = False
         # Compress display
-        if self.conf.has_option('params', 'compress'):
-            if int(self.conf.get('params', 'compress')) == 1:
-                self.params['compress'] = True
+        if self.conf.has_option('params', 'compact'):
+            if int(self.conf.get('params', 'compact')) == 1:
+                self.params['compact'] = True
         # Help bar
         if self.conf.has_option('params', 'help'):
             if int(self.conf.get('params', 'help')) == 0:

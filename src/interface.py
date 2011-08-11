@@ -304,7 +304,11 @@ class Interface(object):
             if self.conf.params['old_skool_border']:
                 panel.border('|','|','-','-','+','+','+','+')
             else:
-                panel.border(0)
+                if self.conf.params['compact']:
+                    panel.border(curses.ACS_VLINE, curses.ACS_VLINE, curses.ACS_HLINE, ' ',
+                                 curses.ACS_ULCORNER, curses.ACS_URCORNER, ' ', ' ')
+                else:
+                    panel.border(0)
 
         # Highlight the current status
         if timeline.current == i:
@@ -319,7 +323,7 @@ class Interface(object):
         except curses.error:
             pass
         # An adjustment to compress a little the display
-        if self.conf.params['compress']:
+        if self.conf.params['compact']:
             c = -1
         else:
             c = 0

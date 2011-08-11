@@ -80,7 +80,7 @@ params = {
     'open_image_command':   'feh %s',
     'transparency':         True,
     'activities':           True,
-    'compress':             False,
+    'compact':              False,
     'help':                 True,
     'old_skool_border':     False,
     'box_position':         1,
