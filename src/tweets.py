@@ -90,7 +90,11 @@ class Tweets(object):
 
     def reply(self):
         status = self.interface.current_status()
-        data = '@' + status.user.screen_name + ' '
+        if hasattr(status, 'user'):
+            nick = status.user.screen_name
+        else:
+            self.direct_message()
+        data = '@' + nick + ' '
         tweet = TweetEditor(data).content
         if tweet:
             self.post_tweet(tweet, status.id)
