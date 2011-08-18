@@ -202,7 +202,7 @@ class Interface(object):
     def check_for_last_read(self, id):
         if self.buffer == 'home':
             if self.last_read_home == str(id):
-                self.screen.hline(self.current_y, 1, '-', self.maxyx[1]-2)
+                self.screen.hline(self.current_y, 1, '-', self.maxyx[1]-3)
                 self.current_y += 1
 
     def set_date(self):
