@@ -1,5 +1,15 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.4.2 -- 2011-09-20
+
+	* Retweet counter
+	* Relative time now update correctly
+	* Few default values changed
+	* Better display with waterline
+	* Force DM reply if you are in DM timeline
+	* Compress param rename to compact
+	* New header template in params
+
 * Version 0.4.1 -- 2011-07-27
 
 	* Goo.gl shortener service added.
