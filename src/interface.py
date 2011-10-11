@@ -577,7 +577,7 @@ class Interface(object):
         urls = get_urls(self.current_status().text)
         for url in urls:
             try:
-                os.system(self.conf.params['openurl_command'] % url)
+                os.system(self.conf.params['openurl_command'] % url + '> /dev/null 2>&1')
             except:
                 pass 
 
