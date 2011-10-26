@@ -45,6 +45,8 @@ class UpdateThread(threading.Thread):
                     self.stop()
                     update = UpdateThread()
                     update.start()
+                except:
+                    logging.error('Unexpected error')
 
     def stop(self):
         self._stopevent.set()

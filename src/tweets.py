@@ -202,6 +202,8 @@ class Tweets(object):
             self.update_error(e)
         except BadStatusLine, e:
             self.update_error(e)
+        except ValueError, e:
+            self.update_error(e)
 
     def update_error(self, err):
         logging.error('Updating issue: {0}'.format(err))

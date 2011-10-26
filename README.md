@@ -32,7 +32,7 @@ Installation
 
 * Current release with `easy_install` (for python2.7, but other release coming soon):
     
-    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.4.1-py2.7.egg
+    sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.4.2-py2.7.egg
 
 or with python-pip tools:
 
@@ -54,3 +54,9 @@ Licence
 
 GNU GENERAL PUBLIC LICENCE (GPL)
 Check `doc/LICENCE` for the full licence text.
+
+Author
+------
+
+Nicolas Paris
+http://www.nicosphere.net
