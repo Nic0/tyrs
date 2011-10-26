@@ -46,7 +46,7 @@ class Interface(object):
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
         tyrs.container.add('interface', self)
-        self.last_read_home = self.conf.load_last_read()
+        self.update_last_read_home()
         self.api.set_interface()
         self.resize_event     = False
         self.regex_retweet     = re.compile('^RT @\w+:')
@@ -57,6 +57,7 @@ class Interface(object):
         signal.signal(signal.SIGWINCH, self.sigwinch_handler)
         self.init_screen()
         self.first_update()
+
 
     def init_screen(self):
 
@@ -580,6 +581,9 @@ class Interface(object):
                 os.system(self.conf.params['openurl_command'] % url + '> /dev/null 2>&1')
             except:
                 pass 
+
+    def update_last_read_home(self):
+        self.last_read_home = self.conf.load_last_read()
 
     def current_user_info(self):
         User(self.current_status().user)
