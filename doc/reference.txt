@@ -525,6 +525,7 @@ get_fav           = B
 delete_fav        = ^B
 thread            = T
 open_image        = ^I
+waterline         = w
 ---------------
 
 Control keys support
@@ -711,6 +712,11 @@ an envelope icon)
 open_image::
 * Description: Retreive the avatar of the current twitter.
 * Default: *^I*
+
+waterline::
+* Description: Allow to set the waterline, the doted line, at the latest read
+tweet.
+* Default: *w*
 
 [TIP]
 A good way to remember the favorites shortcut, think of them as your *b*est tweets.
