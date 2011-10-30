@@ -16,7 +16,7 @@
 import tyrs
 import logging
 import threading
-from urllib2 import URLError
+import time
 
 class UpdateThread(threading.Thread):
     '''
@@ -32,21 +32,16 @@ class UpdateThread(threading.Thread):
     def run(self):
         logging.info('Thread started')
         while not self._stopevent.isSet():
-            self._stopevent.wait(self.conf.params['refresh'] * 60.0)
+            for i in range(self.conf.params['refresh'] * 60):
+                time.sleep(1)
+                if self._stopevent.isSet():
+                    logging.info('Thread Stoped')
+                    return
             if not self._stopevent.isSet():
-                try:
-                    self.api.update_timeline('home')
-                    self.api.update_timeline('mentions')
-                    self.api.update_timeline('direct')
-                    self.interface.display_timeline()
-                except URLError, e:
-                    logging.error('Thread issue with URLError {0}'.format(e))
-                    logging.info('Tread stoped')
-                    self.stop()
-                    update = UpdateThread()
-                    update.start()
-                except:
-                    logging.error('Unexpected error')
+                self.api.update_timeline('home')
+                self.api.update_timeline('mentions')
+                self.api.update_timeline('direct')
+                self.interface.display_timeline()
 
     def stop(self):
         self._stopevent.set()
