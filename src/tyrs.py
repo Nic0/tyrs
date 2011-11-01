@@ -31,6 +31,7 @@ import tweets
 import argparse
 import gettext
 import curses.wrapper
+from urllib2 import URLError
 from keys import Keys
 from timeline import Timeline
 from update import UpdateThread 
@@ -60,7 +61,6 @@ def main():
     utils.set_console_title()
     init_conf()
     curses.wrapper(init_tyrs)
-    print 'Waiting for thread stopping...'
     return 0
 
 def init_tyrs(scr):
@@ -77,7 +77,11 @@ def init_conf():
 def init_api():
     api = tweets.Tweets()
     container.add('api', api)
-    api.authentication()
+    try:
+        api.authentication()
+    except URLError, e:
+        print 'error:%s' % e
+        sys.exit(1)
 
 def init_interface():
     user_interface = Interface()

@@ -31,17 +31,18 @@ class UpdateThread(threading.Thread):
 
     def run(self):
         logging.info('Thread started')
-        while not self._stopevent.isSet():
+        while True:
             for i in range(self.conf.params['refresh'] * 60):
                 time.sleep(1)
                 if self._stopevent.isSet():
                     logging.info('Thread Stoped')
                     return
-            if not self._stopevent.isSet():
-                self.api.update_timeline('home')
-                self.api.update_timeline('mentions')
-                self.api.update_timeline('direct')
-                self.interface.display_timeline()
+            #if not self._stopevent.isSet():
+            self.api.update_timeline('home')
+            self.api.update_timeline('mentions')
+            self.api.update_timeline('direct')
+            self.interface.display_timeline()
+        logging.info('Thread stoped')
 
     def stop(self):
         self._stopevent.set()
