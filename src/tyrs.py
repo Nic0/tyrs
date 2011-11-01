@@ -24,6 +24,7 @@
 
 '''
 
+import sys
 import utils
 import config
 import locale
