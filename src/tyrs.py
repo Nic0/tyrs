@@ -61,10 +61,10 @@ def main():
 
     utils.set_console_title()
     init_conf()
-    curses.wrapper(init_tyrs)
+    init_tyrs()
     return 0
 
-def init_tyrs(scr):
+def init_tyrs():
     init_timelines()
     init_api()
     init_interface()
