@@ -51,6 +51,7 @@ class Interface(object):
         self.resize_event     = False
         self.regex_retweet     = re.compile('^RT @\w+:')
         self.refresh_token    = False
+        self.stoped = False
         self.buffer           = 'home'
         self.charset = sys.stdout.encoding
         # resize event
@@ -506,7 +507,7 @@ class Interface(object):
         origin = str(origin)
         return origin
 
-    def tear_down(self, *dummy):
+    def tear_down(self):
         '''Last function call when quiting, restore some defaults params'''
         self.screen.keypad(0)
         curses.echo()

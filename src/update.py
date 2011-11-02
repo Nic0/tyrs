@@ -33,7 +33,7 @@ class UpdateThread(threading.Thread):
         logging.info('Thread started')
         for i in range(self.conf.params['refresh'] * 60):
             time.sleep(1)
-            if self._stopevent.isSet():
+            if self._stopevent.isSet() or self.interface.stoped:
                 logging.info('Thread forced to stop')
                 return
         self.start_new_thread()

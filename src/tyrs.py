@@ -62,7 +62,6 @@ def main():
     utils.set_console_title()
     init_conf()
     init_tyrs()
-    return 0
 
 def init_tyrs():
     init_timelines()

@@ -145,6 +145,7 @@ class Keys(object):
                 self.interface.update_last_read_home()
             # QUIT
             elif ch == self.conf.keys['quit']:
+                self.interface.stoped = True
                 break
             else:
                 continue
