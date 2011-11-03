@@ -12,19 +12,15 @@ Tyrs is a twitter and identi.ca client using curses that is easily configurable.
 Functionality
 --------------
 
-- **Oauth authentication**
 - Identi.ca and Twitter support
+- Oauth authentication
+- Proxy support
 - utf-8 support, 256 Colors, transparency
-- Display timelines with colorful tweets
-- Send tweets, retweets
+- Mentions, Direct messages, Favorites, User and Search timelines
 - Follow/Unfollow
-- Display mention tweets, reply to tweets
 - Display thread view of replies
-- Direct messages in/out
-- Favorites
-- User timelines
-- Search
-- ur1.ca and bit.ly support
+- ur1.ca, bit.ly and goo.gl support
+- Filter system
 - Configuration file allows for lots of customization
 
 Installation
