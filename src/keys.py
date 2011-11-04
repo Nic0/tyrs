@@ -143,6 +143,7 @@ class Keys(object):
                 self.interface.current_user_info()
             elif ch == self.conf.keys['waterline']:
                 self.interface.update_last_read_home()
+                self.interface.back_on_top()
             # QUIT
             elif ch == self.conf.keys['quit']:
                 self.interface.stoped = True
