@@ -103,6 +103,8 @@ class Config(object):
                 value = 1
             elif self.params[p] == False:
                 value = 0
+            elif self.params[p] == None:
+                continue
             else:
                 value = self.params[p]
 
