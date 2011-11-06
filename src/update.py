@@ -49,7 +49,7 @@ class UpdateThread(threading.Thread):
         update.start()
 
     def update_timeline(self):
-        self.api.update_timeline('home')
-        self.api.update_timeline('mentions')
-        self.api.update_timeline('direct')
+        timeline = ('home', 'mentions', 'direct')
+        for t in timeline:
+            self.api.update_timeline(t)
         self.interface.display_timeline()

@@ -1,5 +1,12 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.5.0 -- 2011-11-06
+
+	* Better update thread, no more freeze after a while
+	* Proxy support
+	* update waterline with 'w' to display a line for the last read
+	* Bugs fixed
+
 * Version 0.4.2 -- 2011-09-20
 
 	* Retweet counter
