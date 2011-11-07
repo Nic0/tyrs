@@ -13,7 +13,7 @@ Tyrs is now available from pypi.python.org site, allowing you to use the
 easy_install method, and quickly get it started.  If your using python2.7, all you need to do is:
 
 [source,bash]
-sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.3.3-py2.7.egg
+sudo easy_install http://pypi.python.org/packages/2.7/t/tyrs/tyrs-0.5.0-py2.7.egg
 
 Or you may visit the http://pypi.python.org/pypi/tyrs and get the latest tarball
 and proceed like so:
@@ -40,11 +40,12 @@ yaourt -S tyrs
 Ubuntu
 ~~~~~~
 
+[source,bash]
 apt-get install python-setuptools python-distutils-extra
-wget http://src.nicosphere.net/tyrs/tyrs-{revision}.tar.gz
-tar xvf tyrs-{revision}.tar.gz && cd tyrs
+wget http://pypi.python.org/packages/source/t/tyrs/tyrs-0.5.0.tar.gz
+tar xvf tyrs-0.5.0.tar.gz && cd tyrs
 python setup.py build
-sudo easy_install dist/tyrs-{revision}-py2.7.egg
+sudo easy_install dist/tyrs-0.5.0-py2.7.egg
 
 Ubuntu users may also use the `easy way` approach above.
 
