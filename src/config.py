@@ -41,7 +41,7 @@ class Config(object):
             sys.exit(0)
 
         self.set_path(args)
-        self.check_for_default_config() 
+        self.check_for_default_config()
         self.conf = ConfigParser.RawConfigParser()
         self.conf.read(self.config_file)
         if not os.path.isfile(self.token_file):
@@ -113,7 +113,7 @@ class Config(object):
         with open(config_file, 'wb') as config:
             conf.write(config)
 
-        print encode(_('Genereting configuration file in %s')) % config_file 
+        print encode(_('Genereting configuration file in %s')) % config_file
 
     def set_path(self, args):
         # Default config path set
@@ -291,7 +291,7 @@ class Config(object):
 
         if self.conf.has_option('params', 'url_shorter'):
             shortener = self.params['url_shorter'] = self.conf.get('params', 'url_shorter')
-            if shortener == 'googl': 
+            if shortener == 'googl':
                 self.check_google_tokens()
 
         if self.conf.has_option('params', 'header_template'):
@@ -300,6 +300,9 @@ class Config(object):
         if self.conf.has_option('params', 'proxy'):
             self.params['proxy'] = self.conf.get('params', 'proxy')
 
+        if self.conf.has_option('params', 'beep'):
+            self.params['beep'] = self.conf.getboolean('params', 'beep')
+
     def check_google_tokens(self):
         try:
             from shorter.googl import GooglUrlShorter
@@ -307,14 +310,14 @@ class Config(object):
             print 'please install google-api-python-client and python-gflags'
             sys.exit(1)
         GooglUrlShorter().register_token()
-        
-    
+
+
     def parse_filter(self):
 
         if self.conf.has_option('filter', 'activate'):
             if int(self.conf.get('filter', 'activate')) == 1:
                 self.filter['activate'] = True
-        
+
         if self.conf.has_option('filter', 'myself'):
             if int(self.conf.get('filter', 'myself')) == 1:
                 self.filter['myself'] = True

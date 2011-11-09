@@ -20,7 +20,7 @@ from utils import encode
 class User(object):
 
     def __init__(self, user):
-        self.interface = tyrs.container['interface'] 
+        self.interface = tyrs.container['interface']
         self.user = user
         self.interface.refresh_token = True
         self._init_screen()

@@ -30,14 +30,14 @@ except ImportError:
     import simplejson as json
 
 class Tweets(object):
- 
+
     def __init__(self):
         self.conf = tyrs.container['conf']
         self.timelines = tyrs.container['timelines']
         self.search_user = None
         self.search_word = None
         self.flash_message = FlashMessage()
-    
+
     def set_interface(self):
         self.interface = tyrs.container['interface']
 
@@ -87,7 +87,7 @@ class Tweets(object):
         try:
             return self.api.PostUpdate(tweet, reply_to)
         except TwitterError, e:
-            self.error(e) 
+            self.error(e)
 
     def retweet(self):
         self.flash('retweet')
@@ -162,7 +162,7 @@ class Tweets(object):
     def unfollow(self):
         nick = NickEditor().content
         if nick:
-            self.destroy_friendship(nick)       
+            self.destroy_friendship(nick)
 
     def unfollow_selected(self):
         nick = self.interface.current_status().user.screen_name
@@ -188,7 +188,7 @@ class Tweets(object):
         try:
             self.api.CreateFavorite(status)
         except TwitterError, e:
-            self.error(e) 
+            self.error(e)
 
     def destroy_favorite(self):
         self.flash('favorite_del')
@@ -210,7 +210,10 @@ class Tweets(object):
         logging.debug('updating "{0}" timeline'.format(timeline))
         try:
             statuses = self.retreive_statuses(timeline)
-            self.timelines[timeline].append_new_statuses(statuses)
+            timeline = self.timelines[timeline]
+            timeline.append_new_statuses(statuses)
+            if timeline.unread and self.conf.params['beep']:
+                self.interface.beep()
 
         except TwitterError, e:
             self.update_error(e)
@@ -311,7 +314,7 @@ class Tweets(object):
         self.flash_message.event = event
         if string:
             self.flash_message.string = string
-    
+
     def error(self, err=None):
         logging.warning('Error catch: {0}'.format(err))
         self.flash_message.warning()
@@ -392,11 +395,11 @@ class ApiPatch(Api):
       http_handler  = self._urllib.HTTPHandler(debuglevel=_debug)
       https_handler = self._urllib.HTTPSHandler(debuglevel=_debug)
       proxy_handler = self._urllib.ProxyHandler(self._proxy)
-    
+
       opener = self._urllib.OpenerDirector()
       opener.add_handler(http_handler)
       opener.add_handler(https_handler)
-    
+
       if self._proxy:
           opener.add_handler(proxy_handler)
 

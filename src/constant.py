@@ -89,6 +89,7 @@ params = {
     'logging_level':        3,
     'header_template':      ' {nick}{retweeted}{retweeter} - {time}{reply} {retweet_count} ',
     'proxy':                None,
+    'beep':                 False,
 }
 
 filter = {
