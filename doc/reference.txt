@@ -751,6 +751,7 @@ source           = 0
 url_shorter      = ur1ca
 logging_level    = 3
 header_template  = (see listing)
+beep             = 1
 -------------------
 
 Listing
@@ -836,6 +837,11 @@ header_template::
 displayed, following a template code.
 * Values: string containing specials parameters with {}
 * Default:  
+
+beep::
+** Description: Do a console beep when receiving unread updates.
+* Values: boolean, 0 or 1
+* Default: 0
 
 [source, conf]
 -----------------
