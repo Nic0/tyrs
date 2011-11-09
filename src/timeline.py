@@ -78,7 +78,7 @@ class Timeline(object):
             self.count = len(self.statuses)
         except TypeError:
             self.count = 0
-            
+
     def count_unread(self):
         try:
             self.unread = 0

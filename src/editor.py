@@ -34,7 +34,7 @@ class Editor(object):
 
     def __init__(self, data=None):
         self.conf = tyrs.container['conf']
-        self.interface = tyrs.container['interface'] 
+        self.interface = tyrs.container['interface']
         self.interface.refresh_token = True
         self.init_content(data)
         self.init_win()
@@ -180,7 +180,7 @@ class TweetEditor(Editor):
     def _set_service(self):
         service = self.conf.params['url_shorter']
         if service == 'bitly':
-            self.shorter = BitLyUrlShorter() 
+            self.shorter = BitLyUrlShorter()
         elif service == 'googl':
             self.shorter = GooglUrlShorter()
         elif service == 'msudpl':

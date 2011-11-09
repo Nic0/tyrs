@@ -90,7 +90,7 @@ class Interface(object):
                 else:
                     rgb = self.conf.color_set[i]
                     curses.init_color(i, rgb[0], rgb[1], rgb[2])
-    
+
     def init_color_pairs(self):
         bgcolor = self.init_background()
         curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 0 black
@@ -129,7 +129,7 @@ class Interface(object):
         self.buffer = buffer
         self.timelines[buffer].reset()
         self.display_timeline()
-    
+
     def navigate_buffer(self, nav):
         '''Navigate with the arrow, mean nav should be -1 or +1'''
         index = self.buffers.index(self.buffer)
@@ -155,7 +155,7 @@ class Interface(object):
     def display_update_msg(self):
         self.api.flash_message.event = 'update'
         self.display_flash_message()
-    
+
     def display_redraw_screen(self):
         self.screen.erase()
         self.set_max_window_size()
@@ -192,7 +192,7 @@ class Interface(object):
                         br = self.display_status(timeline.statuses[i], i)
                         if not br:
                             break
-                timeline.unread = 0 
+                timeline.unread = 0
                 if self.buffer == 'home':
                     self.conf.save_last_read(timeline.last_read)
                 self.screen.refresh()
@@ -232,8 +232,8 @@ class Interface(object):
                 self.display_counter_activities(b)
 
     def display_buffer_activities(self, buff):
-        display = { 
-                'home': 'H', 'mentions': 'M', 'direct': 'D', 
+        display = {
+                'home': 'H', 'mentions': 'M', 'direct': 'D',
                 'search': 'S', 'user': 'U', 'favorite': 'F',
                 'thread': 'T', 'user_retweet': 'R'}
         if self.buffer == buff:
@@ -453,7 +453,7 @@ class Interface(object):
         if self.get_retweet_count(status):
             retweet_count = str(self.get_retweet_count(status))
 
-        header_template = self.conf.params['header_template'] 
+        header_template = self.conf.params['header_template']
         header = unicode(header_template).format(
             time = time,
             nick = nick,
@@ -581,7 +581,7 @@ class Interface(object):
             try:
                 os.system(self.conf.params['openurl_command'] % url + '> /dev/null 2>&1')
             except:
-                pass 
+                pass
 
     def update_last_read_home(self):
         self.last_read_home = self.conf.load_last_read()

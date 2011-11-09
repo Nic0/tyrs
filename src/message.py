@@ -79,9 +79,9 @@ class FlashMessage(object):
 
     def compose_msg(self):
         msg = self.message[self.event][self.level]
-        if self.string != None: 
+        if self.string != None:
             msg = self.message[self.event][self.level] % self.string
-        
+
         return ' ' +msg+ ' '
 
 def print_ask_service(token_file):
