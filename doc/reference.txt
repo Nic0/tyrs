@@ -9,7 +9,7 @@ Installation
 Easy way
 ~~~~~~~~
 
-Tyrs is now available from pypi.python.org site, allowing you to use the 
+Tyrs is now available from pypi.python.org site, allowing you to use the
 easy_install method, and quickly get it started.  If your using python2.7, all you need to do is:
 
 [source,bash]
@@ -259,8 +259,8 @@ param2 = 42
 other_param = otherValue
 ...
 -----------------
-A quick way to get started with configuration is to generate a config file 
-from the command line. with the '-g' option (or '--generate-config'), this 
+A quick way to get started with configuration is to generate a config file
+from the command line. with the '-g' option (or '--generate-config'), this
 parameter takes one argument: the filename.
 
 [source,bash]
@@ -443,7 +443,7 @@ bold::
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use 256 colors in your terminal, use the relevant RGB number, from 0 to 1000. 
+To use 256 colors in your terminal, use the relevant RGB number, from 0 to 1000.
 You must leave spaces between the numbers in the configuration file, for example:
 
 [IMPORTANT]
@@ -752,6 +752,7 @@ source           = 0
 url_shorter      = ur1ca
 logging_level    = 3
 header_template  = (see listing)
+beep             = 1
 -------------------
 
 Listing
@@ -836,7 +837,12 @@ header_template::
 ** Description: Let you chose the how the header of each tweet will be
 displayed, following a template code.
 * Values: string containing specials parameters with {}
-* Default:  
+* Default:
+
+beep::
+** Description: Do a console beep when receiving unread updates.
+* Values: boolean, 0 or 1
+* Default: 0
 
 [source, conf]
 -----------------

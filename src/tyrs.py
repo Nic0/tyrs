@@ -35,7 +35,7 @@ import curses.wrapper
 from urllib2 import URLError
 from keys import Keys
 from timeline import Timeline
-from update import UpdateThread 
+from update import UpdateThread
 from container import Container
 from interface import Interface
 
