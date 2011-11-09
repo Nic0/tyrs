@@ -300,6 +300,9 @@ class Config(object):
         if self.conf.has_option('params', 'proxy'):
             self.params['proxy'] = self.conf.get('params', 'proxy')
 
+        if self.conf.has_option('params', 'beep'):
+            self.params['beep'] = self.conf.getboolean('params', 'beep')
+
     def check_google_tokens(self):
         try:
             from shorter.googl import GooglUrlShorter

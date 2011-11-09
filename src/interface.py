@@ -588,3 +588,6 @@ class Interface(object):
 
     def current_user_info(self):
         User(self.current_status().user)
+
+    def beep(self):
+        return curses.beep()

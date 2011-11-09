@@ -210,7 +210,10 @@ class Tweets(object):
         logging.debug('updating "{0}" timeline'.format(timeline))
         try:
             statuses = self.retreive_statuses(timeline)
-            self.timelines[timeline].append_new_statuses(statuses)
+            timeline = self.timelines[timeline]
+            timeline.append_new_statuses(statuses)
+            if timeline.unread and self.conf.params['beep']:
+                self.interface.beep()
 
         except TwitterError, e:
             self.update_error(e)
