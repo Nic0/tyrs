@@ -16,212 +16,17 @@
 import re
 import os
 import sys
-import time
+#import time
 import tyrs
 import urwid
 import curses
-import logging
+#import logging
 from user import User
 from utils import html_unescape, encode, get_source, get_urls
-
-
-
-class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
-    def __init__(self, original_widget, title=''):
-        """Draw a line around original_widget."""
-        
-        tlcorner=None; tline=None; lline=None
-        trcorner=None; blcorner=None; rline=None
-        bline=None; brcorner=None
-        
-        def use_attr( a, t ):
-            if a is not None:
-                t = urwid.AttrWrap(t, a)
-            return t
-            
-        tline = use_attr( tline, urwid.Columns([
-            ('fixed', 2, urwid.Divider(urwid.utf8decode("─"))),
-            ('fixed', len(title), urwid.Text(title)),
-            urwid.Divider(urwid.utf8decode("─"))]))
-        bline = use_attr( bline, urwid.Divider(urwid.utf8decode("─")))
-        lline = use_attr( lline, urwid.SolidFill(urwid.utf8decode("│")))
-        rline = use_attr( rline, urwid.SolidFill(urwid.utf8decode("│")))
-        tlcorner = use_attr( tlcorner, urwid.Text(urwid.utf8decode("┌")))
-        trcorner = use_attr( trcorner, urwid.Text(urwid.utf8decode("┐")))
-        blcorner = use_attr( blcorner, urwid.Text(urwid.utf8decode("└")))
-        brcorner = use_attr( brcorner, urwid.Text(urwid.utf8decode("┘")))
-        top = urwid.Columns([ ('fixed', 1, tlcorner),
-            tline, ('fixed', 1, trcorner) ])
-        middle = urwid.Columns( [('fixed', 1, lline),
-            original_widget, ('fixed', 1, rline)], box_columns = [0,2],
-            focus_column = 1)
-        bottom = urwid.Columns([ ('fixed', 1, blcorner),
-            bline, ('fixed', 1, brcorner) ])
-        pile = urwid.Pile([('flow',top),middle,('flow',bottom)],
-            focus_item = 1)
-        
-        urwid.WidgetDecoration.__init__(self, original_widget)
-        urwid.WidgetWrap.__init__(self, pile)
-
-
-class StatusWidget (urwid.WidgetWrap):
-
-    def __init__ (self, id, status):
-        self.regex_retweet     = re.compile('^RT @\w+:')
-        self.conf       = tyrs.container['conf']
-        self.set_date()
-        self.buffer = tyrs.container['interface'].buffer
-        self.is_retweet(status)
-        self.id = id
-        status_content = urwid.Padding(
-            urwid.AttrWrap(urwid.Text('%s' % self.get_text(status)), 'body'), left=1, right=1)
-        w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'body', 'focus')
-        self.__super.__init__(w)
-
-    def selectable (self):
-        return True
-
-    def keypress(self, size, key):
-        return key
-
-    def get_text(self, status):
-        text = html_unescape(status.text.replace('\n', ' '))
-        if status.rt:
-            text = text.split(':')[1:]
-            text = ':'.join(text)
-
-        if hasattr(status, 'retweeted_status'):
-            if hasattr(status.retweeted_status, 'text') \
-                    and len(status.retweeted_status.text) > 0:
-                text = status.retweeted_status.text
-        return text
-
-    def get_header(self, status):
-        retweeted = ''
-        reply = ''
-        retweet_count = ''
-        retweeter = ''
-        source = self.get_source(status)
-        nick = self.get_nick(status)
-        timer = self.get_time(status)
-
-        if self.is_reply(status):
-            reply = u' \u2709'
-        if status.rt:
-            retweeted = u" \u267b "
-            retweeter = nick
-            nick = self.origin_of_retweet(status)
-
-        if self.get_retweet_count(status):
-            retweet_count = str(self.get_retweet_count(status))
-
-        header_template = self.conf.params['header_template'] 
-        header = unicode(header_template).format(
-            time = timer,
-            nick = nick,
-            reply = reply,
-            retweeted = retweeted,
-            source = source,
-            retweet_count = retweet_count,
-            retweeter = retweeter
-            )
-
-        return encode(header)
-
-    def set_date(self):
-        self.date = time.strftime("%d %b", time.gmtime())
-
-    def get_time(self, status):
-        '''Handle the time format given by the api with something more
-        readeable
-        @param  date: full iso time format
-        @return string: readeable time
-        '''
-        if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
-            result =  status.GetRelativeCreatedAt()
-        else:
-            hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
-            result = time.strftime('%H:%M', hour)
-            if time.strftime('%d %b', hour) != self.date:
-                result += time.strftime(' - %d %b', hour)
-
-        return result
-
-    def get_source(self, status):
-        source = ''
-        if hasattr(status, 'source'):
-            source = get_source(status.source)
-
-        return source
-
-    def get_nick(self, status):
-        if hasattr(status, 'user'):
-            nick = status.user.screen_name
-        else:
-            #Used for direct messages
-            nick = status.sender_screen_name
-
-        return nick
-
-    def get_retweet_count(self, status):
-        if hasattr(status, 'retweet_count'):
-            return status.retweet_count
-
-    def is_retweet(self, status):
-        status.rt = self.regex_retweet.match(status.text)
-        return status.rt
-
-    def is_reply(self, status):
-        if hasattr(status, 'in_reply_to_screen_name'):
-            reply = status.in_reply_to_screen_name
-            if reply:
-                return True
-        return False
-
-    def origin_of_retweet(self, status):
-        '''When its a retweet, return the first person who tweet it,
-           not the retweeter
-        '''
-        origin = status.text
-        origin = origin[4:]
-        origin = origin.split(':')[0]
-        origin = str(origin)
-        return origin
-
-class HeaderWidget(urwid.WidgetWrap):
-
-    def __init__(self):
-        self.api = tyrs.container['api']
-        w = self.set_flash()
-        self.__super.__init__(w)
-
-    def set_flash(self):
-        msg = ''
-        level = 0
-        msg = self.api.flash_message.get_msg()
-        color = {0: 'info_msg', 1: 'warn_msg'}
-        level = self.api.flash_message.level
-        event_message = urwid.Text(msg)
-        flash = urwid.AttrWrap(event_message, color[level])
-        return flash
-
+from widget import StatusWidget, HeaderWidget
 
 
 class Interface(object):
-    ''' All dispositions in the screen
-
-    self.api              The tweetter API (not directly the api, but the instance of Tweets in tweets.py)
-    self.conf             The configuration file parsed in config.py
-    self.maxyx            Array contain the window size [y, x]
-    self.screen           Main screen (curse)
-    self.current_y        Current line in the screen
-    self.resize_event     boleen if the window is resize
-    self.regexRetweet     regex for retweet
-    self.refresh_token    Boleen to make sure we don't refresh timeline. Usefull to keep editing box on top
-    self.buffer           The current buffer we're looking at, (home, mentions, direct search)
-    self.timelines        Containe all timelines with statuses, all Timeline
-                          objects
-    '''
 
     def __init__(self):
         self.api        = tyrs.container['api']
@@ -231,13 +36,11 @@ class Interface(object):
         tyrs.container.add('interface', self)
         self.update_last_read_home()
         self.api.set_interface()
-        self.resize_event     = False
         self.regex_retweet     = re.compile('^RT @\w+:')
         self.refresh_token    = False
         self.stoped = False
         self.buffer           = 'home'
         self.charset = sys.stdout.encoding
-        #self.init_screen()
         self.first_update()
         self.main_loop()
 
@@ -258,15 +61,11 @@ class Interface(object):
         for i, status in enumerate(timeline.statuses):
             items.append(StatusWidget(i, status))
 
-
-
         self.header = HeaderWidget()
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
         self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
         loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
         loop.run()
-    
-
 
     def keystroke (self, ch):
         if ch in ('q', 'Q'):
@@ -295,13 +94,9 @@ class Interface(object):
             items.append(StatusWidget(i, status))
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
 
-
         self.main_frame.set_body(urwid.AttrWrap(listbox, 'body'))
 
-
-
     def display_flash_message(self):
-            #self.main_frame.set_header(self.header.set_flash())
         try:
             header = HeaderWidget()
             self.main_frame.set_header(header)
@@ -313,13 +108,6 @@ class Interface(object):
         self.api.flash_message.reset()
         self.display_flash_message()
 
-    def handle_resize_event(self):
-        self.resize_event = False
-        curses.endwin()
-        self.set_max_window_size()
-        self.display_redraw_screen()
-        curses.doupdate()
-
     def change_buffer(self, buffer):
         self.buffer = buffer
         self.timelines[buffer].reset()
@@ -330,20 +118,6 @@ class Interface(object):
         new_index = index + nav
         if new_index >= 0 and new_index < len(self.buffers):
             self.change_buffer(self.buffers[new_index])
-
-
-
-    def display_update_msg(self):
-        self.api.flash_message.event = 'update'
-        self.display_flash_message()
-    
-    def display_redraw_screen(self):
-        self.screen.erase()
-        self.set_max_window_size()
-        self.display_timeline()
-
-    def set_max_window_size(self):
-        self.maxyx = self.screen.getmaxyx()
 
     #def display_timeline(self):
         #'''Main entry to display a timeline, as it does not take arguments,
