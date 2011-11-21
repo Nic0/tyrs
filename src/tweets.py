@@ -36,7 +36,7 @@ class Tweets(object):
         self.timelines = tyrs.container['timelines']
         self.search_user = None
         self.search_word = None
-        #self.flash_message = FlashMessage()
+        self.flash_message = FlashMessage()
     
     def set_interface(self):
         self.interface = tyrs.container['interface']
@@ -79,8 +79,8 @@ class Tweets(object):
         tweet = TweetEditor(data).content
         if tweet:
             self.post_tweet(tweet)
-        #else:
-            #self.flash('empty')
+        else:
+            self.flash('empty')
 
     def post_tweet(self, tweet, reply_to=None):
         #self.flash('tweet')
@@ -115,7 +115,7 @@ class Tweets(object):
             self.post_tweet(tweet, status.id)
 
     def destroy(self):
-        #self.flash('destroy')
+        self.flash('destroy')
         status = self.interface.current_status()
         try:
             self.api.DestroyStatus(status.id)
@@ -223,12 +223,14 @@ class Tweets(object):
 
     def update_error(self, err):
         logging.error('Updating issue: {0}'.format(err))
-        #self.flash_message.event = 'update'
-        #self.flash_message.level = 1
-        #self.interface.display_flash_message()
+        self.flash_message.event = 'update'
+        self.flash_message.level = 1
+        self.interface.display_flash_message()
 
     def retreive_statuses(self, timeline, page=None):
-        #self.interface.display_update_msg()
+        self.flash_message.event = 'update'
+        self.flash_message.level = 0
+        self.interface.display_flash_message()
         if timeline == 'home':
             statuses = self.api.GetFriendsTimeline(retweets=True, page=page)
         elif timeline == 'mentions':
@@ -245,7 +247,7 @@ class Tweets(object):
             statuses = self.api.GetFavorites(page=page)
         elif timeline == 'thread':
             statuses = self.get_thread()
-        #self.interface.erase_flash_message()
+        self.interface.erase_flash_message()
 
         return statuses
 

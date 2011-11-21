@@ -98,12 +98,10 @@ def init_timelines():
     container.add('buffers', buffers)
 
 def init_thread():
-    return
     update = UpdateThread()
     update.start()
     init_keys()
     update.stop()
-    container['interface'].tear_down()
 
 def init_keys():
     return

@@ -69,6 +69,8 @@ class StatusWidget (urwid.WidgetWrap):
     def __init__ (self, id, status):
         self.regex_retweet     = re.compile('^RT @\w+:')
         self.conf       = tyrs.container['conf']
+        self.set_date()
+        self.buffer = tyrs.container['interface'].buffer
         self.is_retweet(status)
         self.id = id
         status_content = urwid.Padding(
@@ -84,9 +86,9 @@ class StatusWidget (urwid.WidgetWrap):
 
     def get_text(self, status):
         text = html_unescape(status.text.replace('\n', ' '))
-        #if status.rt:
-            #text = text.split(':')[1:]
-            #text = ':'.join(text)
+        if status.rt:
+            text = text.split(':')[1:]
+            text = ':'.join(text)
 
         if hasattr(status, 'retweeted_status'):
             if hasattr(status.retweeted_status, 'text') \
@@ -126,14 +128,15 @@ class StatusWidget (urwid.WidgetWrap):
 
         return encode(header)
 
+    def set_date(self):
+        self.date = time.strftime("%d %b", time.gmtime())
+
     def get_time(self, status):
         '''Handle the time format given by the api with something more
         readeable
         @param  date: full iso time format
         @return string: readeable time
         '''
-        #FIXME: quick hack with self.buffer
-        self.buffer = 'home'
         if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
             result =  status.GetRelativeCreatedAt()
         else:
@@ -185,6 +188,25 @@ class StatusWidget (urwid.WidgetWrap):
         origin = str(origin)
         return origin
 
+class HeaderWidget(urwid.WidgetWrap):
+
+    def __init__(self):
+        self.api = tyrs.container['api']
+        w = self.set_flash()
+        self.__super.__init__(w)
+
+    def set_flash(self):
+        msg = ''
+        level = 0
+        msg = self.api.flash_message.get_msg()
+        color = {0: 'info_msg', 1: 'warn_msg'}
+        level = self.api.flash_message.level
+        event_message = urwid.Text(msg)
+        flash = urwid.AttrWrap(event_message, color[level])
+        return flash
+
+
+
 class Interface(object):
     ''' All dispositions in the screen
 
@@ -225,7 +247,9 @@ class Interface(object):
         palette = [
             ('body','dark blue', '', 'standout'),
             ('focus','dark red', '', 'standout'),
-            ('head','light red', 'black'),
+            ('head','light red', ''),
+            ('info_msg', 'dark green', ''),
+            ('warn_msg', 'dark red', ''),
             ]
 
 
@@ -236,17 +260,25 @@ class Interface(object):
 
 
 
-        header = urwid.AttrMap(urwid.Text('selected:'), 'head')
+        self.header = HeaderWidget()
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
-        view = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=header)
-        loop = urwid.MainLoop(view, palette, unhandled_input=self.keystrock)
+        self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
+        loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
         loop.run()
     
 
 
-    def keystrock (self, input):
-        if input in ('q', 'Q'):
+    def keystroke (self, ch):
+        if ch in ('q', 'Q'):
             raise urwid.ExitMainLoop()
+        elif ch == 'right':
+            self.navigate_buffer(+1)
+        elif ch == 'u':
+            self.api.update_timeline(self.buffer)
+        elif ch == 'left':
+            self.navigate_buffer(-1)
+
+        self.display_timeline()
 
 
     def first_update(self):
@@ -255,7 +287,31 @@ class Interface(object):
             self.api.update_timeline(buff)
             self.timelines[buff].reset()
             self.timelines[buff].all_read()
-        #self.display_timeline()
+
+    def display_timeline (self):
+        items = []
+        timeline = self.select_current_timeline()
+        for i, status in enumerate(timeline.statuses):
+            items.append(StatusWidget(i, status))
+        listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+
+
+        self.main_frame.set_body(urwid.AttrWrap(listbox, 'body'))
+
+
+
+    def display_flash_message(self):
+            #self.main_frame.set_header(self.header.set_flash())
+        try:
+            header = HeaderWidget()
+            self.main_frame.set_header(header)
+            self.api.flash_message.reset()
+        except AttributeError:
+            pass
+
+    def erase_flash_message(self):
+        self.api.flash_message.reset()
+        self.display_flash_message()
 
     def handle_resize_event(self):
         self.resize_event = False
@@ -265,10 +321,8 @@ class Interface(object):
         curses.doupdate()
 
     def change_buffer(self, buffer):
-        self.screen.clear()
         self.buffer = buffer
         self.timelines[buffer].reset()
-        self.display_timeline()
     
     def navigate_buffer(self, nav):
         '''Navigate with the arrow, mean nav should be -1 or +1'''
@@ -277,20 +331,7 @@ class Interface(object):
         if new_index >= 0 and new_index < len(self.buffers):
             self.change_buffer(self.buffers[new_index])
 
-    def display_flash_message(self):
-        if self.api.flash_message.event and not self.refresh_token:
-            msg = self.api.flash_message.get_msg()
-            level = self.api.flash_message.level
-            msg_color = { 0: 'info_msg', 1: 'warning_msg', }
-            self.screen.addstr(0, 3, msg.encode(self.charset), self.get_color(msg_color[level]))
-            self.api.flash_message.reset()
-            self.screen.refresh()
 
-    def erase_flash_message(self):
-        try:
-            self.screen.addstr(0,3, '                               ')
-        except curses.error:
-            pass
 
     def display_update_msg(self):
         self.api.flash_message.event = 'update'
@@ -304,42 +345,42 @@ class Interface(object):
     def set_max_window_size(self):
         self.maxyx = self.screen.getmaxyx()
 
-    def display_timeline(self):
-        '''Main entry to display a timeline, as it does not take arguments,
-           make sure to set self.buffer before
-        '''
-        try:
-            if not self.refresh_token:
-                self.set_max_window_size()
-                self.set_date()
+    #def display_timeline(self):
+        #'''Main entry to display a timeline, as it does not take arguments,
+           #make sure to set self.buffer before
+        #'''
+        #try:
+            #if not self.refresh_token:
+                #self.set_max_window_size()
+                #self.set_date()
 
-                timeline = self.select_current_timeline()
-                statuses_count = len(timeline.statuses)
+                #timeline = self.select_current_timeline()
+                #statuses_count = len(timeline.statuses)
 
-                self.display_flash_message()
-                self.display_activities()
-                self.display_help_bar()
+                #self.display_flash_message()
+                #self.display_activities()
+                #self.display_help_bar()
 
-                # It might have no tweets yet, we try to retrieve some then
-                if statuses_count  == 0:
-                    self.api.update_timeline(self.buffer)
-                    timeline.reset()
+                ## It might have no tweets yet, we try to retrieve some then
+                #if statuses_count  == 0:
+                    #self.api.update_timeline(self.buffer)
+                    #timeline.reset()
 
-                self.current_y = 1
-                for i in range(len(timeline.statuses)):
-                    if i >= timeline.first:
-                        self.check_for_last_read(timeline.statuses[i].id)
-                        br = self.display_status(timeline.statuses[i], i)
-                        if not br:
-                            break
-                timeline.unread = 0 
-                if self.buffer == 'home':
-                    self.conf.save_last_read(timeline.last_read)
-                self.screen.refresh()
-                self.check_current_not_on_screen()
-        except curses.error:
-            logging.error('Curses error for display_timeline')
-            pass
+                #self.current_y = 1
+                #for i in range(len(timeline.statuses)):
+                    #if i >= timeline.first:
+                        #self.check_for_last_read(timeline.statuses[i].id)
+                        #br = self.display_status(timeline.statuses[i], i)
+                        #if not br:
+                            #break
+                #timeline.unread = 0 
+                #if self.buffer == 'home':
+                    #self.conf.save_last_read(timeline.last_read)
+                #self.screen.refresh()
+                #self.check_current_not_on_screen()
+        #except curses.error:
+            #logging.error('Curses error for display_timeline')
+            #pass
 
     def check_for_last_read(self, id):
         if self.buffer == 'home':
@@ -347,8 +388,6 @@ class Interface(object):
                 self.screen.hline(self.current_y, 1, '-', self.maxyx[1]-3)
                 self.current_y += 1
 
-    def set_date(self):
-        self.date = time.strftime("%d %b", time.gmtime())
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
