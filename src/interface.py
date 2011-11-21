@@ -18,11 +18,136 @@ import os
 import sys
 import time
 import tyrs
-import signal                   # resize event
+import urwid
 import curses
+import signal                   # resize event
+#import curses
 import logging
 from user import User
 from utils import html_unescape, encode, get_source, get_urls
+
+class StatusWidget (urwid.WidgetWrap):
+
+    def __init__ (self, id, status):
+        self.regex_retweet     = re.compile('^RT @\w+:')
+        self.conf       = tyrs.container['conf']
+        self.is_retweet(status)
+        self.id = id
+        self.item = [
+            urwid.AttrWrap(urwid.Text(self.get_header(status)), 'body', 'focus'),
+            urwid.AttrWrap(urwid.Text('%s' % self.get_text(status)), 'body', 'focus'),
+        ]
+        w = urwid.LineBox(urwid.Pile(self.item))
+        self.__super.__init__(w)
+
+    def selectable (self):
+        return True
+
+    def keypress(self, size, key):
+        return key
+
+    def get_text(self, status):
+        text = html_unescape(status.text.replace('\n', ' '))
+        #if status.rt:
+            #text = text.split(':')[1:]
+            #text = ':'.join(text)
+
+        if hasattr(status, 'retweeted_status'):
+            if hasattr(status.retweeted_status, 'text') \
+                    and len(status.retweeted_status.text) > 0:
+                text = status.retweeted_status.text
+        return text
+
+    def get_header(self, status):
+        retweeted = ''
+        reply = ''
+        retweet_count = ''
+        retweeter = ''
+        source = self.get_source(status)
+        nick = self.get_nick(status)
+        time = self.get_time(status)
+
+        if self.is_reply(status):
+            reply = u' \u2709'
+        if status.rt:
+            retweeted = u" \u267b "
+            retweeter = nick
+            nick = self.origin_of_retweet(status)
+
+        if self.get_retweet_count(status):
+            retweet_count = str(self.get_retweet_count(status))
+
+        header_template = self.conf.params['header_template'] 
+        header = unicode(header_template).format(
+            time = time,
+            nick = nick,
+            reply = reply,
+            retweeted = retweeted,
+            source = source,
+            retweet_count = retweet_count,
+            retweeter = retweeter
+            )
+
+        return encode(header)
+
+    def get_time(self, status):
+        '''Handle the time format given by the api with something more
+        readeable
+        @param  date: full iso time format
+        @return string: readeable time
+        '''
+        #FIXME: quick hack with self.buffer
+        self.buffer = 'home'
+        if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
+            result =  status.GetRelativeCreatedAt()
+        else:
+            hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
+            result = time.strftime('%H:%M', hour)
+            if time.strftime('%d %b', hour) != self.date:
+                result += time.strftime(' - %d %b', hour)
+
+        return result
+
+    def get_source(self, status):
+        source = ''
+        if hasattr(status, 'source'):
+            source = get_source(status.source)
+
+        return source
+
+    def get_nick(self, status):
+        if hasattr(status, 'user'):
+            nick = status.user.screen_name
+        else:
+            #Used for direct messages
+            nick = status.sender_screen_name
+
+        return nick
+
+    def get_retweet_count(self, status):
+        if hasattr(status, 'retweet_count'):
+            return status.retweet_count
+
+    def is_retweet(self, status):
+        status.rt = self.regex_retweet.match(status.text)
+        return status.rt
+
+    def is_reply(self, status):
+        if hasattr(status, 'in_reply_to_screen_name'):
+            reply = status.in_reply_to_screen_name
+            if reply:
+                return True
+        return False
+
+    def origin_of_retweet(self, status):
+        '''When its a retweet, return the first person who tweet it,
+           not the retweeter
+        '''
+        origin = status.text
+        origin = origin[4:]
+        origin = origin.split(':')[0]
+        origin = str(origin)
+        return origin
 
 class Interface(object):
     ''' All dispositions in the screen
@@ -54,60 +179,46 @@ class Interface(object):
         self.stoped = False
         self.buffer           = 'home'
         self.charset = sys.stdout.encoding
-        # resize event
-        signal.signal(signal.SIGWINCH, self.sigwinch_handler)
-        self.init_screen()
+        #self.init_screen()
         self.first_update()
+        self.main_loop()
 
 
-    def init_screen(self):
+    def main_loop (self):
 
-        self.screen = curses.initscr()
-        curses.noecho()         # Dont print anything
-        #curses.cbreak()
-        self.screen.timeout(500)
-        self.screen.keypad(1)        # Use of arrow keys
-        try:
-            curses.curs_set(0)      # Dont display cursor
-        except curses.error:
-            pass
-        curses.meta(1)          # allow 8bits inputs
-        self.init_colors()
-        self.maxyx = self.screen.getmaxyx()
+        palette = [
+            ('body','dark blue', '', 'standout'),
+            ('focus','dark red', '', 'standout'),
+            ('head','light red', 'black'),
+            ]
 
-        self.screen.refresh()
+        lorem = [
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'Sed sollicitudin, nulla id viverra pulvinar.',
+            'Cras a magna sit amet felis fringilla lobortis.',
+        ]
 
-    def init_colors(self):
-        curses.start_color()
-        self.init_rgb_colors()
-        self.init_color_pairs()
 
-    def init_rgb_colors(self):
-        if curses.can_change_color():
-            for i in range(len(self.conf.color_set)):
-                if not self.conf.color_set[i]:
-                    continue
-                else:
-                    rgb = self.conf.color_set[i]
-                    curses.init_color(i, rgb[0], rgb[1], rgb[2])
+        items = []
+
+        timeline = self.select_current_timeline()
+        for i, status in enumerate(timeline.statuses):
+            items.append(StatusWidget(i, status))
+
+
+
+        header = urwid.AttrMap(urwid.Text('selected:'), 'head')
+        listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+        view = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=header)
+        loop = urwid.MainLoop(view, palette, unhandled_input=self.keystrock)
+        loop.run()
     
-    def init_color_pairs(self):
-        bgcolor = self.init_background()
-        curses.init_pair(0, curses.COLOR_BLACK, bgcolor)    # 0 black
-        curses.init_pair(1, curses.COLOR_RED, bgcolor)      # 1 red
-        curses.init_pair(2, curses.COLOR_GREEN, bgcolor)    # 2 green
-        curses.init_pair(3, curses.COLOR_YELLOW, bgcolor)   # 3 yellow
-        curses.init_pair(4, curses.COLOR_BLUE, bgcolor)     # 4 blue
-        curses.init_pair(5, curses.COLOR_MAGENTA, bgcolor)  # 5 magenta
-        curses.init_pair(6, curses.COLOR_CYAN, bgcolor)     # 6 cyan
-        curses.init_pair(7, curses.COLOR_WHITE, bgcolor)    # 7 white
 
-    def init_background(self):
-        bgcolor = False
-        if self.conf.params['transparency']:
-            curses.use_default_colors()
-            bgcolor = -1
-        return bgcolor
+
+    def keystrock (self, input):
+        if input in ('q', 'Q'):
+            raise urwid.ExitMainLoop()
+
 
     def first_update(self):
         updates = ['home', 'direct', 'mentions', 'user_retweet', 'favorite']
@@ -115,7 +226,7 @@ class Interface(object):
             self.api.update_timeline(buff)
             self.timelines[buff].reset()
             self.timelines[buff].all_read()
-        self.display_timeline()
+        #self.display_timeline()
 
     def handle_resize_event(self):
         self.resize_event = False
@@ -417,95 +528,6 @@ class Interface(object):
     def get_max_lenght(self):
         adjust = self.conf.params['margin'] + self.conf.params['padding']
         return self.maxyx[1] - adjust
-
-    def get_time(self, status):
-        '''Handle the time format given by the api with something more
-        readeable
-        @param  date: full iso time format
-        @return string: readeable time
-        '''
-        if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
-            result =  status.GetRelativeCreatedAt()
-        else:
-            hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
-            result = time.strftime('%H:%M', hour)
-            if time.strftime('%d %b', hour) != self.date:
-                result += time.strftime(' - %d %b', hour)
-
-        return result
-
-    def get_header(self, status):
-        retweeted = ''
-        reply = ''
-        retweet_count = ''
-        retweeter = ''
-        source = self.get_source(status)
-        nick = self.get_nick(status)
-        time = self.get_time(status)
-
-        if self.is_reply(status):
-            reply = u' \u2709'
-        if status.rt:
-            retweeted = u" \u267b "
-            retweeter = nick
-            nick = self.origin_of_retweet(status)
-
-        if self.get_retweet_count(status):
-            retweet_count = str(self.get_retweet_count(status))
-
-        header_template = self.conf.params['header_template'] 
-        header = unicode(header_template).format(
-            time = time,
-            nick = nick,
-            reply = reply,
-            retweeted = retweeted,
-            source = source,
-            retweet_count = retweet_count,
-            retweeter = retweeter
-            )
-
-        return encode(header)
-
-    def get_source(self, status):
-        source = ''
-        if hasattr(status, 'source'):
-            source = get_source(status.source)
-
-        return source
-
-    def get_nick(self, status):
-        if hasattr(status, 'user'):
-            nick = status.user.screen_name
-        else:
-            #Used for direct messages
-            nick = status.sender_screen_name
-
-        return nick
-
-    def get_retweet_count(self, status):
-        if hasattr(status, 'retweet_count'):
-            return status.retweet_count
-
-    def is_retweet(self, status):
-        status.rt = self.regex_retweet.match(status.text)
-        return status.rt
-
-    def is_reply(self, status):
-        if hasattr(status, 'in_reply_to_screen_name'):
-            reply = status.in_reply_to_screen_name
-            if reply:
-                return True
-        return False
-
-    def origin_of_retweet(self, status):
-        '''When its a retweet, return the first person who tweet it,
-           not the retweeter
-        '''
-        origin = status.text
-        origin = origin[4:]
-        origin = origin.split(':')[0]
-        origin = str(origin)
-        return origin
 
     def tear_down(self):
         '''Last function call when quiting, restore some defaults params'''

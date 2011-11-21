@@ -31,7 +31,6 @@ import locale
 import tweets
 import argparse
 import gettext
-import curses.wrapper
 from urllib2 import URLError
 from keys import Keys
 from timeline import Timeline
@@ -99,6 +98,7 @@ def init_timelines():
     container.add('buffers', buffers)
 
 def init_thread():
+    return
     update = UpdateThread()
     update.start()
     init_keys()
@@ -106,6 +106,7 @@ def init_thread():
     container['interface'].tear_down()
 
 def init_keys():
+    return
     Keys().handleKeyBinding()
 
 if __name__ == "__main__":
