@@ -20,11 +20,49 @@ import time
 import tyrs
 import urwid
 import curses
-import signal                   # resize event
-#import curses
 import logging
 from user import User
 from utils import html_unescape, encode, get_source, get_urls
+
+
+
+class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
+    def __init__(self, original_widget, title=''):
+        """Draw a line around original_widget."""
+        
+        tlcorner=None; tline=None; lline=None
+        trcorner=None; blcorner=None; rline=None
+        bline=None; brcorner=None
+        
+        def use_attr( a, t ):
+            if a is not None:
+                t = urwid.AttrWrap(t, a)
+            return t
+            
+        tline = use_attr( tline, urwid.Columns([
+            ('fixed', 2, urwid.Divider(urwid.utf8decode("─"))),
+            ('fixed', len(title), urwid.Text(title)),
+            urwid.Divider(urwid.utf8decode("─"))]))
+        bline = use_attr( bline, urwid.Divider(urwid.utf8decode("─")))
+        lline = use_attr( lline, urwid.SolidFill(urwid.utf8decode("│")))
+        rline = use_attr( rline, urwid.SolidFill(urwid.utf8decode("│")))
+        tlcorner = use_attr( tlcorner, urwid.Text(urwid.utf8decode("┌")))
+        trcorner = use_attr( trcorner, urwid.Text(urwid.utf8decode("┐")))
+        blcorner = use_attr( blcorner, urwid.Text(urwid.utf8decode("└")))
+        brcorner = use_attr( brcorner, urwid.Text(urwid.utf8decode("┘")))
+        top = urwid.Columns([ ('fixed', 1, tlcorner),
+            tline, ('fixed', 1, trcorner) ])
+        middle = urwid.Columns( [('fixed', 1, lline),
+            original_widget, ('fixed', 1, rline)], box_columns = [0,2],
+            focus_column = 1)
+        bottom = urwid.Columns([ ('fixed', 1, blcorner),
+            bline, ('fixed', 1, brcorner) ])
+        pile = urwid.Pile([('flow',top),middle,('flow',bottom)],
+            focus_item = 1)
+        
+        urwid.WidgetDecoration.__init__(self, original_widget)
+        urwid.WidgetWrap.__init__(self, pile)
+
 
 class StatusWidget (urwid.WidgetWrap):
 
@@ -33,11 +71,9 @@ class StatusWidget (urwid.WidgetWrap):
         self.conf       = tyrs.container['conf']
         self.is_retweet(status)
         self.id = id
-        self.item = [
-            urwid.AttrWrap(urwid.Text(self.get_header(status)), 'body', 'focus'),
-            urwid.AttrWrap(urwid.Text('%s' % self.get_text(status)), 'body', 'focus'),
-        ]
-        w = urwid.LineBox(urwid.Pile(self.item))
+        status_content = urwid.Padding(
+            urwid.AttrWrap(urwid.Text('%s' % self.get_text(status)), 'body'), left=1, right=1)
+        w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'body', 'focus')
         self.__super.__init__(w)
 
     def selectable (self):
@@ -65,7 +101,7 @@ class StatusWidget (urwid.WidgetWrap):
         retweeter = ''
         source = self.get_source(status)
         nick = self.get_nick(status)
-        time = self.get_time(status)
+        timer = self.get_time(status)
 
         if self.is_reply(status):
             reply = u' \u2709'
@@ -79,7 +115,7 @@ class StatusWidget (urwid.WidgetWrap):
 
         header_template = self.conf.params['header_template'] 
         header = unicode(header_template).format(
-            time = time,
+            time = timer,
             nick = nick,
             reply = reply,
             retweeted = retweeted,
@@ -192,15 +228,8 @@ class Interface(object):
             ('head','light red', 'black'),
             ]
 
-        lorem = [
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            'Sed sollicitudin, nulla id viverra pulvinar.',
-            'Cras a magna sit amet felis fringilla lobortis.',
-        ]
-
 
         items = []
-
         timeline = self.select_current_timeline()
         for i, status in enumerate(timeline.statuses):
             items.append(StatusWidget(i, status))
