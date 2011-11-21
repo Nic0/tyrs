@@ -21,6 +21,7 @@ import tyrs
 import urwid
 import curses
 #import logging
+from update import UpdateThread
 from user import User
 from utils import html_unescape, encode, get_source, get_urls
 from widget import StatusWidget, HeaderWidget
@@ -44,7 +45,6 @@ class Interface(object):
         self.first_update()
         self.main_loop()
 
-
     def main_loop (self):
 
         palette = [
@@ -65,7 +65,11 @@ class Interface(object):
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
         self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
         loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
+
+        update = UpdateThread()
+        update.start()
         loop.run()
+        update.stop()
 
     def keystroke (self, ch):
         if ch in ('q', 'Q'):
