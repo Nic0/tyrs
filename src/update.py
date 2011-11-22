@@ -17,11 +17,13 @@ import tyrs
 import logging
 import threading
 import time
+import urwid
 
 class UpdateThread(threading.Thread):
     '''
     The only thread that update all timelines
     '''
+
     def __init__(self):
         self.interface = tyrs.container['interface']
         self.conf = tyrs.container['conf']
@@ -53,3 +55,4 @@ class UpdateThread(threading.Thread):
         self.api.update_timeline('mentions')
         self.api.update_timeline('direct')
         self.interface.display_timeline()
+        self.interface.redraw_screen()

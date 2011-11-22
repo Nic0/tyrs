@@ -53,6 +53,10 @@ class Interface(object):
             ('head','light red', ''),
             ('info_msg', 'dark green', ''),
             ('warn_msg', 'dark red', ''),
+            ('current_tab', 'light blue', ''),
+            ('other_tab', 'dark blue', ''),
+            ('read', 'dark blue', ''),
+            ('unread', 'dark red', ''),
             ]
 
 
@@ -64,11 +68,10 @@ class Interface(object):
         self.header = HeaderWidget()
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
         self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
-        loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
-
+        self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
         update = UpdateThread()
         update.start()
-        loop.run()
+        self.loop.run()
         update.stop()
 
     def keystroke (self, ch):
@@ -99,11 +102,16 @@ class Interface(object):
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
 
         self.main_frame.set_body(urwid.AttrWrap(listbox, 'body'))
+        self.display_flash_message()
+
+    def redraw_screen (self):
+        self.loop.draw_screen()
 
     def display_flash_message(self):
         try:
             header = HeaderWidget()
             self.main_frame.set_header(header)
+            self.redraw_screen()
             self.api.flash_message.reset()
         except AttributeError:
             pass

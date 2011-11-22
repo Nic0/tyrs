@@ -23,7 +23,13 @@ class HeaderWidget(urwid.WidgetWrap):
 
     def __init__(self):
         self.api = tyrs.container['api']
-        w = self.set_flash()
+        self.interface = tyrs.container['interface']
+        self.timelines = tyrs.container['timelines']
+        self.buffer = self.interface.buffer
+        flash = self.set_flash()
+        activities = self.set_activities()
+        w = urwid.Columns([flash, 
+                           ('fixed', 20, activities)])
         self.__super.__init__(w)
 
     def set_flash(self):
@@ -35,6 +41,45 @@ class HeaderWidget(urwid.WidgetWrap):
         event_message = urwid.Text(msg)
         flash = urwid.AttrWrap(event_message, color[level])
         return flash
+
+    def set_activities(self):
+
+        buffers = (
+            'home', 'mentions', 'direct', 'search',
+            'user', 'favorite', 'thread', 'user_retweet'
+        )
+        display = { 
+            'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 
+            'search': 'S', 'user': 'U', 'favorite': 'F',
+            'thread': 'T', 'user_retweet': 'R'
+        }
+        buff_widget = []
+        for b in buffers:
+            if b == self.buffer:
+                buff_widget.append(('fixed', len(display[b]), 
+                                    urwid.AttrWrap(urwid.Text(display[b]),
+                                                   'current_tab')))
+            else:
+                buff_widget.append(('fixed', len(display[b]), 
+                                    urwid.AttrWrap(urwid.Text(display[b]), 
+                                                   'other_tab')))
+            if b in ('home', 'mentions', 'direct'):
+                unread, lenght = self.get_unread(b)
+                buff_widget.append(('fixed', len(lenght)+1, unread))
+
+                    
+        return urwid.Columns(buff_widget)
+
+    def get_unread(self, buff):
+        self.select_current_timeline().all_read()
+        unread = self.timelines[buff].unread
+        if unread == 0:
+            return (urwid.AttrWrap(urwid.Text(str(unread)), 'read'), str(unread))
+        else:
+            return (urwid.AttrWrap(urwid.Text(str(unread)), 'unread'), str(unread))
+
+    def select_current_timeline(self):
+        return self.timelines[self.buffer]
 
 class StatusWidget (urwid.WidgetWrap):
 
