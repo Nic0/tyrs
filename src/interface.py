@@ -186,36 +186,6 @@ class Interface(object):
             self.display_redraw_screen()
             self.display_timeline()
 
-    def display_activities(self):
-        '''Main entry to display the activities bar'''
-        if self.conf.params['activities']:
-            maxyx = self.screen.getmaxyx()
-            max_x = maxyx[1]
-            self.screen.addstr(0, max_x - 23, ' ')
-            for b in self.buffers:
-                self.display_buffer_activities(b)
-                self.display_counter_activities(b)
-
-    def display_buffer_activities(self, buff):
-        display = { 
-                'home': 'H', 'mentions': 'M', 'direct': 'D', 
-                'search': 'S', 'user': 'U', 'favorite': 'F',
-                'thread': 'T', 'user_retweet': 'R'}
-        if self.buffer == buff:
-            self.screen.addstr(display[buff], self.get_color('current_tab'))
-        else:
-            self.screen.addstr(display[buff], self.get_color('other_tab'))
-
-    def display_counter_activities(self, buff):
-        self.select_current_timeline().all_read()
-        if buff in ['home', 'mentions', 'direct']:
-            unread = self.timelines[buff].unread
-            if unread == 0:
-                color = 'read'
-            else:
-                color = 'unread'
-
-            self.screen.addstr(':%s ' % str(unread), self.get_color(color))
 
     def display_help_bar(self):
         '''The help bar display at the bottom of the screen,
