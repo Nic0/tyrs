@@ -28,8 +28,7 @@ class HeaderWidget(urwid.WidgetWrap):
         self.buffer = self.interface.buffer
         flash = self.set_flash()
         activities = self.set_activities()
-        w = urwid.Columns([flash, 
-                           ('fixed', 20, activities)])
+        w = urwid.Columns([flash, ('fixed', 20, activities)])
         self.__super.__init__(w)
 
     def set_flash(self):
@@ -49,7 +48,7 @@ class HeaderWidget(urwid.WidgetWrap):
             'user', 'favorite', 'thread', 'user_retweet'
         )
         display = { 
-            'home': 'H:', 'mentions': 'M:', 'direct': 'D:', 
+            'home': 'H', 'mentions': 'M', 'direct': 'D', 
             'search': 'S', 'user': 'U', 'favorite': 'F',
             'thread': 'T', 'user_retweet': 'R'
         }
@@ -68,9 +67,10 @@ class HeaderWidget(urwid.WidgetWrap):
         self.select_current_timeline().all_read()
         unread = self.timelines[buff].unread
         if unread == 0:
-            return [('read', str(unread)), ' ']
+            color = 'read'
         else:
-            return [('unread', str(unread)), ' ']
+            color = 'unread'
+        return [('read', ':'), (color , str(unread)), ' ']
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
