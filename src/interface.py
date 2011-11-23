@@ -134,43 +134,6 @@ class Interface(object):
         if new_index >= 0 and new_index < len(self.buffers):
             self.change_buffer(self.buffers[new_index])
 
-    #def display_timeline(self):
-        #'''Main entry to display a timeline, as it does not take arguments,
-           #make sure to set self.buffer before
-        #'''
-        #try:
-            #if not self.refresh_token:
-                #self.set_max_window_size()
-                #self.set_date()
-
-                #timeline = self.select_current_timeline()
-                #statuses_count = len(timeline.statuses)
-
-                #self.display_flash_message()
-                #self.display_activities()
-                #self.display_help_bar()
-
-                ## It might have no tweets yet, we try to retrieve some then
-                #if statuses_count  == 0:
-                    #self.api.update_timeline(self.buffer)
-                    #timeline.reset()
-
-                #self.current_y = 1
-                #for i in range(len(timeline.statuses)):
-                    #if i >= timeline.first:
-                        #self.check_for_last_read(timeline.statuses[i].id)
-                        #br = self.display_status(timeline.statuses[i], i)
-                        #if not br:
-                            #break
-                #timeline.unread = 0 
-                #if self.buffer == 'home':
-                    #self.conf.save_last_read(timeline.last_read)
-                #self.screen.refresh()
-                #self.check_current_not_on_screen()
-        #except curses.error:
-            #logging.error('Curses error for display_timeline')
-            #pass
-
     def check_for_last_read(self, id):
         if self.buffer == 'home':
             if self.last_read_home == str(id):
@@ -180,14 +143,6 @@ class Interface(object):
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
-
-    def check_current_not_on_screen(self):
-        '''TODO this hack should be solved when we realy display tweets'''
-        timeline = self.select_current_timeline()
-        if timeline.current > timeline.last:
-            timeline.current = timeline.last
-            self.display_redraw_screen()
-            self.display_timeline()
 
 
     def display_help_bar(self):
@@ -208,166 +163,6 @@ class Interface(object):
                                ), maxyx[1] -4, self.get_color('text')
             )
 
-    def display_status (self, status, i):
-        ''' Display a status (tweet) from top to bottom of the screen,
-        depending on self.current_y, an array [status, panel] is return and
-        will be stock in a array, to retreve status information (like id)
-        @param status, the status to display
-        @param i, to know on witch status we're display (this could be refactored)
-        @return True if the tweet as been displayed, to know it may carry on to display some
-                more, otherwise return False
-        '''
-
-        timeline = self.select_current_timeline()
-        self.is_retweet(status)
-
-        # The content of the tweets is handle
-        # text is needed for the height of a panel
-        try:
-            header  = self.get_header(status)
-        except UnicodeDecodeError:
-            header = 'encode error'
-
-        # We get size and where to display the tweet
-        size = self.get_size_status(status)
-        length = size['length']
-        height = size['height']
-        start_y = self.current_y
-        start_x = self.conf.params['margin']
-        # We leave if no more space left
-        if start_y + height +1 > self.maxyx[0]:
-            return False
-
-        panel = curses.newpad(height, length)
-
-        if self.conf.params['tweet_border'] == 1:
-            if self.conf.params['old_skool_border']:
-                panel.border('|','|','-','-','+','+','+','+')
-            else:
-                if self.conf.params['compact']:
-                    panel.border(curses.ACS_VLINE, curses.ACS_VLINE, curses.ACS_HLINE, ' ',
-                                 curses.ACS_ULCORNER, curses.ACS_URCORNER, ' ', ' ')
-                else:
-                    panel.border(0)
-
-        # Highlight the current status
-        if timeline.current == i:
-            panel.addstr(0,3, header, self.get_color('current_tweet'))
-        else:
-            panel.addstr(0, 3, header, self.get_color('header'))
-
-        self.display_text(panel, status)
-        try:
-            panel.refresh(0, 0, start_y, start_x,
-                start_y + height, start_x + length)
-        except curses.error:
-            pass
-        # An adjustment to compress a little the display
-        if self.conf.params['compact']:
-            c = -1
-        else:
-            c = 0
-
-        self.current_y = start_y + height + c
-        timeline.last = i
-
-        return True
-
-    def get_text(self, status):
-        text = html_unescape(status.text.replace('\n', ' '))
-        if status.rt:
-            text = text.split(':')[1:]
-            text = ':'.join(text)
-
-            if hasattr(status, 'retweeted_status'):
-                if hasattr(status.retweeted_status, 'text') \
-                        and len(status.retweeted_status.text) > 0:
-                    text = status.retweeted_status.text
-        return text
-
-    def display_text(self, panel, status):
-        '''needed to cut words properly, as it would cut it in a midle of a
-        world without. handle highlighting of '#' and '@' tags.
-        '''
-        text = self.get_text(status)
-        words = text.split(' ')
-        margin = self.conf.params['margin']
-        padding = self.conf.params['padding']
-        myself = self.api.myself.screen_name
-        curent_x = padding
-        line = 1
-
-        hashtag = encode('#')
-        attag = encode('@')
-
-
-        for word in words:
-            word = encode(word)
-            if curent_x + len(word) > self.maxyx[1] - (margin + padding)*2:
-                line += 1
-                curent_x = padding
-
-            if word != '':
-                # The word is an HASHTAG ? '#'
-                if word[0] == hashtag:
-                    panel.addstr(line, curent_x, word, self.get_color('hashtag'))
-                # Or is it an 'AT TAG' ? '@'
-                elif word[0] == attag:
-                    # The AT TAG is,  @myself
-                    if word == attag + myself or word == attag + myself+ encode(':'):
-                        panel.addstr(line, curent_x, word, self.get_color('highlight'))
-                    # @anyone
-                    else:
-                        panel.addstr(line, curent_x, word, self.get_color('attag'))
-                # It's just a normal word
-                else:
-                    try:
-                        panel.addstr(line, curent_x, word, self.get_color('text'))
-                    except curses.error:
-                        pass
-                curent_x += len(word) + 1
-
-                # We check for ugly empty spaces
-                while panel.inch(line, curent_x -1) == ord(' ') and panel.inch(line, curent_x -2) == ord(' '):
-                    curent_x -= 1
-
-    def get_size_status(self, status):
-        '''Allow to know how height will be the tweet, it calculate it exactly
-           as it will display it.
-        '''
-        length = self.get_max_lenght()
-        margin = self.conf.params['margin']
-        padding = self.conf.params['padding']
-        x = padding+margin
-        y = 1
-        txt = self.get_text(status)
-        words = txt.split(' ')
-        for w in words:
-            if x+len(w) > length - (padding+margin)*2:
-                y += 1
-                x = padding+margin
-            x += len(w)+1
-
-        height = y + 2
-        size = {'length': length, 'height': height}
-        return size
-
-    def get_max_lenght(self):
-        adjust = self.conf.params['margin'] + self.conf.params['padding']
-        return self.maxyx[1] - adjust
-
-    def tear_down(self):
-        '''Last function call when quiting, restore some defaults params'''
-        self.screen.keypad(0)
-        curses.echo()
-        curses.nocbreak()
-        curses.curs_set(1)
-        curses.endwin()
-
-    def sigwinch_handler(self, *dummy):
-        '''Resize event callback'''
-        self.resize_event = True
-
     def clear_statuses(self):
         timeline = self.select_current_timeline()
         timeline.statuses = [timeline.statuses[0]]
@@ -378,17 +173,6 @@ class Interface(object):
         '''@return the status object itself'''
         timeline = self.select_current_timeline()
         return timeline.statuses[timeline.current]
-
-    def get_color(self, color):
-        '''Return the curses code, with bold if enable of the color
-           given in argument of the function
-           @return color_pair code
-        '''
-        cp = curses.color_pair(self.conf.colors[color]['c'])
-        if self.conf.colors[color]['b']:
-            cp |= curses.A_BOLD
-
-        return cp
 
     def move_down(self):
         timeline = self.select_current_timeline()
