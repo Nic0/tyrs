@@ -80,12 +80,13 @@ class StatusWidget (urwid.WidgetWrap):
     def __init__ (self, id, status):
         self.regex_retweet     = re.compile('^RT @\w+:')
         self.conf       = tyrs.container['conf']
+        self.api       = tyrs.container['api']
         self.set_date()
         self.buffer = tyrs.container['interface'].buffer
         self.is_retweet(status)
         self.id = id
         status_content = urwid.Padding(
-            urwid.AttrWrap(urwid.Text('%s' % self.get_text(status)), 'body'), left=1, right=1)
+            urwid.AttrWrap(urwid.Text(self.get_text(status)), 'body'), left=1, right=1)
         w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'body', 'focus')
         self.__super.__init__(w)
 
@@ -96,6 +97,7 @@ class StatusWidget (urwid.WidgetWrap):
         return key
 
     def get_text(self, status):
+        result = []
         text = html_unescape(status.text.replace('\n', ' '))
         if status.rt:
             text = text.split(':')[1:]
@@ -105,7 +107,26 @@ class StatusWidget (urwid.WidgetWrap):
             if hasattr(status.retweeted_status, 'text') \
                     and len(status.retweeted_status.text) > 0:
                 text = status.retweeted_status.text
-        return text
+
+        myself = self.api.myself.screen_name
+
+        words = text.split(' ')
+        for word in words:
+            if word != '':
+                word += ' '
+                # The word is an HASHTAG ? '#'
+                if word[0] == '#':
+                    result.append(('hashtag', word+' '))
+                elif word[0] == '@':
+                    ## The AT TAG is,  @myself
+                    if word == '@' + myself or word == '@' + myself+ ':':
+                        result.append(('highlight', word+' '))
+                    ## @anyone
+                    else:
+                        result.append(('attag', word))
+                else:
+                    result.append(word)
+        return result
 
     def get_header(self, status):
         retweeted = ''

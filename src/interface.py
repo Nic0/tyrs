@@ -57,6 +57,9 @@ class Interface(object):
             ('other_tab', 'dark blue', ''),
             ('read', 'dark blue', ''),
             ('unread', 'dark red', ''),
+            ('hashtag', 'dark green', ''),
+            ('attag', 'brown', ''),
+            ('highlight', 'dark red', ''),
             ]
 
 
