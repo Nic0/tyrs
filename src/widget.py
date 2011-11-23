@@ -56,27 +56,21 @@ class HeaderWidget(urwid.WidgetWrap):
         buff_widget = []
         for b in buffers:
             if b == self.buffer:
-                buff_widget.append(('fixed', len(display[b]), 
-                                    urwid.AttrWrap(urwid.Text(display[b]),
-                                                   'current_tab')))
+                buff_widget.append(('current_tab', display[b]))
             else:
-                buff_widget.append(('fixed', len(display[b]), 
-                                    urwid.AttrWrap(urwid.Text(display[b]), 
-                                                   'other_tab')))
+                buff_widget.append(('other_tab', display[b]))
             if b in ('home', 'mentions', 'direct'):
-                unread, lenght = self.get_unread(b)
-                buff_widget.append(('fixed', len(lenght)+1, unread))
-
+                buff_widget.append(self.get_unread(b))
                     
-        return urwid.Columns(buff_widget)
+        return urwid.Text(buff_widget)
 
     def get_unread(self, buff):
         self.select_current_timeline().all_read()
         unread = self.timelines[buff].unread
         if unread == 0:
-            return (urwid.AttrWrap(urwid.Text(str(unread)), 'read'), str(unread))
+            return [('read', str(unread)), ' ']
         else:
-            return (urwid.AttrWrap(urwid.Text(str(unread)), 'unread'), str(unread))
+            return [('unread', str(unread)), ' ']
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
