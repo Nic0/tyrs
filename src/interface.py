@@ -33,6 +33,7 @@ class Interface(object):
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
+        self.focus = 0
         tyrs.container.add('interface', self)
         self.update_last_read_home()
         self.api.set_interface()
@@ -95,6 +96,7 @@ class Interface(object):
     def display_timeline (self):
         timeline = self.select_current_timeline()
         self.items = []
+        self.get_focus()
         for i, status in enumerate(timeline.statuses):
             if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
                 self.items.append(urwid.Divider('-'))
@@ -107,6 +109,7 @@ class Interface(object):
         if self.buffer == 'home':
             self.conf.save_last_read(timeline.last_read)
         self.display_flash_message()
+        self.set_focus()
 
     def lazzy_load(self):
         focus = self.listbox.get_focus()[1]
@@ -178,6 +181,14 @@ class Interface(object):
     def current_status(self):
         focus = self.listbox.get_focus()[0]
         return focus.status
+
+    def set_focus(self):
+        self.listbox.set_focus(self.focus)
+
+    def get_focus(self):
+        self.focus = self.listbox.get_focus()[1]
+        if self.focus != type(1):
+            self.focus = 1
 
     def back_on_bottom(self):
         self.listbox.set_focus(len(self.items))
