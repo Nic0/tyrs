@@ -85,6 +85,7 @@ class StatusWidget (urwid.WidgetWrap):
         self.buffer = tyrs.container['interface'].buffer
         self.is_retweet(status)
         self.id = id
+        self.status = status
         status_content = urwid.Padding(
             urwid.AttrWrap(urwid.Text(self.get_text(status)), 'body'), left=1, right=1)
         w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'body', 'focus')

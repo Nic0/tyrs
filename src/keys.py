@@ -17,6 +17,7 @@ import tyrs
 import curses
 from help import Help
 from utils import open_image
+import urwid
 
 class Keys(object):
     '''
@@ -28,6 +29,29 @@ class Keys(object):
         self.conf       = tyrs.container['conf']
         self.interface  = tyrs.container['interface']
         self.api        = tyrs.container['api']
+
+    def keystroke (self, ch):
+        if ch in ('q', 'Q'):
+            raise urwid.ExitMainLoop()
+        elif ch == 'right':
+            self.navigate_buffer(+1)
+        elif ch == 'left':
+            self.interface.navigate_buffer(-1)
+        elif ch == 'u':
+            self.api.update_timeline(self.buffer)
+        elif ch == self.conf.keys['tweet']:
+            self.interface.edit_status('tweet')
+        elif ch == 't':
+            self.interface.edit_status('tweet')
+        elif ch == self.conf.keys['reply']:
+            self.interface.reply()
+        elif ch == self.conf.keys['retweet']:
+            self.api.retweet()
+        elif ch == self.conf.keys['retweet_and_edit']:
+            self.api.retweet_and_edit()
+
+
+        self.interface.display_timeline()
 
     def handleKeyBinding(self):
         '''Should have all keybinding handle here'''

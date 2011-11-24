@@ -83,7 +83,7 @@ class Tweets(object):
             self.flash('empty')
 
     def post_tweet(self, tweet, reply_to=None):
-        #self.flash('tweet')
+        self.flash('tweet')
         try:
             return self.api.PostUpdate(tweet, reply_to)
         except TwitterError, e:
@@ -101,7 +101,7 @@ class Tweets(object):
         status = self.interface.current_status()
         nick = status.user.screen_name
         data = 'RT @%s: %s' % (nick, status.text)
-        self.tweet(data)
+        self.interface.edit_status('tweet', data)
 
     def reply(self):
         status = self.interface.current_status()

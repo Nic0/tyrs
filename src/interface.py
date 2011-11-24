@@ -25,6 +25,8 @@ from update import UpdateThread
 from user import User
 from utils import html_unescape, encode, get_source, get_urls
 from widget import StatusWidget, HeaderWidget
+from editor import TweetEditor
+from keys import Keys
 
 
 class Interface(object):
@@ -71,23 +73,50 @@ class Interface(object):
         self.header = HeaderWidget()
         listbox = urwid.ListBox(urwid.SimpleListWalker(items))
         self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
-        self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=self.keystroke)
+        key_handle = Keys()
+        self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=key_handle.keystroke)
         update = UpdateThread()
         update.start()
         self.loop.run()
         update.stop()
 
-    def keystroke (self, ch):
-        if ch in ('q', 'Q'):
-            raise urwid.ExitMainLoop()
-        elif ch == 'right':
-            self.navigate_buffer(+1)
-        elif ch == 'u':
-            self.api.update_timeline(self.buffer)
-        elif ch == 'left':
-            self.navigate_buffer(-1)
 
-        self.display_timeline()
+    def reply(self):
+        self.status = self.current_status()
+        if hasattr(self.status, 'user'):
+            nick = self.status.user.screen_name
+        #FIXME: 
+        #else:
+            #self.direct_message()
+        data = '@' + nick
+        self.edit_status('reply', data)
+
+    def reply_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.reply_done)
+        if content:
+            self.api.post_tweet(content, self.status.id)
+
+    def edit_status(self, action, content=''):
+        self.foot = TweetEditor(content)
+        self.main_frame.set_footer(self.foot)
+        self.main_frame.set_focus('footer')
+        if action == 'tweet':
+            urwid.connect_signal(self.foot, 'done', self.tweet_done)
+        elif action == 'reply':
+            urwid.connect_signal(self.foot, 'done', self.reply_done)
+
+    def tweet_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.edit_done)
+        if content:
+            self.api.post_tweet(content)
+
+    def clean_edit(self):
+        self.main_frame.set_focus('body')
+        self.main_frame.set_footer(None)
+
+
 
 
     def first_update(self):
@@ -170,9 +199,8 @@ class Interface(object):
         timeline.reset()
 
     def current_status(self):
-        '''@return the status object itself'''
-        timeline = self.select_current_timeline()
-        return timeline.statuses[timeline.current]
+        focus = self.listbox.get_focus[0]
+        return focus.status
 
     def move_down(self):
         timeline = self.select_current_timeline()
