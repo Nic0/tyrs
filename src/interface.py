@@ -169,39 +169,11 @@ class Interface(object):
         focus = self.listbox.get_focus()[0]
         return focus.status
 
-    def move_down(self):
-        timeline = self.select_current_timeline()
-        if timeline.current < timeline.count - 1:
-            if timeline.current >= timeline.last:
-                timeline.first += 1
-            timeline.current += 1
-        else:
-            self.lazzy_load()
-
-    def lazzy_load(self):
-        timeline = self.select_current_timeline()
-        timeline.page += 1
-        statuses = self.api.retreive_statuses(self.buffer, timeline.page)
-        timeline.append_old_statuses(statuses)
-        timeline.first += 1
-        timeline.current += 1
-
-    def move_up(self):
-        timeline = self.select_current_timeline()
-        if timeline.current > 0:
-            # if we need to move up the list to display
-            if timeline.current == timeline.first:
-                timeline.first -= 1
-            timeline.current -= 1
-
     def back_on_bottom(self):
-        timeline = self.select_current_timeline()
-        timeline.current = timeline.last
+        self.listbox.set_focus(len(self.walker))
 
     def back_on_top(self):
-        timeline = self.select_current_timeline()
-        timeline.current = 0
-        timeline.reset()
+        self.listbox.set_focus(0)
 
     def openurl(self):
         urls = get_urls(self.current_status().text)

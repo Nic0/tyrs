@@ -123,19 +123,14 @@ class Keys(object):
 # Waterline
         elif ch == self.conf.keys['waterline']:
             self.interface.update_last_read_home()
+# Back on Top
+        elif ch == self.conf.keys['back_on_top']:
+            self.interface.back_on_top()
+# Back on Bottom
+        elif ch == self.conf.keys['back_on_bottom']:
+            self.interface.back_on_bottom()
+# Help
+        elif ch == ord('?'):
+            Help()
 
         self.interface.display_timeline()
-
-#
-# TODO keybinding not yet done...
-#
-#if ch == self.conf.keys['down'] or ch == curses.KEY_DOWN:
-    #self.interface.move_down()
-#elif ch == self.conf.keys['up'] or ch == curses.KEY_UP:
-    #self.interface.move_up()
-#elif ch == self.conf.keys['back_on_top']:
-    #self.interface.back_on_top()
-#elif ch == self.conf.keys['back_on_bottom']:
-    #self.interface.back_on_bottom()
-#elif ch == ord('?'):
-    #Help()
