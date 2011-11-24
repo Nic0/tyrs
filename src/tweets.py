@@ -425,11 +425,7 @@ class ApiPatch(Api):
       else:
         _debug = 0
 
-<<<<<<< HEAD
-      http_handler  = self._urllib.HTTPHandler(debuglevel=_debug)
-=======
       http_handler = self._urllib.HTTPHandler(debuglevel=_debug)
->>>>>>> dev
       https_handler = self._urllib.HTTPSHandler(debuglevel=_debug)
       proxy_handler = self._urllib.ProxyHandler(self._proxy)
 
@@ -502,10 +498,6 @@ class ApiPatch(Api):
 
     # Always return the latest version
       return url_data
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 
     def PostRetweet(self, id):
         '''This code come from issue #130 on python-twitter tracker'''
