@@ -96,7 +96,6 @@ class Interface(object):
     def display_timeline (self):
         timeline = self.select_current_timeline()
         self.items = []
-        self.get_focus()
         for i, status in enumerate(timeline.statuses):
             if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
                 self.items.append(urwid.Divider('-'))
@@ -109,7 +108,6 @@ class Interface(object):
         if self.buffer == 'home':
             self.conf.save_last_read(timeline.last_read)
         self.display_flash_message()
-        self.set_focus()
 
     def lazzy_load(self):
         focus = self.listbox.get_focus()[1]
