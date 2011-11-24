@@ -18,8 +18,6 @@ import logging
 from urllib2 import URLError
 import oauth2 as oauth
 import urllib2
-from editor import *
-from utils import cut_attag
 from message import FlashMessage
 from twitter import Api, TwitterError, Status, _FileCache
 from httplib import BadStatusLine
@@ -307,31 +305,31 @@ class Tweets(object):
 
     def tweet_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.tweet_done)
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.tweet_done)
         if content:
             self.post_tweet(encode(content))
 
     def follow_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.follow_done)
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.follow_done)
         if content:
             self.create_friendship(content)
 
     def unfollow_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.unfollow_done)
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.unfollow_done)
         if content:
             self.destroy_friendship(content)
 
     def search_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.search_done)
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.search_done)
         if content:
             self.search(content)
 
     def public_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.public_done)
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.public_done)
         if content:
             self.find_public_timeline(content)
 

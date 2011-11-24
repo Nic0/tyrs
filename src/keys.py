@@ -14,10 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
-import curses
+import urwid
 from help import Help
 from utils import open_image
-import urwid
 
 class Keys(object):
     '''

@@ -46,7 +46,10 @@ class Interface(object):
     def main_loop (self):
 
         self.header = HeaderWidget()
-        self.listbox = urwid.ListBox(urwid.SimpleListWalker([]))
+        self.items = []
+        walker = urwid.SimpleListWalker(self.items)
+        self.listbox = urwid.ListBox(walker)
+        urwid.connect_signal(walker, 'modified', self.lazzy_load)
         self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header)
         key_handle = Keys()
         self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=key_handle.keystroke)
@@ -97,26 +100,39 @@ class Interface(object):
 
     def display_timeline (self):
         timeline = self.select_current_timeline()
-        items = []
+        self.items = []
         for i, status in enumerate(timeline.statuses):
             if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
-                items.append(urwid.Divider('-'))
-            items.append(StatusWidget(i, status))
-        self.listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+                self.items.append(urwid.Divider('-'))
+            self.items.append(StatusWidget(i, status))
+        walker = urwid.SimpleListWalker(self.items)
+        self.listbox = urwid.ListBox(walker)
+        urwid.connect_signal(walker, 'modified', self.lazzy_load)
 
         self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
         if self.buffer == 'home':
             self.conf.save_last_read(timeline.last_read)
         self.display_flash_message()
 
+    def lazzy_load(self):
+        focus = self.listbox.get_focus()[1]
+        if focus is len(self.items)-1:
+            timeline = self.select_current_timeline()
+            timeline.page += 1
+            statuses = self.api.retreive_statuses(self.buffer, timeline.page)
+            timeline.append_old_statuses(statuses)
+            self.display_timeline()
+            self.listbox.set_focus(focus)
+
     def redraw_screen (self):
         self.loop.draw_screen()
 
     def display_flash_message(self):
-        header = HeaderWidget()
-        self.main_frame.set_header(header)
-        self.redraw_screen()
-        self.api.flash_message.reset()
+        if hasattr(self, 'main_frame'):
+            header = HeaderWidget()
+            self.main_frame.set_header(header)
+            self.redraw_screen()
+            self.api.flash_message.reset()
 
     def erase_flash_message(self):
         self.api.flash_message.reset()
@@ -170,7 +186,7 @@ class Interface(object):
         return focus.status
 
     def back_on_bottom(self):
-        self.listbox.set_focus(len(self.walker))
+        self.listbox.set_focus(len(self.items))
 
     def back_on_top(self):
         self.listbox.set_focus(0)
