@@ -98,16 +98,16 @@ class Tweets(object):
         data = 'RT @%s: %s' % (nick, status.text)
         self.interface.edit_status('tweet', data)
 
-    def reply(self):
-        status = self.interface.current_status()
-        if hasattr(status, 'user'):
-            nick = status.user.screen_name
-        else:
-            self.direct_message()
-        data = '@' + nick + ' '
-        tweet = TweetEditor(data).content
-        if tweet:
-            self.post_tweet(tweet, status.id)
+    #def reply(self):
+        #status = self.interface.current_status()
+        #if hasattr(status, 'user'):
+            #nick = status.user.screen_name
+        #else:
+            #self.direct_message()
+        #data = '@' + nick + ' '
+        #tweet = TweetEditor(data).content
+        #if tweet:
+            #self.post_tweet(tweet, status.id)
 
     def destroy(self):
         self.flash('destroy')
@@ -117,6 +117,7 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
+    #FIXME!
     def direct_message(self):
         ''' Two editing box, one for the name, and one for the content'''
         nick = self.nick_for_direct_message()
@@ -124,6 +125,7 @@ class Tweets(object):
         if tweet:
             self.send_direct_message(nick, tweet)
 
+    #FIXME!
     def nick_for_direct_message(self):
         status = self.interface.current_status()
         if hasattr(status, 'user'):
@@ -152,10 +154,10 @@ class Tweets(object):
             nick = status.user.screen_name
         self.create_friendship(nick)
 
-    def unfollow(self):
-        nick = NickEditor().content
-        if nick:
-            self.destroy_friendship(nick)
+    #def unfollow(self):
+        #nick = NickEditor().content
+        #if nick:
+            #self.destroy_friendship(nick)
 
     def unfollow_selected(self):
         nick = self.interface.current_status().user.screen_name

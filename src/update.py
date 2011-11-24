@@ -14,10 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import tyrs
+import time
 import logging
 import threading
-import time
-import urwid
 
 class UpdateThread(threading.Thread):
     '''

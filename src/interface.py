@@ -17,6 +17,7 @@ import re
 import os
 import tyrs
 import urwid
+import curses
 from user import User
 from keys import Keys
 from utils import get_urls
@@ -38,7 +39,6 @@ class Interface(object):
         self.update_last_read_home()
         self.api.set_interface()
         self.regex_retweet     = re.compile('^RT @\w+:')
-        self.refresh_token    = False
         self.stoped = False
         self.buffer           = 'home'
         self.first_update()

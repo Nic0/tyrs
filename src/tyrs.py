@@ -18,7 +18,7 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.5.0
+   @version:    0.6.0-dev
    @date:       06/11/2011
    @licence:    GPLv3
 
@@ -32,9 +32,7 @@ import tweets
 import argparse
 import gettext
 from urllib2 import URLError
-from keys import Keys
 from timeline import Timeline
-from update import UpdateThread
 from container import Container
 from interface import Interface
 
@@ -66,7 +64,6 @@ def init_tyrs():
     init_timelines()
     init_api()
     init_interface()
-    #init_thread()
 
 def init_conf():
     conf = config.Config(arguments())
@@ -96,16 +93,6 @@ def init_timelines():
         timelines[buff] = Timeline()
     container.add('timelines', timelines)
     container.add('buffers', buffers)
-
-def init_thread():
-    update = UpdateThread()
-    update.start()
-    #init_keys()
-    update.stop()
-
-#def init_keys():
-    #return
-    #Keys().handleKeyBinding()
 
 if __name__ == "__main__":
     gettext.install('tyrs', unicode=1)
