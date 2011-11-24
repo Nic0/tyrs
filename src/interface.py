@@ -71,8 +71,8 @@ class Interface(object):
             items.append(StatusWidget(i, status))
 
         self.header = HeaderWidget()
-        listbox = urwid.ListBox(urwid.SimpleListWalker(items))
-        self.main_frame = urwid.Frame(urwid.AttrWrap(listbox, 'body'), header=self.header)
+        self.listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+        self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header)
         key_handle = Keys()
         self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=key_handle.keystroke)
         update = UpdateThread()
@@ -105,12 +105,44 @@ class Interface(object):
             urwid.connect_signal(self.foot, 'done', self.tweet_done)
         elif action == 'reply':
             urwid.connect_signal(self.foot, 'done', self.reply_done)
+        elif action == 'follow':
+            urwid.connect_signal(self.foot, 'done', self.follow_done)
+        elif action == 'unfollow':
+            urwid.connect_signal(self.foot, 'done', self.unfollow_done)
+        elif action == 'search':
+            urwid.connect_signal(self.foot, 'done', self.search_done)
+        elif action == 'public':
+            urwid.connect_signal(self.foot, 'done', self.public_done)
 
     def tweet_done(self, content):
         self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.edit_done)
+        urwid.disconnect_signal(self, self.foot, 'done', self.tweet_done)
         if content:
-            self.api.post_tweet(content)
+            self.api.post_tweet(encode(content))
+
+    def follow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.follow_done)
+        if content:
+            self.api.create_friendship(content)
+
+    def unfollow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.unfollow_done)
+        if content:
+            self.api.destroy_friendship(content)
+
+    def search_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.search_done)
+        if content:
+            self.api.search(content)
+
+    def public_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.public_done)
+        if content:
+            self.api.find_public_timeline(content)
 
     def clean_edit(self):
         self.main_frame.set_focus('body')
@@ -131,9 +163,9 @@ class Interface(object):
         timeline = self.select_current_timeline()
         for i, status in enumerate(timeline.statuses):
             items.append(StatusWidget(i, status))
-        listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+        self.listbox = urwid.ListBox(urwid.SimpleListWalker(items))
 
-        self.main_frame.set_body(urwid.AttrWrap(listbox, 'body'))
+        self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
         self.display_flash_message()
 
     def redraw_screen (self):
@@ -199,7 +231,7 @@ class Interface(object):
         timeline.reset()
 
     def current_status(self):
-        focus = self.listbox.get_focus[0]
+        focus = self.listbox.get_focus()[0]
         return focus.status
 
     def move_down(self):

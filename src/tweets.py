@@ -147,9 +147,7 @@ class Tweets(object):
             self.error(e)
 
     def follow(self):
-        nick = NickEditor().content
-        if nick:
-            self.create_friendship(nick)
+        self.interface.edit_status('follow')
 
     def follow_selected(self):
         status = self.interface.current_status()
@@ -251,8 +249,7 @@ class Tweets(object):
 
         return statuses
 
-    def find_public_timeline(self):
-        nick = NickEditor().content
+    def find_public_timeline(self, nick):
         if nick and nick != self.search_user:
             self.change_search_user(nick)
             self.load_user_public_timeline()
@@ -298,8 +295,8 @@ class Tweets(object):
             except TwitterError:
                 pass
 
-    def search(self):
-        self.search_word = SearchEditor().content
+    def search(self, content):
+        self.search_word = content
         self.flash('search', self.search_word)
         self.timelines['search'].empty()
         try:
