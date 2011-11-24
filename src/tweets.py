@@ -310,7 +310,7 @@ class Tweets(object):
         self.clean_edit()
         urwid.disconnect_signal(self, self.interface.foot, 'done', self.reply_done)
         if content:
-            self.post_tweet(encode(content), self.status.id)
+            self.post_tweet(encode(content), self.interface.current_status().id)
 
     def follow_done(self, content):
         self.clean_edit()
