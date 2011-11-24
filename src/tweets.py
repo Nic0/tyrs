@@ -13,14 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import sys
 import tyrs
+import urwid
 import logging
-from urllib2 import URLError
-import oauth2 as oauth
 import urllib2
+import oauth2 as oauth
+from utils import encode
+from urllib2 import URLError
 from message import FlashMessage
-from twitter import Api, TwitterError, Status, _FileCache
 from httplib import BadStatusLine
+from twitter import Api, TwitterError, Status, _FileCache
 
 try:
     import json
@@ -72,13 +76,6 @@ class Tweets(object):
     def set_myself(self):
         self.myself = self.api.VerifyCredentials()
         self.conf.my_nick = self.myself.screen_name
-
-    def tweet(self, data=None):
-        tweet = TweetEditor(data).content
-        if tweet:
-            self.post_tweet(tweet)
-        else:
-            self.flash('empty')
 
     def post_tweet(self, tweet, reply_to=None):
         self.flash('tweet')
@@ -309,6 +306,12 @@ class Tweets(object):
         if content:
             self.post_tweet(encode(content))
 
+    def reply_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.reply_done)
+        if content:
+            self.post_tweet(encode(content), self.status.id)
+
     def follow_done(self, content):
         self.clean_edit()
         urwid.disconnect_signal(self, self.interface.foot, 'done', self.follow_done)
@@ -325,7 +328,7 @@ class Tweets(object):
         self.clean_edit()
         urwid.disconnect_signal(self, self.interface.foot, 'done', self.search_done)
         if content:
-            self.search(content)
+            self.search(encode(content))
 
     def public_done(self, content):
         self.clean_edit()
@@ -350,7 +353,7 @@ DEFAULT_CACHE = object()
 
 class ApiPatch(Api):
 
-  def __init__(self,
+    def __init__(self,
                consumer_key=None,
                consumer_secret=None,
                access_token_key=None,
@@ -366,132 +369,112 @@ class ApiPatch(Api):
               ):
 
 
-    self.SetCache(cache)
-    self._urllib         = urllib2
-    self._cache_timeout  = Api.DEFAULT_CACHE_TIMEOUT
-    self._input_encoding = input_encoding
-    self._use_gzip       = use_gzip_compression
-    self._debugHTTP      = debugHTTP
-    self._oauth_consumer = None
-    self._proxy = proxy
+        self.SetCache(cache)
+        self._urllib         = urllib2
+        self._cache_timeout  = Api.DEFAULT_CACHE_TIMEOUT
+        self._input_encoding = input_encoding
+        self._use_gzip       = use_gzip_compression
+        self._debugHTTP      = debugHTTP
+        self._oauth_consumer = None
+        self._proxy = proxy
 
-    self._InitializeRequestHeaders(request_headers)
-    self._InitializeUserAgent()
-    self._InitializeDefaultParameters()
+        self._InitializeRequestHeaders(request_headers)
+        self._InitializeUserAgent()
+        self._InitializeDefaultParameters()
 
-    if base_url is None:
-      self.base_url = 'https://api.twitter.com/1'
-    else:
-      self.base_url = base_url
+        if base_url is None:
+            self.base_url = 'https://api.twitter.com/1'
+        else:
+            self.base_url = base_url
 
-    if consumer_key is not None and (access_token_key is None or
-                                     access_token_secret is None):
-      print >> sys.stderr, 'Twitter now requires an oAuth Access Token for API calls.'
-      print >> sys.stderr, 'If your using this library from a command line utility, please'
-      print >> sys.stderr, 'run the the included get_access_token.py tool to generate one.'
+        if consumer_key is not None and (access_token_key is None or
+                                         access_token_secret is None):
+            print >> sys.stderr, 'Twitter now requires an oAuth Access Token for API calls.'
+            print >> sys.stderr, 'If your using this library from a command line utility, please'
+            print >> sys.stderr, 'run the the included get_access_token.py tool to generate one.'
 
-      raise TwitterError('Twitter requires oAuth Access Token for all API access')
+            raise TwitterError('Twitter requires oAuth Access Token for all API access')
 
-    self.SetCredentials(consumer_key, consumer_secret, access_token_key, access_token_secret)
+        self.SetCredentials(consumer_key, consumer_secret, access_token_key, access_token_secret)
 
-  def _FetchUrl(self,
+    def _FetchUrl(self,
                 url,
                 post_data=None,
                 parameters=None,
                 no_cache=None,
                 use_gzip_compression=None):
-    '''Fetch a URL, optionally caching for a specified time.
 
-    Args:
-      url:
-        The URL to retrieve
-      post_data:
-        A dict of (str, unicode) key/value pairs.
-        If set, POST will be used.
-      parameters:
-        A dict whose key/value pairs should encoded and added
-        to the query string. [Optional]
-      no_cache:
-        If true, overrides the cache on the current request
-      use_gzip_compression:
-        If True, tells the server to gzip-compress the response.
-        It does not apply to POST requests.
-        Defaults to None, which will get the value to use from
-        the instance variable self._use_gzip [Optional]
 
-    Returns:
-      A string containing the body of the response.
-    '''
     # Build the extra parameters dict
-    extra_params = {}
-    if self._default_params:
-      extra_params.update(self._default_params)
-    if parameters:
-      extra_params.update(parameters)
+      extra_params = {}
+      if self._default_params:
+        extra_params.update(self._default_params)
+      if parameters:
+        extra_params.update(parameters)
 
-    if post_data:
-      http_method = "POST"
-    else:
-      http_method = "GET"
+      if post_data:
+        http_method = "POST"
+      else:
+        http_method = "GET"
 
-    if self._debugHTTP:
-      _debug = 1
-    else:
-      _debug = 0
+      if self._debugHTTP:
+        _debug = 1
+      else:
+        _debug = 0
 
-    http_handler  = self._urllib.HTTPHandler(debuglevel=_debug)
-    https_handler = self._urllib.HTTPSHandler(debuglevel=_debug)
-    proxy_handler = self._urllib.ProxyHandler(self._proxy)
-    
-    opener = self._urllib.OpenerDirector()
-    opener.add_handler(http_handler)
-    opener.add_handler(https_handler)
-    
-    if self._proxy:
-        opener.add_handler(proxy_handler)
+      http_handler = self._urllib.HTTPHandler(debuglevel=_debug)
+      https_handler = self._urllib.HTTPSHandler(debuglevel=_debug)
+      proxy_handler = self._urllib.ProxyHandler(self._proxy)
 
-    if use_gzip_compression is None:
-      use_gzip = self._use_gzip
-    else:
-      use_gzip = use_gzip_compression
+      opener = self._urllib.OpenerDirector()
+      opener.add_handler(http_handler)
+      opener.add_handler(https_handler)
+
+      if self._proxy:
+          opener.add_handler(proxy_handler)
+
+      if use_gzip_compression is None:
+        use_gzip = self._use_gzip
+      else:
+        use_gzip = use_gzip_compression
 
     # Set up compression
-    if use_gzip and not post_data:
-      opener.addheaders.append(('Accept-Encoding', 'gzip'))
+      if use_gzip and not post_data:
+        opener.addheaders.append(('Accept-Encoding', 'gzip'))
 
-    if self._oauth_consumer is not None:
-      if post_data and http_method == "POST":
-        parameters = post_data.copy()
+      if self._oauth_consumer is not None:
+        if post_data and http_method == "POST":
+          parameters = post_data.copy()
 
-      req = oauth.Request.from_consumer_and_token(self._oauth_consumer,
+        req = oauth.Request.from_consumer_and_token(self._oauth_consumer,
                                                   token=self._oauth_token,
                                                   http_method=http_method,
                                                   http_url=url, parameters=parameters)
 
-      req.sign_request(self._signature_method_hmac_sha1, self._oauth_consumer, self._oauth_token)
+        req.sign_request(self._signature_method_hmac_sha1, self._oauth_consumer, self._oauth_token)
 
-      headers = req.to_header()
+        headers = req.to_header()
 
-      if http_method == "POST":
-        encoded_post_data = req.to_postdata()
+        if http_method == "POST":
+          encoded_post_data = req.to_postdata()
+        else:
+          encoded_post_data = None
+          url = req.to_url()
       else:
-        encoded_post_data = None
-        url = req.to_url()
-    else:
-      url = self._BuildUrl(url, extra_params=extra_params)
-      encoded_post_data = self._EncodePostData(post_data)
+        url = self._BuildUrl(url, extra_params=extra_params)
+        encoded_post_data = self._EncodePostData(post_data)
 
-    # Open and return the URL immediately if we're not going to cache
-    if encoded_post_data or no_cache or not self._cache or not self._cache_timeout:
-      response = opener.open(url, encoded_post_data)
-      url_data = self._DecompressGzippedResponse(response)
-      opener.close()
-    else:
+      # Open and return the URL immediately if we're not going to cache
+      if encoded_post_data or no_cache or not self._cache or not self._cache_timeout:
+        response = opener.open(url, encoded_post_data)
+        url_data = self._DecompressGzippedResponse(response)
+        opener.close()
+      else:
       # Unique keys are a combination of the url and the oAuth Consumer Key
-      if self._consumer_key:
-        key = self._consumer_key + ':' + url
-      else:
-        key = url
+        if self._consumer_key:
+          key = self._consumer_key + ':' + url
+        else:
+          key = url
 
       #TODO I turn off the cache as it bugged all the app,
       #but I need to see what's wrong with that.
@@ -500,18 +483,19 @@ class ApiPatch(Api):
 
       # If the cached version is outdated then fetch another and store it
       #if not last_cached or time.time() >= last_cached + self._cache_timeout:
-      try:
-        response = opener.open(url, encoded_post_data)
-        url_data = self._DecompressGzippedResponse(response)
+        try:
+          response = opener.open(url, encoded_post_data)
+          url_data = self._DecompressGzippedResponse(response)
         #self._cache.Set(key, url_data)
-      except urllib2.HTTPError, e:
-        print e
-      opener.close()
+        except urllib2.HTTPError, e:
+          print e
+        opener.close()
     #else:
       #url_data = self._cache.Get(key)
 
     # Always return the latest version
-    return url_data
+      return url_data
+
 
     def PostRetweet(self, id):
         '''This code come from issue #130 on python-twitter tracker'''

@@ -68,12 +68,6 @@ class Interface(object):
         data = '@' + nick
         self.edit_status('reply', data)
 
-    def reply_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.reply_done)
-        if content:
-            self.api.post_tweet(content, self.status.id)
-
     def edit_status(self, action, content=''):
         self.foot = TweetEditor(content)
         self.main_frame.set_footer(self.foot)
