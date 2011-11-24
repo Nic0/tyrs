@@ -15,15 +15,14 @@
 
 import re
 import os
-import sys
 import tyrs
 import urwid
 from user import User
 from keys import Keys
+from utils import get_urls
 from constant import palette
 from editor import TweetEditor
 from update import UpdateThread
-from utils import encode, get_urls
 from widget import StatusWidget, HeaderWidget
 
 
@@ -41,7 +40,6 @@ class Interface(object):
         self.refresh_token    = False
         self.stoped = False
         self.buffer           = 'home'
-        self.charset = sys.stdout.encoding
         self.first_update()
         self.main_loop()
 
@@ -98,8 +96,8 @@ class Interface(object):
             self.timelines[buff].all_read()
 
     def display_timeline (self):
-        items = []
         timeline = self.select_current_timeline()
+        items = []
         for i, status in enumerate(timeline.statuses):
             if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
                 items.append(urwid.Divider('-'))
@@ -115,13 +113,10 @@ class Interface(object):
         self.loop.draw_screen()
 
     def display_flash_message(self):
-        try:
-            header = HeaderWidget()
-            self.main_frame.set_header(header)
-            self.redraw_screen()
-            self.api.flash_message.reset()
-        except AttributeError:
-            pass
+        header = HeaderWidget()
+        self.main_frame.set_header(header)
+        self.redraw_screen()
+        self.api.flash_message.reset()
 
     def erase_flash_message(self):
         self.api.flash_message.reset()
@@ -145,7 +140,6 @@ class Interface(object):
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
-
 
     def display_help_bar(self):
         '''The help bar display at the bottom of the screen,
