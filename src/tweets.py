@@ -305,6 +305,39 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
+    def tweet_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.tweet_done)
+        if content:
+            self.post_tweet(encode(content))
+
+    def follow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.follow_done)
+        if content:
+            self.create_friendship(content)
+
+    def unfollow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.unfollow_done)
+        if content:
+            self.destroy_friendship(content)
+
+    def search_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.search_done)
+        if content:
+            self.search(content)
+
+    def public_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.foot, 'done', self.public_done)
+        if content:
+            self.find_public_timeline(content)
+
+    def clean_edit(self):
+        self.interface.main_frame.set_focus('body')
+        self.interface.main_frame.set_footer(None)
 
     def flash(self, event, string=None):
         self.flash_message.event = event

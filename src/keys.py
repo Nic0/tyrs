@@ -120,6 +120,9 @@ class Keys(object):
 # User info
         elif ch == 'i':
             self.interface.current_user_info()
+# Waterline
+        elif ch == self.conf.keys['waterline']:
+            self.interface.update_last_read_home()
 
         self.interface.display_timeline()
 
@@ -136,5 +139,3 @@ class Keys(object):
     #self.interface.back_on_bottom()
 #elif ch == ord('?'):
     #Help()
-#elif ch == self.conf.keys['waterline']:
-    #self.interface.update_last_read_home()

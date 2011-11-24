@@ -16,17 +16,15 @@
 import re
 import os
 import sys
-#import time
 import tyrs
 import urwid
-import curses
-#import logging
-from update import UpdateThread
 from user import User
-from utils import html_unescape, encode, get_source, get_urls
-from widget import StatusWidget, HeaderWidget
-from editor import TweetEditor
 from keys import Keys
+from constant import palette
+from editor import TweetEditor
+from update import UpdateThread
+from utils import encode, get_urls
+from widget import StatusWidget, HeaderWidget
 
 
 class Interface(object):
@@ -49,29 +47,8 @@ class Interface(object):
 
     def main_loop (self):
 
-        palette = [
-            ('body','dark blue', '', 'standout'),
-            ('focus','dark red', '', 'standout'),
-            ('head','light red', ''),
-            ('info_msg', 'dark green', ''),
-            ('warn_msg', 'dark red', ''),
-            ('current_tab', 'light blue', ''),
-            ('other_tab', 'dark blue', ''),
-            ('read', 'dark blue', ''),
-            ('unread', 'dark red', ''),
-            ('hashtag', 'dark green', ''),
-            ('attag', 'brown', ''),
-            ('highlight', 'dark red', ''),
-            ]
-
-
-        items = []
-        timeline = self.select_current_timeline()
-        for i, status in enumerate(timeline.statuses):
-            items.append(StatusWidget(i, status))
-
         self.header = HeaderWidget()
-        self.listbox = urwid.ListBox(urwid.SimpleListWalker(items))
+        self.listbox = urwid.ListBox(urwid.SimpleListWalker([]))
         self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header)
         key_handle = Keys()
         self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=key_handle.keystroke)
@@ -79,7 +56,6 @@ class Interface(object):
         update.start()
         self.loop.run()
         update.stop()
-
 
     def reply(self):
         self.status = self.current_status()
@@ -102,57 +78,20 @@ class Interface(object):
         self.main_frame.set_footer(self.foot)
         self.main_frame.set_focus('footer')
         if action == 'tweet':
-            urwid.connect_signal(self.foot, 'done', self.tweet_done)
+            urwid.connect_signal(self.foot, 'done', self.api.tweet_done)
         elif action == 'reply':
-            urwid.connect_signal(self.foot, 'done', self.reply_done)
+            urwid.connect_signal(self.foot, 'done', self.api.reply_done)
         elif action == 'follow':
-            urwid.connect_signal(self.foot, 'done', self.follow_done)
+            urwid.connect_signal(self.foot, 'done', self.api.follow_done)
         elif action == 'unfollow':
-            urwid.connect_signal(self.foot, 'done', self.unfollow_done)
+            urwid.connect_signal(self.foot, 'done', self.api.unfollow_done)
         elif action == 'search':
-            urwid.connect_signal(self.foot, 'done', self.search_done)
+            urwid.connect_signal(self.foot, 'done', self.api.search_done)
         elif action == 'public':
-            urwid.connect_signal(self.foot, 'done', self.public_done)
-
-    def tweet_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.tweet_done)
-        if content:
-            self.api.post_tweet(encode(content))
-
-    def follow_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.follow_done)
-        if content:
-            self.api.create_friendship(content)
-
-    def unfollow_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.unfollow_done)
-        if content:
-            self.api.destroy_friendship(content)
-
-    def search_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.search_done)
-        if content:
-            self.api.search(content)
-
-    def public_done(self, content):
-        self.clean_edit()
-        urwid.disconnect_signal(self, self.foot, 'done', self.public_done)
-        if content:
-            self.api.find_public_timeline(content)
-
-    def clean_edit(self):
-        self.main_frame.set_focus('body')
-        self.main_frame.set_footer(None)
-
-
-
+            urwid.connect_signal(self.foot, 'done', self.api.public_done)
 
     def first_update(self):
-        updates = ['home', 'direct', 'mentions', 'user_retweet', 'favorite']
+        updates = ['user_retweet', 'favorite']
         for buff in updates:
             self.api.update_timeline(buff)
             self.timelines[buff].reset()
@@ -162,10 +101,14 @@ class Interface(object):
         items = []
         timeline = self.select_current_timeline()
         for i, status in enumerate(timeline.statuses):
+            if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
+                items.append(urwid.Divider('-'))
             items.append(StatusWidget(i, status))
         self.listbox = urwid.ListBox(urwid.SimpleListWalker(items))
 
         self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
+        if self.buffer == 'home':
+            self.conf.save_last_read(timeline.last_read)
         self.display_flash_message()
 
     def redraw_screen (self):
@@ -196,11 +139,9 @@ class Interface(object):
             self.change_buffer(self.buffers[new_index])
 
     def check_for_last_read(self, id):
-        if self.buffer == 'home':
-            if self.last_read_home == str(id):
-                self.screen.hline(self.current_y, 1, '-', self.maxyx[1]-3)
-                self.current_y += 1
-
+        if self.last_read_home == str(id):
+            return True
+        return False
 
     def select_current_timeline(self):
         return self.timelines[self.buffer]
