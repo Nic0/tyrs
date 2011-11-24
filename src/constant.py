@@ -13,6 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+palette = [
+    ('body','dark blue', '', 'standout'),
+    ('focus','dark red', '', 'standout'),
+    ('head','light red', ''),
+    ('info_msg', 'dark green', ''),
+    ('warn_msg', 'dark red', ''),
+    ('current_tab', 'light blue', ''),
+    ('other_tab', 'dark blue', ''),
+    ('read', 'dark blue', ''),
+    ('unread', 'dark red', ''),
+    ('hashtag', 'dark green', ''),
+    ('attag', 'brown', ''),
+    ('highlight', 'dark red', ''),
+    ]
+
 # c: color value
 # b: bold
 colors = {
@@ -50,7 +65,7 @@ key = {
     'follow':            'F',
     'unfollow':          'L',
     'openurl':           'o',
-    'open_image':        '^I',
+    'open_image':        'ctrl i',
     'home':              'h',
     'mentions':          'm',
     'reply':             'M',
@@ -60,12 +75,12 @@ key = {
     'sendDM':            'D',
     'search':            's',
     'search_user':       'U',
-    'search_current_user': '^F',
-    'search_myself':     '^U',
-    'redraw':            '^L',
+    'search_current_user': 'ctrl f',
+    'search_myself':     'ctrl u',
+    'redraw':            'ctrl l',
     'fav':               'b',
     'get_fav':           'B',
-    'delete_fav':        '^B',
+    'delete_fav':        'ctrl b',
     'thread':            'T',
     'waterline':         'w',
 }

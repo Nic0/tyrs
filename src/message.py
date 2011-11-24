@@ -68,8 +68,8 @@ class FlashMessage(object):
 
     def reset(self):
         self.level = 0
-        self.event = None
-        self.string = None
+        self.event = 'empty'
+        self.string = ''
 
     def warning(self):
         self.level = 1
@@ -78,10 +78,10 @@ class FlashMessage(object):
         return self.compose_msg()
 
     def compose_msg(self):
-        msg = self.message[self.event][self.level]
-        if self.string != None:
+        try:
             msg = self.message[self.event][self.level] % self.string
-
+        except TypeError:
+            msg = self.message[self.event][self.level]
         return ' ' +msg+ ' '
 
 def print_ask_service(token_file):

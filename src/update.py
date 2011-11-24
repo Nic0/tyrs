@@ -17,11 +17,13 @@ import tyrs
 import logging
 import threading
 import time
+import urwid
 
 class UpdateThread(threading.Thread):
     '''
     The only thread that update all timelines
     '''
+
     def __init__(self):
         self.interface = tyrs.container['interface']
         self.conf = tyrs.container['conf']
@@ -30,6 +32,7 @@ class UpdateThread(threading.Thread):
         self._stopevent = threading.Event()
 
     def run(self):
+        self.update_timeline()
         logging.info('Thread started')
         for i in range(self.conf.params['refresh'] * 60):
             time.sleep(1)
@@ -37,7 +40,6 @@ class UpdateThread(threading.Thread):
                 logging.info('Thread forced to stop')
                 return
         self.start_new_thread()
-        self.update_timeline()
         logging.info('Thread stoped')
         self.stop()
 
@@ -53,3 +55,4 @@ class UpdateThread(threading.Thread):
         for t in timeline:
             self.api.update_timeline(t)
         self.interface.display_timeline()
+        self.interface.redraw_screen()

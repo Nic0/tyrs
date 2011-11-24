@@ -13,16 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import sys
 import tyrs
+import urwid
 import logging
-from urllib2 import URLError
-import oauth2 as oauth
 import urllib2
-from editor import *
-from utils import cut_attag
+import oauth2 as oauth
+from utils import encode
+from urllib2 import URLError
 from message import FlashMessage
-from twitter import Api, TwitterError, Status, _FileCache
 from httplib import BadStatusLine
+from twitter import Api, TwitterError, Status, _FileCache
 
 try:
     import json
@@ -75,13 +77,6 @@ class Tweets(object):
         self.myself = self.api.VerifyCredentials()
         self.conf.my_nick = self.myself.screen_name
 
-    def tweet(self, data=None):
-        tweet = TweetEditor(data).content
-        if tweet:
-            self.post_tweet(tweet)
-        else:
-            self.flash('empty')
-
     def post_tweet(self, tweet, reply_to=None):
         self.flash('tweet')
         try:
@@ -101,7 +96,7 @@ class Tweets(object):
         status = self.interface.current_status()
         nick = status.user.screen_name
         data = 'RT @%s: %s' % (nick, status.text)
-        self.tweet(data)
+        self.interface.edit_status('tweet', data)
 
     def reply(self):
         status = self.interface.current_status()
@@ -147,9 +142,7 @@ class Tweets(object):
             self.error(e)
 
     def follow(self):
-        nick = NickEditor().content
-        if nick:
-            self.create_friendship(nick)
+        self.interface.edit_status('follow')
 
     def follow_selected(self):
         status = self.interface.current_status()
@@ -231,7 +224,9 @@ class Tweets(object):
         self.interface.display_flash_message()
 
     def retreive_statuses(self, timeline, page=None):
-        self.interface.display_update_msg()
+        self.flash_message.event = 'update'
+        self.flash_message.level = 0
+        self.interface.display_flash_message()
         if timeline == 'home':
             statuses = self.api.GetFriendsTimeline(retweets=True, page=page)
         elif timeline == 'mentions':
@@ -252,8 +247,7 @@ class Tweets(object):
 
         return statuses
 
-    def find_public_timeline(self):
-        nick = NickEditor().content
+    def find_public_timeline(self, nick):
         if nick and nick != self.search_user:
             self.change_search_user(nick)
             self.load_user_public_timeline()
@@ -299,8 +293,8 @@ class Tweets(object):
             except TwitterError:
                 pass
 
-    def search(self):
-        self.search_word = SearchEditor().content
+    def search(self, content):
+        self.search_word = content
         self.flash('search', self.search_word)
         self.timelines['search'].empty()
         try:
@@ -309,6 +303,45 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
+    def tweet_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.tweet_done)
+        if content:
+            self.post_tweet(encode(content))
+
+    def reply_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.reply_done)
+        if content:
+            self.post_tweet(encode(content), self.interface.current_status().id)
+
+    def follow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.follow_done)
+        if content:
+            self.create_friendship(content)
+
+    def unfollow_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.unfollow_done)
+        if content:
+            self.destroy_friendship(content)
+
+    def search_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.search_done)
+        if content:
+            self.search(encode(content))
+
+    def public_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.public_done)
+        if content:
+            self.find_public_timeline(content)
+
+    def clean_edit(self):
+        self.interface.main_frame.set_focus('body')
+        self.interface.main_frame.set_footer(None)
 
     def flash(self, event, string=None):
         self.flash_message.event = event
@@ -324,48 +357,48 @@ DEFAULT_CACHE = object()
 class ApiPatch(Api):
 
     def __init__(self,
-                 consumer_key=None,
-                 consumer_secret=None,
-                 access_token_key=None,
-                 access_token_secret=None,
-                 input_encoding=None,
-                 request_headers=None,
-                 cache=DEFAULT_CACHE,
-                 shortner=None,
-                 base_url=None,
-                 use_gzip_compression=False,
-                 debugHTTP=False,
-                 proxy={}
-                ):
+               consumer_key=None,
+               consumer_secret=None,
+               access_token_key=None,
+               access_token_secret=None,
+               input_encoding=None,
+               request_headers=None,
+               cache=DEFAULT_CACHE,
+               shortner=None,
+               base_url=None,
+               use_gzip_compression=False,
+               debugHTTP=False,
+               proxy={}
+              ):
 
 
-      self.SetCache(cache)
-      self._urllib         = urllib2
-      self._cache_timeout  = Api.DEFAULT_CACHE_TIMEOUT
-      self._input_encoding = input_encoding
-      self._use_gzip       = use_gzip_compression
-      self._debugHTTP      = debugHTTP
-      self._oauth_consumer = None
-      self._proxy = proxy
+        self.SetCache(cache)
+        self._urllib         = urllib2
+        self._cache_timeout  = Api.DEFAULT_CACHE_TIMEOUT
+        self._input_encoding = input_encoding
+        self._use_gzip       = use_gzip_compression
+        self._debugHTTP      = debugHTTP
+        self._oauth_consumer = None
+        self._proxy = proxy
 
-      self._InitializeRequestHeaders(request_headers)
-      self._InitializeUserAgent()
-      self._InitializeDefaultParameters()
+        self._InitializeRequestHeaders(request_headers)
+        self._InitializeUserAgent()
+        self._InitializeDefaultParameters()
 
-      if base_url is None:
-        self.base_url = 'https://api.twitter.com/1'
-      else:
-        self.base_url = base_url
+        if base_url is None:
+            self.base_url = 'https://api.twitter.com/1'
+        else:
+            self.base_url = base_url
 
-      if consumer_key is not None and (access_token_key is None or
-                                       access_token_secret is None):
-        print >> sys.stderr, 'Twitter now requires an oAuth Access Token for API calls.'
-        print >> sys.stderr, 'If your using this library from a command line utility, please'
-        print >> sys.stderr, 'run the the included get_access_token.py tool to generate one.'
+        if consumer_key is not None and (access_token_key is None or
+                                         access_token_secret is None):
+            print >> sys.stderr, 'Twitter now requires an oAuth Access Token for API calls.'
+            print >> sys.stderr, 'If your using this library from a command line utility, please'
+            print >> sys.stderr, 'run the the included get_access_token.py tool to generate one.'
 
-        raise TwitterError('Twitter requires oAuth Access Token for all API access')
+            raise TwitterError('Twitter requires oAuth Access Token for all API access')
 
-      self.SetCredentials(consumer_key, consumer_secret, access_token_key, access_token_secret)
+        self.SetCredentials(consumer_key, consumer_secret, access_token_key, access_token_secret)
 
     def _FetchUrl(self,
                 url,
@@ -392,7 +425,11 @@ class ApiPatch(Api):
       else:
         _debug = 0
 
+<<<<<<< HEAD
       http_handler  = self._urllib.HTTPHandler(debuglevel=_debug)
+=======
+      http_handler = self._urllib.HTTPHandler(debuglevel=_debug)
+>>>>>>> dev
       https_handler = self._urllib.HTTPSHandler(debuglevel=_debug)
       proxy_handler = self._urllib.ProxyHandler(self._proxy)
 
@@ -465,6 +502,10 @@ class ApiPatch(Api):
 
     # Always return the latest version
       return url_data
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 
     def PostRetweet(self, id):
         '''This code come from issue #130 on python-twitter tracker'''

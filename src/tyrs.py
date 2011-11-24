@@ -31,7 +31,6 @@ import locale
 import tweets
 import argparse
 import gettext
-import curses.wrapper
 from urllib2 import URLError
 from keys import Keys
 from timeline import Timeline
@@ -67,7 +66,7 @@ def init_tyrs():
     init_timelines()
     init_api()
     init_interface()
-    init_thread()
+    #init_thread()
 
 def init_conf():
     conf = config.Config(arguments())
@@ -101,12 +100,12 @@ def init_timelines():
 def init_thread():
     update = UpdateThread()
     update.start()
-    init_keys()
+    #init_keys()
     update.stop()
-    container['interface'].tear_down()
 
-def init_keys():
-    Keys().handleKeyBinding()
+#def init_keys():
+    #return
+    #Keys().handleKeyBinding()
 
 if __name__ == "__main__":
     gettext.install('tyrs', unicode=1)

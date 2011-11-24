@@ -212,9 +212,9 @@ class Config(object):
     def parse_keys(self):
         for key in self.keys:
             if self.conf.has_option('keys', key):
-                self.keys[key] = self.char_value(self.conf.get('keys', key))
+                self.keys[key] = self.conf.get('keys', key)
             else:
-                self.keys[key] = self.char_value(self.keys[key])
+                self.keys[key] = self.keys[key]
 
     def char_value(self, ch):
         if ch[0] == '^':
