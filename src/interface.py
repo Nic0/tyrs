@@ -114,6 +114,9 @@ class Interface(object):
                 self.conf.save_last_read(timeline.last_read)
             self.display_flash_message()
 
+    def create_listwalker(self):
+        pass
+
     def lazzy_load(self):
         focus = self.listbox.get_focus()[1]
         if focus is len(self.items)-1:
