@@ -20,6 +20,7 @@ import urwid
 import curses
 from user import User
 from keys import Keys
+from help import help_bar, Help
 from utils import get_urls
 from constant import palette
 from editor import TweetEditor
@@ -35,6 +36,7 @@ class Interface(object):
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
         self.focus = 0
+        self.help = False
         tyrs.container.add('interface', self)
         self.update_last_read_home()
         self.api.set_interface()
@@ -51,8 +53,10 @@ class Interface(object):
         walker = urwid.SimpleListWalker(self.items)
         self.listbox = urwid.ListBox(walker)
         urwid.connect_signal(walker, 'modified', self.lazzy_load)
-        self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header)
+        foot = help_bar()
+        self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header, footer=foot)
         key_handle = Keys()
+        urwid.connect_signal(key_handle, 'help_done', self.help_done)
         self.loop = urwid.MainLoop(self.main_frame, palette, unhandled_input=key_handle.keystroke)
         update = UpdateThread()
         update.start()
@@ -94,20 +98,21 @@ class Interface(object):
             self.timelines[buff].all_read()
 
     def display_timeline (self):
-        timeline = self.select_current_timeline()
-        self.items = []
-        for i, status in enumerate(timeline.statuses):
-            if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
-                self.items.append(urwid.Divider('-'))
-            self.items.append(StatusWidget(i, status))
-        walker = urwid.SimpleListWalker(self.items)
-        self.listbox = urwid.ListBox(walker)
-        urwid.connect_signal(walker, 'modified', self.lazzy_load)
+        if not self.help:
+            timeline = self.select_current_timeline()
+            self.items = []
+            for i, status in enumerate(timeline.statuses):
+                if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
+                    self.items.append(urwid.Divider('-'))
+                self.items.append(StatusWidget(i, status))
+            walker = urwid.SimpleListWalker(self.items)
+            self.listbox = urwid.ListBox(walker)
+            urwid.connect_signal(walker, 'modified', self.lazzy_load)
 
-        self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
-        if self.buffer == 'home':
-            self.conf.save_last_read(timeline.last_read)
-        self.display_flash_message()
+            self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
+            if self.buffer == 'home':
+                self.conf.save_last_read(timeline.last_read)
+            self.display_flash_message()
 
     def lazzy_load(self):
         focus = self.listbox.get_focus()[1]
@@ -152,23 +157,6 @@ class Interface(object):
     def select_current_timeline(self):
         return self.timelines[self.buffer]
 
-    def display_help_bar(self):
-        '''The help bar display at the bottom of the screen,
-           for keysbinding reminder'''
-        if self.conf.params['help']:
-            maxyx = self.screen.getmaxyx()
-            self.screen.addnstr(maxyx[0] -1, 2,
-                'help:? up:%s down:%s tweet:%s retweet:%s reply:%s home:%s mentions:%s update:%s' %
-                               (chr(self.conf.keys['up']),
-                                chr(self.conf.keys['down']),
-                                chr(self.conf.keys['tweet']),
-                                chr(self.conf.keys['retweet']),
-                                chr(self.conf.keys['reply']),
-                                chr(self.conf.keys['home']),
-                                chr(self.conf.keys['mentions']),
-                                chr(self.conf.keys['update']),
-                               ), maxyx[1] -4, self.get_color('text')
-            )
 
     def clear_statuses(self):
         timeline = self.select_current_timeline()
@@ -187,6 +175,17 @@ class Interface(object):
         self.focus = self.listbox.get_focus()[1]
         if self.focus != type(1):
             self.focus = 1
+
+    def display_help(self):
+        self.help = True
+        h = Help()
+        self.main_frame.set_body(h)
+        #self.main_frame.set_body(Help().display_help_screen())
+        #urwid.connect_signal(h, 'done', self.help_done)
+
+    def help_done(self):
+        self.help = False
+        self.display_timeline()
 
     def back_on_bottom(self):
         self.listbox.set_focus(len(self.items))

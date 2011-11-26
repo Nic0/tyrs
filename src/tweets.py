@@ -21,6 +21,7 @@ import logging
 import urllib2
 import oauth2 as oauth
 from utils import encode
+from help import help_bar
 from urllib2 import URLError
 from message import FlashMessage
 from httplib import BadStatusLine
@@ -342,8 +343,9 @@ class Tweets(object):
             self.find_public_timeline(content)
 
     def clean_edit(self):
+        footer = help_bar()
         self.interface.main_frame.set_focus('body')
-        self.interface.main_frame.set_footer(None)
+        self.interface.main_frame.set_footer(footer)
 
     def flash(self, event, string=None):
         self.flash_message.event = event
