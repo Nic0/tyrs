@@ -121,7 +121,7 @@ class StatusWidget (urwid.WidgetWrap):
                 elif word[0] == '@':
                     ## The AT TAG is,  @myself
                     if word == '@%s ' % myself or word == '@%s: ' % myself:
-                        result.append(('highlight', word))
+                        result.append(('highlight_nick', word))
                     ## @anyone
                     else:
                         result.append(('attag', word))
