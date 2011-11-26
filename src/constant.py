@@ -26,6 +26,8 @@ palette = [
     ('hashtag', 'dark green', ''),
     ('attag', 'brown', ''),
     ('highlight', 'dark red', ''),
+    ('help_bar', 'yellow', 'dark blue'),
+    ('help_key', 'dark red', ''),
     ]
 
 # c: color value

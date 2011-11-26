@@ -19,15 +19,16 @@ import urwid
 def help_bar():
     conf = tyrs.container['conf']
     if conf.params['help']:
-        return urwid.Text( 'help:? up:%s down:%s tweet:%s retweet:%s reply:%s quit:%s'  %
-                           (conf.keys['up'],
-                            conf.keys['down'],
-                            conf.keys['tweet'],
-                            conf.keys['retweet'],
-                            conf.keys['reply'],
-                            conf.keys['quit'],
-                           )
-        )
+        return urwid.AttrWrap(urwid.Columns([
+            urwid.Text(['help:', ('help_key', ' ? ')]),
+            urwid.Text(['up:', ('help_key', ' %s ' % conf.keys['up'])]),
+            urwid.Text(['down:', ('help_key', ' %s ' % conf.keys['down'])]),
+            urwid.Text(['tweet:', ('help_key', ' %s ' % conf.keys['tweet'])]),
+            ('fixed', 12, urwid.Text(['retweet:', ('help_key', ' %s ' %
+                                                   conf.keys['retweet'])])),
+            urwid.Text(['reply:', ('help_key', ' %s ' % conf.keys['reply'])]),
+            urwid.Text(['quit:', ('help_key', ' %s ' % conf.keys['quit'])]),
+        ]), 'help_bar')
     else:
         return None
 
