@@ -1,6 +1,6 @@
 # usage/ watchr watchrc.rb
 
-watch '^src/(.*)\.py$' do |match|
+watch '^src/tyrs/(.*)\.py$' do |match|
     pychecker match[0]
 end
 
