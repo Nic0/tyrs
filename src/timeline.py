@@ -21,6 +21,7 @@ class Timeline(object):
 
     def __init__(self):
         self.statuses = []
+        self.walker = []
         self.unread = 0
         self.count = 0
         self.last_read = 0
@@ -36,13 +37,19 @@ class Timeline(object):
 
         if retreive:
             items = []
-            if len(self.statuses) == 0:
+            if len(self.walker) == 0:
                 for i, status in enumerate(retreive):
                     items.append(StatusWidget(status.id, status))
                     self.walker = urwid.SimpleListWalker(items)
                     self.timeline = urwid.ListBox(self.walker)
             else:
-                pass
+                focus_status, pos = self.walker.get_focus()
+                for i, status in enumerate(retreive):
+                    while status.id != self.walker[0+i].id:
+                        self.walker.insert(i, StatusWidget(status.id, status))
+                        self.walker.set_focus(pos+1)
+                    self.walker[i] = StatusWidget(status.id, status)
+
                 #current_id = self.statuses[self.current].id
                 #for i, status in enumerate(self.statuses):
                     #if retreive[-1].id == status.id:
