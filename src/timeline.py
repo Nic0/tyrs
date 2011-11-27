@@ -83,15 +83,15 @@ class Timeline(object):
 
     def count_statuses(self):
         try:
-            self.count = len(self.statuses)
+            self.count = len(self.walker)
         except TypeError:
             self.count = 0
 
     def count_unread(self):
         try:
             self.unread = 0
-            for i in range(len(self.statuses)):
-                if self.statuses[i].id == self.last_read:
+            for i in range(len(self.walker)):
+                if self.walker[i].id == self.last_read:
                     break
                 self.unread += 1
         except TypeError:
@@ -106,4 +106,4 @@ class Timeline(object):
 
     def all_read(self):
         if self.count > 0:
-            self.last_read = self.statuses[0].id
+            self.last_read = self.walker[0].id
