@@ -8,7 +8,7 @@
 """
 import gettext
 gettext.install('tyrs', unicode=1)
-from src.tyrs import main
+from tyrs.tyrs import main
 #import cProfile
 
 __revision__ = '0.5.0'
