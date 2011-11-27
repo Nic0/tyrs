@@ -50,21 +50,6 @@ class Timeline(object):
                         self.walker.set_focus(pos+i+1)
                     self.walker[i] = StatusWidget(status.id, status)
 
-                #current_id = self.statuses[self.current].id
-                #for i, status in enumerate(self.statuses):
-                    #if retreive[-1].id == status.id:
-                        #try:
-                            #self.statuses = retreive + self.statuses[i+1:]
-                            #self.find_current(current_id)
-                        #except IndexError:
-                            #self.statuses = retreive
-            self.update_counter()
-
-    def find_current(self, current_id):
-        for i, status in enumerate(self.statuses):
-            if status.id == current_id:
-                self.current = i
-
     def filter_statuses(self, statuses):
         filters = []
         for i, status in enumerate(statuses):
