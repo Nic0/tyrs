@@ -34,10 +34,10 @@ class TweetEditor(urwid.WidgetWrap):
     __metaclass__ = urwid.signals.MetaSignals
     signals = ['done']
 
-    def __init__(self, init_content=''):
+    def __init__(self, init_content='', prompt=''):
         if init_content:
             init_content += ' '
-        self.editor = Editor('>> ', init_content)
+        self.editor = Editor('%s >> ' % prompt, init_content)
         self.counter = urwid.Text('0')
         w = urwid.Columns([ ('fixed', 4, self.counter), self.editor])
         urwid.connect_signal(self.editor, 'done', self.send_sigterm)

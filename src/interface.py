@@ -71,10 +71,10 @@ class Interface(object):
         #else:
             #self.direct_message()
         data = '@' + nick
-        self.edit_status('reply', data)
+        self.edit_status('reply', data, 'Tweet ')
 
-    def edit_status(self, action, content=''):
-        self.foot = TweetEditor(content)
+    def edit_status(self, action, content='', prompt=''):
+        self.foot = TweetEditor(content, prompt)
         self.main_frame.set_footer(self.foot)
         self.main_frame.set_focus('footer')
         if action == 'tweet':

@@ -49,7 +49,7 @@ class Keys(object):
                 self.api.update_timeline(self.interface.buffer)
 # Tweet
             elif ch == self.conf.keys['tweet']:
-                self.interface.edit_status('tweet')
+                self.interface.edit_status('tweet', prompt='Tweet ')
 # Reply
             elif ch == self.conf.keys['reply']:
                 self.interface.reply()
@@ -82,19 +82,19 @@ class Keys(object):
                 self.api.unfollow_selected()
 # Follow
             elif ch == self.conf.keys['follow']:
-                self.interface.edit_status('follow')
+                self.interface.edit_status('follow', prompt='Follow')
 # Unfollow
             elif ch == self.conf.keys['unfollow']:
-                self.interface.edit_status('follow')
+                self.interface.edit_status('follow', prompt='Unollow ')
 # Open URL
             elif ch == self.conf.keys['openurl']:
                 self.interface.openurl()
 # Search
             elif ch == self.conf.keys['search']:
-                self.interface.edit_status('search')
+                self.interface.edit_status('search', prompt='Search ')
 # Search User
             elif ch == self.conf.keys['search_user']:
-                self.interface.edit_status('public')
+                self.interface.edit_status('public', prompt='Nick ')
 # Search Myself
             elif ch == self.conf.keys['search_myself']:
                 self.api.my_public_timeline()
