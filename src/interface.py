@@ -100,14 +100,15 @@ class Interface(object):
     def display_timeline (self):
         if not self.help:
             timeline = self.select_current_timeline()
-            self.items = []
-            for i, status in enumerate(timeline.statuses):
-                if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
-                    self.items.append(urwid.Divider('-'))
-                self.items.append(StatusWidget(i, status))
-            walker = urwid.SimpleListWalker(self.items)
-            self.listbox = urwid.ListBox(walker)
-            urwid.connect_signal(walker, 'modified', self.lazzy_load)
+            #self.items = []
+            #for i, status in enumerate(timeline.statuses):
+                #if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
+                    #self.items.append(urwid.Divider('-'))
+                #self.items.append(StatusWidget(i, status))
+            #walker = urwid.SimpleListWalker(self.items)
+            #self.listbox = urwid.ListBox(walker)
+            #urwid.connect_signal(walker, 'modified', self.lazzy_load)
+            self.listbox = timeline.timeline
 
             self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
             if self.buffer == 'home':

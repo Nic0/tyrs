@@ -171,7 +171,10 @@ class StatusWidget (urwid.WidgetWrap):
         @return string: readeable time
         '''
         if self.conf.params['relative_time'] == 1 and self.buffer != 'direct':
-            result =  status.GetRelativeCreatedAt()
+            try:
+                result =  status.GetRelativeCreatedAt()
+            except AttributeError:
+                return ''
         else:
             hour = time.gmtime(status.GetCreatedAtInSeconds() - time.altzone)
             result = time.strftime('%H:%M', hour)

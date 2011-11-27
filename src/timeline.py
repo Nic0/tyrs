@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import urwid
+from widget import StatusWidget
 from filter import FilterStatus
 
 class Timeline(object):
@@ -27,22 +29,28 @@ class Timeline(object):
         self.last = 0
         self.page = 1
         self.filter = FilterStatus()
+        self.timeline = urwid.ListBox(urwid.SimpleListWalker([]))
 
     def append_new_statuses(self, retreive):
         retreive = self.filter_statuses(retreive)
 
         if retreive:
+            items = []
             if len(self.statuses) == 0:
-                self.statuses = retreive
+                for i, status in enumerate(retreive):
+                    items.append(StatusWidget(status.id, status))
+                    self.walker = urwid.SimpleListWalker(items)
+                    self.timeline = urwid.ListBox(self.walker)
             else:
-                current_id = self.statuses[self.current].id
-                for i, status in enumerate(self.statuses):
-                    if retreive[-1].id == status.id:
-                        try:
-                            self.statuses = retreive + self.statuses[i+1:]
-                            self.find_current(current_id)
-                        except IndexError:
-                            self.statuses = retreive
+                pass
+                #current_id = self.statuses[self.current].id
+                #for i, status in enumerate(self.statuses):
+                    #if retreive[-1].id == status.id:
+                        #try:
+                            #self.statuses = retreive + self.statuses[i+1:]
+                            #self.find_current(current_id)
+                        #except IndexError:
+                            #self.statuses = retreive
             self.update_counter()
 
     def find_current(self, current_id):
