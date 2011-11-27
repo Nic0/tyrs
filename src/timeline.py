@@ -47,7 +47,7 @@ class Timeline(object):
                 for i, status in enumerate(retreive):
                     while status.id != self.walker[0+i].id:
                         self.walker.insert(i, StatusWidget(status.id, status))
-                        self.walker.set_focus(pos+1)
+                        self.walker.set_focus(pos+i+1)
                     self.walker[i] = StatusWidget(status.id, status)
 
                 #current_id = self.statuses[self.current].id
