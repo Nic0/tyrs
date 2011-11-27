@@ -21,3 +21,4 @@ dist
 tyrs.egg-info
 build.sh
 PKGBUILD
+src/tyrs/tyrs
