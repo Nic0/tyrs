@@ -42,9 +42,10 @@ class Timeline(object):
                     items.append(StatusWidget(status.id, status))
                     self.walker = urwid.SimpleListWalker(items)
                     self.timeline = urwid.ListBox(self.walker)
+                    import tyrs
+                    self.interface = tyrs.container['interface']
+                    urwid.connect_signal(self.walker, 'modified', self.interface.lazzy_load)
             else:
-                import tyrs
-                self.interface = tyrs.container['interface']
                 size = self.interface.loop.screen_size
                 on_top = 'top' in self.timeline.ends_visible(size)
                 focus_status, pos = self.walker.get_focus()
@@ -75,7 +76,10 @@ class Timeline(object):
         if statuses == []:
             pass
         else:
-            self.statuses += statuses
+            items = []
+            for status in statuses:
+                items.append(StatusWidget(status.id, status))
+            self.walker.extend(items)
             self.count_statuses()
             self.count_unread()
 

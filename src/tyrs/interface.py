@@ -119,14 +119,14 @@ class Interface(object):
         pass
 
     def lazzy_load(self):
-        focus = self.listbox.get_focus()[1]
-        if focus is len(self.items)-1:
-            timeline = self.select_current_timeline()
+        timeline = self.select_current_timeline()
+        focus = timeline.timeline.get_focus()[1]
+        if focus is len(timeline.walker)-1:
             timeline.page += 1
             statuses = self.api.retreive_statuses(self.buffer, timeline.page)
             timeline.append_old_statuses(statuses)
             self.display_timeline()
-            self.listbox.set_focus(focus)
+            #self.listbox.set_focus(focus)
 
     def redraw_screen (self):
         self.loop.draw_screen()
