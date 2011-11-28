@@ -43,11 +43,17 @@ class Timeline(object):
                     self.walker = urwid.SimpleListWalker(items)
                     self.timeline = urwid.ListBox(self.walker)
             else:
+                import tyrs
+                self.interface = tyrs.container['interface']
+                size = self.interface.loop.screen_size
+                on_top = 'top' in self.timeline.ends_visible(size)
                 focus_status, pos = self.walker.get_focus()
                 for i, status in enumerate(retreive):
                     while status.id != self.walker[0+i].id:
                         self.walker.insert(i, StatusWidget(status.id, status))
-                        self.walker.set_focus(pos+i+1)
+                        if on_top:
+                            self.timeline.set_focus(0)
+                        self.timeline.set_focus(pos+i+1)
                     self.walker[i] = StatusWidget(status.id, status)
 
     def filter_statuses(self, statuses):
