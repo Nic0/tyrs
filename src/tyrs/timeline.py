@@ -50,11 +50,14 @@ class Timeline(object):
                 on_top = 'top' in self.timeline.ends_visible(size)
                 focus_status, pos = self.walker.get_focus()
                 for i, status in enumerate(retreive):
+                    # New statuses are insert
                     while status.id != self.walker[0+i].id:
                         self.walker.insert(i, StatusWidget(status.id, status))
                         if on_top:
                             self.timeline.set_focus(0)
                         self.timeline.set_focus(pos+i+1)
+                    # otherwise it just been updated
+                    self.timeline.set_focus(pos)
                     self.walker[i] = StatusWidget(status.id, status)
 
     def filter_statuses(self, statuses):
