@@ -21,14 +21,10 @@ class Timeline(object):
 
     def __init__(self, buffer):
         self.buffer = buffer
-        #self.statuses = []
         self.walker = []
         self.unread = 0
         self.count = 0
         self.last_read = 0
-        #self.current = 0
-        #self.first = 0
-        #self.last = 0
         self.page = 1
         self.filter = FilterStatus()
         self.timeline = urwid.ListBox(urwid.SimpleListWalker([]))

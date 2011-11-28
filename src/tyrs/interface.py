@@ -25,7 +25,7 @@ from utils import get_urls
 from constant import palette
 from editor import TweetEditor
 from update import UpdateThread
-from widget import StatusWidget, HeaderWidget
+from widget import HeaderWidget
 
 
 class Interface(object):
@@ -35,7 +35,6 @@ class Interface(object):
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
-        self.focus = 0
         self.help = False
         tyrs.container.add('interface', self)
         self.update_last_read_home()
@@ -49,11 +48,8 @@ class Interface(object):
     def main_loop (self):
 
         self.header = HeaderWidget()
-        self.items = []
-        walker = urwid.SimpleListWalker(self.items)
-        self.listbox = urwid.ListBox(walker)
-        urwid.connect_signal(walker, 'modified', self.lazzy_load)
         foot = help_bar()
+        self.listbox = self.select_current_timeline().timeline
         self.main_frame = urwid.Frame(urwid.AttrWrap(self.listbox, 'body'), header=self.header, footer=foot)
         key_handle = Keys()
         urwid.connect_signal(key_handle, 'help_done', self.help_done)
@@ -100,16 +96,7 @@ class Interface(object):
     def display_timeline (self):
         if not self.help:
             timeline = self.select_current_timeline()
-            #self.items = []
-            #for i, status in enumerate(timeline.statuses):
-                #if self.buffer == 'home' and self.check_for_last_read(timeline.statuses[i].id):
-                    #self.items.append(urwid.Divider('-'))
-                #self.items.append(StatusWidget(i, status))
-            #walker = urwid.SimpleListWalker(self.items)
-            #self.listbox = urwid.ListBox(walker)
-            #urwid.connect_signal(walker, 'modified', self.lazzy_load)
             self.listbox = timeline.timeline
-
             self.main_frame.set_body(urwid.AttrWrap(self.listbox, 'body'))
             if self.buffer == 'home':
                 self.conf.save_last_read(timeline.last_read)
@@ -126,7 +113,6 @@ class Interface(object):
             statuses = self.api.retreive_statuses(self.buffer, timeline.page)
             timeline.append_old_statuses(statuses)
             self.display_timeline()
-            #self.listbox.set_focus(focus)
 
     def redraw_screen (self):
         self.loop.draw_screen()
@@ -161,7 +147,6 @@ class Interface(object):
     def select_current_timeline(self):
         return self.timelines[self.buffer]
 
-
     def clear_statuses(self):
         timeline = self.select_current_timeline()
         timeline.statuses = [timeline.statuses[0]]
@@ -172,20 +157,10 @@ class Interface(object):
         focus = self.listbox.get_focus()[0]
         return focus.status
 
-    def set_focus(self):
-        self.listbox.set_focus(self.focus)
-
-    def get_focus(self):
-        self.focus = self.listbox.get_focus()[1]
-        if self.focus != type(1):
-            self.focus = 1
-
     def display_help(self):
         self.help = True
         h = Help()
         self.main_frame.set_body(h)
-        #self.main_frame.set_body(Help().display_help_screen())
-        #urwid.connect_signal(h, 'done', self.help_done)
 
     def help_done(self):
         self.help = False
