@@ -50,6 +50,8 @@ class UpdateThread(threading.Thread):
         update.start()
 
     def update_timeline(self):
+        while not self.interface.loop.screen._started:
+            time.sleep(1)
         timeline = ('home', 'mentions', 'direct')
         for t in timeline:
             self.api.update_timeline(t)
