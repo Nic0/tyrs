@@ -19,15 +19,16 @@ from filter import FilterStatus
 
 class Timeline(object):
 
-    def __init__(self):
-        self.statuses = []
+    def __init__(self, buffer):
+        self.buffer = buffer
+        #self.statuses = []
         self.walker = []
         self.unread = 0
         self.count = 0
         self.last_read = 0
-        self.current = 0
-        self.first = 0
-        self.last = 0
+        #self.current = 0
+        #self.first = 0
+        #self.last = 0
         self.page = 1
         self.filter = FilterStatus()
         self.timeline = urwid.ListBox(urwid.SimpleListWalker([]))
@@ -36,6 +37,7 @@ class Timeline(object):
         retreive = self.filter_statuses(retreive)
 
         if retreive:
+            self.last_read = retreive[0].id
             items = []
             if len(self.walker) == 0:
                 for i, status in enumerate(retreive):
@@ -59,6 +61,16 @@ class Timeline(object):
                     # otherwise it just been updated
                     self.timeline.set_focus(pos)
                     self.walker[i] = StatusWidget(status.id, status)
+            if self.buffer == 'home':
+                div = urwid.Divider('-')
+                div.id = None
+                self.walker.insert(self.find_waterline(), div)
+
+    def find_waterline(self):
+        for i, v in enumerate(self.walker):
+            if str(v.id) == self.interface.last_read_home:
+                return i
+        return 0
 
     def filter_statuses(self, statuses):
         filters = []

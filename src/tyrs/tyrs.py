@@ -90,7 +90,7 @@ def init_timelines():
     )
     timelines = {}
     for buff in buffers:
-        timelines[buff] = Timeline()
+        timelines[buff] = Timeline(buff)
     container.add('timelines', timelines)
     container.add('buffers', buffers)
 
