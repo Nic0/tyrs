@@ -26,7 +26,7 @@ from constant import palette
 from editor import TweetEditor
 from update import UpdateThread
 from widget import HeaderWidget
-
+import urwid.html_fragment
 
 class Interface(object):
 

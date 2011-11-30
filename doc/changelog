@@ -1,5 +1,12 @@
 Date Format : YYYY-MM-DD
 
+* Version 0.6.0 -- 2011-11-30
+
+	* First release with urwid support
+	* Much better editing tweets
+	* Better utf-8 support
+	* UI entirely redone
+
 * Version 0.5.0 -- 2011-11-06
 
 	* Better update thread, no more freeze after a while
