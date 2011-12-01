@@ -29,6 +29,7 @@ A list of some of the key features:
 * Supports Identi.ca and Twitter services
 * OAuth authentication.
 * UTF-8 support.
+* User Interface with Urwid
 * Tweets, Retweets, Follow, Unfollow.
 * Mentions, Replies
 * Threaded view of replies

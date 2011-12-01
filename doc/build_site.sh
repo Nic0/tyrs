@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERS="0.5.0"
-DEV="0.5.1-dev"
-DATE="2011-11-06"
+VERS="0.6.0"
+DEV="0.6.1-dev"
+DATE="2011-11-30"
 EMAIL="nicolas.caen@gmail.com"
 
 HTML="asciidoc \

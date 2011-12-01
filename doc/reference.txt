@@ -2,6 +2,11 @@ Tyrs Reference Guide
 ====================
 :author: Nicolas Paris
 
+[CAUTION]
+The user interface of Tyrs is currently under eavy changements, some
+configurations who's interact with the interface isn't yet re-implements, and
+will be in a near release.
+
 [[installation]]
 Installation
 ------------
