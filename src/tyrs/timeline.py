@@ -120,3 +120,12 @@ class Timeline(object):
     def all_read(self):
         if self.count > 0:
             self.last_read = self.walker[0].id
+
+    def go_up(self):
+        focus_status, pos = self.walker.get_focus()
+        if pos > 0:
+            self.timeline.set_focus(pos-1)
+
+    def go_down(self):
+        focus_status, pos = self.walker.get_focus()
+        self.timeline.set_focus(pos+1)

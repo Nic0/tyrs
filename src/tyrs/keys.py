@@ -44,6 +44,10 @@ class Keys(object):
 # left
             elif ch == self.conf.keys['left'] or ch == 'left':
                 self.interface.navigate_buffer(-1)
+            elif ch == self.conf.keys['up']:
+                self.interface.go_up()
+            elif ch == self.conf.keys['down']:
+                self.interface.go_down()
 # Update
             elif ch == self.conf.keys['update']:
                 self.api.update_timeline(self.interface.buffer)

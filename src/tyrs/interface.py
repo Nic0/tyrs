@@ -186,5 +186,13 @@ class Interface(object):
     def current_user_info(self):
         User(self.current_status().user)
 
+    def go_up(self):
+        timeline = self.select_current_timeline()
+        timeline.go_up()
+
+    def go_down(self):
+        timeline = self.select_current_timeline()
+        timeline.go_down()
+
     def beep(self):
         return curses.beep()
