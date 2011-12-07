@@ -89,7 +89,7 @@ class Keys(object):
                 self.interface.edit_status('follow', prompt='Follow')
 # Unfollow
             elif ch == self.conf.keys['unfollow']:
-                self.interface.edit_status('follow', prompt='Unollow ')
+                self.interface.edit_status('follow', prompt='Unfollow ')
 # Open URL
             elif ch == self.conf.keys['openurl']:
                 self.interface.openurl()
