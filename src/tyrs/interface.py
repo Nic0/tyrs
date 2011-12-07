@@ -57,6 +57,7 @@ class Interface(object):
         update = UpdateThread()
         update.start()
         self.loop.run()
+        update._Thread__stop()
         update.stop()
 
     def reply(self):

@@ -40,7 +40,7 @@ class UpdateThread(threading.Thread):
                 return
         self.start_new_thread()
         logging.info('Thread stoped')
-        self.stop()
+        self._Thread__stop()
 
     def stop(self):
         self._stopevent.set()
