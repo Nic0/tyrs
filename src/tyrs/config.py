@@ -113,7 +113,7 @@ class Config(object):
         with open(config_file, 'wb') as config:
             conf.write(config)
 
-        print encode(_('Genereting configuration file in %s')) % config_file
+        print encode(_('Generating configuration file in %s')) % config_file
 
     def set_path(self, args):
         # Default config path set
