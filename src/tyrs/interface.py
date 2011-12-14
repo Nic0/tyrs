@@ -18,6 +18,7 @@ import os
 import tyrs
 import urwid
 import curses
+import logging
 from user import User
 from keys import Keys
 from help import help_bar, Help
@@ -57,6 +58,7 @@ class Interface(object):
         update = UpdateThread()
         update.start()
         self.loop.run()
+        update._Thread__stop()
         update.stop()
 
     def reply(self):
@@ -178,7 +180,7 @@ class Interface(object):
             try:
                 os.system(self.conf.params['openurl_command'] % url + '> /dev/null 2>&1')
             except:
-                pass
+                logging.error('openurl error')
 
     def update_last_read_home(self):
         self.last_read_home = self.conf.load_last_read()
