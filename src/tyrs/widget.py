@@ -225,9 +225,12 @@ class StatusWidget (urwid.WidgetWrap):
         return origin
 
 
+
 class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
     def __init__(self, original_widget, title=''):
         """Draw a line around original_widget."""
+
+        self.color = 'header'
 
         tlcorner=None; tline=None; lline=None
         trcorner=None; blcorner=None; rline=None
@@ -240,7 +243,7 @@ class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
 
         tline = use_attr( tline, urwid.Columns([
             ('fixed', 2, urwid.Divider(urwid.utf8decode("─"))),
-            ('fixed', len(title), urwid.AttrWrap(urwid.Text(title), 'header')),
+            ('fixed', len(title), urwid.AttrWrap(urwid.Text(title), self.color)),
             urwid.Divider(urwid.utf8decode("─"))]))
         bline = use_attr( bline, urwid.Divider(urwid.utf8decode("─")))
         lline = use_attr( lline, urwid.SolidFill(urwid.utf8decode("│")))

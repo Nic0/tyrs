@@ -429,6 +429,7 @@ Configuration 256 Colors
 [IMPORTANT]
 ===================
 The 256 Colors works only with version of Tyrs older than 6.0, it will be avialable soon.
+===================
 
 Key Binding
 ~~~~~~~~~~~
