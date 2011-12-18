@@ -3,7 +3,11 @@ Date Format : YYYY-MM-DD
 * Version 0.6.1
 
 	* 'j' and 'k' fixed #99
-
+	* typos
+	* configuration for colors are back
+	* the line from status box has it own color attribute
+	* follow/unwollow was the same command #104
+	* cleanup
 
 * Version 0.6.0 -- 2011-11-30
 
