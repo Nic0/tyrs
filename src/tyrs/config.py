@@ -185,29 +185,6 @@ class Config(object):
         for i, c in enumerate(self.palette):
             if self.conf.has_option('colors', c[0]):
                 self.palette[i][1] = (self.conf.get('colors', c[0]))
-#        self.parse_bold()
-#        self.parse_rgb()
-
-    def parse_bold(self):
-        if self.conf.has_option('colors', 'bold'):
-            self.get_bold_colors(self.conf.get('colors', 'bold'))
-
-    def get_bold_colors(self, str):
-        bolds = str.split(' ')
-        for bold in bolds:
-            if bold is not '':
-                try:
-                    self.colors[bold]['b'] = True
-                except IndexError:
-                    print encode(_('The param "%s" does not exist for bold colors')) % bold
-
-    def parse_rgb(self):
-        for i in range(len(self.color_set)):
-            if self.conf.has_option('colors', 'color_set'+str(i)):
-                self.color_set[i] = []
-                rgb = (self.conf.get('colors', 'color_set'+str(i)))
-                rgb = rgb.split(' ')
-                self.color_set[i] = [int(rgb[0]), int(rgb[1]), int(rgb[2])]
 
     def parse_keys(self):
         for key in self.keys:
