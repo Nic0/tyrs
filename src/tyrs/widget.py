@@ -88,7 +88,7 @@ class StatusWidget (urwid.WidgetWrap):
         self.status = status
         status_content = urwid.Padding(
             urwid.AttrWrap(urwid.Text(self.get_text(status)), 'body'), left=1, right=1)
-        w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'body', 'focus')
+        w = urwid.AttrWrap(TitleLineBox(status_content, title=self.get_header(status)), 'line', 'focus')
         self.__super.__init__(w)
 
     def selectable (self):
@@ -240,7 +240,7 @@ class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
 
         tline = use_attr( tline, urwid.Columns([
             ('fixed', 2, urwid.Divider(urwid.utf8decode("─"))),
-            ('fixed', len(title), urwid.Text([('header', title)])),
+            ('fixed', len(title), urwid.AttrWrap(urwid.Text(title), 'header')),
             urwid.Divider(urwid.utf8decode("─"))]))
         bline = use_attr( bline, urwid.Divider(urwid.utf8decode("─")))
         lline = use_attr( lline, urwid.SolidFill(urwid.utf8decode("│")))

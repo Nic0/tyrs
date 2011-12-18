@@ -53,8 +53,6 @@ class Config(object):
 
     def init_config(self):
         self.token     = constant.token
-        self.colors    = constant.colors
-        self.color_set = constant.color_set
         self.keys      = constant.key
         self.params    = constant.params
         self.filter    = constant.filter
