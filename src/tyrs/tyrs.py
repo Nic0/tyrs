@@ -18,11 +18,13 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @version:    0.6.1
    @date:       18/12/2011
    @licence:    GPLv3
 
+
 '''
+
+__revision__ = "0.6.1"
 
 import sys
 import utils
@@ -51,7 +53,12 @@ def arguments():
             help='Use another configuration file.')
     parser.add_argument('-g', '--generate-config',
             help='Generate a default configuration file.')
+    parser.add_argument('-v', '--version', action='version', version='Tyrs %s' % __revision__,
+            help='Show the current version of Tyrs')
     args = parser.parse_args()
+    if args.version:
+        print 'coin'
+        sys.exit(0)
     return args
 
 def main():

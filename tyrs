@@ -11,8 +11,6 @@ gettext.install('tyrs', unicode=1)
 from tyrs.tyrs import main
 #import cProfile
 
-__revision__ = '0.6.0'
-
 if __name__=="__main__":
     #cProfile.run('main()')
     main()
