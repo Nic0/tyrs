@@ -315,19 +315,22 @@ Values possible
 The possibles values are determined by curses mode. The available
 values are:
 
-.List of possible values
-[width="25%"]
-|==================
-| Value | Color
-| 0     | Black
-| 1     | Red
-| 2     | Green
-| 3     | Yellow
-| 4     | Blue
-| 5     | Magenta
-| 6     | Cyan
-| 7     | White
-|==================
+* black
+* dark red
+* dark green
+* brown
+* dark blue
+* dark magenta
+* dark cyan
+* light gray
+* dark gray
+* light red
+* light green
+* yellow
+* light blue
+* light magenta
+* light cyan
+* white
 
 Overview
 ^^^^^^^^
@@ -337,43 +340,30 @@ These are the default values:
 [source,conf]
 ----------------
 [colors]
-highlight      = 1
-header         = 6
-current_tweet  = 5
-current_tab    = 6
-other_tab      = 7
-hashtag        = 3
-attag          = 2
-text           = 7
-warning_msg    = 1
-info_msg       = 2
-unread         = 1
-read           = 7
-help           = 6
+body           = dark blue
+focus          = dark red
+header         = light blue
+line           = light blue
+info_msg       = dark green
+warn_msg       = dark red
+current_tab    = light blue
+other_tab      = dark blue
+read           = dark blue
+unread         = dark red
+hashtag        = dark green
+attag          = brown
+highlight      = dark red
+highlight_nick = light red
+help_bar       = yellow
+help_key       = dark red
 ----------------
 
 Bold font
 ^^^^^^^^^
 
-You may activate bold with any of the color parameters.  You activate
-them with one parameter, containing the list of elements you require to be
-displayed as bold. +
-As an example, to activate bold for highlight, warning_msg and
-header. You would do:
+Bold font usualy correspond to the *light* version of a color, *dark*
+correspond to the normal font.
 
-[source,conf]
----------------
-[colors]
-bold = highlight warning_msg header
----------------
-
-That's all you need!
-
-[NOTE]
-=================
-* You need to leave a space between each one, otherwise it won't work.
-* This works as well with RGB colors.
-=================
 
 Listing
 ^^^^^^^
@@ -381,111 +371,64 @@ Listing
 highlight::
 * Description: This will highlight when your nick is display in a tweet,
 for example, a tweet « blabla @you blabla », @you will be color highlighted.
-* Default: 1 (red)
 
 header::
 * Description: Corresponding to the display information above the tweet
 such as user name of the tweeter, time, and any retweet information.
-* Default: 6 (cyan)
+
+line::
+* Description: Corresponding to the border of a tweet.
 
 current_tweet::
 * Description: Corresponding to the header color of the current (selected)
 tweet.
-* Default: 5 (magenta)
 
 current_tab::
 * Description: Display the current timeline (home, mentions or direct message)
 in highlighted color.
-* Default: 1 (red)
 
 other_tab::
 * Description: Color of any other than the current buffer, in the activities bar.
-* Default: 7 (white)
 
 hashtag::
 * Description: This will highlight the hashtag `#` word, useful to follow
 specific subjects, like _#Tyrs_.
-* Default: 3 (yellow)
 
 attag::
 * Description: This will highlight when a name is followed by a `@' tag like
 _@nic0sphere_.
-* Default: 2 (green)
 
 warning_msg::
 * Description: When something goes wrong, or unexpected, a warning message is
 displayed on the top left of the console.
 * Examples: `Couldn\'t retrieve tweets', `Couldn\'t send tweet'...
-* Default: 1 (red)
 
 info_msg::
 * Description: When an action is successful or other feedback is required, Tyrs
 lets you know. Similar to warning_msg.
 * Examples: `Updating timeline', `Tweet send successfully'...
-* Default: 2 (green)
 
 text::
 * Description: This is all the basic text, such as tweets (without highlight),
 or input in the tweet edit box.
-* Default: 7 (white)
 
 read::
 * Description: Color in the activities bar when its set to 0.
-* Default: 7 (white)
 
 unread::
 * Description: Color in the activities bar when you have unread tweets.
-* Default: 1 (red)
 
 help::
 * Description: Color of the main help screen.
-* Default: 6
 
-bold::
-* Description: Activate bold, see above for more information.
 
 
 Configuration 256 Colors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use 256 colors in your terminal, use the relevant RGB number, from 0 to 1000.
-You must leave spaces between the numbers in the configuration file, for example:
-
 [IMPORTANT]
-=====================
-The format used, is a RGB code, it is defined with three
-numbers from 0 to 1000. You *must* leave spaces between numbers in the
-configuration file, for example:
-[source,conf]
-color_set3 = 300 400 500
-
-====================
-
-color_set0::
-Redefine the Black.
-color_set1::
-Redefine the Red.
-color_set2::
-Redefine the Green.
-color_set3::
-Redefine the Yellow.
-color_set4::
-Redefine the Blue.
-color_set5::
-Redefine the Magenta.
-color_set6::
-Redefine the Cyan.
-color_set7::
-Redefine the White.
-
-[IMPORTANT]
-If you turn off one of them, for example you redefine green, and then change
-your mind and revert to the default green, this will take effect only if
-you restart your terminal. Otherwise, it will stay as the last color
-defined. +
-You don't need to restart your terminal if you just change the color setup with
-another one, it will take effect immediately after restarting Tyrs.
-
+===================
+The 256 Colors works only with version of Tyrs older than 6.0, it will be avialable soon.
 
 Key Binding
 ~~~~~~~~~~~
