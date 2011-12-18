@@ -56,9 +56,6 @@ def arguments():
     parser.add_argument('-v', '--version', action='version', version='Tyrs %s' % __revision__,
             help='Show the current version of Tyrs')
     args = parser.parse_args()
-    if args.version:
-        print 'coin'
-        sys.exit(0)
     return args
 
 def main():
