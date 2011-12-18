@@ -465,16 +465,16 @@ reply             = M
 getDM             = d
 sendDM            = D
 search            = s
-redraw            = ^L
+redraw            = ctrl l
 search_user       = U
-search_current_user = ^F
-search_myself     = ^U
+search_current_user = ctrl f
+search_myself     = ctrl u
 delete            = C
 fav               = b
 get_fav           = B
-delete_fav        = ^B
+delete_fav        = ctrl b
 thread            = T
-open_image        = ^I
+open_image        = ctrl i
 waterline         = w
 ---------------
 
@@ -482,16 +482,15 @@ Control keys support
 ^^^^^^^^^^^^^^^^^^^^^
 
 You may activate control keys (Ctrl+something) in the configuration file, for
-example, remap your reply with a Ctrl-r:
+example, remap your reply with a Ctrl-r, works the same way with *alt* and *meta* touch:
 
 [source,conf]
 ---------------
 [keys]
-reply  = ^R
+reply  = ctrl r
+foo    = alt r
+bar    = meta r
 ---------------
-
-CAUTION: The letter followed by '^' *must* be upper case,
-You can’t have a Ctrl-r and Ctrl-R, only '^R' will work.
 
 Listing
 ^^^^^^^
