@@ -60,7 +60,7 @@ class HeaderWidget(urwid.WidgetWrap):
                 buff_widget.append(('other_tab', display[b]))
             if b in ('home', 'mentions', 'direct'):
                 buff_widget.append(self.get_unread(b))
-                    
+
         return urwid.Text(buff_widget)
 
     def get_unread(self, buff):
@@ -228,19 +228,19 @@ class StatusWidget (urwid.WidgetWrap):
 class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
     def __init__(self, original_widget, title=''):
         """Draw a line around original_widget."""
-        
+
         tlcorner=None; tline=None; lline=None
         trcorner=None; blcorner=None; rline=None
         bline=None; brcorner=None
-        
+
         def use_attr( a, t ):
             if a is not None:
                 t = urwid.AttrWrap(t, a)
             return t
-            
+
         tline = use_attr( tline, urwid.Columns([
             ('fixed', 2, urwid.Divider(urwid.utf8decode("─"))),
-            ('fixed', len(title), urwid.Text(title)),
+            ('fixed', len(title), urwid.Text([('header', title)])),
             urwid.Divider(urwid.utf8decode("─"))]))
         bline = use_attr( bline, urwid.Divider(urwid.utf8decode("─")))
         lline = use_attr( lline, urwid.SolidFill(urwid.utf8decode("│")))
@@ -258,6 +258,6 @@ class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
             bline, ('fixed', 1, brcorner) ])
         pile = urwid.Pile([('flow',top),middle,('flow',bottom)],
             focus_item = 1)
-        
+
         urwid.WidgetDecoration.__init__(self, original_widget)
         urwid.WidgetWrap.__init__(self, pile)

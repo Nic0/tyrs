@@ -52,12 +52,13 @@ class Config(object):
         self.parse_config()
 
     def init_config(self):
-        self.token = constant.token
-        self.colors = constant.colors
+        self.token     = constant.token
+        self.colors    = constant.colors
         self.color_set = constant.color_set
-        self.keys = constant.key
-        self.params = constant.params
-        self.filter = constant.filter
+        self.keys      = constant.key
+        self.params    = constant.params
+        self.filter    = constant.filter
+        self.palette   = constant.palette
 
     def get_xdg_config(self):
         try:
@@ -181,12 +182,11 @@ class Config(object):
         self.init_logger()
 
     def parse_color(self):
-        for c in self.colors:
-            self.colors[c]['b'] = False
-            if self.conf.has_option('colors', c):
-                self.colors[c]['c'] = int(self.conf.get('colors', c))
-        self.parse_bold()
-        self.parse_rgb()
+        for i, c in enumerate(self.palette):
+            if self.conf.has_option('colors', c[0]):
+                self.palette[i][1] = (self.conf.get('colors', c[0]))
+#        self.parse_bold()
+#        self.parse_rgb()
 
     def parse_bold(self):
         if self.conf.has_option('colors', 'bold'):

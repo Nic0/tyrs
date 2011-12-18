@@ -14,42 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 palette = [
-    ('body','dark blue', '', 'standout'),
-    ('focus','dark red', '', 'standout'),
-    ('head','light red', ''),
-    ('info_msg', 'dark green', ''),
-    ('warn_msg', 'dark red', ''),
-    ('current_tab', 'light blue', ''),
-    ('other_tab', 'dark blue', ''),
-    ('read', 'dark blue', ''),
-    ('unread', 'dark red', ''),
-    ('hashtag', 'dark green', ''),
-    ('attag', 'brown', ''),
-    ('highlight', 'dark red', ''),
-    ('highlight_nick', 'light red', ''),
-    ('help_bar', 'yellow', 'dark blue'),
-    ('help_key', 'dark red', ''),
+    ['body','dark blue', '', 'standout'],
+    ['focus','dark red', '', 'standout'],
+    ['header','light blue', ''],
+    ['info_msg', 'dark green', ''],
+    ['warn_msg', 'dark red', ''],
+    ['current_tab', 'light blue', ''],
+    ['other_tab', 'dark blue', ''],
+    ['read', 'dark blue', ''],
+    ['unread', 'dark red', ''],
+    ['hashtag', 'dark green', ''],
+    ['attag', 'brown', ''],
+    ['highlight', 'dark red', ''],
+    ['highlight_nick', 'light red', ''],
+    ['help_bar', 'yellow', 'dark blue'],
+    ['help_key', 'dark red', ''],
     ]
-
-# c: color value
-# b: bold
-colors = {
-    'highlight':      {'c': 1},
-    'header':         {'c': 6},
-    'hashtag':        {'c': 3},
-    'attag':          {'c': 2},
-    'text':           {'c': 0},
-    'warning_msg':    {'c': 1},
-    'info_msg':       {'c': 2},
-    'current_tweet':  {'c': 5},
-    'current_tab':    {'c': 6},
-    'other_tab':      {'c': 0},
-    'unread':         {'c': 1},
-    'read':           {'c': 0},
-    'help':           {'c': 6},
-}
-
-color_set = [False, False, False, False, False, False, False, False]
 
 key = {
     'up':                'k',
