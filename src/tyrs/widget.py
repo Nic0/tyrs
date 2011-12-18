@@ -230,7 +230,10 @@ class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
     def __init__(self, original_widget, title=''):
         """Draw a line around original_widget."""
 
+
         self.color = 'header'
+        if int(urwid.__version__[0]) == 1:
+            urwid.utf8decode = self.utf8decode
 
         tlcorner=None; tline=None; lline=None
         trcorner=None; blcorner=None; rline=None
@@ -264,3 +267,7 @@ class TitleLineBox(urwid.WidgetDecoration, urwid.WidgetWrap):
 
         urwid.WidgetDecoration.__init__(self, original_widget)
         urwid.WidgetWrap.__init__(self, pile)
+
+    def utf8decode(self, string):
+        return string
+
