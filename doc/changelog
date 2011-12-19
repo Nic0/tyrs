@@ -1,6 +1,13 @@
 Date Format : YYYY-MM-DD
 
-* Version 0.6.1
+* Version 0.6.2 --
+
+	* Auto-Completion nicks when tweeting
+	* utf8decode bugs fixes for urwid > 1.0.0
+	* Version arguments with -v/--version
+	* Validation for send a tweet need "enter" twice
+
+* Version 0.6.1 -- 2011-12-18
 
 	* 'j' and 'k' fixed #99
 	* typos
