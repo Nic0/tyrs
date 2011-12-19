@@ -27,6 +27,7 @@ from constant import palette
 from editor import TweetEditor
 from update import UpdateThread
 from widget import HeaderWidget
+from completion import Completion
 import urwid.html_fragment
 
 class Interface(object):
@@ -36,6 +37,7 @@ class Interface(object):
         self.conf       = tyrs.container['conf']
         self.timelines  = tyrs.container['timelines']
         self.buffers    = tyrs.container['buffers']
+        self.completion = tyrs.container['completion']
         self.help = False
         tyrs.container.add('interface', self)
         self.update_last_read_home()

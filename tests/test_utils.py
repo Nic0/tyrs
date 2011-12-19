@@ -15,9 +15,9 @@
 
 import unittest
 import sys
-sys.path.append('../src')
-import gettext
-gettext.install('tyrs', unicode=1)
+sys.path.append('../src/tyrs')
+#import gettext
+#gettext.install('tyrs', unicode=1)
 #import src.utils as utils
 import utils
 
@@ -38,6 +38,12 @@ class TestUtils(unittest.TestCase):
         source = '<a href="http://tyrs.nicosphere.net/" rel="nofollow">tyrs</a>'
         result = utils.get_source(source)
         self.assertEqual(result, 'tyrs')
+
+    def test_get_exact_nick(self):
+        nick = ['@mynick', '@mynick,', '@mynick!!', 'mynick,']
+        for n in nick:
+            result = utils.get_exact_nick(n)
+            self.assertEqual(result, 'mynick')
 
 if __name__ == '__main__':
     unittest.main ()

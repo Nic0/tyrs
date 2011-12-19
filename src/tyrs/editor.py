@@ -39,6 +39,7 @@ class TweetEditor(urwid.WidgetWrap):
             init_content += ' '
         self.editor = Editor('%s (twice enter key to validate or esc) \n>> ' % prompt, init_content)
         self.counter = urwid.Text('0')
+        self.editor.completion = tyrs.container['completion']
         w = urwid.Columns([ ('fixed', 4, self.counter), self.editor])
         urwid.connect_signal(self.editor, 'done', self.send_sigterm)
         urwid.connect_signal(self.editor, 'change', self.update_count)
@@ -63,6 +64,11 @@ class Editor(urwid.Edit):
             return
         if key == 'esc':
             urwid.emit_signal(self, 'done', None)
+        if key == 'tab':
+            insert_text = self.completion.text_complete(self.get_edit_text())
+            if insert_text:
+                self.insert_text(insert_text)
+            
         self.last_key = key
         urwid.Edit.keypress(self, size, key)
 

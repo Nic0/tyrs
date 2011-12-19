@@ -37,6 +37,7 @@ from urllib2 import URLError
 from timeline import Timeline
 from container import Container
 from interface import Interface
+from completion import Completion
 
 locale.setlocale(locale.LC_ALL, '')
 container =  Container()
@@ -97,6 +98,8 @@ def init_timelines():
         timelines[buff] = Timeline(buff)
     container.add('timelines', timelines)
     container.add('buffers', buffers)
+    completion = Completion()
+    container.add('completion', completion)
 
 if __name__ == "__main__":
     gettext.install('tyrs', unicode=1)

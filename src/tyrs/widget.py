@@ -17,7 +17,7 @@ import re
 import tyrs
 import time
 import urwid
-from utils import html_unescape, encode, get_source, get_urls
+from utils import html_unescape, encode, get_source, get_urls, get_exact_nick
 
 class HeaderWidget(urwid.WidgetWrap):
 
@@ -125,6 +125,8 @@ class StatusWidget (urwid.WidgetWrap):
                     ## @anyone
                     else:
                         result.append(('attag', word))
+                        tyrs.container['completion'].add(get_exact_nick(word))
+                        
                 else:
                     result.append(word)
         return result
@@ -147,7 +149,8 @@ class StatusWidget (urwid.WidgetWrap):
 
         if self.get_retweet_count(status):
             retweet_count = str(self.get_retweet_count(status))
-
+            
+        tyrs.container['completion'].add(get_exact_nick(nick))
         header_template = self.conf.params['header_template'] 
         header = unicode(header_template).format(
             time = timer,
