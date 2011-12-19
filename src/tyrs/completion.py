@@ -46,5 +46,4 @@ class Completion (object):
             nick = self.complete(last[1:])
             if nick:
                 return nick[len(last)-1:]
-        return text
-                
+        return None
