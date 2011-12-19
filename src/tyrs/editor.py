@@ -37,7 +37,7 @@ class TweetEditor(urwid.WidgetWrap):
     def __init__(self, init_content='', prompt=''):
         if init_content:
             init_content += ' '
-        self.editor = Editor('%s >> ' % prompt, init_content)
+        self.editor = Editor('%s (twice enter key to validate or esc) \n>> ' % prompt, init_content)
         self.counter = urwid.Text('0')
         w = urwid.Columns([ ('fixed', 4, self.counter), self.editor])
         urwid.connect_signal(self.editor, 'done', self.send_sigterm)
@@ -55,13 +55,15 @@ class Editor(urwid.Edit):
 
     __metaclass__ = urwid.signals.MetaSignals
     signals = ['done']
+    last_key = ''
 
     def keypress(self, size, key):
-        if key == 'enter':
+        if key == 'enter' and self.last_key == 'enter':
             urwid.emit_signal(self, 'done', self.get_edit_text())
             return
         if key == 'esc':
             urwid.emit_signal(self, 'done', None)
+        self.last_key = key
         urwid.Edit.keypress(self, size, key)
 
 #FIXME old editor, need to be done for url-shorter
