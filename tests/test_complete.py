@@ -64,7 +64,7 @@ class TestCompletion(unittest.TestCase):
         text = ['foo bar co', 'foo @co bar']
         for t in text:
             result =  nicks.text_complete(t)
-            self.assertEqual(result, t)
+            self.assertIsNone(result)
 
 if __name__ == '__main__':
     unittest.main ()

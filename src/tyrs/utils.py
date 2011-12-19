@@ -35,8 +35,11 @@ def get_exact_nick(word):
     if word[0] == '@':
         word = word[1:]
     alphanum = string.letters + string.digits
-    while word[-1] not in alphanum:
-        word = word[:-1]
+    try:
+        while word[-1] not in alphanum:
+            word = word[:-1]
+    except IndexError:
+        pass
     return word
 
 def encode(string):
