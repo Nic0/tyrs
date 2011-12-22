@@ -110,9 +110,10 @@ class Interface(object):
         pass
 
     def lazzy_load(self):
-        return None
         timeline = self.select_current_timeline()
         focus = timeline.timeline.get_focus()[1]
+        if timeline.cleared != False:
+            return
         if focus is len(timeline.walker)-1:
             timeline.page += 1
             statuses = self.api.retreive_statuses(self.buffer, timeline.page)
