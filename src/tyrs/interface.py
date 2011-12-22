@@ -110,6 +110,7 @@ class Interface(object):
         pass
 
     def lazzy_load(self):
+        return None
         timeline = self.select_current_timeline()
         focus = timeline.timeline.get_focus()[1]
         if focus is len(timeline.walker)-1:
@@ -153,9 +154,9 @@ class Interface(object):
 
     def clear_statuses(self):
         timeline = self.select_current_timeline()
-        timeline.statuses = [timeline.statuses[0]]
         timeline.count_statuses()
         timeline.reset()
+        timeline.clear()
 
     def current_status(self):
         focus = self.listbox.get_focus()[0]

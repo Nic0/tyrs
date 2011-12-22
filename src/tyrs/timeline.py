@@ -20,6 +20,7 @@ from filter import FilterStatus
 class Timeline(object):
 
     def __init__(self, buffer):
+        self.cleared = False
         self.buffer = buffer
         self.walker = []
         self.unread = 0
@@ -34,33 +35,46 @@ class Timeline(object):
 
         if retreive:
             self.last_read = retreive[0].id
-            items = []
-            if len(self.walker) == 0:
-                for i, status in enumerate(retreive):
-                    items.append(StatusWidget(status.id, status))
-                    self.walker = urwid.SimpleListWalker(items)
-                    self.timeline = urwid.ListBox(self.walker)
-                    import tyrs
-                    self.interface = tyrs.container['interface']
-                    urwid.connect_signal(self.walker, 'modified', self.interface.lazzy_load)
+
+            if len(self.walker) == 0 and not self.cleared:
+                self.build_new_walker(retreive)
             else:
-                size = self.interface.loop.screen_size
-                on_top = 'top' in self.timeline.ends_visible(size)
-                focus_status, pos = self.walker.get_focus()
-                for i, status in enumerate(retreive):
-                    # New statuses are insert
-                    while status.id != self.walker[0+i].id:
-                        self.walker.insert(i, StatusWidget(status.id, status))
-                        if on_top:
-                            self.timeline.set_focus(0)
-                        self.timeline.set_focus(pos+i+1)
-                    # otherwise it just been updated
-                    self.timeline.set_focus(pos)
-                    self.walker[i] = StatusWidget(status.id, status)
-            if self.buffer == 'home':
-                div = urwid.Divider('-')
-                div.id = None
-                self.walker.insert(self.find_waterline(), div)
+                self.add_to_walker(retreive)
+            self.add_waterline()
+
+    def add_to_walker(self, retreive):
+        size = self.interface.loop.screen_size
+        on_top = 'top' in self.timeline.ends_visible(size)
+        focus_status, pos = self.walker.get_focus()
+        for i, status in enumerate(retreive):
+            # New statuses are insert
+            if status.id == self.cleared:
+                return
+            while status.id != self.walker[0+i].id:
+                self.walker.insert(i, StatusWidget(status.id, status))
+                if on_top:
+                    self.timeline.set_focus(0)
+                    self.timeline.set_focus(pos+i+1)
+
+            # otherwise it just been updated
+            self.timeline.set_focus(pos)
+            self.walker[i] = StatusWidget(status.id, status)
+
+    def add_waterline(self):
+        if self.buffer == 'home' and self.walker[0].id != None:
+            div = urwid.Divider('-')
+            div.id = None
+            self.walker.insert(self.find_waterline(), div)
+
+    def build_new_walker(self, retreive):
+        items = []
+        for i, status in enumerate(retreive):
+            items.append(StatusWidget(status.id, status))
+            self.walker = urwid.SimpleListWalker(items)
+            self.timeline = urwid.ListBox(self.walker)
+            import tyrs
+            self.interface = tyrs.container['interface']
+            urwid.connect_signal(self.walker, 'modified', self.interface.lazzy_load)
 
     def find_waterline(self):
         for i, v in enumerate(self.walker):
@@ -113,6 +127,13 @@ class Timeline(object):
     def reset(self):
         self.first = 0
         self.unread = 0
+
+    def clear(self):
+        while len(self.walker) > 1:
+            pop = self.walker.pop()
+            self.cleared = pop.id
+        if self.cleared == None:
+            self.cleared = True
 
     def empty(self):
         self.__init__()
