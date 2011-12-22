@@ -129,6 +129,7 @@ class Timeline(object):
         self.unread = 0
 
     def clear(self):
+        urwid.disconnect_signal(self.walker, 'modified', self.interface.lazzy_load)
         while len(self.walker) > 1:
             pop = self.walker.pop()
             self.cleared = pop.id
