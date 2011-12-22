@@ -14,9 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 palette = [
-    ['body','dark blue', '', 'standout'],
+    ['body','default', '', 'standout'],
     ['focus','dark red', '', 'standout'],
-    ['header','dark blue', ''],
+    ['header','light blue', ''],
     ['line', 'dark blue', ''],
     ['info_msg', 'dark green', ''],
     ['warn_msg', 'dark red', ''],
