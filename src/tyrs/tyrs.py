@@ -18,13 +18,13 @@
    Tyrs
 
    @author:     Nicolas Paris <nicolas.caen@gmail.com>
-   @date:       18/12/2011
+   @date:       23/12/2011
    @licence:    GPLv3
 
 
 '''
 
-__revision__ = "0.6.1"
+__revision__ = "0.6.2"
 
 import sys
 import utils

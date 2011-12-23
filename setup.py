@@ -22,7 +22,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='tyrs',
-      version='0.6.1',
+      version='0.6.2',
       description='Twitter and Identica client using curses',
       author='Nicolas Paris',
       author_email='nicolas.caen@gmail.com',

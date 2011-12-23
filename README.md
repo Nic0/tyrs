@@ -22,6 +22,7 @@ Functionality
 - ur1.ca, bit.ly and goo.gl support
 - Filter system
 - Configuration file allows for lots of customization
+- Auto-Completion with nicks
 
 Installation
 ------------
