@@ -88,9 +88,8 @@ class Config(object):
 
         # COLOR
         conf.add_section('colors')
-        for c in self.colors:
-            conf.set('colors', c, self.colors[c]['c'])
-        conf.set('colors', 'bold', '')
+        for c in self.palette:
+            conf.set('colors', c[0], c[1])
         # KEYS
         conf.add_section('keys')
         for k in self.keys:
