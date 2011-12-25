@@ -136,8 +136,8 @@ class Timeline(object):
         if self.cleared == None:
             self.cleared = True
 
-    def empty(self):
-        self.__init__()
+    def empty(self, buffer):
+        self.__init__(buffer)
 
     def all_read(self):
         if self.count > 0:

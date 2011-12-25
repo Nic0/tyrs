@@ -263,7 +263,7 @@ class Tweets(object):
 
     def change_search_user(self, nick):
         self.search_user = nick
-        self.timelines['user'].empty()
+        self.timelines['user'].empty('user')
 
     def my_public_timeline(self):
         self.change_search_user(self.myself.screen_name)
@@ -279,7 +279,7 @@ class Tweets(object):
     def get_thread(self):
         try:
             status = self.interface.current_status()
-            self.timelines['thread'].empty()
+            self.timelines['thread'].empty('thread')
             self.statuses = [status]
             self.build_thread(status)
             self.timelines['thread'].append_new_statuses(self.statuses)
@@ -299,7 +299,7 @@ class Tweets(object):
     def search(self, content):
         self.search_word = content
         self.flash('search', self.search_word)
-        self.timelines['search'].empty()
+        self.timelines['search'].empty('search')
         try:
             self.timelines['search'].append_new_statuses(self.api.GetSearch(self.search_word))
             self.interface.change_buffer('search')
