@@ -106,9 +106,6 @@ class Interface(object):
                 self.conf.save_last_read(timeline.last_read)
             self.display_flash_message()
 
-    def create_listwalker(self):
-        pass
-
     def lazzy_load(self):
         timeline = self.select_current_timeline()
         focus = timeline.timeline.get_focus()[1]

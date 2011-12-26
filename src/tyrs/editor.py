@@ -37,7 +37,7 @@ class TweetEditor(urwid.WidgetWrap):
     def __init__(self, init_content='', prompt=''):
         if init_content:
             init_content += ' '
-        self.editor = Editor('%s (twice enter key to validate or esc) \n>> ' % prompt, init_content)
+        self.editor = Editor(u'%s (twice enter key to validate or esc) \n>> ' % prompt, init_content)
         self.counter = urwid.Text('0')
         self.editor.completion = tyrs.container['completion']
         w = urwid.Columns([ ('fixed', 4, self.counter), self.editor])
