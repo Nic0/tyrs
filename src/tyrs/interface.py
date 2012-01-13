@@ -170,7 +170,8 @@ class Interface(object):
         self.display_timeline()
 
     def back_on_bottom(self):
-        self.listbox.set_focus(len(self.items))
+        timeline = self.select_current_timeline()
+        self.listbox.set_focus(timeline.status_count())
 
     def back_on_top(self):
         self.listbox.set_focus(0)
