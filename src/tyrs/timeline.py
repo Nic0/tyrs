@@ -151,3 +151,7 @@ class Timeline(object):
     def go_down(self):
         focus_status, pos = self.walker.get_focus()
         self.timeline.set_focus(pos+1)
+
+    def status_count(self):
+        self.count_statuses()
+        return self.count
