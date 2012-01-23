@@ -91,7 +91,8 @@ def init_interface():
 def init_timelines():
     buffers = (
         'home', 'mentions', 'direct', 'search',
-        'user', 'favorite', 'thread', 'user_retweet'
+        'user', 'favorite', 'thread', 'user_retweet',
+        'list'
     )
     timelines = {}
     for buff in buffers:

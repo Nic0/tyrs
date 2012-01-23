@@ -89,6 +89,8 @@ class Interface(object):
             urwid.connect_signal(self.foot, 'done', self.api.search_done)
         elif action == 'public':
             urwid.connect_signal(self.foot, 'done', self.api.public_done)
+        elif action == 'list':
+            urwid.connect_signal(self.foot, 'done', self.api.list_done)
 
     def first_update(self):
         updates = ['user_retweet', 'favorite']

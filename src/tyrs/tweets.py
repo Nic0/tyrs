@@ -144,6 +144,9 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
+    def get_list(self):
+        self.interface.edit_status('list')
+
     def follow(self):
         self.interface.edit_status('follow')
 
@@ -246,9 +249,29 @@ class Tweets(object):
             statuses = self.api.GetFavorites(page=page)
         elif timeline == 'thread':
             statuses = self.get_thread()
+        elif timeline == 'list':
+            statuses = self.get_list(slug=self.list_slug, page=page)
         self.interface.erase_flash_message()
 
         return statuses
+
+    def get_list(self,slug='',page=''):
+        if page=='':
+            page=1
+        if slug=='':
+            return
+        url = 'https://api.twitter.com'
+        path_elements = ['1','lists','statuses.json']
+        params = {'slug':slug,
+                  'owner_screen_name':self.myself.screen_name,
+                  'per_page':'15',
+                  'page':page,
+                  'include_entities':'true'}
+        url = self.api._BuildUrl(url,path_elements,params)
+        json_data = self.api._FetchUrl(url)
+        data = json.loads(json_data)
+        self.api._CheckForTwitterError(data)
+        return [Status.NewFromJsonDict(x) for x in data]
 
     def find_public_timeline(self, nick):
         if nick and nick != self.search_user:
@@ -306,6 +329,16 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
+    def list(self, content):
+        self.list_slug = content
+        self.flash('list', self.list_slug)
+        #self.timelines['list'].empty()
+        try:
+            self.timelines['list'].append_new_statuses(self.get_list(self.list_slug))
+            self.interface.change_buffer('list')
+        except TwitterError, e:
+            self.error(e)
+
     def tweet_done(self, content):
         self.clean_edit()
         urwid.disconnect_signal(self, self.interface.foot, 'done', self.tweet_done)
@@ -341,6 +374,12 @@ class Tweets(object):
         urwid.disconnect_signal(self, self.interface.foot, 'done', self.public_done)
         if content:
             self.find_public_timeline(content)
+
+    def list_done(self, content):
+        self.clean_edit()
+        urwid.disconnect_signal(self, self.interface.foot, 'done', self.list_done)
+        if content:
+            self.list(encode(content)) 
 
     def clean_edit(self):
         footer = help_bar()

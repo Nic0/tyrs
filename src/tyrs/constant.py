@@ -67,6 +67,7 @@ key = {
     'delete_fav':        'ctrl b',
     'thread':            'T',
     'waterline':         'w',
+    'get_list':          'a',
 }
 
 params = {
