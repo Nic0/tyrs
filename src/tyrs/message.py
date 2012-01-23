@@ -58,6 +58,10 @@ class FlashMessage(object):
             _('Search results for %s'),
             _('Couldn\'t search for %s'),
             ],
+        'list': [
+            _('List results for %s'),
+            _('Couldn\'t get list for %s'),
+            ],
         'empty': [
             '',''
         ]
