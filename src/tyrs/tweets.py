@@ -332,7 +332,7 @@ class Tweets(object):
     def list(self, content):
         self.list_slug = content
         self.flash('list', self.list_slug)
-        #self.timelines['list'].empty()
+        self.timelines['list'].empty('list')
         try:
             self.timelines['list'].append_new_statuses(self.get_list(self.list_slug))
             self.interface.change_buffer('list')
