@@ -144,7 +144,7 @@ class Tweets(object):
         except TwitterError, e:
             self.error(e)
 
-    def get_list(self):
+    def do_list(self):
         self.interface.edit_status('list')
 
     def follow(self):

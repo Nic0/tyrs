@@ -137,7 +137,7 @@ class Keys(object):
             elif ch == self.conf.keys['back_on_bottom']:
                 self.interface.back_on_bottom()
 # Get list
-            elif ch == self.conf.keys['get_list']:
+            elif ch == self.conf.keys['do_list']:
                 self.interface.edit_status('list', prompt='List ')
 # Help
             elif ch == '?':
