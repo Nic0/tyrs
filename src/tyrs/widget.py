@@ -45,12 +45,13 @@ class HeaderWidget(urwid.WidgetWrap):
 
         buffers = (
             'home', 'mentions', 'direct', 'search',
-            'user', 'favorite', 'thread', 'user_retweet'
+            'user', 'favorite', 'thread', 'user_retweet',
+            'list'
         )
         display = { 
             'home': 'H', 'mentions': 'M', 'direct': 'D', 
             'search': 'S', 'user': 'U', 'favorite': 'F',
-            'thread': 'T', 'user_retweet': 'R'
+            'thread': 'T', 'user_retweet': 'R', 'list': 'L'
         }
         buff_widget = []
         for b in buffers:
