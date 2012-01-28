@@ -25,7 +25,7 @@ from help import help_bar
 from urllib2 import URLError
 from message import FlashMessage
 from httplib import BadStatusLine
-from twitter import Api, TwitterError, Status, _FileCache
+from twitter import Api, TwitterError, Status, _FileCache, List
 
 try:
     import json
@@ -250,28 +250,11 @@ class Tweets(object):
         elif timeline == 'thread':
             statuses = self.get_thread()
         elif timeline == 'list':
-            statuses = self.get_list(slug=self.list_slug, page=page)
+            statuses = self.api.GetListStatuses(self.myself.screen_name, self.list_slug, per_page='15', page=page)
         self.interface.erase_flash_message()
 
         return statuses
 
-    def get_list(self,slug='',page=''):
-        if page=='':
-            page=1
-        if slug=='':
-            return
-        url = 'https://api.twitter.com'
-        path_elements = ['1','lists','statuses.json']
-        params = {'slug':slug,
-                  'owner_screen_name':self.myself.screen_name,
-                  'per_page':'15',
-                  'page':page,
-                  'include_entities':'true'}
-        url = self.api._BuildUrl(url,path_elements,params)
-        json_data = self.api._FetchUrl(url)
-        data = json.loads(json_data)
-        self.api._CheckForTwitterError(data)
-        return [Status.NewFromJsonDict(x) for x in data]
 
     def find_public_timeline(self, nick):
         if nick and nick != self.search_user:
@@ -334,7 +317,7 @@ class Tweets(object):
         self.flash('list', self.list_slug)
         self.timelines['list'].empty('list')
         try:
-            self.timelines['list'].append_new_statuses(self.get_list(self.list_slug))
+            self.timelines['list'].append_new_statuses(self.api.GetListStatuses(self.myself.screen_name,self.list_slug, per_page='15'))
             self.interface.change_buffer('list')
         except TwitterError, e:
             self.error(e)
@@ -576,3 +559,36 @@ class ApiPatch(Api):
             self._cache = _FileCache()
         else:
             self._cache = cache
+
+    def GetListStatuses(self,user,slug, per_page=None,page=None,since_id=None,max_id=None):
+        '''Fetch the List statuses for a given user / list.
+
+        Args:
+          user: the username or id of the user whose list you are fetching.
+          slug: slug of the list to fetch
+          since_id: return only statuses with an ID greater than the specified ID
+          [optional]
+          max_id: return only statuses with an ID less than or equal to the
+          specified ID [optional]
+          per_page: specifies the maximum number of statuses to retrieve.  Must be
+          <= 200 [optional]
+          page: specifies the page to retrieve [optional]
+          '''
+        url = 'https://api.twitter.com'
+        path_elements = ['1','lists','statuses.json']
+        params = {'slug':slug,
+                  'owner_screen_name':user,
+                  'include_entities':'true'}
+        if since_id:
+          params['since_id']=since_id
+        if max_id:
+          params['max_id']=max_id
+        if page:
+            params['page']=page
+        if per_page:
+            params['per_page'] = per_page
+        url = self._BuildUrl(url,path_elements,params)
+        json_data = self._FetchUrl(url)
+        data = json.loads(json_data)
+        self._CheckForTwitterError(data)
+        return [Status.NewFromJsonDict(x) for x in data]
