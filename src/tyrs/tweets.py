@@ -574,8 +574,8 @@ class ApiPatch(Api):
           <= 200 [optional]
           page: specifies the page to retrieve [optional]
           '''
-        url = 'https://api.twitter.com'
-        path_elements = ['1','lists','statuses.json']
+        url = self.base_url
+        path_elements = ['lists','statuses.json']
         params = {'slug':slug,
                   'owner_screen_name':user,
                   'include_entities':'true'}
