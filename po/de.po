@@ -19,7 +19,7 @@ msgstr ""
 
 #: src/message.py:22
 msgid "Updating timeline..."
-msgstr "Aktualisiere timeline..."
+msgstr "Aktualisiere Timeline..."
 
 #: src/message.py:23
 #, fuzzy
@@ -29,17 +29,17 @@ msgstr "Tweets konnten nicht geladen werden"
 #: src/message.py:26
 #, fuzzy
 msgid "Your tweet was sent"
-msgstr "Dein Tweet wurde versendet"
+msgstr "Dein Tweet wurde gesendet"
 
 #: src/message.py:27
 #, fuzzy
 msgid "Couldn't send tweet"
-msgstr "Tweet konnte nicht versendet werden"
+msgstr "Tweet konnte nicht gesendet werden"
 
 #: src/message.py:30
 #, fuzzy
 msgid "Your retweet was sent"
-msgstr "Dein retweet wurde versendet"
+msgstr "Dein Retweet wurde versendet"
 
 #: src/message.py:31
 #, fuzzy
@@ -49,7 +49,7 @@ msgstr "Retweet konnte nicht versendet werden"
 #: src/message.py:34
 #, fuzzy
 msgid "You have deleted the tweet"
-msgstr "Du hast den tweet bereits gelöscht"
+msgstr "Du hast den Tweet bereits gelöscht"
 
 #: src/message.py:35
 #, fuzzy
@@ -59,7 +59,7 @@ msgstr "Tweet konnte nicht gelöscht werden"
 #: src/message.py:38
 #, fuzzy
 msgid "The tweet was added to favorites list"
-msgstr "Der tweet wurde zu deinen Favoriten hinzugefügt"
+msgstr "Der Tweet wurde zu deinen Favoriten hinzugefügt"
 
 #: src/message.py:39
 #, fuzzy
@@ -109,7 +109,7 @@ msgstr "Konnte %s nicht entfolgen"
 #: src/message.py:58
 #, python-format
 msgid "Search results for %s"
-msgstr "Such Ergebnisse für %s"
+msgstr "Suchergebnisse für %s"
 
 #: src/message.py:59
 #, fuzzy, python-format
@@ -132,7 +132,7 @@ msgstr "Wenn du einen neuen account erstellen möchtest, dann folge diesen schri
 
 #: src/message.py:90
 msgid "If you want to skip this, just press return or ctrl-C."
-msgstr "Wenn du dies überspringen möchtest drücke einfach strg-C"
+msgstr "Wenn du dies überspringen möchtest drücke einfach strg-C."
 
 #: src/message.py:94
 msgid "Which service do you want to use?"
@@ -143,11 +143,11 @@ msgstr "Welchen Dienst möchtest du benutzen?"
 msgid ""
 "Which root url do you want? (leave blank for default, https://identi.ca/api)"
 msgstr ""
-"Welche root adresse möchtest du benutzen? (gebe nichts an um die Standart Einstellungen zu verwenden, https://identi.ca/api)"
+"Welche root url möchtest du benutzen? (gebe nichts an um die Standart Einstellungen zu verwenden, https://identi.ca/api)"
 
 #: src/config.py:125 tyrs/config.py:137
 msgid "Your choice? > "
-msgstr "Deine Wahl? >"
+msgstr "Deine Wahl? > "
 
 #: src/config.py:249
 #, python-format
@@ -170,7 +170,7 @@ msgstr " erfrage temp token: %s"
 #: src/config.py:297
 #, fuzzy
 msgid "Please visit the following page to retrieve pin code needed"
-msgstr "Bitte besuche die folgenden seiten um den pin code zu erfahren"
+msgstr "Bitte besuche die folgende seite um den benötigten pin code in erfahrungen zu bringen"
 
 #: src/config.py:298
 #, fuzzy
@@ -201,11 +201,11 @@ msgstr "Was ist los?"
 
 #: src/editor.py:142
 msgid "Entry a name"
-msgstr "Gebe einen Namen an"
+msgstr "Gebe einen Namen ein"
 
 #: src/editor.py:145
 msgid "Search for something?"
-msgstr "Suche nach etwas"
+msgstr "Möchtest du nach etwas suchen?"
 
 #: src/help.py:36
 msgid "Navigation"
@@ -214,11 +214,11 @@ msgstr "Navigation"
 #: src/help.py:37
 #, fuzzy
 msgid "Go up one tweet"
-msgstr "Gehe einen tweet herauf"
+msgstr "Gehe einen Tweet herauf"
 
 #: src/help.py:38
 msgid "Go down one tweet"
-msgstr "Gehe einen tweet herunter"
+msgstr "Gehe einen Tweet herunter"
 
 #: src/help.py:39
 #, fuzzy
@@ -237,37 +237,37 @@ msgstr "Timelines"
 #: src/help.py:43
 #, fuzzy
 msgid "Go left on the timeline's bar"
-msgstr "Gehe auf der timeline bar einen schritt nach links"
+msgstr "Gehe auf der Timeline bar einen Schritt nach links"
 
 #: src/help.py:44
 #, fuzzy
 msgid "Go right on the timeline's bar"
-msgstr "Gehe auf der timeline bar einen schritt nach rechts"
+msgstr "Gehe auf der Timeline bar einen Schritt nach rechts"
 
 #: src/help.py:45
 #, fuzzy
 msgid "Refresh current timeline"
-msgstr "Aktualisiere die aktuelle timeline"
+msgstr "Aktualisiere die momentane Timeline"
 
 #: src/help.py:46
 #, fuzzy
 msgid "Clear all but last tweet in timeline"
-msgstr "Lösche alle außer den letzten tweet in deiner timeline"
+msgstr "Lösche alle außer den letzten Tweet in deiner Timeline"
 
 #: src/help.py:47
 #, fuzzy
 msgid "Go to home timeline"
-msgstr "Gehe zur home timeline"
+msgstr "Gehe zur haupt Timeline"
 
 #: src/help.py:48
 #, fuzzy
 msgid "Go to mentions timeline"
-msgstr "Gehe zur mentions timeline"
+msgstr "Gehe zur mentions Timeline"
 
 #: src/help.py:49
 #, fuzzy
 msgid "Go to direct message timeline"
-msgstr "Gehe zur timeline für direkt Nachrichten"
+msgstr "Gehe zur direkt Nachrichten Timeline"
 
 #: src/help.py:50
 msgid "Search for term and show resulting timeline"
@@ -276,12 +276,12 @@ msgstr "Suche nach einem Begriff und zeige die Ergebnisse in der Timeline"
 #: src/help.py:51
 #, fuzzy
 msgid "Show somebody's public timeline"
-msgstr "Zeige die öffentliche timeline von jemanden anders"
+msgstr "Zeige die öffentliche Timeline von jemanden anderem"
 
 #: src/help.py:52
 #, fuzzy
 msgid "Show your public timeline"
-msgstr "Zeige deine öffentliche timeline"
+msgstr "Zeige deine öffentliche Timeline"
 
 #: src/help.py:54
 msgid "Tweets"
@@ -289,12 +289,12 @@ msgstr "Tweets"
 
 #: src/help.py:55
 msgid "Send a tweet"
-msgstr "Sende einen tweet"
+msgstr "Sende einen Tweet"
 
 #: src/help.py:56
 #, fuzzy
 msgid "Retweet selected tweet"
-msgstr "Retweete den ausgewählten tweet"
+msgstr "Retweete den ausgewählten Tweet"
 
 #: src/help.py:57
 #, fuzzy
@@ -304,7 +304,7 @@ msgstr "Retweete den ausgewählten tweet aber bearbeite in vorher"
 #: src/help.py:58
 #, fuzzy
 msgid "Reply to selected tweet"
-msgstr "Antworte auf den ausgewählten tweet"
+msgstr "Antworte auf den ausgewählten Tweet"
 
 #: src/help.py:59
 #, fuzzy
@@ -314,25 +314,25 @@ msgstr "Sende eine direkt Nachricht"
 #: src/help.py:60
 #, fuzzy
 msgid "Delete selected tweet (must be yours)"
-msgstr "Lösche den ausgewählten tweet (es muss dein tweet sein)"
+msgstr "Lösche den ausgewählten Tweet (es muss dein Tweet sein)"
 
 #: src/help.py:63
 #, fuzzy
 msgid "Follow selected twitter"
-msgstr "Folge dem ausgewählten twitter-Nutzer"
+msgstr "Folge dem ausgewählten Twitter-Nutzer"
 
 #: src/help.py:64
 #, fuzzy
 msgid "Unfollow selected twitter"
-msgstr "Entfolge den ausgewählten twitter-Nutzer"
+msgstr "Entfolge den ausgewählten Twitter-Nutzer"
 
 #: src/help.py:65
 msgid "Follow a twitter"
-msgstr "Folge einem twitter-Nutzer"
+msgstr "Folge einem Twitter-Nutzer"
 
 #: src/help.py:66
 msgid "Unfollow a twitter"
-msgstr "Entfolge einem twitter-Nutzer"
+msgstr "Entfolge einem Twitter-Nutzer"
 
 #: src/help.py:68
 msgid "Others"
@@ -345,7 +345,7 @@ msgstr "Schließe Tyrs"
 #: src/help.py:70
 #, fuzzy
 msgid "Open URL in browser"
-msgstr "Öffne die URL im browser"
+msgstr "Öffne die URL im Browser"
 
 #: src/help.py:71
 #, fuzzy
@@ -354,19 +354,19 @@ msgstr "Erstelle den Screen erneut"
 
 #: src/help.py:72
 msgid "Bookmark selected tweet"
-msgstr "Favorisieren den ausgewählten tweet"
+msgstr "Favorisieren den ausgewählten Tweet"
 
 #: src/help.py:73
 msgid "Go to favorite timeline"
-msgstr "Gehe zur favoriten timeline"
+msgstr "Gehe zur favoriten Timeline"
 
 #: src/help.py:74
 msgid "Delete an favorite tweet"
-msgstr "Lösche einen favorisierten tweet"
+msgstr "Lösche einen favorisierten Tweet"
 
 #: src/help.py:80
 msgid "Open image in browser"
-msgstr "Öffne das Bild im browser"
+msgstr "Öffne das Bild im Browser"
 
 #: src/help.py:82
 msgid "Open thread seltected"
