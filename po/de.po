@@ -132,7 +132,7 @@ msgstr "Wenn du einen neuen account erstellen möchtest, dann folge diesen schri
 
 #: src/message.py:90
 msgid "If you want to skip this, just press return or ctrl-C."
-msgstr "Wenn du dies überspringen möchtest drücke einfachctrl-C"
+msgstr "Wenn du dies überspringen möchtest drücke einfach strg-C"
 
 #: src/message.py:94
 msgid "Which service do you want to use?"
