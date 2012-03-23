@@ -223,12 +223,12 @@ msgstr "Gehe einen tweet herunter"
 #: src/help.py:39
 #, fuzzy
 msgid "Go to top of screen"
-msgstr "Gehe zum Anfang der Anzeige"
+msgstr "Gehe zum Anfang des Screens"
 
 #: src/help.py:40
 #, fuzzy
 msgid "Go to bottom of screen"
-msgstr "Gehe zum Ende der Anzeige"
+msgstr "Gehe zum Ende des Screens"
 
 #: src/help.py:42
 msgid "Timelines"
@@ -350,7 +350,7 @@ msgstr "Öffne die URL im browser"
 #: src/help.py:71
 #, fuzzy
 msgid "Redraw the screen"
-msgstr "Erstelle den screen erneut"
+msgstr "Erstelle den Screen erneut"
 
 #: src/help.py:72
 msgid "Bookmark selected tweet"
