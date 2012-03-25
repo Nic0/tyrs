@@ -1,0 +1,386 @@
+# Tyrs
+# Copyright (C) 2012 Poapfel
+# This file is distributed under the same license as the Tyrs package.
+# Poapfel <contact@poapfel.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-23 18:56+0100\n"
+"PO-Revision-Date: 2012-03-23 18:56+0100\n"
+"Last-Translator:  <contact@poapfel.net>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/message.py:22
+msgid "Updating timeline..."
+msgstr "Aktualisiere Timeline..."
+
+#: src/message.py:23
+#, fuzzy
+msgid "Couldn't retrieve tweets"
+msgstr "Tweets konnten nicht geladen werden"
+
+#: src/message.py:26
+#, fuzzy
+msgid "Your tweet was sent"
+msgstr "Dein Tweet wurde gesendet"
+
+#: src/message.py:27
+#, fuzzy
+msgid "Couldn't send tweet"
+msgstr "Tweet konnte nicht gesendet werden"
+
+#: src/message.py:30
+#, fuzzy
+msgid "Your retweet was sent"
+msgstr "Dein Retweet wurde versendet"
+
+#: src/message.py:31
+#, fuzzy
+msgid "Couldn't send retweet"
+msgstr "Retweet konnte nicht versendet werden"
+
+#: src/message.py:34
+#, fuzzy
+msgid "You have deleted the tweet"
+msgstr "Du hast den Tweet bereits gelöscht"
+
+#: src/message.py:35
+#, fuzzy
+msgid "Couldn't delete tweet"
+msgstr "Tweet konnte nicht gelöscht werden"
+
+#: src/message.py:38
+#, fuzzy
+msgid "The tweet was added to favorites list"
+msgstr "Der Tweet wurde zu deinen Favoriten hinzugefügt"
+
+#: src/message.py:39
+#, fuzzy
+msgid "Couldn't add tweet to favorites list"
+msgstr "Tweet konnte nicht zu deinen Favoriten hinzugefügt werden"
+
+#: src/message.py:42
+#, fuzzy
+msgid "Tweet was removed from favorites list"
+msgstr "Der Tweet wurde von deinen Favoriten entfernt"
+
+#: src/message.py:43
+#, fuzzy
+msgid "Couldn't delete tweet on favorites list"
+msgstr "Der Tweet konnte nicht von deinen Favoriten entfernt werden"
+
+#: src/message.py:46
+#, fuzzy
+msgid "Direct message was sent"
+msgstr "Direkt Nachricht wurde versendet"
+
+#: src/message.py:47
+#, fuzzy
+msgid "Couldn't send direct message"
+msgstr "Direkt Nachricht konnte nicht versendet werden"
+
+#: src/message.py:50
+#, python-format
+msgid "You are now following %s"
+msgstr "Du folgst jetzt %s"
+
+#: src/message.py:51
+#, fuzzy, python-format
+msgid "Couldn't follow %s"
+msgstr "Konnte %s nicht folgen"
+
+#: src/message.py:54
+#, fuzzy, python-format
+msgid "You are not following %s anymore"
+msgstr "Du folgst %s jetzt nicht mehr"
+
+#: src/message.py:55
+#, fuzzy, python-format
+msgid "Couldn't stop following %s"
+msgstr "Konnte %s nicht entfolgen"
+
+#: src/message.py:58
+#, python-format
+msgid "Search results for %s"
+msgstr "Suchergebnisse für %s"
+
+#: src/message.py:59
+#, fuzzy, python-format
+msgid "Couldn't search for %s"
+msgstr "Konnte nicht nach %s suchen"
+
+#: src/message.py:86
+msgid "Couldn't find any profile."
+msgstr "Es wurde kein Profil gefunden"
+
+#: src/message.py:88
+#, fuzzy, python-format
+msgid "It should reside in: %s"
+msgstr "Es sollte sich in %s befinden"
+
+#: src/message.py:89
+#, fuzzy
+msgid "If you want to setup a new account, then follow these steps"
+msgstr "Wenn du einen neuen account erstellen möchtest, dann folge diesen schritten"
+
+#: src/message.py:90
+msgid "If you want to skip this, just press return or ctrl-C."
+msgstr "Wenn du dies überspringen möchtest drücke einfach strg-C."
+
+#: src/message.py:94
+msgid "Which service do you want to use?"
+msgstr "Welchen Dienst möchtest du benutzen?"
+
+#: src/message.py:103
+#, fuzzy
+msgid ""
+"Which root url do you want? (leave blank for default, https://identi.ca/api)"
+msgstr ""
+"Welche root url möchtest du benutzen? (gebe nichts an um die Standart Einstellungen zu verwenden, https://identi.ca/api)"
+
+#: src/config.py:125 tyrs/config.py:137
+msgid "Your choice? > "
+msgstr "Deine Wahl? > "
+
+#: src/config.py:249
+#, python-format
+msgid "The param \"%s\" does not exist for bold colors"
+msgstr "Der parameter \"%s\" exestiert nicht für fettgedruckte farben"
+
+#: src/config.py:286
+msgid "Requesting temp token from "
+msgstr "Erfrage temp token von "
+
+#: src/config.py:291
+msgid "Invalid respond from "
+msgstr "Invalide antwort von "
+
+#: src/config.py:292
+#, python-format
+msgid " requesting temp token: %s"
+msgstr " erfrage temp token: %s"
+
+#: src/config.py:297
+#, fuzzy
+msgid "Please visit the following page to retrieve pin code needed"
+msgstr "Bitte besuche die folgende seite um den benötigten pin code in erfahrungen zu bringen"
+
+#: src/config.py:298
+#, fuzzy
+msgid "to obtain an Authentication Token:"
+msgstr "Um einen Authentifizierung Token zu erhalten:"
+
+#: src/config.py:309
+msgid "Generating and signing request for an access token"
+msgstr "Generiere anfrage für einen acess token"
+
+#: src/config.py:317
+#, fuzzy, python-format
+msgid "Request for access token failed: %s"
+msgstr "Erfragung vom acess token ist fehlgeschlagen: %s"
+
+#: src/config.py:330
+#, fuzzy
+msgid "Error creating directory .config/tyrs"
+msgstr "Fehler bei der erstellung des Ordners .config/tyrs"
+
+#: src/config.py:342
+msgid "your account has been saved"
+msgstr "dein account wurde gespeichert"
+
+#: src/editor.py:139
+msgid "What's up?"
+msgstr "Was ist los?"
+
+#: src/editor.py:142
+msgid "Entry a name"
+msgstr "Gebe einen Namen ein"
+
+#: src/editor.py:145
+msgid "Search for something?"
+msgstr "Möchtest du nach etwas suchen?"
+
+#: src/help.py:36
+msgid "Navigation"
+msgstr "Navigation"
+
+#: src/help.py:37
+#, fuzzy
+msgid "Go up one tweet"
+msgstr "Gehe einen Tweet herauf"
+
+#: src/help.py:38
+msgid "Go down one tweet"
+msgstr "Gehe einen Tweet herunter"
+
+#: src/help.py:39
+#, fuzzy
+msgid "Go to top of screen"
+msgstr "Gehe zum Anfang des Screens"
+
+#: src/help.py:40
+#, fuzzy
+msgid "Go to bottom of screen"
+msgstr "Gehe zum Ende des Screens"
+
+#: src/help.py:42
+msgid "Timelines"
+msgstr "Timelines"
+
+#: src/help.py:43
+#, fuzzy
+msgid "Go left on the timeline's bar"
+msgstr "Gehe auf der Timeline bar einen Schritt nach links"
+
+#: src/help.py:44
+#, fuzzy
+msgid "Go right on the timeline's bar"
+msgstr "Gehe auf der Timeline bar einen Schritt nach rechts"
+
+#: src/help.py:45
+#, fuzzy
+msgid "Refresh current timeline"
+msgstr "Aktualisiere die momentane Timeline"
+
+#: src/help.py:46
+#, fuzzy
+msgid "Clear all but last tweet in timeline"
+msgstr "Lösche alle außer den letzten Tweet in deiner Timeline"
+
+#: src/help.py:47
+#, fuzzy
+msgid "Go to home timeline"
+msgstr "Gehe zur haupt Timeline"
+
+#: src/help.py:48
+#, fuzzy
+msgid "Go to mentions timeline"
+msgstr "Gehe zur mentions Timeline"
+
+#: src/help.py:49
+#, fuzzy
+msgid "Go to direct message timeline"
+msgstr "Gehe zur direkt Nachrichten Timeline"
+
+#: src/help.py:50
+msgid "Search for term and show resulting timeline"
+msgstr "Suche nach einem Begriff und zeige die Ergebnisse in der Timeline"
+
+#: src/help.py:51
+#, fuzzy
+msgid "Show somebody's public timeline"
+msgstr "Zeige die öffentliche Timeline von jemanden anderem"
+
+#: src/help.py:52
+#, fuzzy
+msgid "Show your public timeline"
+msgstr "Zeige deine öffentliche Timeline"
+
+#: src/help.py:54
+msgid "Tweets"
+msgstr "Tweets"
+
+#: src/help.py:55
+msgid "Send a tweet"
+msgstr "Sende einen Tweet"
+
+#: src/help.py:56
+#, fuzzy
+msgid "Retweet selected tweet"
+msgstr "Retweete den ausgewählten Tweet"
+
+#: src/help.py:57
+#, fuzzy
+msgid "Retweet selected tweet, but edit first"
+msgstr "Retweete den ausgewählten tweet aber bearbeite in vorher"
+
+#: src/help.py:58
+#, fuzzy
+msgid "Reply to selected tweet"
+msgstr "Antworte auf den ausgewählten Tweet"
+
+#: src/help.py:59
+#, fuzzy
+msgid "Send direct message"
+msgstr "Sende eine direkt Nachricht"
+
+#: src/help.py:60
+#, fuzzy
+msgid "Delete selected tweet (must be yours)"
+msgstr "Lösche den ausgewählten Tweet (es muss dein Tweet sein)"
+
+#: src/help.py:63
+#, fuzzy
+msgid "Follow selected twitter"
+msgstr "Folge dem ausgewählten Twitter-Nutzer"
+
+#: src/help.py:64
+#, fuzzy
+msgid "Unfollow selected twitter"
+msgstr "Entfolge den ausgewählten Twitter-Nutzer"
+
+#: src/help.py:65
+msgid "Follow a twitter"
+msgstr "Folge einem Twitter-Nutzer"
+
+#: src/help.py:66
+msgid "Unfollow a twitter"
+msgstr "Entfolge einem Twitter-Nutzer"
+
+#: src/help.py:68
+msgid "Others"
+msgstr "Andere"
+
+#: src/help.py:69
+msgid "Leave Tyrs"
+msgstr "Schließe Tyrs"
+
+#: src/help.py:70
+#, fuzzy
+msgid "Open URL in browser"
+msgstr "Öffne die URL im Browser"
+
+#: src/help.py:71
+#, fuzzy
+msgid "Redraw the screen"
+msgstr "Erstelle den Screen erneut"
+
+#: src/help.py:72
+msgid "Bookmark selected tweet"
+msgstr "Favorisieren den ausgewählten Tweet"
+
+#: src/help.py:73
+msgid "Go to favorite timeline"
+msgstr "Gehe zur favoriten Timeline"
+
+#: src/help.py:74
+msgid "Delete an favorite tweet"
+msgstr "Lösche einen favorisierten Tweet"
+
+#: src/help.py:80
+msgid "Open image in browser"
+msgstr "Öffne das Bild im Browser"
+
+#: src/help.py:82
+msgid "Open thread seltected"
+msgstr "Öffne den ausgewählten Thread"
+
+#: src/help.py:91
+msgid "Name"
+msgstr "Name"
+
+#: src/help.py:92
+msgid "Key"
+msgstr "Key"
+
+#: src/help.py:94
+msgid "Description"
+msgstr "Beschreibung"
+
