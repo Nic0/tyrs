@@ -32,7 +32,7 @@ setup(name='tyrs',
       install_requires=[
           'python-twitter>=0.8.2',
           'argparse',
-          'httplib2==0.6.0',
+          'httplib2==0.18.0',
           'urwid',
       ],
       packages=['tyrs', 'tyrs.shorter'],
